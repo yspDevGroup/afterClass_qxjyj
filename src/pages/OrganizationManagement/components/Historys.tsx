@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 10:01:58
- * @LastEditTime: 2021-08-30 09:02:41
+ * @LastEditTime: 2021-08-30 10:31:28
  * @LastEditors: wsl
  */
 /*
@@ -124,25 +124,10 @@ const Historys = (props: { Keys: string | undefined }) => {
             正常结束: 3,
             异常结束: 4
           };
-          const resJYJGSJ = await JYJGSJ({ id: jyjId! });
-          if (resJYJGSJ.status === 'ok') {
-            const res = await getAllInstitutions(
-              {
-                ZT: [zt.已驳回, zt.正常结束, zt.异常结束],
-                XZQHM: resJYJGSJ.data.XZQH,
-                JGMC: '',
-                LX: 0,
-                page: 0,
-                pageSize: 0
-              },
-              opts
-            );
-            console.log(res, '===========');
-          }
-
           const res = await getKHJGRZSQ(
             {
               ZT: [zt.已驳回, zt.正常结束, zt.异常结束],
+              name: typeof opts.keyword === 'undefined' ? '' : opts.keyword,
               page: 0,
               pageSize: 0
             },

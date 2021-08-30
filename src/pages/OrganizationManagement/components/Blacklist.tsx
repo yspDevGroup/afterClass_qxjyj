@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 09:50:10
- * @LastEditTime: 2021-08-30 09:08:57
+ * @LastEditTime: 2021-08-30 10:17:04
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -165,7 +165,7 @@ const Blacklist = (props: { Keys: string | undefined }) => {
               {
                 ZT: [1],
                 XZQHM: resJYJGSJ.data.XZQH,
-                JGMC: '',
+                JGMC: typeof opts.keyword === 'undefined' ? '' : opts.keyword,
                 LX: 1,
                 page: 0,
                 pageSize: 0

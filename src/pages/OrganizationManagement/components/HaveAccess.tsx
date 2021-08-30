@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-26 11:45:40
- * @LastEditTime: 2021-08-30 09:06:02
+ * @LastEditTime: 2021-08-30 10:09:59
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -43,17 +43,13 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
     setIsModalVisible(false);
   };
   const submit = async (params: any) => {
-    const { SQR, SQRId, XZQHM, KHJYJGId } = Datas!.value;
     if (Titles === '异常取消') {
       const data = {
         ZT: 4,
         SPR: username,
         SPRId: id,
         BZ: params.BZ,
-        SQR,
-        SQRId,
-        XZQHM,
-        KHJYJGId
+        JYJGSJId: jyjId
       };
       const res = await updateKHJGRZSQ({ id: Datas!.value.KHJGRZSQs[0].id }, data);
       if (res.status === 'ok') {
@@ -64,12 +60,10 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       const data = {
         KHJYJGId: Datas!.value.id,
         id: Datas!.value.KHJGRZSQs[0].id,
-        XZQHM: Datas!.value.KHJGRZSQs[0].XZQHM,
-        SQR: Datas!.value.KHJGRZSQs[0].SQR,
-        SQRId: Datas!.value.KHJGRZSQs[0].SQRId,
         SPR: username,
         SPRId: id,
-        BZ: params.BZ
+        BZ: params.BZ,
+        JYJGSJId: jyjId
       };
       const res = await blockKHJGRZSQ(data);
       if (res.status === 'ok') {
@@ -233,13 +227,14 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
             ...params,
             sorter: sort && Object.keys(sort).length ? sort : undefined
           };
+          console.log(opts.keyword, '======');
           const resJYJGSJ = await JYJGSJ({ id: jyjId! });
           if (resJYJGSJ.status === 'ok') {
             const res = await getAllInstitutions(
               {
                 ZT: [1],
                 XZQHM: resJYJGSJ.data.XZQH,
-                JGMC: '',
+                JGMC: typeof opts.keyword === 'undefined' ? '' : opts.keyword,
                 LX: 0,
                 page: 0,
                 pageSize: 0

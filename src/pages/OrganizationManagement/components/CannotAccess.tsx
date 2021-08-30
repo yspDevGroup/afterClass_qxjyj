@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 10:16:11
- * @LastEditTime: 2021-08-30 08:33:24
+ * @LastEditTime: 2021-08-30 10:15:06
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -39,16 +39,12 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
     setIsModalVisible(false);
   };
   const submit = async (params: any) => {
-    const { SQR, SQRId, XZQHM, KHJYJGId } = Datas!.value;
     const data = {
       ZT: 2,
       SPR: username,
       SPRId: id,
       BZ: params.BZ,
-      SQR,
-      SQRId,
-      XZQHM,
-      KHJYJGId
+      JYJGSJId: jyjId
     };
     const res = await updateKHJGRZSQ({ id: Datas!.value.KHJGRZSQs[0].id }, data);
     if (res.status === 'ok') {
@@ -136,16 +132,12 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
               key="zr"
               title="确定准入该机构?"
               onConfirm={async () => {
-                const { SQR, SQRId, XZQHM, KHJYJGId } = record.value;
                 const data = {
                   ZT: 1,
                   SPR: username,
                   SPRId: id,
                   RZSJ: moment(myDate).format(),
-                  SQR,
-                  SQRId,
-                  XZQHM,
-                  KHJYJGId
+                  JYJGSJId: jyjId
                 };
 
                 const res = await updateKHJGRZSQ({ id: record.value.KHJGRZSQs[0].id }, data);
@@ -214,7 +206,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
                 ZT: [0],
                 LX: 0,
                 XZQHM: resJYJGSJ.data.XZQH,
-                JGMC: '',
+                JGMC: typeof opts.keyword === 'undefined' ? '' : opts.keyword,
                 page: 0,
                 pageSize: 0
               },
