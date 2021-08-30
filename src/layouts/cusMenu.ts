@@ -41,5 +41,9 @@ export default [
         name: '回收站'
       }
     ]
-  }
+  },
+  {
+    path: '/courseManagement',
+    name: '课程管理',
+  },
 ];
