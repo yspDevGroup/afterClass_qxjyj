@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-08-30 12:03:39
+ * @LastEditTime: 2021-08-30 15:04:04
  * @LastEditors: wsl
  */
 /*
@@ -153,7 +153,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
             <Link
               key="jgxq"
               to={{
-                pathname: '/organizationManagement/courseInfo',
+                pathname: '/organizationManagement/courseList/courseInfo',
                 state: record
               }}
             >

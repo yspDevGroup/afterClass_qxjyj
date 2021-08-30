@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-24 17:21:12
- * @LastEditTime: 2021-08-28 17:32:48
+ * @LastEditTime: 2021-08-30 15:07:23
  * @LastEditors: wsl
  */
 export default [
@@ -14,6 +14,24 @@ export default [
     path: '/organizationManagement',
     name: '机构管理'
   },
+  {
+    path: '/organizationManagement/agencyDetails',
+    name: '机构详情',
+    hideInMenu: 'true'
+  },
+  {
+    path: '/organizationManagement/courseList',
+    name: '课程列表',
+    hideInMenu: 'true',
+    routes: [
+      {
+        path: '/organizationManagement/courseList/courseInfo',
+        hideInMenu: 'true',
+        name: '课程详情'
+      }
+    ]
+  },
+
   {
     path: '/announcements',
     name: '通知公告',
@@ -44,6 +62,6 @@ export default [
   },
   {
     path: '/courseManagement',
-    name: '课程管理',
-  },
+    name: '课程管理'
+  }
 ];

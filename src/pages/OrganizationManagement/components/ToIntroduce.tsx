@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-08-30 08:33:48
+ * @LastEditTime: 2021-08-30 15:13:57
  * @LastEditors: wsl
  */
 /*
@@ -106,6 +106,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
         );
       }
     },
+
     {
       title: '代课老师',
       dataIndex: 'DKLS',
@@ -123,7 +124,23 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
         );
       }
     },
-
+    {
+      title: '准入学校',
+      dataIndex: 'ZRXX',
+      key: 'ZRXX',
+      align: 'center',
+      search: false,
+      render: (text: any) => {
+        return (
+          <EllipsisHint
+            width="100%"
+            text={text?.map((item: any) => {
+              return <Tag key={item.XXJBSJ.id}>{item.XXJBSJ.XXMC}</Tag>;
+            })}
+          />
+        );
+      }
+    },
     {
       title: '操作',
       key: 'option',
@@ -136,7 +153,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
             <Link
               key="kcxq"
               to={{
-                pathname: '/organizationManagement/courseInfo',
+                pathname: '/organizationManagement/courseList/courseInfo',
                 state: record
               }}
             >
@@ -211,12 +228,13 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
           if (res.status === 'ok') {
             let newArr: any[] = [];
             res.data?.rows.forEach((value: any) => {
-              const { KCMC, NJSJs, KHKCJs } = value;
+              const { KCMC, NJSJs, KHKCJs, KHKCSQs } = value;
               const data = {
                 value,
                 KCMC: KCMC,
                 SYNJ: NJSJs,
-                DKLS: KHKCJs
+                DKLS: KHKCJs,
+                ZRXX: KHKCSQs
               };
               newArr.push(data);
             });

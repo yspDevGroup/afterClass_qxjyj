@@ -2,16 +2,16 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-26 19:54:41
- * @LastEditTime: 2021-08-30 08:36:48
+ * @LastEditTime: 2021-08-30 15:04:41
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
 import { Input, Empty, Row, Col, Tag } from 'antd';
 import { applyStatus, colorTagDisk } from '@/constant';
 
-import styles from './index.less';
+import styles from '../index.less';
 import noImg from '@/assets/noImg.png';
-import { fakeClassList } from './mock';
+import { fakeClassList } from '../mock';
 
 const { Search } = Input;
 const CourseItemDom = (props: { course: any; ZT?: number }) => {
