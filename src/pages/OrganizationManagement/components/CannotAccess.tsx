@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 10:16:11
- * @LastEditTime: 2021-08-30 10:15:06
+ * @LastEditTime: 2021-08-31 10:35:00
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -15,6 +15,7 @@ import { getKHJGRZSQ, updateKHJGRZSQ } from '@/services/after-class-qxjyj/khjgrz
 import { history, Link, useModel } from 'umi';
 import moment from 'moment';
 import { getAllInstitutions, JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
+import { updateKHJYJG } from '@/services/after-class-qxjyj/khjyjg';
 
 const CannotAccess = (props: { Keys: string | undefined }) => {
   const { Keys } = props;
@@ -145,6 +146,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
                   message.success('准入成功');
                   actionRef2?.current?.reload();
                 }
+                const resupdateKHJYJG = await updateKHJYJG({ id: Datas!.value.KHJGRZSQs[0].id }, { ZT: 0 });
               }}
               okText="确定"
               cancelText="取消"

@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 09:50:10
- * @LastEditTime: 2021-08-30 10:17:04
+ * @LastEditTime: 2021-08-31 10:34:25
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -14,6 +14,7 @@ import styles from '../index.less';
 import { getKHJGRZSQ, updateKHJGRZSQ } from '@/services/after-class-qxjyj/khjgrzsq';
 import { useModel } from '@/.umi/plugin-model/useModel';
 import { getAllInstitutions, JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
+import { updateKHJYJG } from '@/services/after-class-qxjyj/khjyjg';
 
 const Blacklist = (props: { Keys: string | undefined }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -62,6 +63,7 @@ const Blacklist = (props: { Keys: string | undefined }) => {
     } else {
       message.error(res.message);
     }
+    const resupdateKHJYJG = await updateKHJYJG({ id: Datas!.value.KHJGRZSQs[0].id }, { ZT: 0 });
   };
   const columns: ProColumns<TableListItem>[] = [
     {
