@@ -2,8 +2,8 @@
  * @description: 工具类
  * @author: zpl
  * @Date: 2021-08-09 10:36:53
- * @LastEditTime: 2021-08-24 17:05:44
- * @LastEditors: Sissle Lynn
+ * @LastEditTime: 2021-08-31 17:46:54
+ * @LastEditors: wsl
  */
 import { history } from 'umi';
 
@@ -172,4 +172,28 @@ export const getWidHei = () => {
     width,
     height
   };
+};
+
+/**
+ * 根据当前时间获取学年学期
+ *
+ * @param {API.XNXQ[]} list
+ * @return {*}  {(API.XNXQ | null)}
+ */
+export const getCurrentXQ = (list: API.XNXQ[]): API.XNXQ | null => {
+  if (!list.length) {
+    return null;
+  }
+  const today = new Date();
+  const currentXQ = list.find((xq: any) => {
+    const begin = new Date(xq.KSRQ);
+    const end = new Date(xq.JSRQ);
+    if (begin <= today && today <= end) {
+      return true;
+    }
+    return false;
+  });
+  if (currentXQ) {
+    return currentXQ;
+  }
 };

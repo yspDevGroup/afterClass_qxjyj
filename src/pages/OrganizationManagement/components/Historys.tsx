@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 10:01:58
- * @LastEditTime: 2021-08-30 10:31:28
+ * @LastEditTime: 2021-08-31 16:43:45
  * @LastEditors: wsl
  */
 /*
@@ -124,10 +124,12 @@ const Historys = (props: { Keys: string | undefined }) => {
             正常结束: 3,
             异常结束: 4
           };
+          const resJYJGSJ = await JYJGSJ({ id: jyjId! });
           const res = await getKHJGRZSQ(
             {
               ZT: [zt.已驳回, zt.正常结束, zt.异常结束],
               name: typeof opts.keyword === 'undefined' ? '' : opts.keyword,
+              XZQHM: resJYJGSJ.data.XZQH,
               page: 0,
               pageSize: 0
             },

@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-26 11:45:40
- * @LastEditTime: 2021-08-30 10:09:59
+ * @LastEditTime: 2021-08-31 17:16:11
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -25,6 +25,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
   const actionRef1 = useRef<ActionType>();
   const [Datas, setDatas] = useState<TableListItem>();
   const [Titles, setTitles] = useState<string>();
+  const [XZQUMid, setXZQUMid] = useState<string>();
   useEffect(() => {
     actionRef1?.current?.reload();
   }, [Keys]);
@@ -149,46 +150,52 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
             >
               课程列表
             </Link>
-            <Popconfirm
-              title="请选择取消状态为正常取消或异常取消"
-              onConfirm={async (e) => {
-                const { SQR, SQRId, XZQHM, KHJYJGId } = record.value;
-                const data = {
-                  ZT: 3,
-                  SPR: username,
-                  SPRId: id,
-                  SQR,
-                  SQRId,
-                  XZQHM,
-                  KHJYJGId
-                };
-                const res = await updateKHJGRZSQ({ id: record.value.KHJGRZSQs[0].id }, data);
-                if (res.status === 'ok') {
-                  message.success('取消成功');
-                  actionRef1?.current?.reload();
-                }
-              }}
-              onCancel={(e) => {
-                setDatas(record);
-                setTitles('异常取消');
-                setIsModalVisible(true);
-              }}
-              okText="正常取消"
-              cancelText="异常取消"
-            >
-              <a href="#">取消准入</a>
-            </Popconfirm>
+            {XZQUMid === record.value.XZQHM ? (
+              <>
+                <Popconfirm
+                  title="请选择取消状态为正常取消或异常取消"
+                  onConfirm={async (e) => {
+                    const { SQR, SQRId, XZQHM, KHJYJGId } = record.value;
+                    const data = {
+                      ZT: 3,
+                      SPR: username,
+                      SPRId: id,
+                      SQR,
+                      SQRId,
+                      XZQHM,
+                      KHJYJGId
+                    };
+                    const res = await updateKHJGRZSQ({ id: record.value.KHJGRZSQs[0].id }, data);
+                    if (res.status === 'ok') {
+                      message.success('取消成功');
+                      actionRef1?.current?.reload();
+                    }
+                  }}
+                  onCancel={(e) => {
+                    setDatas(record);
+                    setTitles('异常取消');
+                    setIsModalVisible(true);
+                  }}
+                  okText="正常取消"
+                  cancelText="异常取消"
+                >
+                  <a href="#">取消准入</a>
+                </Popconfirm>
 
-            <a
-              key="qxzr"
-              onClick={() => {
-                setDatas(record);
-                setTitles('加入黑名单');
-                setIsModalVisible(true);
-              }}
-            >
-              加入黑名单
-            </a>
+                <a
+                  key="qxzr"
+                  onClick={() => {
+                    setDatas(record);
+                    setTitles('加入黑名单');
+                    setIsModalVisible(true);
+                  }}
+                >
+                  加入黑名单
+                </a>
+              </>
+            ) : (
+              <></>
+            )}
           </div>
         );
       }
@@ -227,8 +234,8 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
             ...params,
             sorter: sort && Object.keys(sort).length ? sort : undefined
           };
-          console.log(opts.keyword, '======');
           const resJYJGSJ = await JYJGSJ({ id: jyjId! });
+          setXZQUMid(resJYJGSJ.data.XZQH);
           if (resJYJGSJ.status === 'ok') {
             const res = await getAllInstitutions(
               {

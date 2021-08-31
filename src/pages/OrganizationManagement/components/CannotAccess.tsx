@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 10:16:11
- * @LastEditTime: 2021-08-31 10:35:00
+ * @LastEditTime: 2021-08-31 17:10:19
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -141,12 +141,12 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
                   JYJGSJId: jyjId
                 };
 
-                const res = await updateKHJGRZSQ({ id: record.value.KHJGRZSQs[0].id }, data);
+                const res = await updateKHJGRZSQ({ id: record.value?.KHJGRZSQs[0].id }, data);
                 if (res.status === 'ok') {
                   message.success('准入成功');
                   actionRef2?.current?.reload();
                 }
-                const resupdateKHJYJG = await updateKHJYJG({ id: Datas!.value.KHJGRZSQs[0].id }, { ZT: 0 });
+                const resupdateKHJYJG = await updateKHJYJG({ id: Datas!.value?.KHJGRZSQs[0].id }, { ZT: 0 });
               }}
               okText="确定"
               cancelText="取消"

@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 09:50:10
- * @LastEditTime: 2021-08-31 10:34:25
+ * @LastEditTime: 2021-08-31 17:13:35
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -25,6 +25,7 @@ const Blacklist = (props: { Keys: string | undefined }) => {
   const { Keys } = props;
   const [form] = Form.useForm();
   const actionRef3 = useRef<ActionType>();
+  const [XZQUMid, setXZQUMid] = useState<string>();
 
   useEffect(() => {
     actionRef3?.current?.reload();
@@ -113,17 +114,23 @@ const Blacklist = (props: { Keys: string | undefined }) => {
       align: 'center',
       render: (text, record, action) => {
         return (
-          <div className={styles.operation}>
-            <a
-              key="qxzr"
-              onClick={() => {
-                setDatas(record);
-                setIsModalVisible(true);
-              }}
-            >
-              移出黑名单
-            </a>
-          </div>
+          <>
+            {XZQUMid === record.value.XZQHM ? (
+              <div className={styles.operation}>
+                <a
+                  key="qxzr"
+                  onClick={() => {
+                    setDatas(record);
+                    setIsModalVisible(true);
+                  }}
+                >
+                  移出黑名单
+                </a>
+              </div>
+            ) : (
+              <></>
+            )}
+          </>
         );
       }
     }
@@ -162,6 +169,7 @@ const Blacklist = (props: { Keys: string | undefined }) => {
             sorter: sort && Object.keys(sort).length ? sort : undefined
           };
           const resJYJGSJ = await JYJGSJ({ id: jyjId! });
+          setXZQUMid(resJYJGSJ.data.XZQH);
           if (resJYJGSJ.status === 'ok') {
             const res = await getAllInstitutions(
               {
