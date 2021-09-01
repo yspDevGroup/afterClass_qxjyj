@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-09 17:41:43
- * @LastEditTime: 2021-08-30 08:32:54
+ * @LastEditTime: 2021-09-01 10:11:12
  * @LastEditors: wsl
  */
 import React, { useState, useRef, useEffect } from 'react';
@@ -22,23 +22,6 @@ const TableList: React.FC = () => {
   const [dataSource, setDataSource] = useState<API.JYJGTZGG[]>();
   const actionRef = useRef<ActionType>();
 
-  const ongetXXTZGG = async () => {
-    const resgetXXTZGG = await getJYJGTZGG({
-      BT: '',
-      LX: 0,
-      ZT: ['已发布', '草稿'],
-      /** 页数 */
-      page: 0,
-      /** 每页记录数 */
-      pageSize: 0
-    });
-    if (resgetXXTZGG.status === 'ok') {
-      setDataSource(resgetXXTZGG.data?.rows);
-    }
-  };
-  useEffect(() => {
-    ongetXXTZGG();
-  }, []);
   const columns: ProColumns<TableListItem>[] = [
     {
       title: '标题',
@@ -92,7 +75,7 @@ const TableList: React.FC = () => {
                 const resUpdateJYJGTZGG = await updateJYJGTZGG({ id: record.id }, data);
                 if (resUpdateJYJGTZGG.status === 'ok') {
                   message.success('设置成功');
-                  ongetXXTZGG();
+                  actionRef?.current?.reload();
                 } else {
                   message.error('设置失败，请联系管理员或稍后再试。');
                 }
@@ -128,7 +111,7 @@ const TableList: React.FC = () => {
                 const resUpdateJYJGTZGG = await updateJYJGTZGG({ id: record.id }, data);
                 if (resUpdateJYJGTZGG.status === 'ok') {
                   message.success('设置成功');
-                  ongetXXTZGG();
+                  actionRef?.current?.reload();
                 } else {
                   message.error('设置失败，请联系管理员或稍后再试。');
                 }
@@ -152,7 +135,6 @@ const TableList: React.FC = () => {
             id={record.id}
             ZT={record.ZT}
             record={record}
-            ongetXXTZGG={ongetXXTZGG}
             refreshHandler={() => {
               if (actionRef.current) {
                 actionRef.current.reload();

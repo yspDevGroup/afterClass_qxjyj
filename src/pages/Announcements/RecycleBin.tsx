@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-09 17:41:43
- * @LastEditTime: 2021-08-30 08:36:32
+ * @LastEditTime: 2021-09-01 10:12:36
  * @LastEditors: wsl
  */
 import React, { useState, useRef, useEffect } from 'react';
@@ -77,7 +77,6 @@ const TableList: React.FC = () => {
             id={record.id}
             ZT={record.ZT}
             record={record}
-            ongetXXTZGG={ongetXXTZGG}
             refreshHandler={() => {
               if (actionRef.current) {
                 actionRef.current.reload();
@@ -89,24 +88,6 @@ const TableList: React.FC = () => {
       align: 'center'
     }
   ];
-  const ongetXXTZGG = async () => {
-    const resgetXXTZGG = await getJYJGTZGG({
-      BT: '',
-      LX: 0,
-      /** 状态 */
-      ZT: ['已删除'],
-      /** 页数 */
-      page: 0,
-      /** 每页记录数 */
-      pageSize: 0
-    });
-    if (resgetXXTZGG.status === 'ok') {
-      setDataSource(resgetXXTZGG.data?.rows);
-    }
-  };
-  useEffect(() => {
-    ongetXXTZGG();
-  }, []);
 
   return (
     <ProTable<any>

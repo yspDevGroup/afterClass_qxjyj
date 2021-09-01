@@ -25,7 +25,6 @@ type OptType = {
   id: string;
   refreshHandler: () => void;
   record?: TableListItem;
-  ongetXXTZGG: () => Promise<void>;
 };
 
 const EditOpt = ({ id }: { id: string }) => (
@@ -42,7 +41,7 @@ const EditOpt = ({ id }: { id: string }) => (
   </a>
 );
 
-const PubOpt = ({ id, refreshHandler, record, ongetXXTZGG }: OptType) => (
+const PubOpt = ({ id, refreshHandler, record }: OptType) => (
   <a
     onClick={async () => {
       const data = {
@@ -53,8 +52,8 @@ const PubOpt = ({ id, refreshHandler, record, ongetXXTZGG }: OptType) => (
       try {
         const resupdateJYJGTZGG = await updateJYJGTZGG({ id: record!.id }, data);
         if (resupdateJYJGTZGG.status === 'ok') {
-          message.info('发布成功');
-          ongetXXTZGG();
+          message.success('发布成功');
+          refreshHandler();
         } else {
           message.error('发布失败，请联系管理员或稍后重试。');
         }
@@ -71,7 +70,7 @@ const PubOpt = ({ id, refreshHandler, record, ongetXXTZGG }: OptType) => (
   </a>
 );
 
-const UnPubOpt = ({ id, refreshHandler, record, ongetXXTZGG }: OptType) => (
+const UnPubOpt = ({ id, refreshHandler, record }: OptType) => (
   <a
     onClick={async () => {
       const data = {
@@ -82,8 +81,8 @@ const UnPubOpt = ({ id, refreshHandler, record, ongetXXTZGG }: OptType) => (
       try {
         const resupdateJYJGTZGG = await updateJYJGTZGG({ id: record!.id }, data);
         if (resupdateJYJGTZGG.status === 'ok') {
-          message.info('撤稿成功');
-          ongetXXTZGG();
+          message.success('撤稿成功');
+          refreshHandler();
         } else {
           message.error('撤稿失败，请联系管理员或稍后重试。');
         }
@@ -100,7 +99,7 @@ const UnPubOpt = ({ id, refreshHandler, record, ongetXXTZGG }: OptType) => (
   </a>
 );
 
-const UnDelOpt = ({ id, ongetXXTZGG, record }: OptType) => (
+const UnDelOpt = ({ id, refreshHandler, record }: OptType) => (
   <a
     href="#"
     onClick={async () => {
@@ -112,8 +111,8 @@ const UnDelOpt = ({ id, ongetXXTZGG, record }: OptType) => (
       try {
         const resupdateJYJGTZGG = await updateJYJGTZGG({ id: record!.id }, data);
         if (resupdateJYJGTZGG.status === 'ok') {
-          message.info('恢复成功');
-          ongetXXTZGG();
+          message.success('恢复成功');
+          refreshHandler();
         } else {
           message.error('恢复失败，请联系管理员或稍后重试。');
         }
@@ -130,7 +129,7 @@ const UnDelOpt = ({ id, ongetXXTZGG, record }: OptType) => (
   </a>
 );
 
-const DelOpt = ({ id, ongetXXTZGG, record }: OptType) => (
+const DelOpt = ({ id, refreshHandler, record }: OptType) => (
   <Popconfirm
     title="确定要删除吗?"
     onConfirm={async () => {
@@ -142,8 +141,8 @@ const DelOpt = ({ id, ongetXXTZGG, record }: OptType) => (
       try {
         const resupdateJYJGTZGG = await updateJYJGTZGG({ id: id }, data);
         if (resupdateJYJGTZGG.status === 'ok') {
-          message.info('删除成功');
-          ongetXXTZGG();
+          message.success('删除成功');
+          refreshHandler();
         } else {
           message.error('删除失败，请联系管理员或稍后重试。');
         }
@@ -163,15 +162,15 @@ const DelOpt = ({ id, ongetXXTZGG, record }: OptType) => (
   </Popconfirm>
 );
 
-const RealDelOpt = ({ id, ongetXXTZGG }: OptType) => (
+const RealDelOpt = ({ id, refreshHandler }: OptType) => (
   <Popconfirm
     title="彻底删除后数据将不可恢复，是否删除?"
     onConfirm={async () => {
       try {
         const result = await deleteJYJGTZGG({ id: id });
         if (result.status === 'ok') {
-          message.info('删除成功');
-          ongetXXTZGG();
+          message.success('删除成功');
+          refreshHandler();
         } else {
           message.error('删除失败，请联系管理员或稍后重试。');
         }
@@ -198,20 +197,19 @@ type Props = {
   ZT: string;
   refreshHandler: () => void;
   record?: TableListItem;
-  ongetXXTZGG: () => Promise<void>;
 };
 
 const Option: React.FC<Props> = (props) => {
-  const { id, ZT, refreshHandler, record, ongetXXTZGG } = props;
+  const { id, ZT, refreshHandler, record } = props;
   switch (ZT) {
     case '已发布':
-      return <UnPubOpt id={id} refreshHandler={refreshHandler} record={record} ongetXXTZGG={ongetXXTZGG} />;
+      return <UnPubOpt id={id} refreshHandler={refreshHandler} record={record} />;
     case '已删除':
       return (
         <>
-          <UnDelOpt id={id} refreshHandler={refreshHandler} record={record} ongetXXTZGG={ongetXXTZGG} />
+          <UnDelOpt id={id} refreshHandler={refreshHandler} record={record} />
           <Divider type="vertical" />
-          <RealDelOpt id={id} refreshHandler={refreshHandler} record={record} ongetXXTZGG={ongetXXTZGG} />
+          <RealDelOpt id={id} refreshHandler={refreshHandler} record={record} />
         </>
       );
     default:
@@ -219,9 +217,9 @@ const Option: React.FC<Props> = (props) => {
         <>
           <EditOpt id={id} />
           <Divider type="vertical" />
-          <PubOpt id={id} refreshHandler={refreshHandler} record={record} ongetXXTZGG={ongetXXTZGG} />
+          <PubOpt id={id} refreshHandler={refreshHandler} record={record} />
           <Divider type="vertical" />
-          <DelOpt id={id} refreshHandler={refreshHandler} record={record} ongetXXTZGG={ongetXXTZGG} />
+          <DelOpt id={id} refreshHandler={refreshHandler} record={record} />
         </>
       );
   }
