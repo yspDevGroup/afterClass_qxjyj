@@ -2,7 +2,7 @@
  * @description: 工具类
  * @author: zpl
  * @Date: 2021-08-09 10:36:53
- * @LastEditTime: 2021-08-31 17:46:54
+ * @LastEditTime: 2021-09-01 08:41:01
  * @LastEditors: wsl
  */
 import { history } from 'umi';
@@ -196,4 +196,12 @@ export const getCurrentXQ = (list: API.XNXQ[]): API.XNXQ | null => {
   if (currentXQ) {
     return currentXQ;
   }
+  // 未找到匹配学期时返回前一个
+  // 先按降序排序
+  const tempList = list.sort((a, b) => new Date(b.KSRQ).getTime() - new Date(a.KSRQ).getTime());
+  const previousXQ = tempList.find((xq) => new Date() >= new Date(xq.JSRQ));
+  if (previousXQ) {
+    return previousXQ;
+  }
+  return tempList[tempList.length - 1];
 };

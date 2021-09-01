@@ -30,7 +30,7 @@ const formItemLayout = {
 const EditArticle = () => {
   const [id, setId] = useState<string | undefined>(); // 文章ID
   const [pubStatus, setPubStatus] = useState<'草稿' | '已发布' | '已删除' | string>('草稿'); // 发布状态，用于控制表单是否可提交
-  const [stateImg, setstateImg] = useState();
+  const [stateImg, setstateImg] = useState<any>();
   const [form] = Form.useForm();
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
@@ -56,7 +56,8 @@ const EditArticle = () => {
       SFTJ: SFTJ === true ? 1 : SFTJ,
       SFTT: SFTT === true ? 1 : SFTT,
       NR: NR.toHTML(),
-      JYJGSJId: jyjId
+      JYJGSJId: jyjId,
+      TP: stateImg || ''
     };
     try {
       if (typeof id === 'undefined') {
@@ -101,11 +102,11 @@ const EditArticle = () => {
             const initData = {
               ...data,
               RQ: dayjs(data.RQ),
-              // thumbnail: data.thumbnail === '' ? defImg : data.thumbnail,
               NR: BraftEditor.createEditorState(data.NR)
             };
             form.setFieldsValue(initData);
             setPubStatus(data!.ZT!);
+            setstateImg(data!.TP!);
           } else {
             message.error('获取文章内容失败，请联系管理员或稍后再试。');
           }
@@ -184,10 +185,7 @@ const EditArticle = () => {
             </Col>
             <Col className="gutter-row" sm={12} xs={24}>
               <Form.Item name="TP" label="标题图片：">
-                <AvatarUpload
-                  // img={info?.TX || profilePhoto}
-                  onValueChange={onValueChange}
-                />
+                <AvatarUpload img={stateImg} onValueChange={onValueChange} />
               </Form.Item>
             </Col>
           </Row>
