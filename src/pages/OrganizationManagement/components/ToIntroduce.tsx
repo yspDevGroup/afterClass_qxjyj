@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-08-31 10:37:48
+ * @LastEditTime: 2021-09-01 16:37:57
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -269,4 +269,5 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
   );
 };
 
+HaveIntroduced.wrappers = ['@/wrappers/auth'];
 export default HaveIntroduced;

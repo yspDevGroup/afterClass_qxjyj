@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-26 11:45:40
- * @LastEditTime: 2021-09-01 12:19:57
+ * @LastEditTime: 2021-09-01 16:37:18
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -114,15 +114,6 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       ellipsis: true,
       search: false
     },
-    // {
-    //   title: '准入学校',
-    //   dataIndex: 'ZRXX',
-    //   key: 'ZRXX',
-    //   align: 'center',
-    //   ellipsis: true,
-    //   search: false
-    // },
-
     {
       title: '操作',
       key: 'option',
@@ -301,4 +292,5 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
   );
 };
 
+HaveAccess.wrappers = ['@/wrappers/auth'];
 export default HaveAccess;

@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 10:16:11
- * @LastEditTime: 2021-08-31 17:10:19
+ * @LastEditTime: 2021-09-01 16:37:03
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -267,4 +267,5 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
   );
 };
 
+CannotAccess.wrappers = ['@/wrappers/auth'];
 export default CannotAccess;

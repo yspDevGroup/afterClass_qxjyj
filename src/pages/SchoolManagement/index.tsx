@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-24 14:37:02
- * @LastEditTime: 2021-08-30 19:05:45
+ * @LastEditTime: 2021-09-01 18:47:40
  * @LastEditors: wsl
  */
 import React, { useRef } from 'react';
@@ -15,6 +15,7 @@ import { Divider } from 'antd';
 import { TableListParams } from '@/constant';
 import { cooperateSchool } from '@/services/after-class-qxjyj/khjyjg';
 import { KHHZXYSJ } from './data';
+import { getAllSchools, JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
 
 const SchoolManagement = () => {
   const { initialState } = useModel('@@initialState');
@@ -90,10 +91,10 @@ const SchoolManagement = () => {
         <>
           <Link
             to={{
-              pathname: '/businessManagement/schoolManagement/detail',
+              pathname: '/schoolManagement/courseInfo',
               state: {
-                type: 'course',
-                data: record.KHKCSQs
+                type: 'list',
+                data: record
               }
             }}
           >
@@ -125,11 +126,18 @@ const SchoolManagement = () => {
           sorter: sort && Object.keys(sort).length ? sort : undefined,
           filter
         };
-        const res = await cooperateSchool({ JGId: currentUser?.jgId, page: 0, pageSize: 0 }, opts);
-        if (res.status === 'ok') {
+        const resJYJGSJ = await JYJGSJ({ id: currentUser!.jyjId! });
+        const resgetAllSchools = await getAllSchools({
+          XZQHM: resJYJGSJ.data.XZQH,
+          XXMC: '',
+          page: 0,
+          pageSize: 0
+        });
+        console.log(resgetAllSchools, '----------------');
+        if (resgetAllSchools.status === 'ok') {
           return {
-            data: res.data?.rows,
-            total: res.data.count,
+            data: resgetAllSchools.data?.rows,
+            total: resgetAllSchools.data.count,
             success: true
           };
         }
@@ -150,4 +158,5 @@ const SchoolManagement = () => {
   );
 };
 
+SchoolManagement.wrappers = ['@/wrappers/auth'];
 export default SchoolManagement;

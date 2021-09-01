@@ -2,8 +2,8 @@
  * @description: 统一定义loading
  * @author: zpl
  * @Date: 2021-07-20 16:59:30
- * @LastEditTime: 2021-08-16 17:11:12
- * @LastEditors: Sissle Lynn
+ * @LastEditTime: 2021-09-01 17:00:12
+ * @LastEditors: wsl
  */
 import React from 'react';
 import loadingImg from '@/assets/load.gif';
@@ -19,7 +19,7 @@ const Loading = () => {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: '100px'
+          width: '200px'
         }}
       />
     </div>

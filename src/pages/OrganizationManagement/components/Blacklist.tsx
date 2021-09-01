@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 09:50:10
- * @LastEditTime: 2021-08-31 17:13:35
+ * @LastEditTime: 2021-09-01 16:36:50
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -234,4 +234,5 @@ const Blacklist = (props: { Keys: string | undefined }) => {
   );
 };
 
+Blacklist.wrappers = ['@/wrappers/auth'];
 export default Blacklist;

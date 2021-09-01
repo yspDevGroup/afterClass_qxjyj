@@ -65,4 +65,5 @@ const AgencyDetails = (props: any) => {
   );
 };
 
+AgencyDetails.wrappers = ['@/wrappers/auth'];
 export default AgencyDetails;

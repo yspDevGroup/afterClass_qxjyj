@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 10:01:58
- * @LastEditTime: 2021-08-31 16:43:45
+ * @LastEditTime: 2021-09-01 16:37:39
  * @LastEditors: wsl
  */
 /*
@@ -183,4 +183,5 @@ const Historys = (props: { Keys: string | undefined }) => {
   );
 };
 
+Historys.wrappers = ['@/wrappers/auth'];
 export default Historys;

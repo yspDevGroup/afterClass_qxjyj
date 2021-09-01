@@ -1,10 +1,10 @@
-// /*
-//  * @description:
-//  * @author: Sissle Lynn
-//  * @Date: 2021-08-26 19:54:41
-//  * @LastEditTime: 2021-08-31 16:11:29
-//  * @LastEditors: wsl
-//  */
+/*
+ * @description:
+ * @author: Sissle Lynn
+ * @Date: 2021-08-26 19:54:41
+ * @LastEditTime: 2021-09-01 19:15:20
+ * @LastEditors: wsl
+ */
 import React, { useEffect, useState } from 'react';
 import { Input, Empty, Row, Col, message, Tag, Select } from 'antd';
 import { UpOutlined, RightOutlined, DownOutlined } from '@ant-design/icons';
@@ -16,18 +16,17 @@ import noClass from '@/assets/noClass.png';
 import { Link } from 'umi';
 import { getAllCourses, getAllSemester } from '@/services/after-class-qxjyj/khjyjg';
 import { getCurrentXQ } from '@/utils';
+import { getAllKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
+import { getCoursesBySchool } from '@/services/after-class-qxjyj/jyjgsj';
 
 const { Search } = Input;
 const { Option } = Select;
-const CourseItemDom = (props: { course: any; ind: number }) => {
-  const { course, ind } = props;
-  const ZT = course?.KHKCSQs?.[0]?.ZT;
+const CourseItemDom = (props: { course: any; type: string; ind: number }) => {
+  const { course, type, ind } = props;
   const [curIndex, setCurIndex] = useState<number | undefined>(0);
   let bgColor = '#58D14E';
-  if (ZT === 1) {
+  if (course.SSJGLX === '机构课程') {
     bgColor = '#FF9900';
-  } else if (ZT === 2) {
-    bgColor = '#e91e63';
   }
   const handleCollapse = (ind: number) => {
     if (ind === curIndex) {
@@ -42,7 +41,7 @@ const CourseItemDom = (props: { course: any; ind: number }) => {
         <h3>
           {course.KCMC}
           <span className={styles.extraInfo}>
-            <span style={{ backgroundColor: bgColor }}>{copCourseStatus[ZT]}</span>
+            <span style={{ backgroundColor: bgColor }}>{course.SSJGLX}</span>
             <span>
               适用年级：
               {course.NJSJs?.map((item: any, index: number) => {
@@ -63,13 +62,13 @@ const CourseItemDom = (props: { course: any; ind: number }) => {
                 );
               })}
             </span>
-            {/* {type === 'list' ? (
+            {type === 'list' ? (
               <span onClick={() => handleCollapse(ind)}>
                 课程班详情 {ind === curIndex ? <UpOutlined /> : <DownOutlined />}
               </span>
             ) : (
               ''
-            )} */}
+            )}
           </span>
         </h3>
       </div>
@@ -137,60 +136,99 @@ const CourseItemDom = (props: { course: any; ind: number }) => {
 };
 const CourseInfo = (props: any) => {
   const { state } = props.history.location;
-  const jgid = state.value.KHJYJGId;
-  const xxid = state.value.KHKCSQs?.[0].XXJBSJId;
-  console.log(state, '==================');
+  // const jgid = state.value.KHJYJGId;
+  // const xxid = state.value.KHKCSQs?.[0].XXJBSJId;
+  console.log(state);
+
   const [courseList, setCourseList] = useState<any>();
-  const getCourseList = async (xxdm: string, jgdm: string, xnxq?: string) => {
-    const res = await getAllCourses({
-      KHJYJGId: jgdm,
-      XXJBSJId: xxdm,
-      XNXQId: xnxq || ''
-    });
-    if (res?.status === 'ok') {
-      setCourseList(res.data);
-    } else {
-      message.error(res.message);
-    }
-  };
-  const getXNXQ = async (xxdm: string, jgdm: string) => {
-    const res = await getAllSemester({
-      KHJYJGId: jgdm,
-      XXJBSJId: xxdm
-    });
-    if (res?.status === 'ok') {
-      const { data = [] } = res;
-      const currentXQ = getCurrentXQ(data);
-      const term = [].map.call(data, (item: any) => {
-        return {
-          value: item.id,
-          text: `${item.XN} ${item.XQ}`
-        };
-      });
-      term.push({
-        value: '',
-        text: '全部'
-      });
-      getCourseList(xxid, jgid, currentXQ?.id || data[0].id);
-    } else {
-      message.error(res.message);
-    }
-  };
+  // const [term, setTerm] = useState<string>();
+  // const [termList, setTermList] = useState<any>();
+  // const getCourseList = async (xxdm: string, jgdm: string, xnxq?: string) => {
+  //   const res = await getAllCourses({
+  //     KHJYJGId: jgdm,
+  //     XXJBSJId: xxdm,
+  //     XNXQId: xnxq || ''
+  //   });
+  //   if (res?.status === 'ok') {
+  //     setCourseList(res.data);
+  //   } else {
+  //     message.error(res.message);
+  //   }
+  // };
+  // const getXNXQ = async (xxdm: string, jgdm: string) => {
+  //   const res = await getAllSemester({
+  //     KHJYJGId: jgdm,
+  //     XXJBSJId: xxdm
+  //   });
+  //   if (res?.status === 'ok') {
+  //     const { data = [] } = res;
+  //     const currentXQ = getCurrentXQ(data);
+  //     const term = [].map.call(data, (item: any) => {
+  //       return {
+  //         value: item.id,
+  //         text: `${item.XN} ${item.XQ}`
+  //       };
+  //     });
+  //     term.push({
+  //       value: '',
+  //       text: '全部'
+  //     });
+  //     setTermList(term);
+  //     setTerm(currentXQ?.id || data[0].id);
+  //     getCourseList(xxid, jgid, currentXQ?.id || data[0].id);
+  //   } else {
+  //     message.error(res.message);
+  //   }
+  // };
+  // useEffect(() => {
+  //   getXNXQ(xxid, jgid);
+  // }, []);
+  // const onSearch = (value: any) => {
+  //   const rest = courseList.filter((item: any) => {
+  //     return item.KCMC.indexOf(value) > -1;
+  //   });
+  //   setCourseList(rest);
+  // };
   useEffect(() => {
-    getXNXQ(xxid, jgid);
+    (async () => {
+      const res = await getCoursesBySchool({
+        XXJBSJId: state.data.id,
+        XNXQId: ''
+      });
+      setCourseList(res.data);
+      console.log(res, '======================');
+    })();
   }, []);
-  const onSearch = (value: any) => {
-    const rest = courseList.filter((item: any) => {
-      return item.KCMC.indexOf(value) > -1;
-    });
-    setCourseList(rest);
-  };
   return (
     <div className={styles.courseWrapper}>
+      {/* {type === 'list' && courseList ? (
+        <div className={styles.searchWrapper}>
+          <Search placeholder="课程名称" allowClear onSearch={onSearch} style={{ width: 200 }} />
+          <span style={{ marginLeft: '24px' }}>
+            所属学年学期：
+            <Select
+              defaultValue={term}
+              style={{ width: 200 }}
+              onChange={(value: string) => getCourseList(xxid, jgid, value)}
+            >
+              {termList?.map((item: any) => {
+                return (
+                  <Option key={item.value} value={item.value}>
+                    {item.text}
+                  </Option>
+                );
+              })}
+            </Select>
+          </span>
+        </div>
+      ) : (
+        ''
+      )}
+      */}
       {courseList?.length ? (
         <div className={styles.courseIntro}>
           {courseList.map((val: any, index: number) => {
-            return <CourseItemDom course={val} ind={index} key={val.id} />;
+            return <CourseItemDom course={val} type="list" ind={index} key={val.id} />;
           })}
         </div>
       ) : (
@@ -206,5 +244,4 @@ const CourseInfo = (props: any) => {
   );
 };
 
-CourseInfo.wrappers = ['@/wrappers/auth'];
 export default CourseInfo;
