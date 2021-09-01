@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Divider, Form, Input, Select, Image, Switch, DatePicker, Button, Space, message } from 'antd';
 import dayjs from 'dayjs';
 // 引入编辑器组件
-import type { ExtendControlType } from 'braft-editor';
 import BraftEditor from 'braft-editor';
 // 引入编辑器样式
 import 'braft-editor/dist/index.css';
