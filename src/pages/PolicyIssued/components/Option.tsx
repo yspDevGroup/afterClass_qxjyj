@@ -12,12 +12,6 @@ import styles from '../index.module.less';
 import { TableListItem } from '../data';
 
 import moment from 'moment';
-// import editorImg from '@/assets/editor.png';
-// import ashbinImg from '@/assets/ashbin.png';
-// import huifu from '@/assets/huifu.png';
-// import chegao from '@/assets/chegao.png';
-// import fabu from '@/assets/fabu.png';
-// eslint-disable-next-line @typescript-eslint/no-duplicate-imports
 import { deleteJYJGTZGG, updateJYJGTZGG } from '@/services/after-class-qxjyj/jyjgtzgg';
 import { ClearOutlined } from '@ant-design/icons';
 
