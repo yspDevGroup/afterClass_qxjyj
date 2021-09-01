@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-26 19:54:41
- * @LastEditTime: 2021-09-01 19:15:20
+ * @LastEditTime: 2021-09-01 21:03:16
  * @LastEditors: wsl
  */
 import React, { useEffect, useState } from 'react';
@@ -18,6 +18,7 @@ import { getAllCourses, getAllSemester } from '@/services/after-class-qxjyj/khjy
 import { getCurrentXQ } from '@/utils';
 import { getAllKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
 import { getCoursesBySchool } from '@/services/after-class-qxjyj/jyjgsj';
+import { getAllXNXQ } from '@/services/after-class-qxjyj/xnxq';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -141,8 +142,24 @@ const CourseInfo = (props: any) => {
   console.log(state);
 
   const [courseList, setCourseList] = useState<any>();
-  // const [term, setTerm] = useState<string>();
-  // const [termList, setTermList] = useState<any>();
+  const [term, setTerm] = useState<string>();
+  const [termList, setTermList] = useState<any>();
+  const ongetCoursesBySchool = async () => {
+    const res = await getCoursesBySchool({
+      XXJBSJId: state.data.id,
+      XNXQId: ''
+    });
+    setCourseList(res.data);
+  };
+  useEffect(() => {
+    ongetCoursesBySchool();
+    // (async () => {
+    //   const res = await getAllXNXQ();
+    //   setTermList(res.data)
+    //   console.log(res, '==================');
+    // })();
+  }, []);
+
   // const getCourseList = async (xxdm: string, jgdm: string, xnxq?: string) => {
   //   const res = await getAllCourses({
   //     KHJYJGId: jgdm,
@@ -183,28 +200,23 @@ const CourseInfo = (props: any) => {
   // useEffect(() => {
   //   getXNXQ(xxid, jgid);
   // }, []);
-  // const onSearch = (value: any) => {
-  //   const rest = courseList.filter((item: any) => {
-  //     return item.KCMC.indexOf(value) > -1;
-  //   });
-  //   setCourseList(rest);
-  // };
-  useEffect(() => {
-    (async () => {
-      const res = await getCoursesBySchool({
-        XXJBSJId: state.data.id,
-        XNXQId: ''
+  const onSearch = (value: any) => {
+    if (value !== '') {
+      const rest = courseList.filter((item: any) => {
+        return item.KCMC.indexOf(value) > -1;
       });
-      setCourseList(res.data);
-      console.log(res, '======================');
-    })();
-  }, []);
+      setCourseList(rest);
+    } else {
+      ongetCoursesBySchool();
+    }
+  };
+
   return (
     <div className={styles.courseWrapper}>
-      {/* {type === 'list' && courseList ? (
+      {courseList ? (
         <div className={styles.searchWrapper}>
           <Search placeholder="课程名称" allowClear onSearch={onSearch} style={{ width: 200 }} />
-          <span style={{ marginLeft: '24px' }}>
+          {/* <span style={{ marginLeft: '24px' }}>
             所属学年学期：
             <Select
               defaultValue={term}
@@ -219,12 +231,12 @@ const CourseInfo = (props: any) => {
                 );
               })}
             </Select>
-          </span>
+          </span> */}
         </div>
       ) : (
         ''
       )}
-      */}
+
       {courseList?.length ? (
         <div className={styles.courseIntro}>
           {courseList.map((val: any, index: number) => {
