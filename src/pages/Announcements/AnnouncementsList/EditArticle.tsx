@@ -5,12 +5,11 @@ import dayjs from 'dayjs';
 // 引入编辑器组件
 import type { ExtendControlType } from 'braft-editor';
 import BraftEditor from 'braft-editor';
-// import { defImg } from './data';
 // 引入编辑器样式
 import 'braft-editor/dist/index.css';
 import { history, useModel } from 'umi';
-import styles from './index.module.less';
-import AvatarUpload from './components/AvatarUpload';
+import styles from '../index.module.less';
+import AvatarUpload from '../components/AvatarUpload';
 import { createJYJGTZGG, JYJGTZGG, updateJYJGTZGG } from '@/services/after-class-qxjyj/jyjgtzgg';
 
 const { Option } = Select;
@@ -36,7 +35,7 @@ const EditArticle = () => {
   const { currentUser } = initialState || {};
   const { jyjId } = currentUser!;
   const initialValues = {
-    LX: 1,
+    LX: 0,
     BH: 10,
     RQ: dayjs(),
     LY: '本站原创',
@@ -52,19 +51,19 @@ const EditArticle = () => {
     const { NR, RQ, SFTT, SFTJ } = params;
     const data = {
       ...params,
-      TP: stateImg || '',
       RQ: RQ.format(),
       SFTJ: SFTJ === true ? 1 : SFTJ,
       SFTT: SFTT === true ? 1 : SFTT,
       NR: NR.toHTML(),
-      JYJGSJId: jyjId
+      JYJGSJId: jyjId,
+      TP: stateImg || ''
     };
     try {
       if (typeof id === 'undefined') {
         const result = await createJYJGTZGG(data);
         if (result.status === 'ok') {
           message.success('保存成功');
-          history.push('/policyIssued/list');
+          history.push('/announcements/announcementsList');
         } else {
           message.error('保存失败，请联系管理员或稍后再试。');
         }
@@ -72,7 +71,7 @@ const EditArticle = () => {
         const resUpdateXXTZGG = await updateJYJGTZGG({ id: id }, data);
         if (resUpdateXXTZGG.status === 'ok') {
           message.success('修改成功');
-          history.push('/policyIssued/list');
+          history.push('/announcements/announcementsList');
         } else {
           message.error('修改失败，请联系管理员或稍后再试。');
         }
@@ -167,7 +166,7 @@ const EditArticle = () => {
                 ]}
               >
                 <Select disabled={disabled}>
-                  <Option value={1}>政策</Option>
+                  <Option value={0}>公告</Option>
                 </Select>
               </Form.Item>
             </Col>
@@ -238,7 +237,13 @@ const EditArticle = () => {
               }
             ]}
           >
-            <BraftEditor className="my-editor" placeholder="请输入正文内容" />
+            <BraftEditor
+              className="my-editor"
+              placeholder="请输入正文内容"
+              // media={{
+              //   uploadFn: upload
+              // }}
+            />
           </Form.Item>
           <Row justify="end">
             <Col>

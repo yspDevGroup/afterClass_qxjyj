@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-09 17:41:43
- * @LastEditTime: 2021-09-01 10:11:12
+ * @LastEditTime: 2021-09-01 20:29:19
  * @LastEditors: wsl
  */
 import React, { useState, useRef, useEffect } from 'react';
@@ -11,10 +11,9 @@ import { Button, Switch, message } from 'antd';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { history } from 'umi';
-import Option from './components/Option';
-import type { TableListItem } from './data';
-import styles from './index.module.less';
-import { defImg } from './data';
+import Option from '../components/Option';
+import type { TableListItem } from '../data';
+import styles from '../index.module.less';
 import moment from 'moment';
 import { getJYJGTZGG, updateJYJGTZGG } from '@/services/after-class-qxjyj/jyjgtzgg';
 
@@ -137,7 +136,7 @@ const TableList: React.FC = () => {
             record={record}
             refreshHandler={() => {
               if (actionRef.current) {
-                actionRef.current.reload();
+                actionRef?.current?.reload();
               }
             }}
           />
@@ -150,7 +149,7 @@ const TableList: React.FC = () => {
   return (
     <>
       <ProTable<any>
-        headerTitle="公告列表"
+        headerTitle="政策列表"
         actionRef={actionRef}
         className={styles.proTableStyles}
         rowKey="id"
@@ -159,7 +158,7 @@ const TableList: React.FC = () => {
             key="xinjian"
             type="primary"
             onClick={() => {
-              history.push('/announcements/editArticle');
+              history.push('/policyIssued/policyIssuedList/editArticle');
             }}
           >
             <PlusOutlined /> 新建
@@ -169,8 +168,8 @@ const TableList: React.FC = () => {
           if (params.ZT || params.BT) {
             const resgetXXTZGG = await getJYJGTZGG({
               BT: params.BT,
+              LX: 1,
               ZT: params.ZT ? [params.ZT] : ['已发布', '草稿'],
-              LX: 0,
               page: 0,
               pageSize: 0
             });
@@ -180,8 +179,8 @@ const TableList: React.FC = () => {
           } else {
             const resgetXXTZGG = await getJYJGTZGG({
               BT: '',
+              LX: 1,
               ZT: ['已发布', '草稿'],
-              LX: 0,
               page: 0,
               pageSize: 0
             });

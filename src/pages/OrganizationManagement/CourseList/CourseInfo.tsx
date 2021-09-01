@@ -7,7 +7,7 @@
 //  */
 import React, { useEffect, useState } from 'react';
 import { Input, Empty, Row, Col, message, Tag, Select } from 'antd';
-import { UpOutlined, RightOutlined, DownOutlined } from '@ant-design/icons';
+import { RightOutlined } from '@ant-design/icons';
 import { copCourseStatus, colorTagDisk } from '@/constant';
 
 import styles from './index.less';

@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-24 17:21:12
- * @LastEditTime: 2021-08-30 16:20:10
+ * @LastEditTime: 2021-09-01 20:36:13
  * @LastEditors: wsl
  */
 export default [
@@ -38,8 +38,21 @@ export default [
     routes: [
       {
         name: '通知列表',
-        path: '/announcements/list'
+        path: '/announcements/announcementsList',
+        routes: [
+          {
+            name: '编辑文章',
+            path: '/announcements/announcementsList/editArticle',
+            hideInMenu: 'true'
+          },
+          {
+            name: '公告详情',
+            path: '/announcements/announcementsList/articleDetails',
+            hideInMenu: 'true'
+          }
+        ]
       },
+
       {
         path: '/announcements/recycleBin',
         name: '回收站'
@@ -52,8 +65,21 @@ export default [
     routes: [
       {
         name: '政策列表',
-        path: '/policyIssued/list'
+        path: '/policyIssued/policyIssuedList',
+        routes: [
+          {
+            name: '编辑文章',
+            path: '/policyIssued/policyIssuedList/editArticle',
+            hideInMenu: 'true'
+          },
+          {
+            name: '政策详情',
+            path: '/policyIssued/policyIssuedList/articleDetails',
+            hideInMenu: 'true'
+          }
+        ]
       },
+
       {
         path: '/policyIssued/recycleBin',
         name: '回收站'
@@ -63,5 +89,10 @@ export default [
   {
     path: '/schoolManagement',
     name: '学校管理'
+  },
+  {
+    name: '课程详情',
+    path: '/schoolManagement/courseInfo',
+    hideInMenu: 'true'
   }
 ];
