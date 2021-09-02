@@ -37,12 +37,22 @@ const CoursesIntroduced = (props: {JYYData: any}) => {
     },
     {
       title: '所属机构',
-      dataIndex: 'SSJG',
-      key: 'SSJG',
+      dataIndex: 'KHJYJG',
+      key: 'KHJYJG',
       align: 'center',
       search: false,
       render: (text: any) => {
         return text?.QYMC || "-"
+      }
+    },
+    {
+      title: '课程类型',
+      dataIndex: 'KHKCLX',
+      key: 'KHKCLX',
+      align: 'center',
+      search: false,
+      render: (text: any) => {
+        return text?.KCTAG || "-"
       }
     },
     {
@@ -72,7 +82,7 @@ const CoursesIntroduced = (props: {JYYData: any}) => {
           <a
             onClick={() => {
               history.push({
-                pathname: `/organizationManagement/courseInfo`,
+                pathname: `/courseInfo`,
                 state: { ...record }
               });
             }}

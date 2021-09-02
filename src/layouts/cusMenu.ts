@@ -98,5 +98,10 @@ export default [
   {
     path: '/courseManagement',
     name: '课程管理'
+  },
+  {
+    path: '/courseInfo',
+    name: '课程详情',
+    hideInMenu: 'true'
   }
 ];

@@ -54,6 +54,16 @@ const LocalCourses = (props: {JYYData: any}) => {
       }
     },
     {
+      title: '课程类型',
+      dataIndex: 'KHKCLX',
+      key: 'KHKCLX',
+      align: 'center',
+      search: false,
+      render: (text: any) => {
+        return text?.KCTAG || "-"
+      }
+    },
+    {
       title: '课程来源',
       dataIndex: 'SSJGLX',
       key: 'SSJGLX',
@@ -87,13 +97,14 @@ const LocalCourses = (props: {JYYData: any}) => {
           <a
             onClick={() => {
               history.push({
-                pathname: `/organizationManagement/courseInfo`,
+                pathname: `/courseInfo`,
                 state: { ...record }
               });
             }}
           >
             课程详情
           </a>
+          <a >班级详情</a>
           {
             record?.SSJGLX === '校内课程' ? '':
               <>
