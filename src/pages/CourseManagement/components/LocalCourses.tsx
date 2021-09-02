@@ -104,7 +104,12 @@ const LocalCourses = (props: {JYYData: any}) => {
           >
             课程详情
           </a>
-          <a >班级详情</a>
+          <a onClick={() => {
+            history.push({
+              pathname: `/classInfo`,
+              state: { ...record }
+            });
+          }} >班级详情</a>
           {
             record?.SSJGLX === '校内课程' ? '':
               <>
@@ -112,7 +117,7 @@ const LocalCourses = (props: {JYYData: any}) => {
                   onClick={() => {
                     history.push({
                       pathname: `/organizationManagement/agencyDetails`,
-                      state: { ...record }
+                      state: { value: record.KHJYJG }
                     });
                   }}
                 >

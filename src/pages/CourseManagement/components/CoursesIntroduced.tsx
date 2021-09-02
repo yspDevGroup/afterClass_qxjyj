@@ -93,7 +93,7 @@ const CoursesIntroduced = (props: {JYYData: any}) => {
             onClick={() => {
               history.push({
                 pathname: `/organizationManagement/agencyDetails`,
-                state: { ...record }
+                state: { value: record.KHJYJG }
               });
             }}
           >

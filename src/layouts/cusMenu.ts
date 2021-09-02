@@ -103,5 +103,10 @@ export default [
     path: '/courseInfo',
     name: '课程详情',
     hideInMenu: 'true'
+  },
+  {
+    path: '/classInfo',
+    name: '班级详情',
+    hideInMenu: 'true'
   }
 ];
