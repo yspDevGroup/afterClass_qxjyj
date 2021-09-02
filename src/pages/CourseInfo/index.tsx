@@ -40,7 +40,7 @@ const CourseInfo = (props: any) => {
       const params = {
         KCMC: state?.KCMC || '',
         KCMS: state?.KCMS || '',
-        njIds: state?.NJSJs?.map((item: any) => item.XD === '初中' ? item?.NJMC : `${item.XD}${item?.NJMC}`)  || '',
+        njIds: state?.NJSJs?.map((item: any) => (item.XD === '初中' ? item?.NJMC : `${item.XD}${item?.NJMC}`)) || '',
         jsIds: state?.KHKCJs?.map((item: any) => item?.KHJSSJ?.XM) || '',
         KCTP: state?.KCTP || '',
         KHKCLX: state?.KHKCLX?.KCTAG || ''
@@ -61,7 +61,7 @@ const CourseInfo = (props: any) => {
           placeholder: '',
           name: 'KCMC',
           key: 'KCMC',
-          disabled,
+          disabled
         },
         {}
       ]
@@ -76,7 +76,7 @@ const CourseInfo = (props: any) => {
           placeholder: '',
           name: 'KHKCLX',
           key: 'KHKCLX',
-          disabled,
+          disabled
         },
         {}
       ]
@@ -124,7 +124,7 @@ const CourseInfo = (props: any) => {
       imageurl: imageUrl,
       upurl: '/upload/uploadFile?type=badge',
       accept: '.jpg, .jpeg, .png',
-      imagename: 'image',
+      imagename: 'image'
     },
     {
       type: 'textArea',
@@ -157,16 +157,8 @@ const CourseInfo = (props: any) => {
   ];
   return (
     <div className={classes.content}>
-      <div
-        style={{ width: '85%', minWidth: '850px', margin: '0 auto' }}
-        className={classes.formType}
-      >
-        <CustomForm
-          values={formValues || {}}
-          formItems={basicForm}
-          formLayout={formItemLayout}
-          hideBtn={true}
-        />
+      <div style={{ width: '85%', minWidth: '850px', margin: '0 auto' }} className={classes.formType}>
+        <CustomForm values={formValues || {}} formItems={basicForm} formLayout={formItemLayout} hideBtn={true} />
         <Table
           title={() => '代课老师列表'}
           columns={columns}

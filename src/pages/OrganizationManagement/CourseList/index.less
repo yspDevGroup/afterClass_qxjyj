@@ -144,3 +144,37 @@
     }
   }
 }
+
+.content {
+  height: 100%;
+  padding: 24px;
+  background: #fff;
+  border-radius: 8px;
+  .formType {
+    :global {
+      .ant-select-multiple.ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+        background: none;
+        border: none;
+        cursor: auto;
+      }
+      .ant-form-item-control-input {
+        line-height: 32px;
+      }
+
+      .ant-input[disabled] {
+        color: @text-color;
+        text-overflow: ellipsis;
+        background-color: inherit;
+        border: none;
+        cursor: default;
+        resize: none;
+      }
+      .ant-select-disabled.ant-select-multiple .ant-select-selection-item {
+        color: #000;
+        background: #fff;
+        border-color: #fff;
+        cursor: auto;
+      }
+    }
+  }
+}

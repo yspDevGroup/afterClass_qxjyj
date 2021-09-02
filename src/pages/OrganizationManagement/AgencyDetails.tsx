@@ -4,10 +4,11 @@ import styles from './index.less';
 
 const AgencyDetails = (props: any) => {
   const { state } = props.history.location;
+  console.log(state);
   return (
     <div className={styles.AgencyDetails}>
       <div className={styles.header}>
-        <Image width={100} src="https://img2.baidu.com/it/u=171918543,1850609786&fm=26&fmt=auto&gp=0.jpg" />
+        <Image width={100} src={state.value.QYTB} />
         <p> {state.value?.QYMC}</p>
       </div>
       <Divider />
@@ -53,11 +54,11 @@ const AgencyDetails = (props: any) => {
           </p>
           <p>
             <span>营业执照：</span>
-            <Image width={100} src="https://img0.baidu.com/it/u=3950425853,3989742947&fm=26&fmt=auto&gp=0.jpg" />
+            <Image width={100} src={state.value.YYZZ} />
           </p>
           <p>
             <span>办学许可证：</span>
-            <Image width={100} src="https://img0.baidu.com/it/u=3950425853,3989742947&fm=26&fmt=auto&gp=0.jpg" />
+            <Image width={100} src={state.value.BXXKZ} />
           </p>
         </Col>
       </Row>

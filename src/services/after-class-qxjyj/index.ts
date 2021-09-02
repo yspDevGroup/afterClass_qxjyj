@@ -7,42 +7,42 @@ import * as auth from './auth';
 import * as user from './user';
 import * as bjsj from './bjsj';
 import * as jzgjbsj from './jzgjbsj';
-import * as jcsj from './jcsj';
-import * as jcxx from './jcxx';
-import * as fjsj from './fjsj';
 import * as fjlx from './fjlx';
+import * as jcsj from './jcsj';
+import * as fjsj from './fjsj';
+import * as jcxx from './jcxx';
 import * as jxjhsj from './jxjhsj';
 import * as jyjgsj from './jyjgsj';
-import * as jyjgtzgg from './jyjgtzgg';
 import * as jzgcfsj from './jzgcfsj';
+import * as jyjgtzgg from './jyjgtzgg';
 import * as jzggzjl from './jzggzjl';
 import * as jzgktyj from './jzgktyj';
+import * as jzgjtcy from './jzgjtcy';
 import * as jzglwsj from './jzglwsj';
 import * as jzgrysj from './jzgrysj';
-import * as jzgjtcy from './jzgjtcy';
 import * as jzgxxjl from './jzgxxjl';
-import * as kcsj from './kcsj';
 import * as khbjsj from './khbjsj';
+import * as kcsj from './kcsj';
 import * as khjgrzsq from './khjgrzsq';
-import * as khjspj from './khjspj';
 import * as khjssj from './khjssj';
+import * as khjspj from './khjspj';
 import * as khjyjg from './khjyjg';
-import * as khjytzgg from './khjytzgg';
 import * as khkclx from './khkclx';
+import * as khjytzgg from './khjytzgg';
 import * as khkcsj from './khkcsj';
-import * as khkcsq from './khkcsq';
 import * as khpksj from './khpksj';
+import * as khkcsq from './khkcsq';
 import * as khxscq from './khxscq';
-import * as khxsdd from './khxsdd';
 import * as khxspj from './khxspj';
+import * as khxsdd from './khxsdd';
 import * as khxsqj from './khxsqj';
-import * as njsj from './njsj';
 import * as pksj from './pksj';
+import * as njsj from './njsj';
 import * as redis from './redis';
 import * as sso from './sso';
 import * as upload from './upload';
-import * as wechat from './wechat';
 import * as xksj from './xksj';
+import * as wechat from './wechat';
 import * as xl from './xl';
 import * as xnjgsj from './xnjgsj';
 import * as xnxq from './xnxq';
@@ -66,42 +66,42 @@ export default {
   user,
   bjsj,
   jzgjbsj,
-  jcsj,
-  jcxx,
-  fjsj,
   fjlx,
+  jcsj,
+  fjsj,
+  jcxx,
   jxjhsj,
   jyjgsj,
-  jyjgtzgg,
   jzgcfsj,
+  jyjgtzgg,
   jzggzjl,
   jzgktyj,
+  jzgjtcy,
   jzglwsj,
   jzgrysj,
-  jzgjtcy,
   jzgxxjl,
-  kcsj,
   khbjsj,
+  kcsj,
   khjgrzsq,
-  khjspj,
   khjssj,
+  khjspj,
   khjyjg,
-  khjytzgg,
   khkclx,
+  khjytzgg,
   khkcsj,
-  khkcsq,
   khpksj,
+  khkcsq,
   khxscq,
-  khxsdd,
   khxspj,
+  khxsdd,
   khxsqj,
-  njsj,
   pksj,
+  njsj,
   redis,
   sso,
   upload,
-  wechat,
   xksj,
+  wechat,
   xl,
   xnjgsj,
   xnxq,

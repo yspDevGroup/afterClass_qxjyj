@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-09-01 16:37:26
+ * @LastEditTime: 2021-09-02 16:49:40
  * @LastEditors: wsl
  */
 /*
@@ -154,7 +154,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
               key="jgxq"
               to={{
                 pathname: '/organizationManagement/courseList/courseInfo',
-                state: record
+                state: record.value
               }}
             >
               课程详情
