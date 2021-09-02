@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-24 17:21:12
- * @LastEditTime: 2021-09-01 20:36:13
+ * @LastEditTime: 2021-09-02 08:47:15
  * @LastEditors: wsl
  */
 export default [
@@ -94,5 +94,9 @@ export default [
     name: '课程详情',
     path: '/schoolManagement/courseInfo',
     hideInMenu: 'true'
+  },
+  {
+    path: '/courseManagement',
+    name: '课程管理'
   }
 ];
