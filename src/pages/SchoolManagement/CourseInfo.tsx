@@ -2,18 +2,18 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-26 19:54:41
- * @LastEditTime: 2021-09-01 21:03:16
+ * @LastEditTime: 2021-09-03 14:31:41
  * @LastEditors: wsl
  */
 import React, { useEffect, useState } from 'react';
-import { Input, Empty, Row, Col, message, Tag, Select } from 'antd';
-import { UpOutlined, RightOutlined, DownOutlined } from '@ant-design/icons';
+import { Input, Empty, Row, Col, message, Tag, Select, Button } from 'antd';
+import { UpOutlined, RightOutlined, DownOutlined, LeftOutlined } from '@ant-design/icons';
 import { copCourseStatus, colorTagDisk } from '@/constant';
 
 import styles from './index.less';
 import noCourse from '@/assets/noCourse.png';
 import noClass from '@/assets/noClass.png';
-import { Link } from 'umi';
+import { Link, history } from 'umi';
 import { getAllCourses, getAllSemester } from '@/services/after-class-qxjyj/khjyjg';
 import { getCurrentXQ } from '@/utils';
 import { getAllKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
@@ -212,11 +212,24 @@ const CourseInfo = (props: any) => {
   };
 
   return (
-    <div className={styles.courseWrapper}>
-      {courseList ? (
-        <div className={styles.searchWrapper}>
-          <Search placeholder="课程名称" allowClear onSearch={onSearch} style={{ width: 200 }} />
-          {/* <span style={{ marginLeft: '24px' }}>
+    <>
+      <Button
+        type="primary"
+        onClick={() => {
+          history.goBack();
+        }}
+        style={{
+          marginBottom: '24px'
+        }}
+      >
+        <LeftOutlined />
+        返回上一页
+      </Button>
+      <div className={styles.courseWrapper}>
+        {courseList ? (
+          <div className={styles.searchWrapper}>
+            <Search placeholder="课程名称" allowClear onSearch={onSearch} style={{ width: 200 }} />
+            {/* <span style={{ marginLeft: '24px' }}>
             所属学年学期：
             <Select
               defaultValue={term}
@@ -232,27 +245,28 @@ const CourseInfo = (props: any) => {
               })}
             </Select>
           </span> */}
-        </div>
-      ) : (
-        ''
-      )}
+          </div>
+        ) : (
+          ''
+        )}
 
-      {courseList?.length ? (
-        <div className={styles.courseIntro}>
-          {courseList.map((val: any, index: number) => {
-            return <CourseItemDom course={val} type="list" ind={index} key={val.id} />;
-          })}
-        </div>
-      ) : (
-        <Empty
-          image={noCourse}
-          imageStyle={{
-            height: 80
-          }}
-          description="暂无课程信息"
-        />
-      )}
-    </div>
+        {courseList?.length ? (
+          <div className={styles.courseIntro}>
+            {courseList.map((val: any, index: number) => {
+              return <CourseItemDom course={val} type="list" ind={index} key={val.id} />;
+            })}
+          </div>
+        ) : (
+          <Empty
+            image={noCourse}
+            imageStyle={{
+              height: 80
+            }}
+            description="暂无课程信息"
+          />
+        )}
+      </div>
+    </>
   );
 };
 

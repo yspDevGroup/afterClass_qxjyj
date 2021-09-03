@@ -152,7 +152,7 @@ const CourseInfo = (props: any) => {
     }
   ];
   return (
-    <div className={classes.content}>
+    <>
       <Button
         type="primary"
         onClick={() => {
@@ -165,17 +165,19 @@ const CourseInfo = (props: any) => {
         <LeftOutlined />
         返回上一页
       </Button>
-      <div style={{ width: '85%', minWidth: '850px', margin: '0 auto' }} className={classes.formType}>
-        <CustomForm values={formValues || {}} formItems={basicForm} formLayout={formItemLayout} hideBtn={true} />
-        <Table
-          title={() => '代课老师列表'}
-          columns={columns}
-          dataSource={teacherData}
-          pagination={false}
-          size="small"
-        />
+      <div className={classes.content}>
+        <div style={{ width: '85%', minWidth: '850px', margin: '0 auto' }} className={classes.formType}>
+          <CustomForm values={formValues || {}} formItems={basicForm} formLayout={formItemLayout} hideBtn={true} />
+          <Table
+            title={() => '代课老师列表'}
+            columns={columns}
+            dataSource={teacherData}
+            pagination={false}
+            size="small"
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
