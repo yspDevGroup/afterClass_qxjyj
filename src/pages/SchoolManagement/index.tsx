@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-24 14:37:02
- * @LastEditTime: 2021-09-01 18:47:40
+ * @LastEditTime: 2021-09-03 19:01:50
  * @LastEditors: wsl
  */
 import React, { useRef } from 'react';
@@ -11,9 +11,7 @@ import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import { Link, useModel } from 'umi';
 
 import styles from './index.less';
-import { Divider } from 'antd';
 import { TableListParams } from '@/constant';
-import { cooperateSchool } from '@/services/after-class-qxjyj/khjyjg';
 import { KHHZXYSJ } from './data';
 import { getAllSchools, JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
 
@@ -33,28 +31,13 @@ const SchoolManagement = () => {
       ellipsis: true
     },
     {
-      title: '所属区域',
-      dataIndex: 'SSQY',
-      key: 'SSQY',
-      align: 'center',
-      width: 90,
-      ellipsis: true
-    },
-    {
-      title: '学段',
+      title: '所属学段',
       key: 'XD',
       dataIndex: 'XD',
       align: 'center',
       valueType: 'select',
       filters: true,
       onFilter: true,
-      // valueEnum: {
-      //   全学段: { text: '全学段' },
-      //   学前: { text: '学前' },
-      //   小学: { text: '小学' },
-      //   初中: { text: '初中' },
-      //   高中: { text: '高中' }
-      // },
       width: 150
     },
     {
@@ -78,7 +61,10 @@ const SchoolManagement = () => {
       align: 'center',
       width: 90,
       render: (_, record) => {
-        return <div>{record.KHKCSQs?.length}</div>;
+        const num1 = record.KHKCSQs?.length;
+        const num2 = record.KHKCSJs?.length;
+        const num = num1! + num2!;
+        return <div>{num}</div>;
       }
     },
     {
@@ -88,73 +74,79 @@ const SchoolManagement = () => {
       width: 200,
       align: 'center',
       render: (_, record) => (
-        <>
+        <div className={styles.operation}>
           <Link
             to={{
-              pathname: '/schoolManagement/courseInfo',
-              state: {
-                type: 'list',
-                data: record
-              }
+              pathname: '/schoolManagement/schoolInfos',
+              state: record
             }}
           >
-            课程详情
+            学校详情
           </Link>
-        </>
+          <Link
+            to={{
+              pathname: '/schoolManagement/courseList',
+              state: record
+            }}
+          >
+            课程列表
+          </Link>
+        </div>
       )
     }
   ];
 
   return (
-    <ProTable<KHHZXYSJ>
-      columns={columns}
-      className={styles.schoolTable}
-      actionRef={actionRef}
-      search={false}
-      request={async (
-        params: KHHZXYSJ & {
-          pageSize?: number;
-          current?: number;
-          keyword?: string;
-        },
-        sort,
-        filter
-      ): Promise<Partial<RequestData<KHHZXYSJ>>> => {
-        // 表单搜索项会从 params 传入，传递给后端接口。
-        const opts: TableListParams = {
-          ...params,
-          sorter: sort && Object.keys(sort).length ? sort : undefined,
+    <div className={styles.SchoolManagement}>
+      <ProTable<KHHZXYSJ>
+        columns={columns}
+        className={styles.schoolTable}
+        actionRef={actionRef}
+        search={false}
+        request={async (
+          params: KHHZXYSJ & {
+            pageSize?: number;
+            current?: number;
+            keyword?: string;
+          },
+          sort,
           filter
-        };
-        const resJYJGSJ = await JYJGSJ({ id: currentUser!.jyjId! });
-        const resgetAllSchools = await getAllSchools({
-          XZQHM: resJYJGSJ.data.XZQH,
-          XXMC: '',
-          page: 0,
-          pageSize: 0
-        });
-        console.log(resgetAllSchools, '----------------');
-        if (resgetAllSchools.status === 'ok') {
-          return {
-            data: resgetAllSchools.data?.rows,
-            total: resgetAllSchools.data.count,
-            success: true
+        ): Promise<Partial<RequestData<KHHZXYSJ>>> => {
+          // 表单搜索项会从 params 传入，传递给后端接口。
+          const opts: TableListParams = {
+            ...params,
+            sorter: sort && Object.keys(sort).length ? sort : undefined,
+            filter
           };
-        }
-        return {};
-      }}
-      options={{
-        setting: false,
-        fullScreen: false,
-        density: false,
-        reload: false,
-        search: {
-          placeholder: '学校名称'
-        }
-      }}
-      rowKey="id"
-      dateFormatter="string"
-    />
+          const resJYJGSJ = await JYJGSJ({ id: currentUser!.jyjId! });
+          const resgetAllSchools = await getAllSchools({
+            XZQHM: resJYJGSJ.data.XZQH,
+            XXMC: '',
+            page: 0,
+            pageSize: 0
+          });
+          if (resgetAllSchools.status === 'ok') {
+            return {
+              data: resgetAllSchools.data?.rows,
+              total: resgetAllSchools.data.count,
+              success: true
+            };
+          }
+          return {};
+        }}
+        options={{
+          setting: false,
+          fullScreen: false,
+          density: false,
+          reload: false,
+          search: {
+            placeholder: '学校名称'
+          }
+        }}
+        rowKey="id"
+        dateFormatter="string"
+      />
+    </div>
   );
 };
 

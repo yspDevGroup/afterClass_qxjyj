@@ -1,7 +1,7 @@
 /* eslint-disable max-nested-callbacks */
 import React, { useEffect, useState } from 'react';
-import { Button, FormInstance, message, Table } from 'antd';
-import { history, useModel } from 'umi';
+import { Button, Table } from 'antd';
+import { history } from 'umi';
 import classes from './index.less';
 import { LeftOutlined } from '@ant-design/icons';
 import CustomForm from '@/components/CustomForm';
@@ -19,12 +19,8 @@ const CourseInfo = (props: any) => {
 
   const [disabled, setDisabled] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
-  const [forms, setForm] = useState<FormInstance<any>>();
-  const [KCLXOptions, setKCLXOptions] = useState<any>([]);
   const [JSSJOptions, setJSSJOptions] = useState<any>([]);
   const [NJDataOption, setNJDataOption] = useState<any>([]);
-  const { initialState } = useModel('@@initialState');
-  const { currentUser } = initialState || {};
   const [formValues, setFormValues] = useState({});
   const [teacherData, setTeacherData] = useState<any>([]);
   useEffect(() => {
@@ -185,4 +181,5 @@ const CourseInfo = (props: any) => {
   );
 };
 
+CourseInfo.wrappers = ['@/wrappers/auth'];
 export default CourseInfo;

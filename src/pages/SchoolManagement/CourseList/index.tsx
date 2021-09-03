@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-09-03 17:28:00
+ * @LastEditTime: 2021-09-03 19:06:10
  * @LastEditors: wsl
  */
 /*
@@ -19,19 +19,16 @@ import ProTable from '@ant-design/pro-table';
 import { TableListItem, TableListParams } from '../data';
 import styles from './index.less';
 import { Link, useModel } from 'umi';
-import { getCourses } from '@/services/after-class-qxjyj/jyjgsj';
+import { getCoursesBySchool } from '@/services/after-class-qxjyj/jyjgsj';
 import EllipsisHint from '@/components/EllipsisHint';
-import { updateKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
 
-const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
-  const { Keys, state } = props;
+const HaveIntroduced = (props: any) => {
+  const { state } = props.location;
   const { initialState } = useModel('@@initialState');
-  const { currentUser } = initialState || {};
-  const { username, jyjId, id } = currentUser!;
   const actionRef1 = useRef<ActionType>();
   useEffect(() => {
     actionRef1?.current?.reload();
-  }, [Keys]);
+  }, []);
 
   const columns: ProColumns<TableListItem>[] = [
     {
@@ -51,12 +48,20 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
       ellipsis: true
     },
     {
+      title: '课程来源',
+      dataIndex: 'KCLY',
+      key: 'KCLY',
+      align: 'center',
+      search: false,
+      ellipsis: true
+    },
+    {
       title: '适用年级',
       dataIndex: 'SYNJ',
       key: 'SYNJ',
       align: 'center',
       search: false,
-      width: 200,
+      width: 300,
       render: (text: any) => {
         return (
           <EllipsisHint
@@ -86,23 +91,6 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
         );
       }
     },
-    {
-      title: '准入学校',
-      dataIndex: 'ZRXX',
-      key: 'ZRXX',
-      align: 'center',
-      search: false,
-      render: (text: any) => {
-        return (
-          <EllipsisHint
-            width="100%"
-            text={text?.map((item: any) => {
-              return <Tag key={item.XXJBSJ.id}>{item.XXJBSJ.XXMC}</Tag>;
-            })}
-          />
-        );
-      }
-    },
 
     {
       title: '操作',
@@ -114,35 +102,23 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
         return (
           <div className={styles.operation}>
             <Link
-              key="jgxq"
+              key="kcxq"
               to={{
-                pathname: '/organizationManagement/courseList/courseInfo',
+                pathname: '/schoolManagement/courseList/courseInfo',
                 state: record.value
               }}
             >
               课程详情
             </Link>
-
-            <Popconfirm
-              key="zr"
-              title="确定取消引入该课程?"
-              onConfirm={async () => {
-                const data = {
-                  KCZT: 1
-                };
-
-                const res = await updateKHKCSJ({ id: record.value.id }, data);
-                if (res.status === 'ok') {
-                  message.success('取消成功');
-                  actionRef1?.current?.reload();
-                }
+            <Link
+              key="bjxq"
+              to={{
+                pathname: '/schoolManagement/courseList/classInfo',
+                state: record.value
               }}
-              okText="确定"
-              cancelText="取消"
-              placement="topRight"
             >
-              <a>取消引入</a>
-            </Popconfirm>
+              班级详情
+            </Link>
           </div>
         );
       }
@@ -181,28 +157,27 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
             ...params,
             sorter: sort && Object.keys(sort).length ? sort : undefined
           };
-          const res = await getCourses({
-            JGId: state.value.id,
-            KCMC: params.keyword,
-            KCZT: [2],
-            page: 0,
-            pageSize: 0
+          const res = await getCoursesBySchool({
+            XXJBSJId: state.id,
+            XNXQId: '',
+            KCMC: opts.keyword || ''
           });
           if (res.status === 'ok') {
             let newArr: any[] = [];
-            res.data?.rows.forEach((value: any) => {
-              const { KCMC, NJSJs, KHKCJs, KHKCSQs, KHKCLX } = value;
+            res.data?.forEach((value: any) => {
+              const { KCMC, NJSJs, KHKCJs, KHKCLX, SSJGLX } = value;
               const data = {
                 value,
                 KCMC: KCMC,
                 SYNJ: NJSJs,
                 DKLS: KHKCJs,
-                ZRXX: KHKCSQs,
+                KCLY: SSJGLX,
                 KCLX: KHKCLX.KCTAG
               };
               newArr.push(data);
             });
-            if (newArr.length === res.data?.rows.length) {
+
+            if (newArr.length === res.data?.length) {
               return {
                 data: newArr,
                 total: res.data?.count,
@@ -217,7 +192,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
           return {};
         }}
         dateFormatter="string"
-        toolBarRender={() => [<span key="JGMC">{state.JGMC}</span>]}
+        toolBarRender={() => [<span key="XXMC">{state.XXMC}</span>]}
       />
     </div>
   );

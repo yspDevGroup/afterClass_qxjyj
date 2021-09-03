@@ -2,77 +2,28 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-09-03 10:26:50
+ * @LastEditTime: 2021-09-03 18:05:30
  * @LastEditors: wsl
  */
-import React, { useEffect, useRef, useState } from 'react';
-import { Col, message, Popconfirm, Row, Tabs, Image, Modal, Form, Input, Tag } from 'antd';
+import React, { useEffect, useRef } from 'react';
+import { message, Popconfirm, Tag } from 'antd';
 import type { ActionType, ProColumns, RequestData } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { TableListItem, TableListParams } from '../data';
-import styles from '../index.less';
-import { blockKHJGRZSQ, getKHJGRZSQ, updateKHJGRZSQ } from '@/services/after-class-qxjyj/khjgrzsq';
+import styles from './index.less';
 import { Link, useModel } from 'umi';
 import { getCourses } from '@/services/after-class-qxjyj/jyjgsj';
 import EllipsisHint from '@/components/EllipsisHint';
 import { updateKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
 
 const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const { Keys, state } = props;
-  const [form] = Form.useForm();
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
-  const { username, jyjId, id } = currentUser!;
   const actionRef1 = useRef<ActionType>();
-  const [Datas, setDatas] = useState<TableListItem>();
-  const [Titles, setTitles] = useState<string>();
   useEffect(() => {
     actionRef1?.current?.reload();
   }, [Keys]);
-  useEffect(() => {
-    setTimeout(() => {
-      form.resetFields();
-    }, 50);
-  }, [isModalVisible]);
-  const handleOk = () => {
-    form.submit();
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
-  const submit = async (params: any) => {
-    const { SQR, SQRId, XZQHM, KHJYJGId } = Datas!.value;
-    if (Titles === '异常取消') {
-      const data = {
-        ZT: 4,
-        SPR: username,
-        SPRId: id,
-        BZ: params.BZ,
-        SQR,
-        SQRId,
-        XZQHM,
-        KHJYJGId
-      };
-      const res = await updateKHJGRZSQ({ id: Datas!.value.KHJGRZSQs[0].id }, data);
-      if (res.status === 'ok') {
-        message.success('取消成功');
-        actionRef1?.current?.reload();
-      }
-    } else {
-      const data = {
-        ...Datas!.value,
-        BZ: params.BZ
-      };
-      const res = await blockKHJGRZSQ(data);
-      if (res.status === 'ok') {
-        message.success('成功加入黑名单');
-        actionRef1?.current?.reload();
-      }
-    }
-  };
 
   const columns: ProColumns<TableListItem>[] = [
     {
@@ -81,7 +32,17 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
       key: 'KCMC',
       align: 'center',
       search: false,
+      width: '15%',
       ellipsis: true
+    },
+    {
+      title: '课程类型',
+      dataIndex: 'KCLX',
+      key: 'KCLX',
+      align: 'center',
+      search: false,
+      ellipsis: true,
+      width: '15%'
     },
     {
       title: '适用年级',
@@ -89,7 +50,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
       key: 'SYNJ',
       align: 'center',
       search: false,
-      width: 300,
+      width: '30%',
       render: (text: any) => {
         return (
           <EllipsisHint
@@ -108,7 +69,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
       key: 'DKLS',
       align: 'center',
       search: false,
-      width: 200,
+      width: '30%',
       render: (text: any) => {
         return (
           <EllipsisHint
@@ -120,23 +81,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
         );
       }
     },
-    {
-      title: '准入学校',
-      dataIndex: 'ZRXX',
-      key: 'ZRXX',
-      align: 'center',
-      search: false,
-      render: (text: any) => {
-        return (
-          <EllipsisHint
-            width="100%"
-            text={text?.map((item: any) => {
-              return <Tag key={item.XXJBSJ.id}>{item.XXJBSJ.XXMC}</Tag>;
-            })}
-          />
-        );
-      }
-    },
+
     {
       title: '操作',
       key: 'option',
@@ -150,7 +95,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
               key="kcxq"
               to={{
                 pathname: '/organizationManagement/courseList/courseInfo',
-                state: record
+                state: record.value
               }}
             >
               课程详情
@@ -158,7 +103,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
 
             <Popconfirm
               key="zr"
-              title="确定取消引入该课程?"
+              title="确定引入该课程?"
               onConfirm={async () => {
                 const data = {
                   KCZT: 2
@@ -182,7 +127,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
     }
   ];
   return (
-    <div className={styles.OrganizationManagement}>
+    <div className={styles.ToIntroduce}>
       <ProTable<any>
         columns={columns}
         rowKey="key"
@@ -224,13 +169,14 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
           if (res.status === 'ok') {
             let newArr: any[] = [];
             res.data?.rows.forEach((value: any) => {
-              const { KCMC, NJSJs, KHKCJs, KHKCSQs } = value;
+              const { KCMC, NJSJs, KHKCJs, KHKCSQs, KHKCLX } = value;
               const data = {
                 value,
                 KCMC: KCMC,
                 SYNJ: NJSJs,
                 DKLS: KHKCJs,
-                ZRXX: KHKCSQs
+                ZRXX: KHKCSQs,
+                KCLX: KHKCLX.KCTAG
               };
               newArr.push(data);
             });
@@ -249,25 +195,8 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
           return {};
         }}
         dateFormatter="string"
-        toolBarRender={() => []}
+        toolBarRender={() => [<span key="JGMC">{state.JGMC}</span>]}
       />
-      <Modal title={Titles} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-        <Form form={form} onFinish={submit} className={styles.Forms}>
-          <Form.Item
-            name="BZ"
-            key="BZ"
-            label="原因："
-            rules={[
-              {
-                required: true,
-                message: '请输入原因'
-              }
-            ]}
-          >
-            <Input.TextArea placeholder="请输入" rows={4} />
-          </Form.Item>
-        </Form>
-      </Modal>
     </div>
   );
 };

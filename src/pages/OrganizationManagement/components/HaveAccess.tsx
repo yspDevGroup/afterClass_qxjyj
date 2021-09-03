@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-26 11:45:40
- * @LastEditTime: 2021-09-01 16:37:18
+ * @LastEditTime: 2021-09-03 18:11:50
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -82,13 +82,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       align: 'center',
       search: false
     },
-    {
-      title: '法人姓名',
-      dataIndex: 'FRXM',
-      key: 'FRXM',
-      align: 'center',
-      search: false
-    },
+
     {
       title: '联系人姓名',
       dataIndex: 'LXRXM',
@@ -112,6 +106,13 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       width: 80,
       align: 'center',
       ellipsis: true,
+      search: false
+    },
+    {
+      title: '服务范围',
+      dataIndex: 'JGFWFW',
+      key: 'JGFWFW',
+      align: 'center',
       search: false
     },
     {
@@ -242,11 +243,11 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
             if (res.status === 'ok') {
               let newArr: any[] = [];
               res.data?.rows.forEach((value: any) => {
-                const { QYMC, FRDBXM, LXRXM, LXDH, KHKCSJs } = value;
+                const { QYMC, JGFWFW, LXRXM, LXDH, KHKCSJs } = value;
                 const data = {
                   value,
                   JGMC: QYMC,
-                  FRXM: FRDBXM,
+                  JGFWFW: JGFWFW,
                   LXRXM: LXRXM,
                   LXRDH: LXDH,
                   KCSL: KHKCSJs.length

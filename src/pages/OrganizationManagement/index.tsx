@@ -19,22 +19,21 @@ const OrganizationManagement = () => {
         <TabPane tab="已准入机构" key="YZR">
           <HaveAccess Keys={Keys} />
         </TabPane>
-        <TabPane tab="未准入机构" key="WZR">
+        <TabPane tab="待准入机构" key="WZR">
           <CannotAccess Keys={Keys} />
         </TabPane>
         <TabPane tab="黑名单" key="HMD">
           <Blacklist Keys={Keys} />
         </TabPane>
       </Tabs>
-      <Button
-        type="primary"
-        className={styles.btns}
+      <span
+        className={styles.LSJL}
         onClick={() => {
           history.push('/organizationManagement/historys');
         }}
       >
-        查看历史记录
-      </Button>
+        历史记录
+      </span>
     </div>
   );
 };

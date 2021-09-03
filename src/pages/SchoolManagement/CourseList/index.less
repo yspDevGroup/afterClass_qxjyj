@@ -56,7 +56,7 @@
             border-radius: 22px;
           }
 
-          > span:nth-child(2) {
+          span:nth-child(2) {
             padding-left: @padding-lg;
             color: @text-color-secondary;
             font-weight: normal;
@@ -145,75 +145,59 @@
   }
 }
 
-.SchoolManagement {
+.content {
+  height: 100%;
+  padding: 24px;
+  background: #fff;
+  border-radius: 8px;
+  .formType {
+    :global {
+      .ant-select-multiple.ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+        background: none;
+        border: none;
+        cursor: auto;
+      }
+      .ant-form-item-control-input {
+        line-height: 32px;
+      }
+
+      .ant-input[disabled] {
+        color: @text-color;
+        text-overflow: ellipsis;
+        background-color: inherit;
+        border: none;
+        cursor: default;
+        resize: none;
+      }
+      .ant-select-disabled.ant-select-multiple .ant-select-selection-item {
+        color: #000;
+        background: #fff;
+        border-color: #fff;
+        cursor: auto;
+      }
+    }
+  }
+}
+
+.ToIntroduce {
   .operation {
     a {
       margin-right: 10px;
     }
   }
-}
-
-.schoolWrapper {
-  padding: @padding-lg;
-  background: #ffffff;
-
   :global {
-    .ant-tabs-nav-list {
-      .ant-tabs-tab-btn {
-        padding: @padding-sm;
-      }
-    }
-  }
-
-  .schoolInfoBody {
-    width: 85%;
-    min-width: 850px;
-    margin: 0 auto;
-
-    .schoolInfoTitle {
-      display: flex;
-      justify-content: space-between;
-      padding: @padding-lg 0;
-
-      .schoolInfoLogo {
-        padding: 0 @padding-lg;
-
-        img {
-          width: 60px;
-          height: 60px;
+    .ant-pro-table-list-toolbar {
+      .ant-pro-table-list-toolbar-container {
+        display: block;
+        height: 64px;
+        .ant-space:nth-child(1) {
+          float: right;
         }
-      }
-
-      .schoolInfoTitleHeader {
-        flex: 1;
-        color: @text-color;
-        font-weight: bold;
-        font-size: 18px;
-
-        p {
-          margin-bottom: 0;
-          line-height: 60px;
-        }
-      }
-    }
-
-    .schoolInfoBasic {
-      :global {
-        .ant-form-item-label {
-          text-align: right;
-        }
-
-        .ant-form-item-control-input {
+        .ant-space:nth-child(2) {
+          float: left;
+          font-weight: bold;
+          font-size: 16px;
           line-height: 32px;
-        }
-
-        .ant-input[disabled] {
-          color: @text-color;
-          text-overflow: ellipsis;
-          background-color: inherit;
-          border: none;
-          cursor: default;
-          resize: none;
         }
       }
     }
