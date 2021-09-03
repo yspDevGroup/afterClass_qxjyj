@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-09-03 10:19:11
+ * @LastEditTime: 2021-09-03 10:26:24
  * @LastEditors: wsl
  */
 /*
@@ -87,7 +87,8 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
       dataIndex: 'KCMC',
       key: 'KCMC',
       align: 'center',
-      search: false
+      search: false,
+      ellipsis: true
     },
     {
       title: '适用年级',
@@ -95,6 +96,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
       key: 'SYNJ',
       align: 'center',
       search: false,
+      width: 300,
       render: (text: any) => {
         return (
           <EllipsisHint
@@ -112,6 +114,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
       key: 'DKLS',
       align: 'center',
       search: false,
+      width: 200,
       render: (text: any) => {
         return (
           <EllipsisHint

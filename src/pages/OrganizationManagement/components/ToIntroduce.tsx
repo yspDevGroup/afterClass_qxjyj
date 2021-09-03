@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-09-03 10:18:53
+ * @LastEditTime: 2021-09-03 10:26:50
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -80,7 +80,8 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
       dataIndex: 'KCMC',
       key: 'KCMC',
       align: 'center',
-      search: false
+      search: false,
+      ellipsis: true
     },
     {
       title: '适用年级',

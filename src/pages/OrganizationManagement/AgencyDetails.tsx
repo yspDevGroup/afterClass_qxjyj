@@ -1,15 +1,29 @@
 import React, { useState } from 'react';
-import { Modal, Image, Row, Col, Divider } from 'antd';
+import { Modal, Image, Row, Col, Divider, Button } from 'antd';
 import styles from './index.less';
+import { history } from 'umi';
+import { LeftOutlined } from '@ant-design/icons';
 
 const AgencyDetails = (props: any) => {
   const { state } = props.history.location;
   console.log(state);
   return (
     <div className={styles.AgencyDetails}>
+      <Button
+        type="primary"
+        onClick={() => {
+          history.goBack();
+        }}
+        style={{
+          marginBottom: '24px'
+        }}
+      >
+        <LeftOutlined />
+        返回上一页
+      </Button>
       <div className={styles.header}>
         <Image width={100} src={state.value.QYTB} />
-        <p> {state.value?.QYMC}</p>
+        <p style={{ marginLeft: '20px' }}> {state.value?.QYMC}</p>
       </div>
       <Divider />
       <Row className={styles.wrap}>

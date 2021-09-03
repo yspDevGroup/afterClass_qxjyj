@@ -158,6 +158,9 @@ const CourseInfo = (props: any) => {
         onClick={() => {
           history.goBack();
         }}
+        style={{
+          marginBottom: '24px'
+        }}
       >
         <LeftOutlined />
         返回上一页
