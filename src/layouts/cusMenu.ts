@@ -52,7 +52,6 @@ export default [
           }
         ]
       },
-
       {
         path: '/announcements/recycleBin',
         name: '回收站'
@@ -79,7 +78,6 @@ export default [
           }
         ]
       },
-
       {
         path: '/policyIssued/recycleBin',
         name: '回收站'

@@ -3,7 +3,7 @@
  * @description: 通用布局
  * @author: zpl
  * @Date: 2021-08-16 17:31:56
- * @LastEditTime: 2021-08-24 18:18:20
+ * @LastEditTime: 2021-09-02 17:31:06
  * @LastEditors: Sissle Lynn
  */
 import React, { FC, useEffect, useState } from 'react';
@@ -70,9 +70,12 @@ const CommonLayout: FC<IRouteComponentProps> = ({ children, location, route, his
           }}
           menuHeaderRender={() => {
             return (
-              <Link to="/">
-                <img src={headerTop} />
-              </Link>
+              <div className={styles.headerLogo}>
+                <Link to="/">
+                  <img src={headerTop} />
+                </Link>
+                <h1>— 教育局端 —</h1>
+              </div>
             );
           }}
           menu={{

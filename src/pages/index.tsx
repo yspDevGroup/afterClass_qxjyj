@@ -1,11 +1,11 @@
 import React from 'react';
 import { Access, useAccess } from 'umi';
 import { Carousel } from 'antd';
+import IndexComp from '@/components/IndexComp';
 
-import styles from './index.less';
 
 const Index = () => {
-  return <div>index</div>;
+  return <IndexComp />;
 };
 Index.title = '主页';
 Index.access = '管理员';
