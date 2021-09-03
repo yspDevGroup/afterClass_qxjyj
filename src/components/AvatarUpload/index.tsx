@@ -71,7 +71,7 @@ const AvatarUpload = (props: { img?: string; onValueChange?: (value: string) => 
       }}
       disabled={readonly}
       showUploadList={false}
-      action="/api/upload/uploadFile?type=avatar"
+      action="/api/upload/uploadFile?type=avatar&plat=education"
       beforeUpload={beforeUpload}
       onChange={handleChange}
     >

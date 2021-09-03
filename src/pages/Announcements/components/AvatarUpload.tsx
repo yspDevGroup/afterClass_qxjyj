@@ -21,11 +21,7 @@ const beforeUpload = (file: any) => {
   return isJpgOrPng && isLt2M;
 };
 
-const AvatarUpload = (props: {
-  img?: string;
-  onValueChange?: (value: string) => void;
-  readonly?: boolean;
-}) => {
+const AvatarUpload = (props: { img?: string; onValueChange?: (value: string) => void; readonly?: boolean }) => {
   const { img, onValueChange, readonly = false } = props;
   const [loading, setLoading] = useState<boolean>(false);
   const [imgUrl, setImgUrl] = useState<string | undefined>(img);
@@ -75,7 +71,7 @@ const AvatarUpload = (props: {
       }}
       disabled={readonly}
       showUploadList={false}
-      action="/api/upload/uploadFile?type=notice"
+      action="/api/upload/uploadFile?type=notice&plat=education"
       beforeUpload={beforeUpload}
       onChange={handleChange}
     >
