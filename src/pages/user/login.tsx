@@ -46,7 +46,6 @@ const formItemList: FormItemType[] = [
   {
     key: 'autoLogin',
     type: 'checkbox',
-    name: 'autoLogin',
     desc: '记住密码'
   }
 ];

@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-24 19:59:45
- * @LastEditTime: 2021-09-02 17:22:29
+ * @LastEditTime: 2021-09-03 17:16:10
  * @LastEditors: Sissle Lynn
  */
 export const bgColor = [
@@ -37,7 +37,7 @@ export const topNum = [
     type: 'xxNum'
   },
   {
-    title: '已引入课程机构',
+    title: '已准入机构',
     type: 'jgNum',
   },
   {
@@ -45,15 +45,15 @@ export const topNum = [
     type: 'kcNum'
   },
   {
-    title: '开设课程班总数 ',
+    title: '开设课程班',
     type: 'bjNum'
   },
   {
-    title: '参加学生总数',
+    title: '参加学生',
     type: 'xsNum'
   },
   {
-    title: '收费金额总数',
+    title: '收费金额',
     type: 'amount'
   }
 ];
