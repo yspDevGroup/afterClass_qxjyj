@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-09-01 16:37:57
+ * @LastEditTime: 2021-09-03 10:18:53
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -88,6 +88,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
       key: 'SYNJ',
       align: 'center',
       search: false,
+      width: 300,
       render: (text: any) => {
         return (
           <EllipsisHint
@@ -106,6 +107,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
       key: 'DKLS',
       align: 'center',
       search: false,
+      width: 200,
       render: (text: any) => {
         return (
           <EllipsisHint
@@ -139,7 +141,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
       key: 'option',
       valueType: 'option',
       align: 'center',
-      width: 300,
+      width: 200,
       render: (text, record, action) => {
         return (
           <div className={styles.operation}>
@@ -213,7 +215,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
           };
           const res = await getCourses({
             JGId: state.value.id,
-            KCMC: '',
+            KCMC: opts.keyword,
             KCZT: [1],
             page: 0,
             pageSize: 0

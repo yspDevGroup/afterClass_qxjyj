@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 10:01:58
- * @LastEditTime: 2021-09-01 16:37:39
+ * @LastEditTime: 2021-09-03 09:58:25
  * @LastEditors: wsl
  */
 /*
@@ -16,7 +16,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Col, message, Modal, Popconfirm, Row, Image } from 'antd';
 import type { ActionType, ProColumns, RequestData } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { TableListItem, TableListParams } from '../data';
+import { TableListItem, TableListParams } from './data';
 import styles from './index.less';
 import { getKHJGRZSQ, updateKHJGRZSQ } from '@/services/after-class-qxjyj/khjgrzsq';
 import { getAllInstitutions, JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';

@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-09-02 16:49:40
+ * @LastEditTime: 2021-09-03 10:19:11
  * @LastEditors: wsl
  */
 /*
@@ -146,7 +146,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
       key: 'option',
       valueType: 'option',
       align: 'center',
-      width: 300,
+      width: 200,
       render: (text, record, action) => {
         return (
           <div className={styles.operation}>
@@ -220,7 +220,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
           };
           const res = await getCourses({
             JGId: state.value.id,
-            KCMC: '',
+            KCMC: params.keyword,
             KCZT: [2],
             page: 0,
             pageSize: 0
