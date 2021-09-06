@@ -6,7 +6,6 @@ import { LeftOutlined } from '@ant-design/icons';
 
 const AgencyDetails = (props: any) => {
   const { state } = props.history.location;
-  console.log(state);
   return (
     <div className={styles.AgencyDetails}>
       <Button

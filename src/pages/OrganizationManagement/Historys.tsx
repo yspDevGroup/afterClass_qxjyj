@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 10:01:58
- * @LastEditTime: 2021-09-03 09:58:25
+ * @LastEditTime: 2021-09-06 15:31:50
  * @LastEditors: wsl
  */
 /*
@@ -43,14 +43,31 @@ const Historys = (props: { Keys: string | undefined }) => {
       search: false
     },
     {
-      title: '状态',
-      dataIndex: 'ZT',
-      key: 'ZT',
+      title: '服务状态',
+      dataIndex: 'KSZT',
+      key: 'KSZT',
+      valueEnum: {
+        申请中: { text: '申请中', status: 'Default' },
+        黑名单: {
+          text: '黑名单',
+          status: 'Error'
+        },
+        服务中: {
+          text: '服务中',
+          status: 'Success',
+          disabled: true
+        },
+        停顿整改: {
+          text: '停顿整改',
+          status: 'Processing'
+        }
+      },
       align: 'center',
       search: false
     },
+
     {
-      title: '开始时间',
+      title: '操作时间',
       dataIndex: 'KSSJ',
       key: 'KSSJ',
       align: 'center',
@@ -65,6 +82,13 @@ const Historys = (props: { Keys: string | undefined }) => {
       align: 'center',
       valueType: 'dateTime',
       ellipsis: true,
+      search: false
+    },
+    {
+      title: '最终状态',
+      dataIndex: 'ZT',
+      key: 'ZT',
+      align: 'center',
       search: false
     },
     {
@@ -140,25 +164,31 @@ const Historys = (props: { Keys: string | undefined }) => {
             res.data?.rows.forEach((value: any) => {
               const { QYMC } = value.KHJYJG;
               let state;
+              let KSZT;
               if (value.ZT === 2) {
                 state = '已驳回';
+                KSZT = '申请中';
               } else if (value.ZT === 4) {
-                state = '异常结束';
+                state = '终止';
+                KSZT = '服务中';
               } else if (value.ZT === 3 && value.LX === 0) {
                 state = '正常结束';
+                KSZT = '服务中';
               } else if (value.ZT === 3 && value.LX === 1) {
-                state = '移出黑名单';
+                state = '已移出';
+                KSZT = '黑名单';
               } else if (value.ZT === 1 && value.LX === 1) {
                 state = '加入黑名单';
               }
               const data = {
                 value,
                 JGMC: QYMC,
-                KSSJ: value.createdAt,
+                KSSJ: value.RZSJ ? value.RZSJ : value.createdAt,
                 JSSJ: value.updatedAt,
                 SPR: value.SPR,
                 BZ: value.BZ,
-                ZT: state
+                ZT: state,
+                KSZT: KSZT
               };
               newArr.push(data);
             });

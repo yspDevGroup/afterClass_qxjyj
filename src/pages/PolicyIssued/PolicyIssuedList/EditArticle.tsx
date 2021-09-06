@@ -248,7 +248,7 @@ const EditArticle = () => {
                   <Button
                     htmlType="button"
                     onClick={() => {
-                      history.push('/announcements/list');
+                      history.push('/policyIssued/policyIssuedList');
                     }}
                   >
                     取消

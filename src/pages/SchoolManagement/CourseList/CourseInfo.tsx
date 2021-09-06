@@ -1,8 +1,8 @@
 /* eslint-disable max-nested-callbacks */
 import React, { useEffect, useState } from 'react';
 import { Button, Table } from 'antd';
-import { history } from 'umi';
-import classes from './index.less';
+import { history, Link } from 'umi';
+import styles from './index.less';
 import { LeftOutlined } from '@ant-design/icons';
 import CustomForm from '@/components/CustomForm';
 import { FormItemType } from '@/components/CustomForm/interfice';
@@ -149,6 +149,29 @@ const CourseInfo = (props: any) => {
       dataIndex: 'DZXX',
       key: 'DZXX',
       align: 'center'
+    },
+    {
+      title: '操作',
+      key: 'option',
+      valueType: 'option',
+      align: 'center',
+      width: 200,
+      render: (text: any, record: { value: any }) => {
+        console.log(record);
+        return (
+          <div className={styles.operation}>
+            <Link
+              key="xq"
+              to={{
+                pathname: '/schoolManagement/courseList/teacherInfo',
+                state: record
+              }}
+            >
+              详情
+            </Link>
+          </div>
+        );
+      }
     }
   ];
   return (
@@ -165,8 +188,8 @@ const CourseInfo = (props: any) => {
         <LeftOutlined />
         返回上一页
       </Button>
-      <div className={classes.content}>
-        <div style={{ width: '85%', minWidth: '850px', margin: '0 auto' }} className={classes.formType}>
+      <div className={styles.content}>
+        <div style={{ width: '85%', minWidth: '850px', margin: '0 auto' }} className={styles.formType}>
           <CustomForm values={formValues || {}} formItems={basicForm} formLayout={formItemLayout} hideBtn={true} />
           <Table
             title={() => '代课老师列表'}

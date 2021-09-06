@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-09-03 17:28:00
+ * @LastEditTime: 2021-09-03 19:32:55
  * @LastEditors: wsl
  */
 /*
@@ -87,7 +87,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
       }
     },
     {
-      title: '准入学校',
+      title: '引入学校',
       dataIndex: 'ZRXX',
       key: 'ZRXX',
       align: 'center',

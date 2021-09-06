@@ -203,3 +203,77 @@
     }
   }
 }
+
+.teacherWrapper {
+  padding: @padding-lg;
+  background: #ffffff;
+
+  :global {
+    .ant-tabs-nav-list {
+      .ant-tabs-tab-btn {
+        padding: @padding-sm;
+      }
+    }
+
+    .ant-form-item-label {
+      text-align: right;
+    }
+
+    .ant-form-item-control-input {
+      line-height: 32px;
+    }
+
+    .ant-input[disabled],
+    .ant-picker-disabled,
+    .ant-input-number-disabled,
+    .ant-select-disabled .ant-select-selector {
+      color: @text-color !important;
+      text-overflow: ellipsis;
+      background: none !important;
+      background-color: inherit;
+      border: none;
+      cursor: default;
+      resize: none;
+
+      .ant-picker-suffix {
+        display: none;
+      }
+    }
+
+    .ant-select-disabled .ant-select-arrow {
+      display: none;
+    }
+  }
+
+  .teacherInfoBody {
+    width: 85%;
+    min-width: 850px;
+    margin: 0 auto;
+
+    :global {
+      .ant-picker,
+      .ant-input-number {
+        width: 100%;
+      }
+    }
+  }
+}
+.contents {
+  height: 100%;
+  padding: 24px;
+  background: #fff;
+  border-radius: 8px;
+  .headerInfo {
+    margin-bottom: 24px;
+    span {
+      margin-right: 16px;
+    }
+  }
+  .proTableinfo {
+    :global {
+      .ant-card-body {
+        padding: 0;
+      }
+    }
+  }
+}

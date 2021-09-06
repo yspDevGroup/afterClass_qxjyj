@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-26 16:24:39
- * @LastEditTime: 2021-09-03 19:05:00
+ * @LastEditTime: 2021-09-04 12:22:36
  * @LastEditors: wsl
  */
 import React from 'react';
@@ -20,7 +20,6 @@ const formItemLayout = {
 };
 const SchoolInfo = (props: any) => {
   const { state } = props.location;
-  console.log(state);
   return (
     <>
       <Button
