@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-09-03 19:06:10
+ * @LastEditTime: 2021-09-06 17:02:48
  * @LastEditors: wsl
  */
 /*
@@ -113,11 +113,11 @@ const HaveIntroduced = (props: any) => {
             <Link
               key="bjxq"
               to={{
-                pathname: '/schoolManagement/courseList/classInfo',
+                pathname: '/schoolManagement/courseList/classList',
                 state: record.value
               }}
             >
-              班级详情
+              班级列表
             </Link>
           </div>
         );

@@ -1,7 +1,7 @@
 /* eslint-disable max-params */
 
-import React, { useRef } from 'react'
-import { history } from "umi";
+import React, { useRef } from 'react';
+import { history } from 'umi';
 import { Button, message, Popconfirm, Space, Tag } from 'antd';
 import { useModel } from '@/.umi/plugin-model/useModel';
 import EllipsisHint from '@/components/EllipsisHint';
@@ -9,12 +9,11 @@ import ProTable, { ActionType } from '@ant-design/pro-table';
 import { toIntroduceCourses } from '@/services/after-class-qxjyj/jyjgsj';
 import { updateKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
 
-
 /**
  * 待引入课程
  * @returns
  */
-const CoursesIntroduced = (props: {JYYData: any}) => {
+const CoursesIntroduced = (props: { JYYData: any }) => {
   const { JYYData } = props;
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
@@ -33,7 +32,7 @@ const CoursesIntroduced = (props: {JYYData: any}) => {
       title: '课程名称',
       dataIndex: 'KCMC',
       key: 'KCMC',
-      align: 'center',
+      align: 'center'
     },
     {
       title: '所属机构',
@@ -42,7 +41,7 @@ const CoursesIntroduced = (props: {JYYData: any}) => {
       align: 'center',
       search: false,
       render: (text: any) => {
-        return text?.QYMC || "-"
+        return text?.QYMC || '-';
       }
     },
     {
@@ -52,7 +51,7 @@ const CoursesIntroduced = (props: {JYYData: any}) => {
       align: 'center',
       search: false,
       render: (text: any) => {
-        return text?.KCTAG || "-"
+        return text?.KCTAG || '-';
       }
     },
     {
@@ -65,9 +64,12 @@ const CoursesIntroduced = (props: {JYYData: any}) => {
         return (
           <EllipsisHint
             width="100%"
-            text={text!=='-'&&text?.map((item: any) => {
-              return <Tag key={item.id}>{item.XD === '初中' ? `${item.NJMC}` : `${item.XD}${item.NJMC}`}</Tag>;
-            })}
+            text={
+              text !== '-' &&
+              text?.map((item: any) => {
+                return <Tag key={item.id}>{item.XD === '初中' ? `${item.NJMC}` : `${item.XD}${item.NJMC}`}</Tag>;
+              })
+            }
           />
         );
       }
@@ -112,13 +114,12 @@ const CoursesIntroduced = (props: {JYYData: any}) => {
           >
             引入
           </a>
-
         </Space>
       )
     }
   ];
   return (
-    <div >
+    <div>
       <ProTable
         actionRef={actionRef}
         columns={columns}
@@ -153,11 +154,12 @@ const CoursesIntroduced = (props: {JYYData: any}) => {
           setting: false,
           fullScreen: false,
           density: false,
-          reload: false,
+          reload: false
         }}
       />
     </div>
-  )
-}
+  );
+};
 
+CoursesIntroduced.wrappers = ['@/wrappers/auth'];
 export default CoursesIntroduced;

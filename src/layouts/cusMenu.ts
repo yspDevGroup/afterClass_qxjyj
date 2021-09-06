@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-24 17:21:12
- * @LastEditTime: 2021-09-04 10:59:24
+ * @LastEditTime: 2021-09-06 17:02:00
  * @LastEditors: wsl
  */
 export default [
@@ -65,9 +65,16 @@ export default [
             name: '老师详情'
           },
           {
-            path: '/schoolManagement/courseList/classInfo',
+            path: '/schoolManagement/courseList/classList',
             hideInMenu: 'true',
-            name: '班级详情'
+            name: '班级列表',
+            routes: [
+              {
+                path: '/schoolManagement/courseList/classList/classInfo',
+                hideInMenu: 'true',
+                name: '班级详情'
+              }
+            ]
           }
         ]
       }

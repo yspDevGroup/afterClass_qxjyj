@@ -1,17 +1,25 @@
+/*
+ * @description:
+ * @author: wsl
+ * @Date: 2021-09-06 17:00:58
+ * @LastEditTime: 2021-09-06 17:53:06
+ * @LastEditors: wsl
+ */
 import ProTable, { ActionType } from '@ant-design/pro-table';
 import { Button, Modal, Table, Tag } from 'antd';
 import React, { useRef, useState } from 'react';
-import classes from './index.less';
-import { history } from 'umi';
+import styles from '../index.less';
+import { history, Link } from 'umi';
 import { LeftOutlined } from '@ant-design/icons';
 /**
  * 班级详情
  * @returns
  */
-const ClassInfo = (props: any) => {
+const ClassList = (props: any) => {
   const { state } = props.location;
   const actionRef = useRef<ActionType>();
   const { KHBJSJs } = state;
+  console.log(KHBJSJs, '====');
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [stdData, setStdData] = useState([]);
 
@@ -87,14 +95,25 @@ const ClassInfo = (props: any) => {
       search: false,
       render: (text: any, record: any) => {
         return (
-          <a
-            onClick={() => {
-              showModal();
-              setStdData(record.KHXSBJs);
-            }}
-          >
-            学生列表
-          </a>
+          <div className={styles.operation}>
+            <Link
+              key="bjxq"
+              to={{
+                pathname: '/schoolManagement/courseList/classList/classInfo',
+                state: record
+              }}
+            >
+              班级详情
+            </Link>
+            <a
+              onClick={() => {
+                showModal();
+                setStdData(record.KHXSBJs);
+              }}
+            >
+              学生列表
+            </a>
+          </div>
         );
       }
     }
@@ -108,7 +127,7 @@ const ClassInfo = (props: any) => {
     }
   ];
   return (
-    <>
+    <div className={styles.ClassInfo}>
       <Button
         type="primary"
         onClick={() => {
@@ -121,8 +140,8 @@ const ClassInfo = (props: any) => {
         <LeftOutlined />
         返回上一页
       </Button>
-      <div className={classes.contents}>
-        <div className={classes.headerInfo}>
+      <div className={styles.contents}>
+        <div className={styles.headerInfo}>
           <span>课程名称：{state?.KCMC}</span>
           {state?.SSJGLX === '机构课程' ? <span>所属机构：{state?.KHJYJG?.QYMC}</span> : ''}
           <span>课程类型：{state?.KHKCLX?.KCTAG}</span>
@@ -134,7 +153,7 @@ const ClassInfo = (props: any) => {
           </span>
         </div>
         <ProTable
-          className={classes.proTableinfo}
+          className={styles.proTableinfo}
           actionRef={actionRef}
           columns={columns}
           dataSource={KHBJSJs}
@@ -165,8 +184,9 @@ const ClassInfo = (props: any) => {
           <Table dataSource={stdData} columns={stdColumns} pagination={false} rowKey="id" />
         </Modal>
       </div>
-    </>
+    </div>
   );
 };
 
-export default ClassInfo;
+ClassList.wrappers = ['@/wrappers/auth'];
+export default ClassList;

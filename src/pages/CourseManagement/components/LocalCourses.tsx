@@ -1,7 +1,7 @@
 /* eslint-disable max-params */
 
-import React, { useRef } from 'react'
-import { history } from "umi";
+import React, { useRef } from 'react';
+import { history } from 'umi';
 import { Button, message, Popconfirm, Space, Tag } from 'antd';
 import { useModel } from '@/.umi/plugin-model/useModel';
 import EllipsisHint from '@/components/EllipsisHint';
@@ -9,12 +9,11 @@ import ProTable, { ActionType } from '@ant-design/pro-table';
 import { getAllCourses } from '@/services/after-class-qxjyj/jyjgsj';
 import { updateKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
 
-
 /**
  * 本区课程
  * @returns
  */
-const LocalCourses = (props: {JYYData: any}) => {
+const LocalCourses = (props: { JYYData: any }) => {
   const { JYYData } = props;
   const actionRef = useRef<ActionType>();
   const confirm = async (id: any) => {
@@ -31,7 +30,7 @@ const LocalCourses = (props: {JYYData: any}) => {
       title: '课程名称',
       dataIndex: 'KCMC',
       key: 'KCMC',
-      align: 'center',
+      align: 'center'
     },
     {
       title: '所属机构',
@@ -40,7 +39,7 @@ const LocalCourses = (props: {JYYData: any}) => {
       align: 'center',
       search: false,
       render: (text: any) => {
-        return text?.QYMC || "-"
+        return text?.QYMC || '-';
       }
     },
     {
@@ -50,7 +49,7 @@ const LocalCourses = (props: {JYYData: any}) => {
       align: 'center',
       search: false,
       render: (text: any) => {
-        return text?.XXMC || "-"
+        return text?.XXMC || '-';
       }
     },
     {
@@ -60,7 +59,7 @@ const LocalCourses = (props: {JYYData: any}) => {
       align: 'center',
       search: false,
       render: (text: any) => {
-        return text?.KCTAG || "-"
+        return text?.KCTAG || '-';
       }
     },
     {
@@ -68,7 +67,7 @@ const LocalCourses = (props: {JYYData: any}) => {
       dataIndex: 'SSJGLX',
       key: 'SSJGLX',
       align: 'center',
-      search: false,
+      search: false
     },
     {
       title: '适用年级',
@@ -104,47 +103,51 @@ const LocalCourses = (props: {JYYData: any}) => {
           >
             课程详情
           </a>
-          <a onClick={() => {
-            history.push({
-              pathname: `/classInfo`,
-              state: { ...record }
-            });
-          }} >班级详情</a>
-          {
-            record?.SSJGLX === '校内课程' ? '':
-              <>
-                <a
-                  onClick={() => {
-                    history.push({
-                      pathname: `/organizationManagement/agencyDetails`,
-                      state: { value: record.KHJYJG }
-                    });
-                  }}
-                >
-                  机构详情
-                </a>
-                <a
-                  onClick={async () => {
-                    const res = await updateKHKCSJ({ id: record?.id }, { KCZT: 1 });
-                    if (res.status === 'ok') {
-                      message.success('操作成功');
-                      action?.reload();
-                    } else {
-                      message.error('操作失败');
-                    }
-                  }}
-                >
-                    取消引入
-                </a>
-              </>
-          }
-
+          <a
+            onClick={() => {
+              history.push({
+                pathname: `/classInfo`,
+                state: { ...record }
+              });
+            }}
+          >
+            班级列表
+          </a>
+          {record?.SSJGLX === '校内课程' ? (
+            ''
+          ) : (
+            <>
+              <a
+                onClick={() => {
+                  history.push({
+                    pathname: `/organizationManagement/agencyDetails`,
+                    state: { value: record.KHJYJG }
+                  });
+                }}
+              >
+                机构详情
+              </a>
+              <a
+                onClick={async () => {
+                  const res = await updateKHKCSJ({ id: record?.id }, { KCZT: 1 });
+                  if (res.status === 'ok') {
+                    message.success('操作成功');
+                    action?.reload();
+                  } else {
+                    message.error('操作失败');
+                  }
+                }}
+              >
+                取消引入
+              </a>
+            </>
+          )}
         </Space>
       )
     }
   ];
   return (
-    <div >
+    <div>
       <ProTable
         actionRef={actionRef}
         columns={columns}
@@ -175,17 +178,18 @@ const LocalCourses = (props: {JYYData: any}) => {
               };
             }
           }
-          return []
+          return [];
         }}
         options={{
           setting: false,
           fullScreen: false,
           density: false,
-          reload: false,
+          reload: false
         }}
       />
     </div>
-  )
-}
+  );
+};
 
+LocalCourses.wrappers = ['@/wrappers/auth'];
 export default LocalCourses;

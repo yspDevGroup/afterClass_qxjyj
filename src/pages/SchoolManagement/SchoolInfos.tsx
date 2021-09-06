@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-26 16:24:39
- * @LastEditTime: 2021-09-04 12:22:36
+ * @LastEditTime: 2021-09-06 17:54:06
  * @LastEditors: wsl
  */
 import React from 'react';
@@ -60,4 +60,5 @@ const SchoolInfo = (props: any) => {
   );
 };
 
+SchoolInfo.wrappers = ['@/wrappers/auth'];
 export default SchoolInfo;
