@@ -34,6 +34,13 @@ const LocalCourses = (props: { JYYData: any }) => {
       align: 'center'
     },
     {
+      title: '课程来源',
+      dataIndex: 'SSJGLX',
+      key: 'SSJGLX',
+      align: 'center',
+      search: false
+    },
+    {
       title: '课程名称',
       dataIndex: 'KCMC',
       key: 'KCMC',
@@ -68,13 +75,6 @@ const LocalCourses = (props: { JYYData: any }) => {
       render: (text: any) => {
         return text?.KCTAG || '-';
       }
-    },
-    {
-      title: '课程来源',
-      dataIndex: 'SSJGLX',
-      key: 'SSJGLX',
-      align: 'center',
-      search: false
     },
     {
       title: '适用年级',
