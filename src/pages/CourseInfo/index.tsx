@@ -185,4 +185,5 @@ const CourseInfo = (props: any) => {
   );
 };
 
+CourseInfo.wrappers = ['@/wrappers/auth'];
 export default CourseInfo;

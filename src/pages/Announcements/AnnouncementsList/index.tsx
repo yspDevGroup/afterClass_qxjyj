@@ -199,4 +199,5 @@ const TableList: React.FC = () => {
   );
 };
 
+TableList.wrappers = ['@/wrappers/auth'];
 export default TableList;

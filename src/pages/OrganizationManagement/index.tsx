@@ -38,4 +38,5 @@ const OrganizationManagement = () => {
   );
 };
 
+OrganizationManagement.wrappers = ['@/wrappers/auth'];
 export default OrganizationManagement;

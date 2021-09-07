@@ -7,7 +7,7 @@ import HaveIntroduced from './components/HaveIntroduced';
 import ToIntroduce from './components/ToIntroduce';
 
 const { TabPane } = Tabs;
-const OrganizationManagement = (props: any) => {
+const CourseList = (props: any) => {
   const { state } = props.history.location;
   const [Keys, setKeys] = useState<string>();
 
@@ -28,5 +28,5 @@ const OrganizationManagement = (props: any) => {
   );
 };
 
-OrganizationManagement.wrappers = ['@/wrappers/auth'];
-export default OrganizationManagement;
+CourseList.wrappers = ['@/wrappers/auth'];
+export default CourseList;

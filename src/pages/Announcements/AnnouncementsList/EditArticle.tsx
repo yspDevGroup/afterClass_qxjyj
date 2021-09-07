@@ -270,4 +270,5 @@ const EditArticle = () => {
   );
 };
 
+EditArticle.wrappers = ['@/wrappers/auth'];
 export default EditArticle;

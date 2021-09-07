@@ -154,4 +154,5 @@ const ClassInfo = (props: any) => {
   );
 };
 
+ClassInfo.wrappers = ['@/wrappers/auth'];
 export default ClassInfo;

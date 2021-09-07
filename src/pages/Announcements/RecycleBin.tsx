@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-09 17:41:43
- * @LastEditTime: 2021-09-01 10:12:36
+ * @LastEditTime: 2021-09-07 09:04:32
  * @LastEditors: wsl
  */
 import React, { useState, useRef, useEffect } from 'react';
@@ -15,7 +15,7 @@ import styles from './index.module.less';
 import { defImg } from './data';
 import { getJYJGTZGG, updateJYJGTZGG } from '@/services/after-class-qxjyj/jyjgtzgg';
 
-const TableList: React.FC = () => {
+const TableList = () => {
   const [dataSource, setDataSource] = useState<API.JYJGTZGG[]>();
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<TableListItem>[] = [
@@ -116,4 +116,5 @@ const TableList: React.FC = () => {
   );
 };
 
+TableList.wrappers = ['@/wrappers/auth'];
 export default TableList;

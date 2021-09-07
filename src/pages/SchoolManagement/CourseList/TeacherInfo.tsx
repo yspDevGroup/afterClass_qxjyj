@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-26 16:24:39
- * @LastEditTime: 2021-09-04 12:05:28
+ * @LastEditTime: 2021-09-07 09:09:55
  * @LastEditors: wsl
  */
 import React, { useEffect, useState } from 'react';
@@ -26,7 +26,7 @@ type PropsType = {
   setForm: React.Dispatch<React.SetStateAction<FormInstance<any> | undefined>>;
   readonly?: boolean;
 };
-const SchoolInfo = (props: any) => {
+const TeacherInfo = (props: any) => {
   const { state } = props.location;
   console.log(state);
   const values = state;
@@ -341,5 +341,5 @@ const SchoolInfo = (props: any) => {
     </>
   );
 };
-
-export default SchoolInfo;
+TeacherInfo.wrappers = ['@/wrappers/auth'];
+export default TeacherInfo;

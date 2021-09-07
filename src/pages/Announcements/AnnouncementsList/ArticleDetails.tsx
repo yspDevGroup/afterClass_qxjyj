@@ -12,5 +12,6 @@ const ArticleDetails = (props: any) => {
     </div>
   );
 };
+
 ArticleDetails.wrappers = ['@/wrappers/auth'];
 export default ArticleDetails;
