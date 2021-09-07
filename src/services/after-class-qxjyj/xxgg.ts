@@ -45,6 +45,8 @@ export async function getAllXXGG(
   body: {
     /** 公告状态 */
     status?: string[];
+    /** 学校ID */
+    XXJBSJId?: string;
   },
   options?: { [key: string]: any },
 ) {

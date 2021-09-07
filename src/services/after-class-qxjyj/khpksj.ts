@@ -121,10 +121,8 @@ export async function getAllKHPKSJ(
   body: {
     /** 年级ID */
     njId?: string;
-    /** 学年 */
-    xn?: string;
-    /** 学期 */
-    xq?: string;
+    /** 学年学期ID */
+    XNXQId?: string;
     /** 课程名称 */
     name?: string;
   },

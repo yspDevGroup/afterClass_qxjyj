@@ -205,6 +205,8 @@ export async function payKHXSDD(
     kcmc?: string;
     /** 课后服务订单支付金额 */
     amount?: number;
+    /** 学校ID */
+    XXJBSJId?: string;
   },
   options?: { [key: string]: any },
 ) {

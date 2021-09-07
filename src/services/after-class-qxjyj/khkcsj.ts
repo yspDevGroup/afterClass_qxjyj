@@ -173,10 +173,8 @@ export async function allNJs(
 /** 根据年级ID查找所有课后课程 POST /khkcsj/khkcs */
 export async function allKCsByNJ(
   body: {
-    /** 学年 */
-    xn?: string;
-    /** 学期 */
-    xq?: string;
+    /** 学年学期ID */
+    XNXQId?: string;
     /** 课程类型ID */
     kclxId?: string;
     /** 课程状态 */

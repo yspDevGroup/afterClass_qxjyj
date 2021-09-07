@@ -2,14 +2,6 @@
 /* eslint-disable */
 import { request } from 'umi';
 
-/** github认证回调 GET /auth/github/callback */
-export async function githubCallback(options?: { [key: string]: any }) {
-  return request<any>('/auth/github/callback', {
-    method: 'GET',
-    ...(options || {}),
-  });
-}
-
 /** Route used by the frontend app to validate the session and retrieve the CSRF token. GET /user/refresh */
 export async function getUserRefresh(options?: { [key: string]: any }) {
   return request<{ csrfToken?: string }>('/user/refresh', {
@@ -41,13 +33,14 @@ export async function currentUser(
   return request<{
     status?: 'ok' | 'error';
     data?: {
-      info: {
+      info?: {
         id?: string;
         jgId?: string | any;
         jyjId?: string | any;
         xxId?: string | any;
         XXDM?: string;
         XD?: string;
+        XZQHM?: string | any;
         loginName?: string;
         username?: string;
         avatar?: string;
@@ -120,13 +113,14 @@ export async function updateUser(body: API.CreateUser, options?: { [key: string]
 export async function createUser(body: API.CreateUser, options?: { [key: string]: any }) {
   return request<{
     status?: 'ok' | 'error';
-    data: {
+    data?: {
       id?: string;
       jgId?: string | any;
       jyjId?: string | any;
       xxId?: string | any;
       XXDM?: string;
       XD?: string;
+      XZQHM?: string | any;
       loginName?: string;
       username?: string;
       avatar?: string;
@@ -363,4 +357,12 @@ export async function refreshToken(options?: { [key: string]: any }) {
       ...(options || {}),
     },
   );
+}
+
+/** github认证回调 GET /auth/github/callback */
+export async function githubCallback(options?: { [key: string]: any }) {
+  return request<any>('/auth/github/callback', {
+    method: 'GET',
+    ...(options || {}),
+  });
 }
