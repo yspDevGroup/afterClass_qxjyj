@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 10:16:11
- * @LastEditTime: 2021-09-03 18:11:42
+ * @LastEditTime: 2021-09-07 18:46:56
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -62,6 +62,13 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
   }, [Keys]);
   let myDate = new Date();
   const columns: ProColumns<TableListItem>[] = [
+    {
+      title: '序号',
+      dataIndex: 'index',
+      valueType: 'index',
+      width: 58,
+      align: 'center'
+    },
     {
       title: '机构名称',
       dataIndex: 'JGMC',

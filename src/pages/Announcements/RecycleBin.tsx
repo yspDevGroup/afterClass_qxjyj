@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-09 17:41:43
- * @LastEditTime: 2021-09-07 09:04:32
+ * @LastEditTime: 2021-09-07 18:44:45
  * @LastEditors: wsl
  */
 import React, { useState, useRef, useEffect } from 'react';
@@ -19,6 +19,13 @@ const TableList = () => {
   const [dataSource, setDataSource] = useState<API.JYJGTZGG[]>();
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<TableListItem>[] = [
+    {
+      title: '序号',
+      dataIndex: 'index',
+      valueType: 'index',
+      width: 58,
+      align: 'center'
+    },
     {
       title: '标题',
       dataIndex: 'BT',

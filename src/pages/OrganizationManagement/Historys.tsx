@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 10:01:58
- * @LastEditTime: 2021-09-06 15:31:50
+ * @LastEditTime: 2021-09-07 18:46:33
  * @LastEditors: wsl
  */
 /*
@@ -35,6 +35,13 @@ const Historys = (props: { Keys: string | undefined }) => {
   }, [Keys]);
 
   const columns: ProColumns<TableListItem>[] = [
+    {
+      title: '序号',
+      dataIndex: 'index',
+      valueType: 'index',
+      width: 58,
+      align: 'center'
+    },
     {
       title: '机构名称',
       dataIndex: 'JGMC',

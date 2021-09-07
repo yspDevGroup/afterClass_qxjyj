@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-26 11:45:40
- * @LastEditTime: 2021-09-03 18:11:50
+ * @LastEditTime: 2021-09-07 18:47:04
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -75,6 +75,13 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
   };
 
   const columns: ProColumns<TableListItem>[] = [
+    {
+      title: '序号',
+      dataIndex: 'index',
+      valueType: 'index',
+      width: 58,
+      align: 'center'
+    },
     {
       title: '机构名称',
       dataIndex: 'JGMC',

@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-09-03 18:05:30
+ * @LastEditTime: 2021-09-07 18:47:15
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef } from 'react';
@@ -26,6 +26,13 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
   }, [Keys]);
 
   const columns: ProColumns<TableListItem>[] = [
+    {
+      title: '序号',
+      dataIndex: 'index',
+      valueType: 'index',
+      width: 58,
+      align: 'center'
+    },
     {
       title: '课程名称',
       dataIndex: 'KCMC',

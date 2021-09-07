@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-09-06 17:02:23
- * @LastEditTime: 2021-09-06 17:49:30
+ * @LastEditTime: 2021-09-07 18:48:45
  * @LastEditors: wsl
  */
 /* eslint-disable max-nested-callbacks */
@@ -154,6 +154,13 @@ const ClassInfo = (props: any) => {
     }
   ];
   const columns: any = [
+    {
+      title: '序号',
+      dataIndex: 'index',
+      valueType: 'index',
+      width: 58,
+      align: 'center'
+    },
     {
       title: '姓名',
       dataIndex: 'JSXM',

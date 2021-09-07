@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-09-01 20:20:28
- * @LastEditTime: 2021-09-01 20:38:59
+ * @LastEditTime: 2021-09-07 18:43:51
  * @LastEditors: wsl
  */
 
@@ -18,11 +18,18 @@ import styles from '../index.module.less';
 import moment from 'moment';
 import { getJYJGTZGG, updateJYJGTZGG } from '@/services/after-class-qxjyj/jyjgtzgg';
 
-const TableList: React.FC = () => {
+const TableList = () => {
   const [dataSource, setDataSource] = useState<API.JYJGTZGG[]>();
   const actionRef = useRef<ActionType>();
 
   const columns: ProColumns<TableListItem>[] = [
+    {
+      title: '序号',
+      dataIndex: 'index',
+      valueType: 'index',
+      width: 58,
+      align: 'center'
+    },
     {
       title: '标题',
       dataIndex: 'BT',
