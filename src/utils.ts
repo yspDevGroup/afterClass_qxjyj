@@ -2,8 +2,8 @@
  * @description: 工具类
  * @author: zpl
  * @Date: 2021-08-09 10:36:53
- * @LastEditTime: 2021-09-01 08:41:01
- * @LastEditors: wsl
+ * @LastEditTime: 2021-09-07 19:09:27
+ * @LastEditors: zpl
  */
 import { history } from 'umi';
 
@@ -47,6 +47,34 @@ export const envjudge = (): PlatType => {
     return 'wx-pc'; // PC端微信
   }
   return 'pc'; // PC
+};
+
+/**
+ * 根据运行环境获取登录地址
+ *
+ * @return {*}
+ */
+export const getLoginPath = (): string => {
+  let loginPath: string;
+  switch (authType) {
+    case 'wechat':
+      // 前提是本应该已经注册为微信认证，且正确配置认证回调地址为 ${ENV_host}/AuthCallback/wechat
+      loginPath = `${ssoHost}/oauth2/Wechat?client_id=${clientId}&client_secret=${clientSecret}`;
+      break;
+    case 'authorization_code':
+      // TODO 待处理
+      loginPath = `${ssoHost}/oauth2/code?client_id=${clientId}&response_type=${authType}&redirect_uri=${''}state=${''}scope=${''}`;
+      break;
+    case 'password':
+    default:
+      {
+        // 为方便本地调试登录，认证回调地址通过参数传递给后台
+        const callback = encodeURIComponent(`${ENV_host}/AuthCallback/password`);
+        loginPath = `${ssoHost}/oauth2/password?response_type=${authType}&client_id=${clientId}&client_secret=${clientSecret}&redirect_uri=${callback}`;
+      }
+      break;
+  }
+  return loginPath;
 };
 
 /**
@@ -98,7 +126,7 @@ export const getOauthToken = () => {
     ysp_access_token: localStorage.getItem('ysp_access_token'),
     ysp_expires_in: localStorage.getItem('ysp_expires_in'),
     ysp_refresh_token: localStorage.getItem('ysp_refresh_token'),
-    ysp_token_type: localStorage.getItem('ysp_token_type')
+    ysp_token_type: localStorage.getItem('ysp_token_type'),
   };
 };
 
@@ -170,7 +198,7 @@ export const getWidHei = () => {
   }
   return {
     width,
-    height
+    height,
   };
 };
 
@@ -199,7 +227,7 @@ export const getCurrentXQ = (list: API.XNXQ[]): API.XNXQ | null => {
   // 未找到匹配学期时返回前一个
   // 先按降序排序
   const tempList = list.sort((a, b) => new Date(b.KSRQ).getTime() - new Date(a.KSRQ).getTime());
-  const previousXQ = tempList.find((xq) => new Date() >= new Date(xq.JSRQ));
+  const previousXQ = tempList.find(xq => new Date() >= new Date(xq.JSRQ));
   if (previousXQ) {
     return previousXQ;
   }
