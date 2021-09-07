@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-09-06 17:00:58
- * @LastEditTime: 2021-09-06 17:53:06
- * @LastEditors: wsl
+ * @LastEditTime: 2021-09-07 08:22:44
+ * @LastEditors: Sissle Lynn
  */
 import ProTable, { ActionType } from '@ant-design/pro-table';
 import { Button, Modal, Table, Tag } from 'antd';
@@ -11,6 +11,7 @@ import React, { useRef, useState } from 'react';
 import styles from '../index.less';
 import { history, Link } from 'umi';
 import { LeftOutlined } from '@ant-design/icons';
+import { paginationConfig } from '@/constant';
 /**
  * 班级详情
  * @returns
@@ -120,10 +121,37 @@ const ClassList = (props: any) => {
   ];
   const stdColumns: any = [
     {
+      title:'学号',
+      dataIndex:'XSId',
+      key:'XSId',
+      align:'center'
+    },
+    {
       title: '学生姓名',
       dataIndex: 'XSXM',
       key: 'XSXM',
       align: 'center'
+    },
+    {
+      title: '操作',
+      dataIndex: 'option',
+      key: 'option',
+      align: 'center',
+      search: false,
+      render: (text: any, record: any) => {
+        return (
+          <div className={styles.operation}>
+            <Link
+              to={{
+                pathname: '/schoolManagement/courseList/classList/studentInfo',
+                state: record
+              }}
+            >
+              详情
+            </Link>
+          </div>
+        );
+      }
     }
   ];
   return (
@@ -181,7 +209,7 @@ const ClassList = (props: any) => {
           }}
         >
           <div style={{ float: 'right', marginBottom: 12 }}>总人数：{stdData.length}人</div>
-          <Table dataSource={stdData} columns={stdColumns} pagination={false} rowKey="id" />
+          <Table dataSource={stdData} columns={stdColumns} pagination={paginationConfig} rowKey="id" />
         </Modal>
       </div>
     </div>

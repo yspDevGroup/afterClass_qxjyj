@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-24 19:59:45
- * @LastEditTime: 2021-09-03 17:16:10
+ * @LastEditTime: 2021-09-03 19:19:34
  * @LastEditors: Sissle Lynn
  */
 export const bgColor = [
@@ -41,7 +41,7 @@ export const topNum = [
     type: 'jgNum',
   },
   {
-    title: '开设课程总数',
+    title: '开设课程',
     type: 'kcNum'
   },
   {

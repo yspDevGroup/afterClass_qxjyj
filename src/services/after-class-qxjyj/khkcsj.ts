@@ -30,7 +30,7 @@ export async function getAllKHKCSJ(
     /** 是否与班级关联查询 */
     isRequired?: boolean;
     /** 课程类型ID */
-    kclxId?: string;
+    KHKCLXId?: string;
     /** 学年学期ID */
     XNXQId?: string;
     /** 学校ID */
@@ -42,11 +42,13 @@ export async function getAllKHKCSJ(
     /** 页数 */
     page?: number;
     /** 课程来源 */
-    KCLY?: string;
+    SSJGLX?: string;
     /** 每页记录数 */
     pageSize?: number;
     /** 课程名称 */
-    name?: string;
+    KCMC?: string;
+    /** 课后教育机构名称 */
+    KHJYJG?: string;
   },
   options?: { [key: string]: any },
 ) {
@@ -77,7 +79,7 @@ export async function createKHKCSJ(body: API.CreateKHKCSJ, options?: { [key: str
         id?: string;
         BJMC?: string;
         BJMS?: string;
-        BJZT?: '待发布' | '已发布' | '已下架' | '已结课';
+        BJZT?: '待开班' | '已开班' | '已结课';
         ZJS?: string;
         FJS?: string;
         BJRS?: number;
@@ -190,7 +192,7 @@ export async function allKCsByNJ(
       id?: string;
       KCMC?: string;
       KCTP?: string;
-      KCZT?: '待发布' | '已发布' | '已下架' | '已结课';
+      KCZT?: number;
       KCMS?: string;
       XNXQId?: string;
       KKRQ?: string | any;
