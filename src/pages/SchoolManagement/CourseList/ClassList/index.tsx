@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-09-06 17:00:58
- * @LastEditTime: 2021-09-07 08:22:44
- * @LastEditors: Sissle Lynn
+ * @LastEditTime: 2021-09-07 18:48:37
+ * @LastEditors: wsl
  */
 import ProTable, { ActionType } from '@ant-design/pro-table';
 import { Button, Modal, Table, Tag } from 'antd';
@@ -36,6 +36,13 @@ const ClassList = (props: any) => {
     setIsModalVisible(false);
   };
   const columns: any[] = [
+    {
+      title: '序号',
+      dataIndex: 'index',
+      valueType: 'index',
+      width: 58,
+      align: 'center'
+    },
     {
       title: '班级名称',
       dataIndex: 'BJMC',
@@ -121,10 +128,10 @@ const ClassList = (props: any) => {
   ];
   const stdColumns: any = [
     {
-      title:'学号',
-      dataIndex:'XSId',
-      key:'XSId',
-      align:'center'
+      title: '学号',
+      dataIndex: 'XSId',
+      key: 'XSId',
+      align: 'center'
     },
     {
       title: '学生姓名',

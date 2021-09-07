@@ -29,6 +29,13 @@ const CoursesIntroduced = (props: { JYYData: any }) => {
   };
   const columns: any[] = [
     {
+      title: '序号',
+      dataIndex: 'index',
+      valueType: 'index',
+      width: 58,
+      align: 'center'
+    },
+    {
       title: '课程名称',
       dataIndex: 'KCMC',
       key: 'KCMC',

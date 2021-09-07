@@ -4,7 +4,8 @@
   background-color: #fff;
 
   .hello {
-    margin-top: 120px;
+    margin-top: 20px;
+    margin-bottom: 10px;
     font-weight: bold;
     font-size: 24px;
     text-align: center;
@@ -21,6 +22,7 @@
     width: 400px;
     height: 300px;
     margin: 0 auto;
+    margin-top: 80px;
   }
 
   button {
@@ -32,8 +34,8 @@
 .pageWrapper {
   .topHeader {
     .headerItem {
-      text-align: center;
       padding: @padding-lg;
+      text-align: center;
 
       h3,
       p {
@@ -62,9 +64,9 @@
       overflow: hidden;
 
       ul {
-        list-style: none;
-        padding: 0;
         margin: 0;
+        padding: 0;
+        list-style: none;
 
         li {
           padding: 0 0 @padding-lg 0;
@@ -77,13 +79,13 @@
             span:nth-child(1) {
               flex: 1 1 140px;
               overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
               color: @text-color;
+              white-space: nowrap;
+              text-overflow: ellipsis;
 
-              &+span {
-                color: @normal-color;
+              & + span {
                 width: 140px;
+                color: @normal-color;
                 text-align: right;
               }
             }
@@ -92,7 +94,6 @@
               padding: 0;
             }
           }
-
         }
       }
 
@@ -108,7 +109,7 @@
     margin-top: @padding-lg;
 
     .chartWrapper {
-      >div {
+      > div {
         height: 270px !important;
       }
     }

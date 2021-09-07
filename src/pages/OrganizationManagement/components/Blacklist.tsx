@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 09:50:10
- * @LastEditTime: 2021-09-01 16:36:50
+ * @LastEditTime: 2021-09-07 18:46:51
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -67,6 +67,13 @@ const Blacklist = (props: { Keys: string | undefined }) => {
     const resupdateKHJYJG = await updateKHJYJG({ id: Datas!.value.KHJGRZSQs[0].id }, { ZT: 0 });
   };
   const columns: ProColumns<TableListItem>[] = [
+    {
+      title: '序号',
+      dataIndex: 'index',
+      valueType: 'index',
+      width: 58,
+      align: 'center'
+    },
     {
       title: '机构名称',
       dataIndex: 'JGMC',

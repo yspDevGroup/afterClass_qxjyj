@@ -28,6 +28,13 @@ const ClassInfo = (props: any) => {
   };
   const columns: any[] = [
     {
+      title: '序号',
+      dataIndex: 'index',
+      valueType: 'index',
+      width: 58,
+      align: 'center'
+    },
+    {
       title: '班级名称',
       dataIndex: 'BJMC',
       key: 'BJMC',

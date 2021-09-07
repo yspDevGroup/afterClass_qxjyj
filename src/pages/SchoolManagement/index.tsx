@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-24 14:37:02
- * @LastEditTime: 2021-09-03 19:01:50
+ * @LastEditTime: 2021-09-07 18:48:07
  * @LastEditors: wsl
  */
 import React, { useRef } from 'react';
@@ -22,6 +22,13 @@ const SchoolManagement = () => {
   const actionRef = useRef<ActionType>();
 
   const columns: ProColumns<KHHZXYSJ>[] = [
+    {
+      title: '序号',
+      dataIndex: 'index',
+      valueType: 'index',
+      width: 58,
+      align: 'center'
+    },
     {
       title: '学校名称',
       dataIndex: 'XXMC',
