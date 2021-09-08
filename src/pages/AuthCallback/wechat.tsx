@@ -2,8 +2,8 @@
  * @description: 微信认证回调，本页面接收code后，通知后台获取登录信息
  * @author: zpl
  * @Date: 2021-09-04 09:00:38
- * @LastEditTime: 2021-09-07 19:32:42
- * @LastEditors: zpl
+ * @LastEditTime: 2021-09-08 12:06:38
+ * @LastEditors: wsl
  */
 import React from 'react';
 import { message } from 'antd';
@@ -18,7 +18,7 @@ const WechatAuth = () => {
   const goto = async () => {
     // 通知后台产生token
     const search = new URLSearchParams(location.search);
-    const params = { suiteID: clientId };
+    const params = { plat: 'education', suiteID: clientId };
     for (const p of search.entries()) {
       params[p[0]] = p[1];
     }
