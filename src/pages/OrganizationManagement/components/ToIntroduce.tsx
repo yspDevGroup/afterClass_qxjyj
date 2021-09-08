@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-09-08 16:57:59
+ * @LastEditTime: 2021-09-08 17:59:15
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef } from 'react';
@@ -18,7 +18,6 @@ import { updateKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
 
 const HaveIntroduced = (props: { Keys: string | undefined; state: any; type?: string }) => {
   const { Keys, state, type } = props;
-  console.log(type);
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
   const actionRef1 = useRef<ActionType>();

@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-09-06 17:00:58
- * @LastEditTime: 2021-09-07 21:15:09
+ * @LastEditTime: 2021-09-08 17:59:12
  * @LastEditors: wsl
  */
 import ProTable, { ActionType } from '@ant-design/pro-table';
@@ -117,7 +117,6 @@ const ClassList = (props: any) => {
       }
     }
   ];
-  console.log(state.XXMC,'--------')
   return (
     <div className={styles.ClassInfo}>
       <Button

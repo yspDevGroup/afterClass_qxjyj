@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-26 16:24:39
- * @LastEditTime: 2021-09-07 09:09:55
+ * @LastEditTime: 2021-09-08 17:59:04
  * @LastEditors: wsl
  */
 import React, { useEffect, useState } from 'react';
@@ -28,7 +28,6 @@ type PropsType = {
 };
 const TeacherInfo = (props: any) => {
   const { state } = props.location;
-  console.log(state);
   const values = state;
   const { setForm, readonly = true } = props;
   const { initialState } = useModel('@@initialState');

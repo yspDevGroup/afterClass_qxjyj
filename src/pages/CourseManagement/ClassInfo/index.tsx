@@ -2,7 +2,7 @@ import ProTable, { ActionType } from '@ant-design/pro-table';
 import { Button, Modal, Table, Tag } from 'antd';
 import React, { useRef, useState } from 'react';
 import classes from './index.less';
-import { history } from 'umi';
+import { history, Link } from 'umi';
 import { LeftOutlined } from '@ant-design/icons';
 /**
  * 班级详情
@@ -79,14 +79,19 @@ const ClassInfo = (props: any) => {
       search: false,
       render: (text: any, record: any) => {
         return (
-          <a
-            onClick={() => {
-              showModal();
-              setStdData(record.KHXSBJs);
+          <Link
+            key="bjxq"
+            to={{
+              pathname: '/courseManagement/classInfo/studentList',
+              state: {
+                value: record,
+                xxmc: state.XXJBSJ.XXMC,
+                kcmc: state.KCMC
+              }
             }}
           >
-            查看学生
-          </a>
+            学生列表
+          </Link>
         );
       }
     }

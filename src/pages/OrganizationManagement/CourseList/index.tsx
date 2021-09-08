@@ -10,7 +10,6 @@ const { TabPane } = Tabs;
 const OrganizationManagement = (props: any) => {
   const { state } = props.history.location;
   const [Keys, setKeys] = useState<string>();
-  console.log(state, '=====');
   const callback = (key: any) => {
     setKeys(key);
   };

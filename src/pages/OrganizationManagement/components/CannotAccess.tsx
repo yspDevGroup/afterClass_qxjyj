@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 10:16:11
- * @LastEditTime: 2021-09-08 17:17:13
+ * @LastEditTime: 2021-09-08 17:58:48
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -115,7 +115,6 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
       align: 'center',
       width: 300,
       render: (text, record, action) => {
-        console.log(record);
         return (
           <div className={styles.operation}>
             <Link

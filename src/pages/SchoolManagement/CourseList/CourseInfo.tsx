@@ -157,7 +157,6 @@ const CourseInfo = (props: any) => {
       align: 'center',
       width: 200,
       render: (text: any, record: { value: any }) => {
-        console.log(record);
         return (
           <div className={styles.operation}>
             <Link

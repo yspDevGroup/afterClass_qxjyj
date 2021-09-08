@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-09-06 17:02:23
- * @LastEditTime: 2021-09-07 21:08:57
+ * @LastEditTime: 2021-09-08 17:59:08
  * @LastEditors: wsl
  */
 /* eslint-disable max-nested-callbacks */
@@ -24,7 +24,6 @@ const formItemLayout = {
 };
 const ClassInfo = (props: any) => {
   const { state } = props.location;
-  console.log(state, '++++++++++++');
   const [disabled, setDisabled] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
   const [JSSJOptions, setJSSJOptions] = useState<any>([]);

@@ -2,11 +2,18 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-24 17:21:12
- * @LastEditTime: 2021-09-07 12:25:02
- * @LastEditors: Sissle Lynn
+ * @LastEditTime: 2021-09-08 18:00:46
+ * @LastEditors: wsl
  */
 import React from 'react';
-import { HomeOutlined, ApartmentOutlined, FlagOutlined, AppstoreAddOutlined, NotificationOutlined,AuditOutlined } from '@ant-design/icons';
+import {
+  HomeOutlined,
+  ApartmentOutlined,
+  FlagOutlined,
+  AppstoreAddOutlined,
+  NotificationOutlined,
+  AuditOutlined
+} from '@ant-design/icons';
 export default {
   route: {
     path: '/',
@@ -19,7 +26,7 @@ export default {
       {
         path: '/organizationManagement',
         name: '机构管理',
-        icon: <ApartmentOutlined /> ,
+        icon: <ApartmentOutlined />,
         routes: [
           {
             path: '/organizationManagement/historys',
@@ -48,7 +55,7 @@ export default {
       {
         path: '/schoolManagement',
         name: '学校管理',
-        icon: <FlagOutlined /> ,
+        icon: <FlagOutlined />,
         routes: [
           {
             name: '学校详情',
@@ -80,11 +87,11 @@ export default {
                     hideInMenu: 'true',
                     name: '班级详情'
                   },
-              	  {
+                  {
                     path: '/schoolManagement/courseList/classList/studentList',
                     hideInMenu: 'true',
                     name: '学生列表'
-              	  }
+                  }
                 ]
               }
             ]
@@ -94,7 +101,26 @@ export default {
       {
         icon: <AppstoreAddOutlined />,
         path: '/courseManagement',
-        name: '课程管理'
+        name: '课程管理',
+        routes: [
+          {
+            path: '/courseManagement/courseInfo',
+            name: '课程详情',
+            hideInMenu: 'true'
+          },
+          {
+            path: '/courseManagement/classInfo',
+            name: '班级列表',
+            hideInMenu: 'true',
+            routes: [
+              {
+                path: '/courseManagement/classInfo/studentList',
+                name: '学生列表',
+                hideInMenu: 'true'
+              }
+            ]
+          }
+        ]
       },
       {
         icon: <NotificationOutlined />,
@@ -126,7 +152,7 @@ export default {
       {
         path: '/policyIssued',
         name: '政策发布',
-        icon: <AuditOutlined /> ,
+        icon: <AuditOutlined />,
         routes: [
           {
             name: '政策列表',

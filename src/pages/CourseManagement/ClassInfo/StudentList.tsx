@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-09-07 08:30:40
- * @LastEditTime: 2021-09-08 17:56:04
+ * @LastEditTime: 2021-09-08 17:57:55
  * @LastEditors: wsl
  */
 import React, { useEffect, useState } from 'react';
@@ -10,7 +10,7 @@ import { LeftOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Avatar, Row, Empty } from 'antd';
 import stuImg from '@/assets/stu.png';
 
-import styles from '../index.less';
+import styles from './index.less';
 
 const { Meta } = Card;
 const StudentList = (props: any) => {
@@ -30,7 +30,7 @@ const StudentList = (props: any) => {
         返回上一页
       </Button>
       <div>
-        <div className={styles.courseWrappers}>
+        <div className={styles.courseWrapper}>
           <div className={styles.searchWrapper}>
             <span style={{ fontSize: '16px', fontWeight: 'bold' }}>
               {state.xxmc}
