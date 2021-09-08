@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-09-01 08:49:11
- * @LastEditTime: 2021-09-02 17:02:28
+ * @LastEditTime: 2021-09-08 15:10:15
  * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useState } from 'react';
@@ -50,10 +50,13 @@ const Index = () => {
         }
         // 配置课程类型占比数据
         if (kclx?.length) {
-          const newKclx = [].map.call(kclx, (item: any) => {
-            return {
-              type: item.KCTAG,
-              value: item.count
+          const newKclx: { type: any; value: any; }[] = [];
+          kclx.forEach((item: { KCTAG: any; count: any; }) => {
+            if (item.count !== 0) {
+              newKclx.push({
+                type: item.KCTAG,
+                value: item.count
+              })
             }
           });
           setKclxData(newKclx);

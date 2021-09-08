@@ -2,8 +2,8 @@
  * @description:
  * @author: zpl
  * @Date: 2021-08-16 19:24:39
- * @LastEditTime: 2021-08-24 11:29:47
- * @LastEditors: zpl
+ * @LastEditTime: 2021-09-07 14:12:52
+ * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useState } from 'react';
 import { history, Link, useAccess } from 'umi';
@@ -36,8 +36,6 @@ const getActivedMenu = (menuList: MenuItemProps[], pathname: string, state?: unk
         return url1.origin === url2.origin;
       }) ||
       menuList[0];
-
-    console.log('===', currentMenu);
     return currentMenu;
   }
 

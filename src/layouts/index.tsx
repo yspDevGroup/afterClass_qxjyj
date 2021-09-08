@@ -3,7 +3,7 @@
  * @description: 通用布局
  * @author: zpl
  * @Date: 2021-08-16 17:31:56
- * @LastEditTime: 2021-09-02 17:31:06
+ * @LastEditTime: 2021-09-07 14:35:31
  * @LastEditors: Sissle Lynn
  */
 import React, { FC, useEffect, useState } from 'react';
@@ -13,6 +13,7 @@ import Footer from '@/components/Footer';
 
 import customMenu from './cusMenu';
 import headerTop from '@/assets/headerTop.png';
+import headerTopSmall from '@/assets/headerTopSmall.png'
 import styles from './index.less';
 import { BreadcrumbProps, PageHeaderProps } from 'antd';
 import RightContent from '@/components/RightContent';
@@ -55,18 +56,28 @@ const CommonLayout: FC<IRouteComponentProps> = ({ children, location, route, his
         <div>{children}</div>
       ) : (
         <ProLayout
+          {...customMenu}
           layout="side"
           headerRender={false}
           collapsedButtonRender={false}
           rightContentRender={false}
           disableContentMargin={false}
           pageTitleRender={() => {
-            return `${ENV_subTitle}`;
+            return `${ENV_title}`;
           }}
+          fixSiderbar
           location={{
             pathname: path
           }}
-          menuHeaderRender={() => {
+          menuHeaderRender={(logo, title, props) => {
+            if(props?.collapsed){
+              return <div className={styles.headerLogoSmall}>
+              <Link to="/">
+                <img src={headerTopSmall} />
+              </Link>
+              <span>教育<br/>局端</span>
+            </div>
+            }
             return (
               <div className={styles.headerLogo}>
                 <Link to="/">
@@ -76,17 +87,10 @@ const CommonLayout: FC<IRouteComponentProps> = ({ children, location, route, his
               </div>
             );
           }}
-          menu={{
-            request: async () => {
-              return customMenu;
-            }
-          }}
           menuItemRender={(item: MenuDataItem & { isUrl: boolean; onClick: () => void }, dom: React.ReactNode) =>
             menuRender(item, dom)
           }
-          onMenuHeaderClick={(e) => console.log(e)}
           footerRender={() => <Footer />}
-          collapsed={false}
         >
           <PageContainer
             style={{ minWidth: '990px' }}
