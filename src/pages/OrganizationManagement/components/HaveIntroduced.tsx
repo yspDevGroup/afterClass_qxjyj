@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-09-07 21:09:55
+ * @LastEditTime: 2021-09-08 17:24:59
  * @LastEditors: wsl
  */
 /*
@@ -25,6 +25,7 @@ import { updateKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
 
 const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
   const { Keys, state } = props;
+  console.log(state);
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
   const { username, jyjId, id } = currentUser!;

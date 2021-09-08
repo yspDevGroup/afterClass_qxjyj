@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-26 11:45:40
- * @LastEditTime: 2021-09-07 18:47:04
+ * @LastEditTime: 2021-09-08 17:24:01
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -91,7 +91,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
     },
 
     {
-      title: '联系人姓名',
+      title: '联系人',
       dataIndex: 'LXRXM',
       key: 'LXRXM',
       align: 'center',
@@ -99,7 +99,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       search: false
     },
     {
-      title: '联系人电话',
+      title: '联系电话',
       dataIndex: 'LXRDH',
       key: 'LXRDH',
       align: 'center',
@@ -144,7 +144,9 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
               key="kclb"
               to={{
                 pathname: '/organizationManagement/courseList',
-                state: record
+                state: {
+                  record: record
+                }
               }}
             >
               课程列表

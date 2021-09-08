@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 10:16:11
- * @LastEditTime: 2021-09-08 14:52:55
+ * @LastEditTime: 2021-09-08 17:17:13
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -11,7 +11,7 @@ import type { ActionType, ProColumns, RequestData } from '@ant-design/pro-table'
 import ProTable from '@ant-design/pro-table';
 import { TableListItem, TableListParams } from '../data';
 import styles from '../index.less';
-import { getKHJGRZSQ, updateKHJGRZSQ } from '@/services/after-class-qxjyj/khjgrzsq';
+import { updateKHJGRZSQ } from '@/services/after-class-qxjyj/khjgrzsq';
 import { history, Link, useModel } from 'umi';
 import moment from 'moment';
 import { getAllInstitutions, JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
@@ -77,7 +77,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
       search: false
     },
     {
-      title: '联系人姓名',
+      title: '联系人',
       dataIndex: 'LXRXM',
       key: 'LXRXM',
       align: 'center',
@@ -85,7 +85,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
       search: false
     },
     {
-      title: '联系人电话',
+      title: '联系电话',
       dataIndex: 'LXRDH',
       key: 'LXRDH',
       align: 'center',
@@ -131,7 +131,10 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
               key="kclb"
               to={{
                 pathname: '/organizationManagement/courseList',
-                state: record
+                state: {
+                  record: record,
+                  type: '待准入'
+                }
               }}
             >
               课程列表

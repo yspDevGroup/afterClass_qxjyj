@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-09-07 21:09:45
+ * @LastEditTime: 2021-09-08 16:57:59
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef } from 'react';
@@ -16,8 +16,9 @@ import { getCourses } from '@/services/after-class-qxjyj/jyjgsj';
 import EllipsisHint from '@/components/EllipsisHint';
 import { updateKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
 
-const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
-  const { Keys, state } = props;
+const HaveIntroduced = (props: { Keys: string | undefined; state: any; type?: string }) => {
+  const { Keys, state, type } = props;
+  console.log(type);
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
   const actionRef1 = useRef<ActionType>();
@@ -107,27 +108,30 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
             >
               课程详情
             </Link>
+            {type ? (
+              <></>
+            ) : (
+              <Popconfirm
+                key="zr"
+                title="确定引入该课程?"
+                onConfirm={async () => {
+                  const data = {
+                    KCZT: 2
+                  };
 
-            <Popconfirm
-              key="zr"
-              title="确定引入该课程?"
-              onConfirm={async () => {
-                const data = {
-                  KCZT: 2
-                };
-
-                const res = await updateKHKCSJ({ id: record.value.id }, data);
-                if (res.status === 'ok') {
-                  message.success('引入成功');
-                  actionRef1?.current?.reload();
-                }
-              }}
-              okText="确定"
-              cancelText="取消"
-              placement="topRight"
-            >
-              <a>引入</a>
-            </Popconfirm>
+                  const res = await updateKHKCSJ({ id: record.value.id }, data);
+                  if (res.status === 'ok') {
+                    message.success('引入成功');
+                    actionRef1?.current?.reload();
+                  }
+                }}
+                okText="确定"
+                cancelText="取消"
+                placement="topRight"
+              >
+                <a>引入</a>
+              </Popconfirm>
+            )}
           </div>
         );
       }

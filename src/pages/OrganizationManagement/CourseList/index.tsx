@@ -10,18 +10,22 @@ const { TabPane } = Tabs;
 const OrganizationManagement = (props: any) => {
   const { state } = props.history.location;
   const [Keys, setKeys] = useState<string>();
-
+  console.log(state, '=====');
   const callback = (key: any) => {
     setKeys(key);
   };
   return (
     <div className={styles.OrganizationManagement}>
       <Tabs defaultActiveKey="YZR" onChange={callback}>
-        <TabPane tab="已引入课程" key="YZR">
-          <HaveIntroduced Keys={Keys} state={state} />
-        </TabPane>
+        {state.type ? (
+          <></>
+        ) : (
+          <TabPane tab="已引入课程" key="YZR">
+            <HaveIntroduced Keys={Keys} state={state.record} />
+          </TabPane>
+        )}
         <TabPane tab="待引入课程" key="WZR">
-          <ToIntroduce Keys={Keys} state={state} />
+          <ToIntroduce Keys={Keys} state={state.record} type={state?.type} />
         </TabPane>
       </Tabs>
     </div>
