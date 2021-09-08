@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-09-01 08:49:11
- * @LastEditTime: 2021-09-08 10:07:38
+ * @LastEditTime: 2021-09-08 10:56:43
  * @LastEditors: wsl
  */
 import React, { useEffect, useState } from 'react';
@@ -71,13 +71,16 @@ const Register = () => {
   };
 
   const submit = async () => {
-    console.log(cityAdcode);
-    const res = await updateJYJGSJ({ id: currentUser!.jyjId! }, { XZQH: cityAdcode });
-    if (res.status === 'ok') {
-      message.success('保存成功');
-      window.location.reload();
+    if (typeof cityAdcode !== 'undefined') {
+      const res = await updateJYJGSJ({ id: currentUser!.jyjId! }, { XZQH: cityAdcode });
+      if (res.status === 'ok') {
+        message.success('保存成功');
+        window.location.reload();
+      } else {
+        message.success(res.message);
+      }
     } else {
-      message.success(res.message);
+      message.info('请选择所在行政区域');
     }
   };
   return (
