@@ -2,18 +2,18 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-09-01 08:49:11
- * @LastEditTime: 2021-09-07 18:36:04
+ * @LastEditTime: 2021-09-08 10:07:38
  * @LastEditors: wsl
  */
 import React, { useEffect, useState } from 'react';
 import { useModel } from 'umi';
-import { Button, Form, Select } from 'antd';
+import { Button, Form, message, Select } from 'antd';
 import img from '@/assets/Company.png';
-import $ from 'jquery';
+import { updateJYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
+import styles from './index.less';
 
 const { Option } = Select;
 
-import styles from './index.less';
 const Register = () => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
@@ -22,106 +22,75 @@ const Register = () => {
   const [cityAdcode, setCityAdcode] = useState<string>();
   const [secondCity, setSecondCity] = useState<any>();
   const [county, setCounty] = useState<any>();
-  const [cityName, setCityName] = useState<string>();
-  const [provinceName, setProvinceName] = useState<string>();
-  const [countyName, setCountyName] = useState<string>();
-  const [Datas, setDatas] = useState<any>();
 
-  // const requestData = () => {
-  //   $.ajax({
-  //     url: 'http://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/100000_province.json',
-  //     data: {},
-  //     success: function (data) {
-  //       setCities(data.rows);
-  //     }
-  //   });
-  // };
-  // useEffect(() => {
-  //   requestData();
-  //   if (typeof XZQHM !== 'undefined') {
-  //     $.ajax({
-  //       url: `http://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${XZQHM?.substring(0, 2)}0000_city.json`,
-  //       data: {},
-  //       success: function (data) {
-  //         setSecondCity(data.rows);
-  //       }
-  //     });
-  //     $.ajax({
-  //       url: `http://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${XZQHM?.substring(0, 4)}00_district.json`,
-  //       data: {},
-  //       success: function (data) {
-  //         let newArr: any[] = [];
-  //         data.rows.forEach((item: any) => {
-  //           if (item.adcode.substring(0, 4) === XZQHM?.substring(0, 4)) {
-  //             newArr.push(item);
-  //           }
-  //         });
-  //         setCounty(newArr);
-  //       }
-  //     });
-  //   }
-  // }, [XZQHM]);
+  const requestData = () => {
+    const ajax = new XMLHttpRequest();
+    ajax.open('get', 'http://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/100000_province.json');
+    ajax.send();
+    ajax.onreadystatechange = function () {
+      if (ajax.readyState === 4 && ajax.status === 200) {
+        const data = JSON.parse(ajax.responseText);
+        setCities(data.rows);
+      }
+    };
+  };
+  useEffect(() => {
+    requestData();
+  }, []);
 
-  // const handleChange = (type: string, value: any) => {
-  //   if (type === 'cities') {
-  //     $.ajax({
-  //       url: `http://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${value.value}_city.json`,
-  //       data: {},
-  //       success: function (data) {
-  //         setSecondCity(data.rows);
-  //         setCityName(value.label);
-  //       }
-  //     });
-  //   } else if (type === 'secondCity') {
-  //     $.ajax({
-  //       url: `http://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${value.value}_district.json`,
-  //       data: {},
-  //       success: function (data) {
-  //         let newArr: any[] = [];
-  //         data.rows.forEach((item: any) => {
-  //           if (item.adcode.substring(0, 4) === value.value.substring(0, 4)) {
-  //             newArr.push(item);
-  //           }
-  //         });
-  //         setCounty(newArr);
-  //         setProvinceName(value.label);
-  //       }
-  //     });
-  //   } else if (type === 'county') {
-  //     setCityAdcode(value.value);
-  //     setCountyName(value.label);
-  //   }
-  // };
-  // const submit = async (params: any) => {
-  //   const { id, ...info } = params;
-  // };
+  const handleChange = (type: string, value: any) => {
+    if (type === 'cities') {
+      const ajax = new XMLHttpRequest();
+      ajax.open('get', `http://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${value}_city.json`);
+      ajax.send();
+      ajax.onreadystatechange = function () {
+        if (ajax.readyState === 4 && ajax.status === 200) {
+          const data = JSON.parse(ajax.responseText);
+          setSecondCity(data.rows);
+        }
+      };
+    } else if (type === 'secondCity') {
+      const ajax = new XMLHttpRequest();
+      ajax.open('get', `http://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${value}_district.json`);
+      ajax.send();
+      ajax.onreadystatechange = function () {
+        if (ajax.readyState === 4 && ajax.status === 200) {
+          let newArr: any[] = [];
+          const data = JSON.parse(ajax.responseText);
+          data.rows.forEach((item: any) => {
+            if (item.adcode.substring(0, 4) === value.substring(0, 4)) {
+              newArr.push(item);
+            }
+          });
+          setCounty(newArr);
+        }
+      };
+    } else if (type === 'county') {
+      setCityAdcode(value);
+    }
+  };
+
+  const submit = async () => {
+    console.log(cityAdcode);
+    const res = await updateJYJGSJ({ id: currentUser!.jyjId! }, { XZQH: cityAdcode });
+    if (res.status === 'ok') {
+      message.success('保存成功');
+      window.location.reload();
+    } else {
+      message.success(res.message);
+    }
+  };
   return (
     <div className={styles.Index}>
       <img src={img} alt="" />
       <p className={styles.hello}>您好，欢迎使用课后服务平台</p>
       <p className={styles.apply}>请先选择所在行政区域</p>
-      {/* <Form form={form} onFinish={submit} className={styles.Forms}>
-        <Form.Item
-          name="XZQHM"
-          key="XZQHM"
-          label="行政区域："
-          rules={[
-            {
-              required: true,
-              message: '请选择行政区域'
-            }
-          ]}
-        >
+      <Form form={form} onFinish={submit} className={styles.Forms}>
+        <Form.Item name="XZQHM" key="XZQHM">
           <Select
-            style={{ width: 100, marginRight: 10 }}
+            style={{ width: 120, marginRight: 10 }}
             onChange={(value: any) => {
               handleChange('cities', value);
-            }}
-            labelInValue
-            defaultValue={{
-              value: `${XZQHM!.substring(0, 2)}0000`,
-              label: Datas?.XZQ.split('/')[0],
-              key: `${XZQHM!.substring(0, 2)}0000`
             }}
           >
             {cities?.map((item: any) => {
@@ -133,15 +102,9 @@ const Register = () => {
             })}
           </Select>
           <Select
-            style={{ width: 100, marginRight: 10 }}
+            style={{ width: 120, marginRight: 10 }}
             onChange={(value: any) => {
               handleChange('secondCity', value);
-            }}
-            labelInValue
-            defaultValue={{
-              value: `${XZQHM!.substring(0, 4)}00`,
-              label: Datas?.XZQ.split('/')[1],
-              key: `${XZQHM!.substring(0, 4)}00`
             }}
           >
             {secondCity?.map((item: any) => {
@@ -153,12 +116,10 @@ const Register = () => {
             })}
           </Select>
           <Select
-            style={{ width: 100 }}
+            style={{ width: 120 }}
             onChange={(value: any) => {
               handleChange('county', value);
             }}
-            labelInValue
-            defaultValue={{ value: XZQHM!, label: Datas?.XZQ.split('/')[2], key: XZQHM! }}
           >
             {county?.map((item: any) => {
               return (
@@ -169,7 +130,12 @@ const Register = () => {
             })}
           </Select>
         </Form.Item>
-      </Form> */}
+        <Form.Item wrapperCol={{ offset: 6, span: 12 }}>
+          <Button type="primary" htmlType="submit">
+            保存
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 };

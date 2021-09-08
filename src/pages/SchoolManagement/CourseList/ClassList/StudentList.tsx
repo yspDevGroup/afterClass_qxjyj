@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-09-07 08:30:40
- * @LastEditTime: 2021-09-07 21:16:26
+ * @LastEditTime: 2021-09-08 09:49:05
  * @LastEditors: wsl
  */
 import React, { useEffect, useState } from 'react';
@@ -15,14 +15,6 @@ import styles from '../index.less';
 const { Meta } = Card;
 const StudentList = (props: any) => {
   const { state } = props.history.location;
-  const { xxmc, kcmc, bjmc, xssj } = state;
-  const [stuList, setStuList] = useState<any>();
-  useEffect(() => {
-    if (xssj) {
-      setStuList(xssj);
-    }
-  }, [xssj]);
-
   return (
     <div>
       <Button

@@ -7,13 +7,13 @@
     margin-top: 20px;
     margin-bottom: 10px;
     font-weight: bold;
-    font-size: 24px;
+    font-size: 20px;
     text-align: center;
   }
 
   .apply {
     color: #333333;
-    font-size: 18px;
+    font-size: 16px;
     text-align: center;
   }
 
@@ -118,6 +118,19 @@
   :global {
     .ant-card-head-title {
       font-weight: bold;
+    }
+  }
+}
+
+.Forms {
+  :global {
+    .ant-row:nth-child(1) {
+      display: flex;
+      justify-content: center;
+      .ant-col:nth-child(1) {
+        flex: inherit;
+        width: 380px;
+      }
     }
   }
 }
