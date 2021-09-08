@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 10:16:11
- * @LastEditTime: 2021-09-07 18:46:56
+ * @LastEditTime: 2021-09-08 14:52:55
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -115,6 +115,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
       align: 'center',
       width: 300,
       render: (text, record, action) => {
+        console.log(record);
         return (
           <div className={styles.operation}>
             <Link
@@ -152,7 +153,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
                   message.success('准入成功');
                   actionRef2?.current?.reload();
                 }
-                const resupdateKHJYJG = await updateKHJYJG({ id: Datas!.value?.KHJGRZSQs[0].id }, { ZT: 0 });
+                await updateKHJYJG({ id: record.value?.KHJGRZSQs[0].KHJYJGId }, { ZT: 0 });
               }}
               okText="确定"
               cancelText="取消"
