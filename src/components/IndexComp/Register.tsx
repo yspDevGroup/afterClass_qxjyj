@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-09-01 08:49:11
- * @LastEditTime: 2021-09-08 10:56:43
+ * @LastEditTime: 2021-09-08 20:47:52
  * @LastEditors: wsl
  */
 import React, { useEffect, useState } from 'react';
@@ -22,6 +22,10 @@ const Register = () => {
   const [cityAdcode, setCityAdcode] = useState<string>();
   const [secondCity, setSecondCity] = useState<any>();
   const [county, setCounty] = useState<any>();
+  const [provinceVal, setProvinceVal] = useState<any>();
+  const [cityVal, setCityVal] = useState<any>();
+  const [countyVal, setCountyVal] = useState<any>();
+  const [Datas, setDatas] = useState<any>();
 
   const requestData = () => {
     const ajax = new XMLHttpRequest();
@@ -41,32 +45,57 @@ const Register = () => {
   const handleChange = (type: string, value: any) => {
     if (type === 'cities') {
       const ajax = new XMLHttpRequest();
-      ajax.open('get', `http://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${value}_city.json`);
+      ajax.open('get', `http://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${value.value}_city.json`);
       ajax.send();
       ajax.onreadystatechange = function () {
         if (ajax.readyState === 4 && ajax.status === 200) {
           const data = JSON.parse(ajax.responseText);
+          if (value.value === '810000' || value.value === '820000' || value.value === '710000') {
+            setCityAdcode(value.value);
+          } else {
+            setCityAdcode(undefined);
+          }
           setSecondCity(data.rows);
+          setProvinceVal({
+            value: value.value,
+            label: value.label,
+            key: value.value
+          });
+          setCityVal({});
+          setCountyVal({});
+          setCounty([]);
         }
       };
     } else if (type === 'secondCity') {
       const ajax = new XMLHttpRequest();
-      ajax.open('get', `http://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${value}_district.json`);
+      ajax.open('get', `http://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${value.value}_district.json`);
       ajax.send();
       ajax.onreadystatechange = function () {
         if (ajax.readyState === 4 && ajax.status === 200) {
           let newArr: any[] = [];
           const data = JSON.parse(ajax.responseText);
           data.rows.forEach((item: any) => {
-            if (item.adcode.substring(0, 4) === value.substring(0, 4)) {
+            if (item.adcode.substring(0, 4) === value.value.substring(0, 4)) {
               newArr.push(item);
             }
           });
           setCounty(newArr);
+          setCityVal({
+            value: value.value,
+            label: value.label,
+            key: value.value
+          });
+          setCountyVal({});
+          setCityAdcode(undefined);
         }
       };
     } else if (type === 'county') {
-      setCityAdcode(value);
+      setCityAdcode(value.value);
+      setCountyVal({
+        value: value.value,
+        label: value.label,
+        key: value.value
+      });
     }
   };
 
@@ -95,6 +124,9 @@ const Register = () => {
             onChange={(value: any) => {
               handleChange('cities', value);
             }}
+            labelInValue
+            value={provinceVal}
+            placeholder="请选择"
           >
             {cities?.map((item: any) => {
               return (
@@ -109,6 +141,9 @@ const Register = () => {
             onChange={(value: any) => {
               handleChange('secondCity', value);
             }}
+            labelInValue
+            value={cityVal}
+            placeholder="请选择"
           >
             {secondCity?.map((item: any) => {
               return (
@@ -123,6 +158,9 @@ const Register = () => {
             onChange={(value: any) => {
               handleChange('county', value);
             }}
+            labelInValue
+            value={countyVal}
+            placeholder="请选择"
           >
             {county?.map((item: any) => {
               return (
