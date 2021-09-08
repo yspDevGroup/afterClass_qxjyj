@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-duplicate-imports */
 /* eslint-disable max-params */
 
 import React, { useRef } from 'react';
 import { history } from 'umi';
 import { Button, message, Popconfirm, Space, Tag } from 'antd';
-import { useModel } from '@/.umi/plugin-model/useModel';
+import { useModel } from 'umi';
 import EllipsisHint from '@/components/EllipsisHint';
 import ProTable, { ActionType } from '@ant-design/pro-table';
 import { toIntroduceCourses } from '@/services/after-class-qxjyj/jyjgsj';

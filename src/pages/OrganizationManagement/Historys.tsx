@@ -20,7 +20,7 @@ import { TableListItem, TableListParams } from './data';
 import styles from './index.less';
 import { getKHJGRZSQ, updateKHJGRZSQ } from '@/services/after-class-qxjyj/khjgrzsq';
 import { getAllInstitutions, JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
-import { useModel } from '@/.umi/plugin-model/useModel';
+import { useModel } from 'umi';
 
 const Historys = (props: { Keys: string | undefined }) => {
   const { Keys } = props;

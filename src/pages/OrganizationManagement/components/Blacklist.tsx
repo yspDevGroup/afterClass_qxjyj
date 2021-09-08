@@ -12,7 +12,7 @@ import ProTable from '@ant-design/pro-table';
 import { TableListItem, TableListParams } from '../data';
 import styles from '../index.less';
 import { getKHJGRZSQ, updateKHJGRZSQ } from '@/services/after-class-qxjyj/khjgrzsq';
-import { useModel } from '@/.umi/plugin-model/useModel';
+import { useModel } from 'umi';
 import { getAllInstitutions, JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
 import { updateKHJYJG } from '@/services/after-class-qxjyj/khjyjg';
 

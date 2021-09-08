@@ -4,7 +4,7 @@ import CoursesIntroduced from './components/CoursesIntroduced';
 import LocalCourses from './components/LocalCourses';
 import classes from './index.less';
 import { JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
-import { useModel } from '@/.umi/plugin-model/useModel';
+import { useModel } from 'umi';
 const { TabPane } = Tabs;
 /**
  * 课程管理

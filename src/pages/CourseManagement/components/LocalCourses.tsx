@@ -3,7 +3,6 @@
 import React, { useRef } from 'react';
 import { history } from 'umi';
 import { Button, message, Popconfirm, Space, Tag } from 'antd';
-import { useModel } from '@/.umi/plugin-model/useModel';
 import EllipsisHint from '@/components/EllipsisHint';
 import ProTable, { ActionType } from '@ant-design/pro-table';
 import { getAllCourses } from '@/services/after-class-qxjyj/jyjgsj';
