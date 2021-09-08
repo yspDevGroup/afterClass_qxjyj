@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-09-07 18:48:20
+ * @LastEditTime: 2021-09-07 21:11:02
  * @LastEditors: wsl
  */
 /*
@@ -81,7 +81,7 @@ const HaveIntroduced = (props: any) => {
       }
     },
     {
-      title: '代课老师',
+      title: '任课教师',
       dataIndex: 'DKLS',
       key: 'DKLS',
       align: 'center',
@@ -121,7 +121,10 @@ const HaveIntroduced = (props: any) => {
               key="bjxq"
               to={{
                 pathname: '/schoolManagement/courseList/classList',
-                state: record.value
+                state: {
+                  value: record.value,
+                  xxmc: state.XXMC
+                }
               }}
             >
               班级列表

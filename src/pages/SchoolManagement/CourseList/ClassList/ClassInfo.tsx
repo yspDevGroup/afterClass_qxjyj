@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-09-06 17:02:23
- * @LastEditTime: 2021-09-07 18:48:45
+ * @LastEditTime: 2021-09-07 21:08:57
  * @LastEditors: wsl
  */
 /* eslint-disable max-nested-callbacks */
@@ -210,7 +210,7 @@ const ClassInfo = (props: any) => {
         <div style={{ width: '85%', minWidth: '850px', margin: '0 auto' }} className={styles.formType}>
           <CustomForm values={formValues || {}} formItems={basicForm} formLayout={formItemLayout} hideBtn={true} />
           <Table
-            title={() => '班级老师列表'}
+            title={() => '任课教师列表'}
             columns={columns}
             dataSource={teacherData}
             pagination={false}

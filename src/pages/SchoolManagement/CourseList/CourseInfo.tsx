@@ -100,7 +100,7 @@ const CourseInfo = (props: any) => {
       groupItems: [
         {
           type: 'select',
-          label: '代课老师',
+          label: '任课教师',
           placeholder: '',
           key: 'jsIds',
           name: 'jsIds',
@@ -192,7 +192,7 @@ const CourseInfo = (props: any) => {
         <div style={{ width: '85%', minWidth: '850px', margin: '0 auto' }} className={styles.formType}>
           <CustomForm values={formValues || {}} formItems={basicForm} formLayout={formItemLayout} hideBtn={true} />
           <Table
-            title={() => '代课老师列表'}
+            title={() => '任课教师列表'}
             columns={columns}
             dataSource={teacherData}
             pagination={false}

@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-24 17:21:12
- * @LastEditTime: 2021-09-06 17:02:00
+ * @LastEditTime: 2021-09-07 21:13:12
  * @LastEditors: wsl
  */
 export default [
@@ -73,6 +73,11 @@ export default [
                 path: '/schoolManagement/courseList/classList/classInfo',
                 hideInMenu: 'true',
                 name: '班级详情'
+              },
+              {
+                path: '/schoolManagement/courseList/classList/studentList',
+                hideInMenu: 'true',
+                name: '学生列表'
               }
             ]
           }
@@ -83,7 +88,19 @@ export default [
 
   {
     path: '/courseManagement',
-    name: '课程管理'
+    name: '课程管理',
+    routes: [
+      {
+        path: '/courseManagement/courseInfo',
+        name: '课程详情',
+        hideInMenu: 'true'
+      },
+      {
+        path: '/courseManagement/classInfo',
+        name: '班级详情',
+        hideInMenu: 'true'
+      }
+    ]
   },
   {
     path: '/announcements',

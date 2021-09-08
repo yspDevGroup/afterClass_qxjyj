@@ -103,7 +103,7 @@ const LocalCourses = (props: { JYYData: any }) => {
           <a
             onClick={() => {
               history.push({
-                pathname: `/courseInfo`,
+                pathname: `/courseManagement/courseInfo`,
                 state: { ...record }
               });
             }}
@@ -113,7 +113,7 @@ const LocalCourses = (props: { JYYData: any }) => {
           <a
             onClick={() => {
               history.push({
-                pathname: `/classInfo`,
+                pathname: `/courseManagement/classInfo`,
                 state: { ...record }
               });
             }}

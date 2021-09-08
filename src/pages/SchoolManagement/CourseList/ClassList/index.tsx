@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-09-06 17:00:58
- * @LastEditTime: 2021-09-07 18:48:37
+ * @LastEditTime: 2021-09-07 21:15:09
  * @LastEditors: wsl
  */
 import ProTable, { ActionType } from '@ant-design/pro-table';
@@ -19,22 +19,8 @@ import { paginationConfig } from '@/constant';
 const ClassList = (props: any) => {
   const { state } = props.location;
   const actionRef = useRef<ActionType>();
-  const { KHBJSJs } = state;
-  console.log(KHBJSJs, '====');
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [stdData, setStdData] = useState([]);
+  const { KHBJSJs } = state.value;
 
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
   const columns: any[] = [
     {
       title: '序号',
@@ -113,54 +99,25 @@ const ClassList = (props: any) => {
             >
               班级详情
             </Link>
-            <a
-              onClick={() => {
-                showModal();
-                setStdData(record.KHXSBJs);
+            <Link
+              key="bjxq"
+              to={{
+                pathname: '/schoolManagement/courseList/classList/studentList',
+                state: {
+                  value: record,
+                  xxmc: state.xxmc,
+                  kcmc: state.value.KCMC
+                }
               }}
             >
               学生列表
-            </a>
-          </div>
-        );
-      }
-    }
-  ];
-  const stdColumns: any = [
-    {
-      title: '学号',
-      dataIndex: 'XSId',
-      key: 'XSId',
-      align: 'center'
-    },
-    {
-      title: '学生姓名',
-      dataIndex: 'XSXM',
-      key: 'XSXM',
-      align: 'center'
-    },
-    {
-      title: '操作',
-      dataIndex: 'option',
-      key: 'option',
-      align: 'center',
-      search: false,
-      render: (text: any, record: any) => {
-        return (
-          <div className={styles.operation}>
-            <Link
-              to={{
-                pathname: '/schoolManagement/courseList/classList/studentInfo',
-                state: record
-              }}
-            >
-              详情
             </Link>
           </div>
         );
       }
     }
   ];
+  console.log(state.XXMC,'--------')
   return (
     <div className={styles.ClassInfo}>
       <Button
@@ -177,12 +134,12 @@ const ClassList = (props: any) => {
       </Button>
       <div className={styles.contents}>
         <div className={styles.headerInfo}>
-          <span>课程名称：{state?.KCMC}</span>
-          {state?.SSJGLX === '机构课程' ? <span>所属机构：{state?.KHJYJG?.QYMC}</span> : ''}
-          <span>课程类型：{state?.KHKCLX?.KCTAG}</span>
+          <span>课程名称：{state?.value.KCMC}</span>
+          {state?.value.SSJGLX === '机构课程' ? <span>所属机构：{state?.value.KHJYJG?.QYMC}</span> : ''}
+          <span>课程类型：{state?.value.KHKCLX?.KCTAG}</span>
           <span>
             适用年级：
-            {state?.NJSJs.map((item: any) => {
+            {state?.value.NJSJs.map((item: any) => {
               return <Tag key={item.id}>{item.XD === '初中' ? `${item.NJMC}` : `${item.XD}${item.NJMC}`}</Tag>;
             })}
           </span>
@@ -203,21 +160,6 @@ const ClassList = (props: any) => {
             search: false
           }}
         />
-        <Modal
-          title={`学生列表 `}
-          visible={isModalVisible}
-          onOk={handleOk}
-          onCancel={handleCancel}
-          footer={false}
-          bodyStyle={{
-            maxHeight: '600px',
-            overflowY: 'auto',
-            minHeight: 200
-          }}
-        >
-          <div style={{ float: 'right', marginBottom: 12 }}>总人数：{stdData.length}人</div>
-          <Table dataSource={stdData} columns={stdColumns} pagination={paginationConfig} rowKey="id" />
-        </Modal>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-09-07 18:47:09
+ * @LastEditTime: 2021-09-07 21:09:55
  * @LastEditors: wsl
  */
 /*
@@ -76,7 +76,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
       }
     },
     {
-      title: '代课老师',
+      title: '任课教师',
       dataIndex: 'DKLS',
       key: 'DKLS',
       align: 'center',
