@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-24 19:59:45
- * @LastEditTime: 2021-09-03 19:19:34
+ * @LastEditTime: 2021-09-09 10:39:44
  * @LastEditors: Sissle Lynn
  */
 export const bgColor = [
@@ -63,11 +63,15 @@ export const columnConfig: any = {
   yField: 'value',
   xAxis: {
     label: {
-      autoHide: true,
+      autoHide: false,
       autoRotate: false
     }
   },
   yAxis: { minInterval: 1 },
+  grid:{
+    containLabel: true,
+    bottom: 40
+  },
   columnStyle: {},
   maxColumnWidth: 30,
   meta: {
@@ -110,5 +114,9 @@ export const lineConfig: any = {
   seriesField: 'category',
   legend: false,
   yAxis: {},
+  grid:{
+    containLabel: true,
+    bottom: 40
+  },
   color: ['#1979C9', '#D62A0D', '#FAA219'],
 };

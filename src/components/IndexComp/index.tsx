@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-09-01 08:49:11
- * @LastEditTime: 2021-09-08 15:10:15
+ * @LastEditTime: 2021-09-09 10:31:16
  * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useState } from 'react';
@@ -63,11 +63,14 @@ const Index = () => {
         }
         // 配置各校报名情况数据
         if (xxbm?.length) {
-          const newXxbm = [].map.call(xxbm, (item: any) => {
-            return {
-              category: "报名人数",
-              type: item.XXMC,
-              value: item.count
+          const newXxbm: { category: string; type: any; value: any; }[] = [];
+          xxbm.forEach((item: any) => {
+            if (item.id) {
+              newXxbm.push({
+                category: "报名人数",
+                type: item.XXMC,
+                value: item.count
+              })
             }
           });
           setXxbmData(newXxbm);
@@ -95,7 +98,7 @@ const Index = () => {
       <Row gutter={[24, 24]} className={styles.chartWrapper}>
         <Col span={24}>
           <Card title="各校报名情况" bordered={false}>
-            <LineChart data={xxbmData} />
+            <LineChart data={xxbmData} noDataText='暂无报名信息' />
           </Card>
         </Col>
       </Row>
