@@ -53,7 +53,7 @@
         font-size: 14px;
         line-height: 18px;
         display: block;
-        overflow:hidden;
+        overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
       }
@@ -87,7 +87,7 @@
               white-space: nowrap;
               text-overflow: ellipsis;
 
-              & + span {
+              &+span {
                 width: 140px;
                 color: @normal-color;
                 text-align: right;
@@ -109,11 +109,21 @@
     }
   }
 
+  .rowWrapper {
+    div[class*='ant-col']:nth-child(1) {
+      padding-right: 12px;
+    }
+
+    div[class*='ant-col']+div[class*='ant-col'] {
+      padding-left: 12px;
+    }
+  }
+
   .chartWrapper {
     margin-top: @padding-lg;
 
-    .chartWrapper {
-      > div {
+    .chartContainer {
+      >div {
         height: 270px !important;
       }
     }
@@ -131,6 +141,7 @@
     .ant-row:nth-child(1) {
       display: flex;
       justify-content: center;
+
       .ant-col:nth-child(1) {
         flex: inherit;
         width: 380px;

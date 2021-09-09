@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-24 19:59:45
- * @LastEditTime: 2021-09-09 10:39:44
+ * @LastEditTime: 2021-09-09 11:48:52
  * @LastEditors: Sissle Lynn
  */
 export const bgColor = [
@@ -58,6 +58,7 @@ export const topNum = [
   }
 ];
 export const columnConfig: any = {
+  appendPadding: 20,
   data: [],
   xField: 'type',
   yField: 'value',
@@ -80,7 +81,7 @@ export const columnConfig: any = {
   }
 };
 export const pieConfig: any = {
-  appendPadding: 10,
+  appendPadding: 20,
   legend: {
     layout: 'horizontal',
     position: 'top',
@@ -108,6 +109,7 @@ export const pieConfig: any = {
   },
 };
 export const lineConfig: any = {
+  appendPadding: 20,
   data: [],
   xField: 'type',
   yField: 'value',

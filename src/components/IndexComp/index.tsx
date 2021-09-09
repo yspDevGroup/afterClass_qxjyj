@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-09-01 08:49:11
- * @LastEditTime: 2021-09-09 10:31:16
+ * @LastEditTime: 2021-09-09 11:51:34
  * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useState } from 'react';
@@ -83,7 +83,7 @@ const Index = () => {
   return (
     <div className={styles.pageWrapper}>
       <Topbar data={homeData} />
-      <Row gutter={[24, 24]} className={styles.chartWrapper}>
+      <Row className={`${styles.chartWrapper} ${styles.rowWrapper}`}>
         <Col span={12}>
           <Card title="各校开课数量" bordered={false}>
             <ColumnChart data={xxkcData} color='#6186EE' />
@@ -95,7 +95,7 @@ const Index = () => {
           </Card>
         </Col>
       </Row>
-      <Row gutter={[24, 24]} className={styles.chartWrapper}>
+      <Row className={styles.chartWrapper}>
         <Col span={24}>
           <Card title="各校报名情况" bordered={false}>
             <LineChart data={xxbmData} noDataText='暂无报名信息' />

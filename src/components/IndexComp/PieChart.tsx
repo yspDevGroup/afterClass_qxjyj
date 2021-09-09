@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-17 19:55:27
- * @LastEditTime: 2021-09-02 12:03:28
+ * @LastEditTime: 2021-09-09 11:49:41
  * @LastEditors: Sissle Lynn
  */
 import { Empty } from 'antd';
@@ -19,7 +19,7 @@ const PieChart = (props: { data?: any, noDataImg?: any, noDataText?: string }) =
   pieConfig.data = data;
 
   return (
-    <div className={styles.chartWrapper}>
+    <div className={styles.chartContainer}>
       {data?.length ? <Pie {...pieConfig} /> : <Empty
         image={noDataImg}
         imageStyle={{

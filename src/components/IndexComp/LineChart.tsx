@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-17 19:55:27
- * @LastEditTime: 2021-09-02 16:53:30
+ * @LastEditTime: 2021-09-09 11:49:37
  * @LastEditors: Sissle Lynn
  */
 import { Empty } from 'antd';
@@ -17,7 +17,7 @@ const LineChart = (props: { data?: any, noDataImg?: any, noDataText?: string }) 
   lineConfig.data = data;
 
   return (
-    <div className={styles.chartWrapper}>
+    <div className={styles.chartContainer}>
       {data?.length ? <Line {...lineConfig} /> : <Empty
         image={noDataImg}
         imageStyle={{
