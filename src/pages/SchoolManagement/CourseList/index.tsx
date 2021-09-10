@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-09-10 10:23:16
+ * @LastEditTime: 2021-09-10 10:45:01
  * @LastEditors: wsl
  */
 /*
@@ -13,12 +13,13 @@
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef } from 'react';
-import { message, Popconfirm, Form, Tag } from 'antd';
+import { message, Popconfirm, Form, Tag, Button } from 'antd';
 import type { ActionType, ProColumns, RequestData } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { TableListItem, TableListParams } from '../data';
 import styles from './index.less';
-import { Link, useModel } from 'umi';
+import { Link, useModel, history } from 'umi';
+import { LeftOutlined } from '@ant-design/icons';
 import { getCoursesBySchool } from '@/services/after-class-qxjyj/jyjgsj';
 import EllipsisHint from '@/components/EllipsisHint';
 
@@ -143,77 +144,91 @@ const HaveIntroduced = (props: any) => {
     }
   ];
   return (
-    <div className={styles.ToIntroduce}>
-      <ProTable<any>
-        columns={columns}
-        rowKey="key"
-        actionRef={actionRef1}
-        pagination={{
-          showQuickJumper: true
+    <>
+      <Button
+        type="primary"
+        onClick={() => {
+          history.goBack();
         }}
-        search={false}
-        options={{
-          setting: false,
-          fullScreen: false,
-          density: false,
-          reload: false,
-          search: {
-            placeholder: '搜索课程名称'
-          }
+        style={{
+          marginBottom: '24px'
         }}
-        request={async (
-          params: TableListItem & {
-            pageSize?: number;
-            current?: number;
-            keyword?: string;
-          },
-          sort,
-          filter
-        ): Promise<Partial<RequestData<TableListItem>>> => {
-          // 表单搜索项会从 params 传入，传递给后端接口。
-          const opts: TableListParams = {
-            ...params,
-            sorter: sort && Object.keys(sort).length ? sort : undefined
-          };
-          const res = await getCoursesBySchool({
-            XXJBSJId: state.id,
-            XNXQId: '',
-            KCMC: opts.keyword || ''
-          });
-          if (res.status === 'ok') {
-            let newArr: any[] = [];
-            res.data?.forEach((value: any) => {
-              const { KCMC, NJSJs, KHKCJs, KHKCLX, SSJGLX, KHKCSQs } = value;
-              const data = {
-                value,
-                KCMC: KCMC,
-                SYNJ: NJSJs,
-                DKLS: KHKCJs,
-                KCLY: SSJGLX,
-                KCLX: KHKCLX.KCTAG,
-                JGMC: KHKCSQs.length !== 0 ? KHKCSQs[0].KHJYJG.QYMC : '-'
-              };
-              newArr.push(data);
-            });
-
-            if (newArr.length === res.data?.length) {
-              return {
-                data: newArr,
-                total: res.data?.count,
-                success: true
-              };
+      >
+        <LeftOutlined />
+        返回上一页
+      </Button>
+      <div className={styles.ToIntroduce}>
+        <ProTable<any>
+          columns={columns}
+          rowKey="key"
+          actionRef={actionRef1}
+          pagination={{
+            showQuickJumper: true
+          }}
+          search={false}
+          options={{
+            setting: false,
+            fullScreen: false,
+            density: false,
+            reload: false,
+            search: {
+              placeholder: '搜索课程名称'
             }
-          } else {
-            message.error(res.message);
-            return {};
-          }
+          }}
+          request={async (
+            params: TableListItem & {
+              pageSize?: number;
+              current?: number;
+              keyword?: string;
+            },
+            sort,
+            filter
+          ): Promise<Partial<RequestData<TableListItem>>> => {
+            // 表单搜索项会从 params 传入，传递给后端接口。
+            const opts: TableListParams = {
+              ...params,
+              sorter: sort && Object.keys(sort).length ? sort : undefined
+            };
+            const res = await getCoursesBySchool({
+              XXJBSJId: state.id,
+              XNXQId: '',
+              KCMC: opts.keyword || ''
+            });
+            if (res.status === 'ok') {
+              let newArr: any[] = [];
+              res.data?.forEach((value: any) => {
+                const { KCMC, NJSJs, KHKCJs, KHKCLX, SSJGLX, KHKCSQs } = value;
+                const data = {
+                  value,
+                  KCMC: KCMC,
+                  SYNJ: NJSJs,
+                  DKLS: KHKCJs,
+                  KCLY: SSJGLX,
+                  KCLX: KHKCLX.KCTAG,
+                  JGMC: KHKCSQs.length !== 0 ? KHKCSQs[0].KHJYJG.QYMC : '-'
+                };
+                newArr.push(data);
+              });
 
-          return {};
-        }}
-        dateFormatter="string"
-        toolBarRender={() => [<span key="XXMC">{state.XXMC}</span>]}
-      />
-    </div>
+              if (newArr.length === res.data?.length) {
+                return {
+                  data: newArr,
+                  total: res.data?.count,
+                  success: true
+                };
+              }
+            } else {
+              message.error(res.message);
+              return {};
+            }
+
+            return {};
+          }}
+          dateFormatter="string"
+          toolBarRender={() => [<span key="XXMC">{state.XXMC}</span>]}
+        />
+      </div>
+    </>
   );
 };
 
