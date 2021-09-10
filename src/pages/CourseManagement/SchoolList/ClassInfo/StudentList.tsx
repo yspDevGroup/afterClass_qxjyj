@@ -2,8 +2,8 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-09-07 08:30:40
- * @LastEditTime: 2021-09-10 11:44:35
- * @LastEditors: wsl
+ * @LastEditTime: 2021-09-10 15:12:47
+ * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useState } from 'react';
 import { LeftOutlined } from '@ant-design/icons';
@@ -15,7 +15,6 @@ import styles from './index.less';
 const { Meta } = Card;
 const StudentList = (props: any) => {
   const { state } = props.history.location;
-  console.log(state, '777777');
   return (
     <div>
       <Button
@@ -55,7 +54,6 @@ const StudentList = (props: any) => {
                             alignItems: 'center'
                           }}
                           title={item.XSXM}
-                          description={`学号：${item.XSId}`}
                         />
                       </Card>
                     </Col>

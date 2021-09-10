@@ -2,8 +2,8 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-09-07 08:30:40
- * @LastEditTime: 2021-09-08 17:57:55
- * @LastEditors: wsl
+ * @LastEditTime: 2021-09-10 15:12:57
+ * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useState } from 'react';
 import { LeftOutlined } from '@ant-design/icons';
@@ -54,7 +54,6 @@ const StudentList = (props: any) => {
                             alignItems: 'center'
                           }}
                           title={item.XSXM}
-                          description={`学号：${item.XSId}`}
                         />
                       </Card>
                     </Col>
