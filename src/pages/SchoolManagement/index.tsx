@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-24 14:37:02
- * @LastEditTime: 2021-09-07 18:48:07
+ * @LastEditTime: 2021-09-10 10:41:52
  * @LastEditors: wsl
  */
 import React, { useRef } from 'react';
@@ -128,7 +128,7 @@ const SchoolManagement = () => {
           const resJYJGSJ = await JYJGSJ({ id: currentUser!.jyjId! });
           const resgetAllSchools = await getAllSchools({
             XZQHM: resJYJGSJ.data.XZQH,
-            XXMC: '',
+            XXMC: opts.keyword,
             page: 0,
             pageSize: 0
           });

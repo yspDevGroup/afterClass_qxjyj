@@ -1,7 +1,7 @@
 /* eslint-disable max-params */
 
 import React, { useRef } from 'react';
-import { history } from 'umi';
+import { history, Link } from 'umi';
 import { Button, message, Popconfirm, Space, Tag } from 'antd';
 import EllipsisHint from '@/components/EllipsisHint';
 import ProTable, { ActionType } from '@ant-design/pro-table';
@@ -43,7 +43,21 @@ const LocalCourses = (props: { JYYData: any }) => {
       title: '课程名称',
       dataIndex: 'KCMC',
       key: 'KCMC',
-      align: 'center'
+      align: 'center',
+      render: (text: string, record: any) => {
+        return (
+          <a
+            onClick={() => {
+              history.push({
+                pathname: `/courseManagement/courseInfo`,
+                state: { ...record }
+              });
+            }}
+          >
+            {text}
+          </a>
+        );
+      }
     },
     {
       title: '所属机构',
@@ -51,8 +65,25 @@ const LocalCourses = (props: { JYYData: any }) => {
       key: 'KHJYJG',
       align: 'center',
       search: false,
-      render: (text: any) => {
-        return text?.QYMC || '-';
+      render: (text: any, record: any) => {
+        return (
+          <>
+            {record?.SSJGLX === '校内课程' ? (
+              <>-</>
+            ) : (
+              <a
+                onClick={() => {
+                  history.push({
+                    pathname: `/organizationManagement/agencyDetails`,
+                    state: { value: record.KHJYJG }
+                  });
+                }}
+              >
+                {text?.QYMC}
+              </a>
+            )}
+          </>
+        );
       }
     },
     {
@@ -61,8 +92,17 @@ const LocalCourses = (props: { JYYData: any }) => {
       key: 'XXJBSJ',
       align: 'center',
       search: false,
-      render: (text: any) => {
-        return text?.XXMC || '-';
+      render: (text: any, record: any) => {
+        return (
+          <Link
+            to={{
+              pathname: '/courseManagement/schoolList/schoolInfos',
+              state: record
+            }}
+          >
+            {text?.XXMC || '-'}
+          </Link>
+        );
       }
     },
     {
@@ -99,40 +139,34 @@ const LocalCourses = (props: { JYYData: any }) => {
       align: 'center',
       render: (text: any, record: any, index: any, action: any) => (
         <Space size="middle">
-          <a
-            onClick={() => {
-              history.push({
-                pathname: `/courseManagement/courseInfo`,
-                state: { ...record }
-              });
-            }}
-          >
-            课程详情
-          </a>
-          <a
-            onClick={() => {
-              history.push({
-                pathname: `/courseManagement/classInfo`,
-                state: { ...record }
-              });
-            }}
-          >
-            班级列表
-          </a>
+          {record?.SSJGLX === '机构课程' ? (
+            <a
+              onClick={() => {
+                history.push({
+                  pathname: `/courseManagement/schoolList`,
+                  state: { ...record }
+                });
+              }}
+            >
+              学校列表
+            </a>
+          ) : (
+            <a
+              onClick={() => {
+                history.push({
+                  pathname: `/courseManagement/classInfo`,
+                  state: { ...record }
+                });
+              }}
+            >
+              班级列表
+            </a>
+          )}
+
           {record?.SSJGLX === '校内课程' ? (
             ''
           ) : (
             <>
-              <a
-                onClick={() => {
-                  history.push({
-                    pathname: `/organizationManagement/agencyDetails`,
-                    state: { value: record.KHJYJG }
-                  });
-                }}
-              >
-                机构详情
-              </a>
               <a
                 onClick={async () => {
                   const res = await updateKHKCSJ({ id: record?.id }, { KCZT: 1 });

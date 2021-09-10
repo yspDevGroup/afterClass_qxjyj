@@ -1,12 +1,11 @@
-.content{
+.content {
   height: 100%;
-  background: #FFF;
-  border-radius: 8px;
   padding: 24px;
-  .formType{
+  background: #fff;
+  border-radius: 8px;
+  .formType {
     :global {
-      .ant-select-multiple.ant-select-disabled.ant-select:not(.ant-select-customize-input)
-      .ant-select-selector{
+      .ant-select-multiple.ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector {
         background: none;
         border: none;
         cursor: auto;
@@ -17,19 +16,73 @@
 
       .ant-input[disabled] {
         color: @text-color;
+        text-overflow: ellipsis;
         background-color: inherit;
         border: none;
         cursor: default;
         resize: none;
-        text-overflow: ellipsis;
       }
       .ant-select-disabled.ant-select-multiple .ant-select-selection-item {
         color: #000;
+        background: #fff;
         border-color: #fff;
-        background: #FFF;
         cursor: auto;
       }
     }
   }
 }
 
+.teacherWrapper {
+  padding: @padding-lg;
+  background: #ffffff;
+
+  :global {
+    .ant-tabs-nav-list {
+      .ant-tabs-tab-btn {
+        padding: @padding-sm;
+      }
+    }
+
+    .ant-form-item-label {
+      text-align: right;
+    }
+
+    .ant-form-item-control-input {
+      line-height: 32px;
+    }
+
+    .ant-input[disabled],
+    .ant-picker-disabled,
+    .ant-input-number-disabled,
+    .ant-select-disabled .ant-select-selector {
+      color: @text-color !important;
+      text-overflow: ellipsis;
+      background: none !important;
+      background-color: inherit;
+      border: none;
+      cursor: default;
+      resize: none;
+
+      .ant-picker-suffix {
+        display: none;
+      }
+    }
+
+    .ant-select-disabled .ant-select-arrow {
+      display: none;
+    }
+  }
+
+  .teacherInfoBody {
+    width: 85%;
+    min-width: 850px;
+    margin: 0 auto;
+
+    :global {
+      .ant-picker,
+      .ant-input-number {
+        width: 100%;
+      }
+    }
+  }
+}

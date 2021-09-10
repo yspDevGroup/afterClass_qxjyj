@@ -109,6 +109,7 @@ const CourseInfo = (props: any) => {
           key: 'jsIds',
           name: 'jsIds',
           disabled,
+          hidden: disabled,
           mode: 'multiple',
           items: JSSJOptions
         },
@@ -153,6 +154,29 @@ const CourseInfo = (props: any) => {
       dataIndex: 'DZXX',
       key: 'DZXX',
       align: 'center'
+    },
+    {
+      title: '操作',
+      dataIndex: 'opthion',
+      key: 'opthion',
+      align: 'center',
+      render: (text: any, record: any) => {
+        return (
+          <a
+            onClick={() => {
+              history.push({
+                pathname: `/courseManagement/courseInfo/teacherInfo`,
+                state: {
+                  type: 'detail',
+                  data: record
+                }
+              });
+            }}
+          >
+            详情
+          </a>
+        );
+      }
     }
   ];
   return (

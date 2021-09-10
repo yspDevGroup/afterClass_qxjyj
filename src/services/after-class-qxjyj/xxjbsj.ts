@@ -2,8 +2,16 @@
 /* eslint-disable */
 import { request } from 'umi';
 
-/** 获取学校基本数据 GET /xxjbsj/ */
-export async function getXXJBSJ(options?: { [key: string]: any }) {
+/** 获取学校基本数据 GET /xxjbsj/${param0} */
+export async function getXXJBSJ(
+  params: {
+    // path
+    /** 学校ID */
+    id: string;
+  },
+  options?: { [key: string]: any },
+) {
+  const { id: param0, ...queryParams } = params;
   return request<{
     status?: 'ok' | 'error';
     data: {
@@ -16,6 +24,7 @@ export async function getXXJBSJ(options?: { [key: string]: any }) {
       XXDZ?: string;
       XXYZBM?: string;
       XZQHM?: string;
+      XZQ?: string;
       JXNY?: string | any;
       XQR?: string;
       XXBXLXM?: string;
@@ -48,8 +57,26 @@ export async function getXXJBSJ(options?: { [key: string]: any }) {
       XD?: string;
     };
     message?: string;
-  }>('/xxjbsj/', {
+  }>(`/xxjbsj/${param0}`, {
     method: 'GET',
+    params: { ...queryParams },
+    ...(options || {}),
+  });
+}
+
+/** 删除学校基本数据 DELETE /xxjbsj/${param0} */
+export async function deleteXXJBSJ(
+  params: {
+    // path
+    /** 学校ID */
+    id: string;
+  },
+  options?: { [key: string]: any },
+) {
+  const { id: param0, ...queryParams } = params;
+  return request<{ status?: 'ok' | 'error'; message?: string }>(`/xxjbsj/${param0}`, {
+    method: 'DELETE',
+    params: { ...queryParams },
     ...(options || {}),
   });
 }
@@ -96,6 +123,7 @@ export async function createXXJBSJ(body: API.CreateXXJBSJ, options?: { [key: str
       XXDZ?: string;
       XXYZBM?: string;
       XZQHM?: string;
+      XZQ?: string;
       JXNY?: string | any;
       XQR?: string;
       XXBXLXM?: string;
@@ -134,23 +162,6 @@ export async function createXXJBSJ(body: API.CreateXXJBSJ, options?: { [key: str
       'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {}),
-  });
-}
-
-/** 删除学校基本数据 DELETE /xxjbsj/${param0} */
-export async function deleteXXJBSJ(
-  params: {
-    // path
-    /** 学校ID */
-    id: string;
-  },
-  options?: { [key: string]: any },
-) {
-  const { id: param0, ...queryParams } = params;
-  return request<{ status?: 'ok' | 'error'; message?: string }>(`/xxjbsj/${param0}`, {
-    method: 'DELETE',
-    params: { ...queryParams },
     ...(options || {}),
   });
 }

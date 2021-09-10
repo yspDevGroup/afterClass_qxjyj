@@ -2,6 +2,22 @@
 /* eslint-disable */
 
 declare namespace API {
+  type LoginParams = {
+    /** 登录名 */
+    username: string;
+    /** 密码 */
+    password: string;
+    /** 自动登录 */
+    autoLogin: boolean;
+    type: 'account' | 'mobile';
+  };
+
+  type LoginResult = {
+    currentAuthority: string[];
+    token: string;
+    type: 'account' | 'mobile' | 'github';
+  };
+
   type BJSJ = {
     id: string;
     /** 班号 */
@@ -485,6 +501,7 @@ declare namespace API {
     SFTJ?: number;
     /** 内容 */
     NR?: string;
+    JYJGSJ?: { id?: string; BMMC?: string };
   };
 
   type CreateJYJGTZGG = {
@@ -1581,9 +1598,9 @@ declare namespace API {
     KHKCSJId?: string;
     /** 学年学期ID */
     XNXQId?: string;
-    KHKCJMs?: { FYJM?: string; JMDX?: string; JFBL?: number; ZJFY?: number }[];
-    KHKCJCs?: { JCMC?: string; JCFY?: string }[];
-    KHBJJSs?: { JSLX?: string; JSXM?: string; KHJSSJId?: string }[];
+    KHKCJMs?: { FYJM?: string; JMDX?: string; JFBL?: number; ZJFY?: number; KHBJSJId?: string }[];
+    KHKCJCs?: { JCMC?: string; JCFY?: string; KHBJSJId?: string }[];
+    KHBJJSs?: { JSLX?: string; JSXM?: string; KHJSSJId?: string; KHBJSJId?: string }[];
   };
 
   type KHJGRZSQ = {
@@ -1866,6 +1883,8 @@ declare namespace API {
     ZT?: number;
     /** 企业微信ID */
     CorpID?: string;
+    /** 包含学段 */
+    XD?: string;
     KHJGRZSQs?: {
       id?: string;
       ZT?: number;
@@ -1915,8 +1934,8 @@ declare namespace API {
     ZT?: number;
     /** 企业微信ID */
     CorpID?: string;
-    /** 课后教育机构ID */
-    KHJYJGId: string;
+    /** 包含学段 */
+    XD?: string;
   };
 
   type UpdateKHJYJG = {
@@ -1952,6 +1971,8 @@ declare namespace API {
     ZT?: number;
     /** 企业微信ID */
     CorpID?: string;
+    /** 包含学段 */
+    XD?: string;
   };
 
   type KHJYTZGG = {
@@ -2504,6 +2525,58 @@ declare namespace API {
     DDFY?: number;
   };
 
+  type KHXSPJ = {
+    id: string;
+    /** 评价日期 */
+    PJRQ?: string | any;
+    /** 评价类型 */
+    PJLX?: '节次评价' | '总评价';
+    /** 评价分数 */
+    PJFS?: string;
+    /** 评语 */
+    PY?: string;
+    /** 教师ID */
+    JSId?: string;
+    /** 学生ID */
+    XSId?: string;
+    /** 班级ID */
+    KHBJSJId?: string;
+  };
+
+  type CreateKHXSPJ = {
+    /** 评价日期 */
+    PJRQ?: string | any;
+    /** 评价类型 */
+    PJLX?: '节次评价' | '总评价';
+    /** 评价分数 */
+    PJFS?: string;
+    /** 评语 */
+    PY?: string;
+    /** 教师ID */
+    JSId?: string;
+    /** 学生ID */
+    XSId?: string;
+    /** 班级ID */
+    KHBJSJId?: string;
+  };
+
+  type UpdateKHXSPJ = {
+    /** 评价日期 */
+    PJRQ?: string | any;
+    /** 评价类型 */
+    PJLX?: '节次评价' | '总评价';
+    /** 评价分数 */
+    PJFS?: string;
+    /** 评语 */
+    PY?: string;
+    /** 教师ID */
+    JSId?: string;
+    /** 学生ID */
+    XSId?: string;
+    /** 班级ID */
+    KHBJSJId?: string;
+  };
+
   type KHXSQJ = {
     /** 请假开始时间 */
     KSSJ?: string | any;
@@ -2728,6 +2801,7 @@ declare namespace API {
     /** 状态，0无效1有效，其他可由业务自行定义 */
     status?: number;
     userType?: string;
+    type?: string;
     auth?: '老师' | '家长' | '管理员' | { authType?: string; appName?: string }[];
     adminAuth?: string[];
     /** 微信用户ID，智慧校园 学生或老师ID */
@@ -2809,56 +2883,76 @@ declare namespace API {
     XD?: string;
   };
 
-  type KHXSPJ = {
+  type XL = {
     id: string;
-    /** 评价日期 */
-    PJRQ?: string | any;
-    /** 评价类型 */
-    PJLX?: '节次评价' | '总评价';
-    /** 评价分数 */
-    PJFS?: string;
-    /** 评语 */
-    PY?: string;
-    /** 教师ID */
-    JSId?: string;
-    /** 学生ID */
-    XSId?: string;
-    /** 班级ID */
-    KHBJSJId?: string;
+    /** 标题 */
+    BT?: string;
+    /** 开始日期 */
+    KSRQ?: string;
+    /** 结束日期 */
+    JSRQ?: string;
+    XNXQ?: { id?: string; XN?: string; XQ?: string; KSRQ?: string; JSRQ?: string };
   };
 
-  type CreateKHXSPJ = {
-    /** 评价日期 */
-    PJRQ?: string | any;
-    /** 评价类型 */
-    PJLX?: '节次评价' | '总评价';
-    /** 评价分数 */
-    PJFS?: string;
-    /** 评语 */
-    PY?: string;
-    /** 教师ID */
-    JSId?: string;
-    /** 学生ID */
-    XSId?: string;
-    /** 班级ID */
-    KHBJSJId?: string;
+  type CreateXL = {
+    /** 标题 */
+    BT?: string;
+    /** 开始日期 */
+    KSRQ?: string;
+    /** 结束日期 */
+    JSRQ?: string;
+    XNXQId: string;
   };
 
-  type UpdateKHXSPJ = {
-    /** 评价日期 */
-    PJRQ?: string | any;
-    /** 评价类型 */
-    PJLX?: '节次评价' | '总评价';
-    /** 评价分数 */
-    PJFS?: string;
-    /** 评语 */
-    PY?: string;
-    /** 教师ID */
-    JSId?: string;
-    /** 学生ID */
-    XSId?: string;
-    /** 班级ID */
-    KHBJSJId?: string;
+  type UpdateXL = {
+    /** 标题 */
+    BT?: string;
+    /** 开始日期 */
+    KSRQ?: string;
+    /** 结束日期 */
+    JSRQ?: string;
+    XNXQId: string;
+  };
+
+  type XNJGSJ = {
+    id: string;
+    /** 隶属机构号 */
+    LSJGH: string;
+    /** 隶属机构名称 */
+    LSJGMC?: string;
+    /** 机构名称 */
+    JGMC: string;
+    /** 机构简称 */
+    JGJC: string;
+    FZR?: { id?: string; GH?: string; XM?: string };
+    JZGJBSJs?: { id?: string; GH?: string; XM?: string; LXDH?: string; DZXX?: string }[];
+  };
+
+  type CreateXNJGSJ = {
+    /** 隶属机构号 */
+    LSJGH: string;
+    /** 隶属机构名称 */
+    LSJGMC: string;
+    /** 机构名称 */
+    JGMC: string;
+    /** 机构简称 */
+    JGJC: string;
+    /** 负责人工号 */
+    FZRGH?: string;
+    XQSJId?: string;
+  };
+
+  type UpdateXNJGSJ = {
+    /** 隶属机构号 */
+    LSJGH?: string;
+    /** 隶属机构名称 */
+    LSJGMC?: string;
+    /** 机构名称 */
+    JGMC?: string;
+    /** 机构简称 */
+    JGJC?: string;
+    /** 负责人工号 */
+    FZRGH?: string;
   };
 
   type XNXQ = {
@@ -3597,7 +3691,9 @@ declare namespace API {
     /** 学校邮政编码 */
     XXYZBM?: string;
     /** 行政区划码 */
-    XZQHM: string;
+    XZQHM?: string;
+    /** 行政区 */
+    XZQ?: string;
     /** 建校年月 */
     JXNY?: string | any;
     /** 校庆日 */
@@ -3677,6 +3773,8 @@ declare namespace API {
     XXYZBM?: string;
     /** 行政区划码 */
     XZQHM: string;
+    /** 行政区 */
+    XZQ?: string;
     /** 建校年月 */
     JXNY?: string | any;
     /** 校庆日 */
@@ -3754,6 +3852,8 @@ declare namespace API {
     XXYZBM?: string;
     /** 行政区划码 */
     XZQHM?: string;
+    /** 行政区 */
+    XZQ?: string;
     /** 建校年月 */
     JXNY?: string;
     /** 校庆日 */
@@ -4115,93 +4215,5 @@ declare namespace API {
     /** 时长 */
     SC?: number;
     ZXFAId?: string;
-  };
-
-  type XL = {
-    id: string;
-    /** 标题 */
-    BT?: string;
-    /** 开始日期 */
-    KSRQ?: string;
-    /** 结束日期 */
-    JSRQ?: string;
-    XNXQ?: { id?: string; XN?: string; XQ?: string; KSRQ?: string; JSRQ?: string };
-  };
-
-  type CreateXL = {
-    /** 标题 */
-    BT?: string;
-    /** 开始日期 */
-    KSRQ?: string;
-    /** 结束日期 */
-    JSRQ?: string;
-    XNXQId: string;
-  };
-
-  type UpdateXL = {
-    /** 标题 */
-    BT?: string;
-    /** 开始日期 */
-    KSRQ?: string;
-    /** 结束日期 */
-    JSRQ?: string;
-    XNXQId: string;
-  };
-
-  type LoginParams = {
-    /** 登录名 */
-    username: string;
-    /** 密码 */
-    password: string;
-    /** 自动登录 */
-    autoLogin: boolean;
-    type: 'account' | 'mobile';
-  };
-
-  type LoginResult = {
-    currentAuthority: string[];
-    token: string;
-    type: 'account' | 'mobile' | 'github';
-  };
-
-  type XNJGSJ = {
-    id: string;
-    /** 隶属机构号 */
-    LSJGH: string;
-    /** 隶属机构名称 */
-    LSJGMC?: string;
-    /** 机构名称 */
-    JGMC: string;
-    /** 机构简称 */
-    JGJC: string;
-    FZR?: { id?: string; GH?: string; XM?: string };
-    JZGJBSJs?: { id?: string; GH?: string; XM?: string; LXDH?: string; DZXX?: string }[];
-  };
-
-  type CreateXNJGSJ = {
-    /** 隶属机构号 */
-    LSJGH: string;
-    /** 隶属机构名称 */
-    LSJGMC: string;
-    /** 机构名称 */
-    JGMC: string;
-    /** 机构简称 */
-    JGJC: string;
-    /** 负责人工号 */
-    FZRGH?: string;
-    XQSJId?: string;
-  };
-
-  type UpdateXNJGSJ = {
-    /** 隶属机构号 */
-    LSJGH?: string;
-    /** 隶属机构名称 */
-    LSJGMC?: string;
-    /** 机构名称 */
-    JGMC?: string;
-    /** 机构简称 */
-    JGJC?: string;
-    /** 负责人工号 */
-    FZRGH?: string;
   };
 }

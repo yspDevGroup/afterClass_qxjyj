@@ -2,7 +2,7 @@
  * @description: 学校基本信息表单元素
  * @author: Sissle Lynn
  * @Date: 2021-08-02 15:12:46
- * @LastEditTime: 2021-09-10 11:31:51
+ * @LastEditTime: 2021-09-10 11:31:25
  * @LastEditors: wsl
  */
 import { FormItemType } from '@/components/CustomForm/interfice';

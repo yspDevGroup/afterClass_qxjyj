@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-24 17:21:12
- * @LastEditTime: 2021-09-08 18:00:46
+ * @LastEditTime: 2021-09-10 11:53:31
  * @LastEditors: wsl
  */
 import React from 'react';
@@ -106,7 +106,14 @@ export default {
           {
             path: '/courseManagement/courseInfo',
             name: '课程详情',
-            hideInMenu: 'true'
+            hideInMenu: 'true',
+            routes: [
+              {
+                path: '/courseManagement/courseInfo/TeacherInfo',
+                name: '教师详情',
+                hideInMenu: 'true'
+              }
+            ]
           },
           {
             path: '/courseManagement/classInfo',
@@ -116,6 +123,30 @@ export default {
               {
                 path: '/courseManagement/classInfo/studentList',
                 name: '学生列表',
+                hideInMenu: 'true'
+              }
+            ]
+          },
+          {
+            path: '/courseManagement/schoolList',
+            name: '学校列表',
+            hideInMenu: 'true',
+            routes: [
+              {
+                path: '/courseManagement/schoolList/classInfo',
+                name: '班级列表',
+                hideInMenu: 'true',
+                routes: [
+                  {
+                    path: '/courseManagement/schoolList/classInfo/studentList',
+                    name: '学生列表',
+                    hideInMenu: 'true'
+                  }
+                ]
+              },
+              {
+                path: '/courseManagement/schoolList/schoolInfos',
+                name: '学校详情',
                 hideInMenu: 'true'
               }
             ]

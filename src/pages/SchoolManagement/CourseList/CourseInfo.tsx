@@ -94,23 +94,7 @@ const CourseInfo = (props: any) => {
         {}
       ]
     },
-    {
-      type: 'group',
-      key: 'group4',
-      groupItems: [
-        {
-          type: 'select',
-          label: '任课教师',
-          placeholder: '',
-          key: 'jsIds',
-          name: 'jsIds',
-          disabled,
-          mode: 'multiple',
-          items: JSSJOptions
-        },
-        {}
-      ]
-    },
+
     {
       type: 'uploadImage',
       label: '课程封面',
