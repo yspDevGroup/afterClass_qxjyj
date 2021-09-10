@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-26 16:24:39
- * @LastEditTime: 2021-09-08 17:59:04
+ * @LastEditTime: 2021-09-10 16:44:05
  * @LastEditors: wsl
  */
 import React, { useEffect, useState } from 'react';
@@ -28,6 +28,7 @@ type PropsType = {
 };
 const TeacherInfo = (props: any) => {
   const { state } = props.location;
+  console.log(state, '=====');
   const values = state;
   const { setForm, readonly = true } = props;
   const { initialState } = useModel('@@initialState');
@@ -78,7 +79,6 @@ const TeacherInfo = (props: any) => {
     {
       type: 'group',
       key: 'group1',
-      gutter: [88, 88],
       groupItems: [
         {
           type: 'uploadImage',
@@ -111,7 +111,6 @@ const TeacherInfo = (props: any) => {
     {
       type: 'group',
       key: 'group2',
-      gutter: [88, 88],
       groupItems: [
         {
           type: 'input',
@@ -133,7 +132,6 @@ const TeacherInfo = (props: any) => {
     {
       type: 'group',
       key: 'group3',
-      gutter: [88, 88],
       groupItems: [
         {
           type: 'input',
@@ -154,7 +152,6 @@ const TeacherInfo = (props: any) => {
     {
       type: 'group',
       key: 'group4',
-      gutter: [88, 88],
       groupItems: [
         {
           type: 'input',
@@ -175,7 +172,6 @@ const TeacherInfo = (props: any) => {
     {
       type: 'group',
       key: 'group6',
-      gutter: [88, 88],
       groupItems: [
         {
           type: 'input',
@@ -197,7 +193,6 @@ const TeacherInfo = (props: any) => {
     {
       type: 'group',
       key: 'group7',
-      gutter: [88, 88],
       groupItems: [
         {
           type: 'input',
@@ -209,17 +204,18 @@ const TeacherInfo = (props: any) => {
         },
         {
           type: 'inputNumber',
-          label: '教龄(月)',
+          label: '教龄（年）',
           name: 'JL',
           key: 'JL',
-          placeholder: readonly ? '——' : ''
+          placeholder: readonly ? '-' : '',
+          formatter: (value) => `${Math.round(value)}`,
+          tooltip: '注意：教龄四舍五入，只能填写整数'
         }
       ]
     },
     {
       type: 'group',
       key: 'group8',
-      gutter: [88, 88],
       groupItems: [
         {
           type: 'input',
@@ -240,7 +236,6 @@ const TeacherInfo = (props: any) => {
     {
       type: 'group',
       key: 'group9',
-      gutter: [88, 88],
       groupItems: [
         {
           type: 'input',
@@ -261,7 +256,6 @@ const TeacherInfo = (props: any) => {
     {
       type: 'group',
       key: 'group10',
-      gutter: [88, 88],
       groupItems: [
         {},
         {
@@ -324,7 +318,6 @@ const TeacherInfo = (props: any) => {
                 };
               }
               return {
-                XB: '男',
                 KHJYJGId: currentUser?.jgId
               };
             })()}

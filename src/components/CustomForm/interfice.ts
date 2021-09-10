@@ -2,8 +2,8 @@
  * @description:
  * @author: zpl
  * @Date: 2020-07-30 10:21:18
- * @LastEditTime: 2021-08-16 16:21:01
- * @LastEditors: Sissle Lynn
+ * @LastEditTime: 2021-09-10 16:22:05
+ * @LastEditors: wsl
  */
 import type { UploadListType } from 'antd/es/upload/interface';
 import type { FormItemProps } from 'antd/lib/form/FormItem.d';
@@ -33,6 +33,7 @@ export type FormInputNumberProps = {
   disabled?: boolean;
   percent?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  formatter?: (value: any | undefined) => string;
 } & FormItemProps;
 
 export type FormPasswordProps = {
@@ -113,22 +114,22 @@ export type MenuProp = {
   name: string;
 };
 export type UploadImageProp = {
-/**
+  /**
    * 上传图片组件-回显地址
    */
- imageurl?: string;
- /**
-  * 上传图片组件-上传地址
-  */
- upurl?: string;
- /**
-  * 上传图片组件-发到后台的文件参数名
-  */
- imagename?: string;
- /**
-  * 上传图片组件-文件状态改变的回调
-  */
- handleImageChange?: (value?: any)=>void;
+  imageurl?: string;
+  /**
+   * 上传图片组件-上传地址
+   */
+  upurl?: string;
+  /**
+   * 上传图片组件-发到后台的文件参数名
+   */
+  imagename?: string;
+  /**
+   * 上传图片组件-文件状态改变的回调
+   */
+  handleImageChange?: (value?: any) => void;
 };
 export type FormDropMenuProps = {
   disabled?: boolean;
@@ -174,27 +175,27 @@ export type FormItemType = (
 ) & {
   key?: string | number;
   type?:
-  | 'input'
-  | 'inputNumber'
-  | 'password'
-  | 'select'
-  | 'treeSelect'
-  | 'radio'
-  | 'time'
-  | 'timeRange'
-  | 'dateRange'
-  | 'textArea'
-  | 'switch'
-  | 'custom'
-  | 'group'
-  | 'empty'
-  | 'label'
-  | 'pdf'
-  | 'upload'
-  | 'checkbox'
-  | 'dropMenu'
-  | 'button'
-  | 'uploadImage'
+    | 'input'
+    | 'inputNumber'
+    | 'password'
+    | 'select'
+    | 'treeSelect'
+    | 'radio'
+    | 'time'
+    | 'timeRange'
+    | 'dateRange'
+    | 'textArea'
+    | 'switch'
+    | 'custom'
+    | 'group'
+    | 'empty'
+    | 'label'
+    | 'pdf'
+    | 'upload'
+    | 'checkbox'
+    | 'dropMenu'
+    | 'button'
+    | 'uploadImage';
   /**
    * 类型为group横向排列时，需要设置子数组
    *
@@ -246,5 +247,5 @@ export type FormItemType = (
   data?: {};
   handleCate?: (data: any) => void;
   handleLevel?: (data: any) => void;
-} & RowProps
-  & UploadImageProp;
+} & RowProps &
+  UploadImageProp;

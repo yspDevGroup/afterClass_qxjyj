@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-09-06 17:00:58
- * @LastEditTime: 2021-09-08 17:59:12
+ * @LastEditTime: 2021-09-10 16:01:23
  * @LastEditors: wsl
  */
 import ProTable, { ActionType } from '@ant-design/pro-table';
@@ -18,6 +18,7 @@ import { paginationConfig } from '@/constant';
  */
 const ClassList = (props: any) => {
   const { state } = props.location;
+  console.log(state, '----');
   const actionRef = useRef<ActionType>();
   const { KHBJSJs } = state.value;
 
@@ -37,11 +38,14 @@ const ClassList = (props: any) => {
       search: false
     },
     {
-      title: '班级人数',
+      title: '报名人数',
       dataIndex: 'BJRS',
       key: 'BJRS',
       align: 'center',
-      search: false
+      search: false,
+      render: (text: any, record: any) => {
+        return record.KHXSBJs?.length;
+      }
     },
     {
       title: '所属校区',
@@ -60,7 +64,7 @@ const ClassList = (props: any) => {
       align: 'center',
       search: false,
       render: (text: any, record: any) => {
-        return text?.XXJBSJ?.XXMC;
+        return state?.xxmc;
       }
     },
     {
@@ -134,7 +138,7 @@ const ClassList = (props: any) => {
       <div className={styles.contents}>
         <div className={styles.headerInfo}>
           <span>课程名称：{state?.value.KCMC}</span>
-          {state?.value.SSJGLX === '机构课程' ? <span>所属机构：{state?.value.KHJYJG?.QYMC}</span> : ''}
+          {state?.value.SSJGLX === '机构课程' ? <span>所属机构：{state?.value.KHKCSQs[0].KHJYJG.QYMC}</span> : ''}
           <span>课程类型：{state?.value.KHKCLX?.KCTAG}</span>
           <span>
             适用年级：

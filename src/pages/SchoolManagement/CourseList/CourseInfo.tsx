@@ -16,10 +16,9 @@ const formItemLayout = {
 };
 const CourseInfo = (props: any) => {
   const { state } = props.location;
-
+  console.log(state, '----------');
   const [disabled, setDisabled] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
-  const [JSSJOptions, setJSSJOptions] = useState<any>([]);
   const [NJDataOption, setNJDataOption] = useState<any>([]);
   const [formValues, setFormValues] = useState({});
   const [teacherData, setTeacherData] = useState<any>([]);
@@ -120,6 +119,12 @@ const CourseInfo = (props: any) => {
       title: '姓名',
       dataIndex: 'XM',
       key: 'XM',
+      align: 'center'
+    },
+    {
+      title: '性别',
+      dataIndex: 'XB',
+      key: 'XB',
       align: 'center'
     },
     {

@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-09-06 17:02:23
- * @LastEditTime: 2021-09-08 17:59:08
+ * @LastEditTime: 2021-09-10 16:45:49
  * @LastEditors: wsl
  */
 /* eslint-disable max-nested-callbacks */
@@ -24,6 +24,7 @@ const formItemLayout = {
 };
 const ClassInfo = (props: any) => {
   const { state } = props.location;
+  console.log(state, '=-------');
   const [disabled, setDisabled] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
   const [JSSJOptions, setJSSJOptions] = useState<any>([]);
@@ -154,17 +155,13 @@ const ClassInfo = (props: any) => {
   ];
   const columns: any = [
     {
-      title: '序号',
-      dataIndex: 'index',
-      valueType: 'index',
-      width: 58,
-      align: 'center'
-    },
-    {
       title: '姓名',
       dataIndex: 'JSXM',
       key: 'JSXM',
-      align: 'center'
+      align: 'center',
+      render: (text: any, record: any) => {
+        return record.KHJSSJ?.XM;
+      }
     },
     {
       title: '性别',
@@ -172,7 +169,7 @@ const ClassInfo = (props: any) => {
       key: 'XB',
       align: 'center',
       render: (text: any, record: any) => {
-        return record.KHJSSJ.XB;
+        return record.KHJSSJ?.XB === '女性' ? '女' : '男';
       }
     },
     {
@@ -188,6 +185,28 @@ const ClassInfo = (props: any) => {
       align: 'center',
       render: (text: any, record: any) => {
         return record.KHJSSJ.LXDH;
+      }
+    },
+    {
+      title: '操作',
+      key: 'option',
+      valueType: 'option',
+      align: 'center',
+      width: 200,
+      render: (text: any, record: any) => {
+        return (
+          <div className={styles.operation}>
+            <Link
+              key="xq"
+              to={{
+                pathname: '/schoolManagement/courseList/teacherInfo',
+                state: record.KHJSSJ
+              }}
+            >
+              详情
+            </Link>
+          </div>
+        );
       }
     }
   ];

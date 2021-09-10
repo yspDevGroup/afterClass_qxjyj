@@ -132,14 +132,6 @@ const ClassInfo = (props: any) => {
       }
     }
   ];
-  const stdColumns: any = [
-    {
-      title: '学生姓名',
-      dataIndex: 'XSXM',
-      key: 'XSXM',
-      align: 'center'
-    }
-  ];
   return (
     <>
       <Button
@@ -182,21 +174,6 @@ const ClassInfo = (props: any) => {
             search: false
           }}
         />
-        {/* <Modal
-          title={`学生列表 `}
-          visible={isModalVisible}
-          onOk={handleOk}
-          onCancel={handleCancel}
-          footer={false}
-          bodyStyle={{
-            maxHeight: '600px',
-            overflowY: 'auto',
-            minHeight: 200
-          }}
-        >
-          <div style={{ float: 'right', marginBottom: 12 }}>总人数：{stdData.length}人</div>
-          <Table dataSource={stdData} columns={stdColumns} pagination={false} rowKey="id" />
-        </Modal> */}
       </div>
     </>
   );
