@@ -61,11 +61,14 @@ const ClassInfo = (props: any) => {
       search: false
     },
     {
-      title: '班级人数',
+      title: '报名人数',
       dataIndex: 'BJRS',
       key: 'BJRS',
       align: 'center',
-      search: false
+      search: false,
+      render: (_: any, record: any) => {
+        return record.KHXSBJs.length;
+      }
     },
     {
       title: '开课日期',
