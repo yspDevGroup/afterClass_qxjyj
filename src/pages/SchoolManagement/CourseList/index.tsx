@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-09-07 21:11:02
+ * @LastEditTime: 2021-09-10 10:23:16
  * @LastEditors: wsl
  */
 /*
@@ -58,6 +58,14 @@ const HaveIntroduced = (props: any) => {
       title: '课程来源',
       dataIndex: 'KCLY',
       key: 'KCLY',
+      align: 'center',
+      search: false,
+      ellipsis: true
+    },
+    {
+      title: '机构名称',
+      dataIndex: 'JGMC',
+      key: 'JGMC',
       align: 'center',
       search: false,
       ellipsis: true
@@ -175,14 +183,15 @@ const HaveIntroduced = (props: any) => {
           if (res.status === 'ok') {
             let newArr: any[] = [];
             res.data?.forEach((value: any) => {
-              const { KCMC, NJSJs, KHKCJs, KHKCLX, SSJGLX } = value;
+              const { KCMC, NJSJs, KHKCJs, KHKCLX, SSJGLX, KHKCSQs } = value;
               const data = {
                 value,
                 KCMC: KCMC,
                 SYNJ: NJSJs,
                 DKLS: KHKCJs,
                 KCLY: SSJGLX,
-                KCLX: KHKCLX.KCTAG
+                KCLX: KHKCLX.KCTAG,
+                JGMC: KHKCSQs.length !== 0 ? KHKCSQs[0].KHJYJG.QYMC : '-'
               };
               newArr.push(data);
             });
