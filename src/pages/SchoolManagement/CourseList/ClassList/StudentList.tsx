@@ -2,8 +2,8 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-09-07 08:30:40
- * @LastEditTime: 2021-09-08 17:56:04
- * @LastEditors: wsl
+ * @LastEditTime: 2021-09-10 08:53:16
+ * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useState } from 'react';
 import { LeftOutlined } from '@ant-design/icons';
@@ -45,7 +45,7 @@ const StudentList = (props: any) => {
               <Row gutter={[24, 24]}>
                 {state?.value.KHXSBJs?.map((item: any) => {
                   return (
-                    <Col span={6} key={item.XSId}>
+                    <Col span={4} key={item.XSId}>
                       <Card style={{ display: 'flex' }}>
                         <Meta
                           avatar={<Avatar src={stuImg} />}
@@ -54,7 +54,6 @@ const StudentList = (props: any) => {
                             alignItems: 'center'
                           }}
                           title={item.XSXM}
-                          description={`学号：${item.XSId}`}
                         />
                       </Card>
                     </Col>
