@@ -44,7 +44,7 @@ const AgencyDetails = (props: any) => {
             </p>
             <p>
               <span>组织机构代码：</span>
-              {state.value?.FRDBSFZH}
+              {state.value?.ZZJGDM}
             </p>
 
             <p>
