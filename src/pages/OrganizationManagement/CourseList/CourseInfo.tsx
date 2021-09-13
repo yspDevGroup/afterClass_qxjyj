@@ -117,7 +117,7 @@ const CourseInfo = (props: any) => {
   ];
   const columns: any = [
     {
-      title: '姓名',
+      title: '姓名 ',
       dataIndex: 'XM',
       key: 'XM',
       align: 'center'
