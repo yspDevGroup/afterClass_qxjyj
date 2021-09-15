@@ -8,7 +8,6 @@ import BraftEditor from 'braft-editor';
 import 'braft-editor/dist/index.css';
 import { history, useModel } from 'umi';
 import styles from '../index.module.less';
-import AvatarUpload from '../components/AvatarUpload';
 import { createJYJGTZGG, JYJGTZGG, updateJYJGTZGG } from '@/services/after-class-qxjyj/jyjgtzgg';
 
 const { Option } = Select;
@@ -181,18 +180,6 @@ const EditArticle = () => {
                 <Input.TextArea placeholder="说点什么..." showCount maxLength={200} rows={4} disabled={disabled} />
               </Form.Item>
             </Col>
-            <Col className="gutter-row" sm={12} xs={24}>
-              <Form.Item name="TP" label="标题图片：">
-                <AvatarUpload img={stateImg} onValueChange={onValueChange} />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col className="gutter-row" sm={6} xs={12}>
-              <Form.Item name="ZZ" label="作者：" labelCol={{ sm: { span: 8 } }}>
-                <Input disabled={disabled} />
-              </Form.Item>
-            </Col>
             <Col className="gutter-row" sm={6} xs={12}>
               <Form.Item
                 name="RQ"
@@ -215,12 +202,12 @@ const EditArticle = () => {
             </Col>
           </Row>
           <Row>
-            <Col className="gutter-row" sm={3} xs={6}>
-              <Form.Item name="SFTT" label="是否头条：" valuePropName="checked" labelCol={{ sm: { span: 16 } }}>
-                <Switch disabled={disabled} />
+            <Col className="gutter-row" sm={6} xs={12}>
+              <Form.Item name="ZZ" label="作者：" labelCol={{ sm: { span: 8 } }}>
+                <Input disabled={disabled} />
               </Form.Item>
             </Col>
-            <Col className="gutter-row" sm={3} xs={6}>
+            <Col className="gutter-row" sm={3} xs={6} style={{ minWidth: '142px' }}>
               <Form.Item name="SFTJ" label="是否推荐：" valuePropName="checked" labelCol={{ sm: { span: 16 } }}>
                 <Switch disabled={disabled} />
               </Form.Item>

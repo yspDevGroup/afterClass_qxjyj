@@ -29,7 +29,17 @@ const RecycleBin = () => {
       title: '标题',
       dataIndex: 'BT',
       ellipsis: true,
-      align: 'center'
+      align: 'center',
+      width: '18rem'
+    },
+    {
+      title: '作者',
+      dataIndex: 'ZZ',
+      key: 'ZZ',
+      ellipsis: true,
+      align: 'center',
+      width: '8rem',
+      search: false
     },
     {
       title: '发布时间',
@@ -37,19 +47,21 @@ const RecycleBin = () => {
       valueType: 'dateTime',
       hideInForm: true,
       search: false,
-      align: 'center'
+      align: 'center',
+      width: '10em'
     },
     {
       title: '发布状态',
       dataIndex: 'ZT',
-      width: '7em',
+      width: '10em',
       valueEnum: {
         草稿: { text: '草稿', status: 'Default' },
         已发布: { text: '已发布', status: 'Success' },
         已删除: { text: '已删除', status: 'Error' }
       },
       filters: false,
-      search: false
+      search: false,
+      align: 'center'
     },
     {
       title: '头条',
@@ -57,17 +69,7 @@ const RecycleBin = () => {
       defaultSortOrder: 'descend',
       search: false,
       align: 'center',
-      width: '7em',
-      render: (text, record) => {
-        return <Switch defaultChecked={!!text} size="small" disabled={true} />;
-      }
-    },
-    {
-      title: '推荐',
-      dataIndex: 'SFTJ',
-      search: false,
-      align: 'center',
-      width: '5em',
+      width: '8em',
       render: (text, record) => {
         return <Switch defaultChecked={!!text} size="small" disabled={true} />;
       }

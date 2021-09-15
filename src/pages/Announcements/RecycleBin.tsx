@@ -30,7 +30,16 @@ const TableList = () => {
       title: '标题',
       dataIndex: 'BT',
       ellipsis: true,
-      align: 'center'
+      align: 'center',
+      width: '18rem'
+    },
+    {
+      title: '作者',
+      dataIndex: 'ZZ',
+      ellipsis: true,
+      align: 'center',
+      search: false,
+      width: '8rem'
     },
     {
       title: '发布时间',
@@ -38,19 +47,21 @@ const TableList = () => {
       valueType: 'dateTime',
       hideInForm: true,
       search: false,
-      align: 'center'
+      align: 'center',
+      width: '10rem'
     },
     {
       title: '发布状态',
       dataIndex: 'ZT',
-      width: '7em',
+      width: '10em',
       valueEnum: {
         草稿: { text: '草稿', status: 'Default' },
         已发布: { text: '已发布', status: 'Success' },
         已删除: { text: '已删除', status: 'Error' }
       },
       filters: false,
-      search: false
+      search: false,
+      align: 'center'
     },
     {
       title: '头条',
@@ -58,21 +69,12 @@ const TableList = () => {
       defaultSortOrder: 'descend',
       search: false,
       align: 'center',
-      width: '7em',
+      width: '8em',
       render: (text, record) => {
         return <Switch defaultChecked={!!text} size="small" disabled={true} />;
       }
     },
-    {
-      title: '推荐',
-      dataIndex: 'SFTJ',
-      search: false,
-      align: 'center',
-      width: '5em',
-      render: (text, record) => {
-        return <Switch defaultChecked={!!text} size="small" disabled={true} />;
-      }
-    },
+
     {
       title: '操作',
       dataIndex: 'option',
