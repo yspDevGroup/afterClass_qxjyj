@@ -9,6 +9,7 @@ import 'braft-editor/dist/index.css';
 import { history, useModel } from 'umi';
 import styles from '../index.module.less';
 import { createJYJGTZGG, JYJGTZGG, updateJYJGTZGG } from '@/services/after-class-qxjyj/jyjgtzgg';
+import { LeftOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
 
@@ -117,6 +118,18 @@ const EditArticle = () => {
   const disabled = pubStatus !== '草稿';
   return (
     <>
+      <Button
+        type="primary"
+        onClick={() => {
+          history.goBack();
+        }}
+        style={{
+          marginBottom: '24px'
+        }}
+      >
+        <LeftOutlined />
+        返回上一页
+      </Button>
       <div className={styles.container}>
         <Form {...formItemLayout} form={form} initialValues={initialValues} onFinish={submit}>
           <Divider orientation="left">文章属性</Divider>
