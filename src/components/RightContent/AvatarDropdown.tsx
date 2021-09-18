@@ -85,7 +85,6 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
         )}
         <span className={`${styles.name} anticon`} ref={userRef}>
         <WWOpenDataCom type='userName' openid={wechatInfo.openId} />
-          {/* {currentUser?.username} */}
           {isAdmin ? '' : '老师'}
         </span>
       </span>
