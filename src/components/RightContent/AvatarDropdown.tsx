@@ -4,6 +4,7 @@ import { useAccess, useModel } from 'umi';
 import styles from './index.less';
 import { JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
+const [jgData, setJgData] = useState<any>();
 import { initWXAgentConfig, initWXConfig, showUserName } from '@/wx';
 
 export type GlobalHeaderRightProps = {
