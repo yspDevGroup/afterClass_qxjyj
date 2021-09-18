@@ -3,6 +3,7 @@ import { Spin } from 'antd';
 import { useAccess, useModel } from 'umi';
 import styles from './index.less';
 import { JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
+import WWOpenDataCom from '@/components/WWOpenDataCom'
 import { initWXAgentConfig, initWXConfig, showUserName } from '@/wx';
 
 export type GlobalHeaderRightProps = {
@@ -13,13 +14,17 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
   const { isAdmin } = useAccess();
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
+  const [wechatReded, setWechatReded] = useState(false);
+  const [wechatInfo, setWechatInfo] = useState({
+    openId: ''
+  })
   const [jyjData, setJyjData] = useState<any>();
   const userRef = useRef(null);
   useEffect(() => {
     async function fetchData(jyjId: string) {
       const res = await JYJGSJ({
         id: jyjId
-      })
+      });
       if (res.status === 'ok') {
         setJyjData(res.data);
       }
@@ -34,15 +39,21 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
         await initWXConfig(['checkJsApi']);
       }
       if (await initWXAgentConfig(['checkJsApi'])) {
-        showUserName(userRef?.current, currentUser?.userId);
-        // 注意: 只有 agentConfig 成功回调后，WWOpenData 才会注入到 window 对象上面
-        WWOpenData.bindAll(document.querySelectorAll('ww-open-data'));
+        setWechatReded(true);
+        // showUserName(userRef?.current, currentUser?.userId);
+        // // 注意: 只有 agentConfig 成功回调后，WWOpenData 才会注入到 window 对象上面
+        // WWOpenData.bindAll(document.querySelectorAll('ww-open-data'));
       } else {
         console.warn('微信登录过期，请重新授权');
         message.warn('微信登录过期，请重新授权');
       }
     })();
-  }, []);
+  }, [currentUser]);
+  useEffect(() => {
+    wechatReded && setWechatInfo({
+      openId: currentUser?.UserId || ''
+    })
+  }, [wechatReded])
   const loading = (
     <span className={`${styles.action} ${styles.account}`}>
       <Spin
@@ -60,11 +71,21 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
   return (
     <>
       <span className={`${styles.action}`}>
-        {jyjData ? <span style={{paddingRight:'40px'}}>
-          {jyjData?.BMMC}
-        </span> : ''}
+      {jgData ? (
+          <span style={{ paddingRight: '40px' }}>
+            {jgData?.QYTB && jgData?.QYTB.indexOf('http') > -1 ? (
+              <img style={{ width: '40px', height: '40px', borderRadius: '40px' }} src={jgData?.QYTB} />
+            ) : (
+              ''
+            )}{' '}
+            {jgData?.QYMC}
+          </span>
+        ) : (
+          ''
+        )}
         <span className={`${styles.name} anticon`} ref={userRef}>
-          {currentUser?.username}
+        <WWOpenDataCom type='userName' openid={wechatInfo.openId} />
+          {/* {currentUser?.username} */}
           {isAdmin ? '' : '老师'}
         </span>
       </span>
