@@ -121,6 +121,7 @@ const LocalCourses = (props: { JYYData: any }) => {
       dataIndex: 'NJSJs',
       search: false,
       align: 'center',
+      width: '200px',
       render: (text: any) => {
         return (
           <EllipsisHint
