@@ -29,7 +29,7 @@ const Register = () => {
 
   const requestData = () => {
     const ajax = new XMLHttpRequest();
-    ajax.open('get', 'http://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/100000_province.json');
+    ajax.open('get', '//datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/100000_province.json');
     ajax.send();
     ajax.onreadystatechange = function () {
       if (ajax.readyState === 4 && ajax.status === 200) {
@@ -45,7 +45,7 @@ const Register = () => {
   const handleChange = (type: string, value: any) => {
     if (type === 'cities') {
       const ajax = new XMLHttpRequest();
-      ajax.open('get', `http://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${value.value}_city.json`);
+      ajax.open('get', `//datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${value.value}_city.json`);
       ajax.send();
       ajax.onreadystatechange = function () {
         if (ajax.readyState === 4 && ajax.status === 200) {
@@ -68,7 +68,7 @@ const Register = () => {
       };
     } else if (type === 'secondCity') {
       const ajax = new XMLHttpRequest();
-      ajax.open('get', `http://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${value.value}_district.json`);
+      ajax.open('get', `//datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${value.value}_district.json`);
       ajax.send();
       ajax.onreadystatechange = function () {
         if (ajax.readyState === 4 && ajax.status === 200) {
