@@ -155,7 +155,6 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
                   message.success('准入成功');
                   actionRef2?.current?.reload();
                 }
-                await updateKHJYJG({ id: record.value?.KHJGRZSQs[0].KHJYJGId }, { ZT: 0 });
               }}
               okText="确定"
               cancelText="取消"
