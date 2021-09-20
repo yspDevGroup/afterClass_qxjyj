@@ -87,7 +87,20 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       dataIndex: 'JGMC',
       key: 'JGMC',
       align: 'center',
-      search: false
+      search: false,
+      render: (text: any, record: any) => {
+        return (
+          <Link
+            key="jgxq"
+            to={{
+              pathname: '/organizationManagement/agencyDetails',
+              state: record
+            }}
+          >
+            {text}
+          </Link>
+        );
+      }
     },
 
     {
@@ -131,15 +144,6 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       render: (text, record, action) => {
         return (
           <div className={styles.operation}>
-            <Link
-              key="jgxq"
-              to={{
-                pathname: '/organizationManagement/agencyDetails',
-                state: record
-              }}
-            >
-              机构详情
-            </Link>
             <Link
               key="kclb"
               to={{
