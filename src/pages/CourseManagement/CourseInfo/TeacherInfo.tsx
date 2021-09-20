@@ -310,9 +310,10 @@ const TeacherInfo = (props: any) => {
           <CustomForm
             values={(() => {
               if (info) {
-                const { CSRQ, ...rest } = info;
+                const { CSRQ, XB, ...rest } = info;
                 return {
                   CSRQ: CSRQ ? moment(CSRQ) : '',
+                  XB: XB === '男性' ? '男' : '女',
                   ...rest
                 };
               }
