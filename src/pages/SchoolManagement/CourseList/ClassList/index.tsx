@@ -38,9 +38,19 @@ const ClassList = (props: any) => {
       search: false
     },
     {
-      title: '报名人数',
+      title: '班级人数',
       dataIndex: 'BJRS',
       key: 'BJRS',
+      align: 'center',
+      search: false,
+      render: (text: any, record: any) => {
+        return record.BJRS;
+      }
+    },
+    {
+      title: '报名人数',
+      dataIndex: 'BMRS',
+      key: 'BMRS',
       align: 'center',
       search: false,
       render: (text: any, record: any) => {
