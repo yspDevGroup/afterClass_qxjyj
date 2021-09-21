@@ -12,18 +12,12 @@ import { updateKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
  * 本区课程
  * @returns
  */
-const LocalCourses = (props: { JYYData: any }) => {
-  const { JYYData } = props;
+const LocalCourses = (props: { JYYData: any, reload: boolean }) => {
+  const { JYYData, reload } = props;
   const actionRef = useRef<ActionType>();
-  const confirm = async (id: any) => {
-    // const res = await deleteKHJYJG({ id });
-    // if (res.status === 'ok') {
-    //   message.success('删除成功');
-    //   actionRef.current?.reload();
-    // } else {
-    //   message.error(res.message);
-    // }
-  };
+  if (reload) {
+    actionRef.current?.reload();
+  }
   const columns: any[] = [
     {
       title: '序号',
@@ -168,8 +162,10 @@ const LocalCourses = (props: { JYYData: any }) => {
             ''
           ) : (
             <>
-              <a
-                onClick={async () => {
+              <Popconfirm
+                key="zr"
+                title="确定取消引入该课程?"
+                onConfirm={async () => {
                   const res = await updateKHKCSJ({ id: record?.id }, { KCZT: 1 });
                   if (res.status === 'ok') {
                     message.success('操作成功');
@@ -178,9 +174,12 @@ const LocalCourses = (props: { JYYData: any }) => {
                     message.error('操作失败');
                   }
                 }}
+                okText="确定"
+                cancelText="取消"
+                placement="topRight"
               >
-                取消引入
-              </a>
+                <a>取消引入</a>
+              </Popconfirm>
             </>
           )}
         </Space>
@@ -202,7 +201,7 @@ const LocalCourses = (props: { JYYData: any }) => {
               page: param.current,
               pageSize: param.pageSize,
               XZQHM: JYYData?.XZQH,
-              KCMC: param.keyword
+              KCMC: param.KCMC
             };
             const res = await getAllCourses(params);
             if (res.status === 'ok') {

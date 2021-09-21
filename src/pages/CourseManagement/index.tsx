@@ -14,6 +14,7 @@ const index = () => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
   const [JYYData, setXZQH] = useState<any>();
+  const [reload, setReload] = useState<boolean>(false);
   useEffect(() => {
     (async () => {
       const res = await JYJGSJ({ id: currentUser?.jyjId || '' });
@@ -23,16 +24,16 @@ const index = () => {
     })();
   }, []);
   const callback = (key: any) => {
-    console.log(key);
+    setReload(key === '1');
   };
   return (
     <div className={classes.content}>
       <Tabs defaultActiveKey="1" onChange={callback}>
         <TabPane tab="本区课程" key="1">
-          {JYYData ? <LocalCourses JYYData={JYYData} /> : ''}
+          {JYYData ? <LocalCourses JYYData={JYYData} reload={reload} /> : ''}
         </TabPane>
         <TabPane tab="待引入课程" key="2">
-          {JYYData ? <CoursesIntroduced JYYData={JYYData} /> : ''}
+          {JYYData ? <CoursesIntroduced JYYData={JYYData} reload={reload} /> : ''}
         </TabPane>
       </Tabs>
     </div>

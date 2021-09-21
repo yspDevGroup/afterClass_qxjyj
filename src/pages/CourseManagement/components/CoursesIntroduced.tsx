@@ -14,20 +14,14 @@ import { updateKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
  * 待引入课程
  * @returns
  */
-const CoursesIntroduced = (props: { JYYData: any }) => {
-  const { JYYData } = props;
+const CoursesIntroduced = (props: { JYYData: any, reload: boolean }) => {
+  const { JYYData, reload } = props;
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
   const actionRef = useRef<ActionType>();
-  const confirm = async (id: any) => {
-    // const res = await deleteKHJYJG({ id });
-    // if (res.status === 'ok') {
-    //   message.success('删除成功');
-    //   actionRef.current?.reload();
-    // } else {
-    //   message.error(res.message);
-    // }
-  };
+  if (!reload) {
+    actionRef.current?.reload();
+  }
   const columns: any[] = [
     {
       title: '序号',
