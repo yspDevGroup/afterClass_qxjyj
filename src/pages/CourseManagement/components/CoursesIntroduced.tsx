@@ -105,17 +105,29 @@ const CoursesIntroduced = (props: { JYYData: any, reload: boolean }) => {
           </a>
           <a
             onClick={async () => {
+
+            }}
+          >
+
+          </a>
+          <Popconfirm
+            key="zr"
+            title="确定取消引入该课程?"
+            onConfirm={async () => {
               const res = await updateKHKCSJ({ id: record?.id }, { KCZT: 2 });
               if (res.status === 'ok') {
                 message.success('操作成功');
                 action?.reload();
               } else {
-                message.error('操作失败');
+                message.error(res.message || '操作失败');
               }
             }}
+            okText="确定"
+            cancelText="取消"
+            placement="topRight"
           >
-            引入
-          </a>
+            <a>引入</a>
+          </Popconfirm>
         </Space>
       )
     }
