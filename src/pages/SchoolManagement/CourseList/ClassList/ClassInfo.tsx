@@ -24,11 +24,8 @@ const formItemLayout = {
 };
 const ClassInfo = (props: any) => {
   const { state } = props.location;
-  console.log(state, '=-------');
   const [disabled, setDisabled] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
-  const [JSSJOptions, setJSSJOptions] = useState<any>([]);
-  const [NJDataOption, setNJDataOption] = useState<any>([]);
   const [formValues, setFormValues] = useState({});
   const [teacherData, setTeacherData] = useState<any>([]);
   useEffect(() => {
@@ -39,6 +36,10 @@ const ClassInfo = (props: any) => {
       thData.push(item?.KHJSSJ);
     });
     setTeacherData(state?.KHBJJs);
+    const jfData: any[] = [];
+    state?.KHKCJCs?.forEach((item: any, index: number) => {
+      jfData.push(`${index + 1}.${item.JCMC}，费用：${item.JCFY} ；\n`);
+    });
     if (state?.id) {
       // form详情
       const params = {
@@ -50,7 +51,8 @@ const ClassInfo = (props: any) => {
         BMRS: `${state?.KHXSBJs.length} / ${state?.BJRS}`,
         SKSD: `${state?.KKRQ} - ${state?.JKRQ}`,
         BMSD: `${moment(state?.BMKSSJ).format('YYYY-MM-DD')} - ${moment(state?.BMJSSJ).format('YYYY-MM-DD')}`,
-        BMFY: state?.FY
+        BMFY: state?.FY,
+        JF: jfData.toString().replace(',', '') || ''
       };
       setImageUrl(state?.KCTP || '');
       setFormValues(params);
@@ -70,7 +72,14 @@ const ClassInfo = (props: any) => {
           key: 'BJMC',
           disabled
         },
-        {}
+        {
+          type: 'textArea',
+          label: '教辅材料',
+          placeholder: '——',
+          name: 'JF',
+          key: 'JF',
+          disabled
+        }
       ]
     },
     {
