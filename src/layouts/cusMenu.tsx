@@ -2,10 +2,10 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-24 17:21:12
- * @LastEditTime: 2021-09-10 15:36:18
- * @LastEditors: wsl
+ * @LastEditTime: 2021-09-23 11:37:07
+ * @LastEditors: gxh
  */
-//配置路由
+// 配置路由
 import React from 'react';
 import {
   HomeOutlined,
@@ -13,7 +13,8 @@ import {
   FlagOutlined,
   AppstoreAddOutlined,
   NotificationOutlined,
-  AuditOutlined
+  AuditOutlined,
+  ProfileOutlined
 } from '@ant-design/icons';
 export default {
   route: {
@@ -53,6 +54,7 @@ export default {
           }
         ]
       },
+      // 学校
       {
         path: '/schoolManagement',
         name: '学校管理',
@@ -208,6 +210,19 @@ export default {
           }
         ]
       },
+      {
+        path: '/orderinquiry',
+        name: '订单详情',
+        icon: <NotificationOutlined />,
+        routes: [
+          {
+            path: '/orderinquiry/detatil',
+            name: ' 课程订单详情',
+            hideInMenu: 'true'
+          }
+        ]
+      },
+
       {
         path: '/courseInfo',
         name: '课程详情',
