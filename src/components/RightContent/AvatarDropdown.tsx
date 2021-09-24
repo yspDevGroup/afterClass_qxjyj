@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { message, Spin } from 'antd';
 import { useAccess, useModel } from 'umi';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
-// import { KHJYJG } from '@/services/after-class-pxjg/khjyjg';
+import { JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
 import { initWXAgentConfig, initWXConfig, showUserName } from '@/wx';
 import styles from './index.less';
 
@@ -18,19 +18,19 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
   const [wechatInfo, setWechatInfo] = useState({
     openId: ''
   });
-  const [jgData, setJgData] = useState<any>();
+  const [jyjData, setJyjData] = useState<any>();
   const userRef = useRef(null);
   useEffect(() => {
-    async function fetchData(jgId: string) {
-      const res = await KHJYJG({
-        id: jgId
+    async function fetchData(jyjId: string) {
+      const res = await JYJGSJ({
+        id: jyjId
       });
       if (res.status === 'ok') {
-        setJgData(res.data);
+        setJyjData(res.data);
       }
     }
-    if (currentUser?.jgId) {
-      fetchData(currentUser?.jgId);
+    if (currentUser?.jyjId) {
+      fetchData(currentUser?.jyjId);
     }
   }, [currentUser]);
   useEffect(() => {
@@ -71,14 +71,14 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
   return (
     <>
       <span className={`${styles.action}`}>
-        {jgData ? (
+        {jyjData ? (
           <span style={{ paddingRight: '40px' }}>
-            {jgData?.QYTB && jgData?.QYTB.indexOf('http') > -1 ? (
-              <img style={{ width: '40px', height: '40px', borderRadius: '40px' }} src={jgData?.QYTB} />
+            {jyjData?.JYJTB && jyjData?.JYJTB.startsWith('http') ? (
+              <img style={{ width: '40px', height: '40px', borderRadius: '40px' }} src={jyjData?.JYJTB} />
             ) : (
               ''
             )}{' '}
-            {jgData?.QYMC}
+            {jyjData?.BMMC}
           </span>
         ) : (
           ''
