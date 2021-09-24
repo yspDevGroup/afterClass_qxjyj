@@ -112,7 +112,7 @@ const CoursesIntroduced = (props: { JYYData: any, reload: boolean }) => {
           </a>
           <Popconfirm
             key="zr"
-            title="确定取消引入该课程?"
+            title="确定引入该课程?"
             onConfirm={async () => {
               const res = await updateKHKCSJ({ id: record?.id }, { KCZT: 2 });
               if (res.status === 'ok') {
@@ -147,7 +147,7 @@ const CoursesIntroduced = (props: { JYYData: any, reload: boolean }) => {
             page: param.current,
             pageSize: param.pageSize,
             XZQHM: JYYData.XZQH,
-            KCMC: param.keyword
+            KCMC: param.KCMC
           };
           const res = await toIntroduceCourses(params);
           if (res.status === 'ok') {
