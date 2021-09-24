@@ -27,11 +27,8 @@ const ClassInfo = (props: any) => {
         setKHBJSJs(res.data.KHBJSJs);
         setDatas(res.data);
       }
-
-      console.log(res, '121212121-');
     })();
   }, []);
-  console.log(KHBJSJs);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -59,6 +56,16 @@ const ClassInfo = (props: any) => {
       key: 'BJMC',
       align: 'center',
       search: false
+    },
+    {
+      title: '班级人数',
+      dataIndex: 'BJRS',
+      key: 'BJRS',
+      align: 'center',
+      search: false,
+      render: (text: any, record: any) => {
+        return record.BJRS;
+      }
     },
     {
       title: '报名人数',
@@ -113,7 +120,6 @@ const ClassInfo = (props: any) => {
       align: 'center',
       search: false,
       render: (text: any, record: any) => {
-        console.log(record, '+++++++++++++==');
         return (
           <Link
             key="bjxq"
