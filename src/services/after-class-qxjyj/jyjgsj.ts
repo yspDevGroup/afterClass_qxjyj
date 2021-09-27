@@ -9,7 +9,7 @@ export async function JYJGSJ(
     /** 教育机构ID */
     id: string;
   },
-  options?: { [key: string]: any }
+  options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
   return request<{
@@ -31,7 +31,7 @@ export async function JYJGSJ(
   }>(`/jyjgsj/${param0}`, {
     method: 'GET',
     params: { ...queryParams },
-    ...(options || {})
+    ...(options || {}),
   });
 }
 
@@ -42,13 +42,13 @@ export async function deleteJYJGSJ(
     /** 教育机构ID */
     id: string;
   },
-  options?: { [key: string]: any }
+  options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
   return request<{ status?: 'ok' | 'error'; message?: string }>(`/jyjgsj/${param0}`, {
     method: 'DELETE',
     params: { ...queryParams },
-    ...(options || {})
+    ...(options || {}),
   });
 }
 
@@ -73,10 +73,10 @@ export async function createJYJGSJ(body: API.CreateJYJGSJ, options?: { [key: str
   }>('/jyjgsj/create', {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   });
 }
 
@@ -88,7 +88,7 @@ export async function getJYJGSJ(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any }
+  options?: { [key: string]: any },
 ) {
   return request<{
     status?: 'ok' | 'error';
@@ -97,10 +97,10 @@ export async function getJYJGSJ(
   }>('/jyjgsj/getAll', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   });
 }
 
@@ -112,17 +112,17 @@ export async function updateJYJGSJ(
     id: string;
   },
   body: API.UpdateJYJGSJ,
-  options?: { [key: string]: any }
+  options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
   return request<{ status?: 'ok' | 'error'; message?: string }>(`/jyjgsj/update/${param0}`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     params: { ...queryParams },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   });
 }
 
@@ -138,15 +138,15 @@ export async function getAllSchools(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any }
+  options?: { [key: string]: any },
 ) {
   return request<any>('/jyjgsj/getAllSchools', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   });
 }
 
@@ -166,15 +166,15 @@ export async function getAllInstitutions(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any }
+  options?: { [key: string]: any },
 ) {
   return request<any>('/jyjgsj/getAllInstitutions', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   });
 }
 
@@ -194,15 +194,15 @@ export async function getAllCourses(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any }
+  options?: { [key: string]: any },
 ) {
   return request<any>('/jyjgsj/getAllCourses', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   });
 }
 
@@ -220,15 +220,15 @@ export async function toIntroduceCourses(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any }
+  options?: { [key: string]: any },
 ) {
   return request<any>('/jyjgsj/toIntroduceCourses', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   });
 }
 
@@ -244,15 +244,15 @@ export async function getCourses(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any }
+  options?: { [key: string]: any },
 ) {
   return request<any>('/jyjgsj/getCourses', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   });
 }
 
@@ -263,15 +263,15 @@ export async function getCoursesBySchool(
     XNXQId?: string;
     KCMC?: string;
   },
-  options?: { [key: string]: any }
+  options?: { [key: string]: any },
 ) {
   return request<any>('/jyjgsj/getCoursesBySchool', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   });
 }
 
@@ -280,15 +280,15 @@ export async function homePage(
   body: {
     JYJGSJId?: string;
   },
-  options?: { [key: string]: any }
+  options?: { [key: string]: any },
 ) {
   return request<any>('/jyjgsj/homePage', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   });
 }
 
@@ -308,14 +308,14 @@ export async function getOrders(
     /** 课后服务订单状态 */
     DDZT?: string;
   },
-  options?: { [key: string]: any }
+  options?: { [key: string]: any },
 ) {
   return request<any>('/jyjgsj/getOrders', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   });
 }
