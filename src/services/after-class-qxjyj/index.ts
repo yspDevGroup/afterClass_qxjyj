@@ -46,6 +46,7 @@ import * as khzzfw from './khzzfw';
 import * as njsj from './njsj';
 import * as pksj from './pksj';
 import * as redis from './redis';
+import * as reports from './reports';
 import * as sso from './sso';
 import * as upload from './upload';
 import * as wechat from './wechat';
@@ -53,7 +54,6 @@ import * as xksj from './xksj';
 import * as xl from './xl';
 import * as xnjgsj from './xnjgsj';
 import * as xnxq from './xnxq';
-import * as xqsj from './xqsj';
 import * as xscfsj from './xscfsj';
 import * as xsjbsj from './xsjbsj';
 import * as xsjlsj from './xsjlsj';
@@ -67,6 +67,7 @@ import * as xxsjpz from './xxsjpz';
 import * as xxtzgg from './xxtzgg';
 import * as zxfa from './zxfa';
 import * as zxsj from './zxsj';
+import * as xqsj from './xqsj';
 export default {
   other,
   auth,
@@ -112,6 +113,7 @@ export default {
   njsj,
   pksj,
   redis,
+  reports,
   sso,
   upload,
   wechat,
@@ -119,7 +121,6 @@ export default {
   xl,
   xnjgsj,
   xnxq,
-  xqsj,
   xscfsj,
   xsjbsj,
   xsjlsj,
@@ -132,5 +133,6 @@ export default {
   xxsjpz,
   xxtzgg,
   zxfa,
-  zxsj
+  zxsj,
+  xqsj,
 };

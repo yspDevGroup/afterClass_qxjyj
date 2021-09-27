@@ -130,7 +130,7 @@ const CourseInfo = (props: any) => {
     {
       type: 'textArea',
       label: '课程简介',
-      placeholder: '',
+      placeholder: '—',
       name: 'KCMS',
       disabled,
       key: 'KCMS'
