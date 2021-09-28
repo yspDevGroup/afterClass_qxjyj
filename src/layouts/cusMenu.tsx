@@ -222,6 +222,11 @@ export default {
           }
         ]
       },
+      {
+        path: '/chartspage',
+        name: '数据大屏',
+
+      },
 
       {
         path: '/courseInfo',
