@@ -97,14 +97,13 @@
 
   .customPageHeader {
     :global {
-      .ant-page-header.has-breadcrumb {
-        padding-top: @padding-md;
-      }
 
       .ant-page-header {
         display: flex;
         height: 6vh;
         box-shadow: 0 1px 0 #e3e6f2;
+        line-height: 6vh;
+        padding: 0 24px;
 
         .ant-page-header-heading {
           flex: auto;
@@ -126,6 +125,7 @@
 
           & + .ant-page-header-heading {
             width: 200px;
+            margin: 0;
           }
         }
       }

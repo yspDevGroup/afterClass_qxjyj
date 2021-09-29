@@ -3,7 +3,7 @@
  * @description: 通用布局
  * @author: zpl
  * @Date: 2021-08-16 17:31:56
- * @LastEditTime: 2021-09-07 14:35:31
+ * @LastEditTime: 2021-09-28 10:40:47
  * @LastEditors: Sissle Lynn
  */
 import React, { FC, useEffect, useState } from 'react';
@@ -17,6 +17,7 @@ import headerTopSmall from '@/assets/headerTopSmall.png'
 import styles from './index.less';
 import { BreadcrumbProps, PageHeaderProps } from 'antd';
 import RightContent from '@/components/RightContent';
+import { Route } from '@ant-design/pro-layout/lib/typings';
 
 const menuRender = (
   item: MenuDataItem & {
@@ -42,7 +43,8 @@ const CommonLayout: FC<IRouteComponentProps> = ({ children, location, route, his
   useEffect(() => {
     const path = location.pathname.toLowerCase();
     const isLoginPage = path.startsWith('/user/login');
-    setHiddenHeader(isLoginPage);
+    const idGraphic = path.startsWith('/statistics/graphic');
+    setHiddenHeader(isLoginPage || idGraphic);
   }, [location.pathname]);
 
   return (
@@ -56,7 +58,7 @@ const CommonLayout: FC<IRouteComponentProps> = ({ children, location, route, his
         <div>{children}</div>
       ) : (
         <ProLayout
-          {...customMenu}
+          {...(customMenu as unknown as Route[])}
           layout="side"
           headerRender={false}
           collapsedButtonRender={false}
@@ -70,13 +72,13 @@ const CommonLayout: FC<IRouteComponentProps> = ({ children, location, route, his
             pathname: path
           }}
           menuHeaderRender={(logo, title, props) => {
-            if(props?.collapsed){
+            if (props?.collapsed) {
               return <div className={styles.headerLogoSmall}>
-              <Link to="/">
-                <img src={headerTopSmall} />
-              </Link>
-              <span>教育<br/>局端</span>
-            </div>
+                <Link to="/">
+                  <img src={headerTopSmall} />
+                </Link>
+                <span>教育<br />局端</span>
+              </div>
             }
             return (
               <div className={styles.headerLogo}>

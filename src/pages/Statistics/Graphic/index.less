@@ -1,0 +1,112 @@
+.diaplayBox {
+  width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  .diaplayTop {
+    width: 100%;
+    height: 82px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .bodyRow {
+    padding: 0 0 24px 0;
+
+    >div[class*='ant-col'] {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: auto;
+      padding: 0 12px;
+      color: #fff;
+
+      >div {
+        width: 100%;
+        box-shadow: 0 0 20px #3845CD inset;
+        position: relative;
+        min-height: 200px;
+
+        &+div {
+          margin-top: 24px;
+        }
+
+        span.boxfoot::after,
+        span.boxfoot::before,
+        &::before,
+        &::after {
+          position: absolute;
+          content: '';
+          width: 20px;
+          height: 20px;
+        }
+
+        &::before {
+          top: 0;
+          left: 0;
+          border-top: 2px solid #356AE0;
+          border-left: 2px solid #356AE0;
+        }
+
+        &::after {
+          top: 0;
+          right: 0;
+          border-right: 2px solid #356AE0;
+          border-top: 2px solid #356AE0;
+        }
+
+        span.boxfoot::before {
+          left: 0;
+          bottom: 0;
+          border-bottom: 2px solid #356AE0;
+          border-left: 2px solid #356AE0;
+        }
+
+        span.boxfoot::after {
+          right: 0;
+          bottom: 0;
+          border-right: 2px solid #356AE0;
+          border-bottom: 2px solid #356AE0;
+        }
+
+        header {
+          font-weight: bold;
+          font-size: 20px;
+          line-height: 28px;
+          color: #fff;
+          padding: 16px;
+          border-bottom: 1px solid #356AE0;
+        }
+
+        .container {
+          padding: 24px 16px;
+
+          .serviceNum {
+            h3 {
+              font-weight: normal;
+              font-size: 16px;
+              line-height: 22px;
+              color: #fff;
+              margin: 0;
+            }
+
+            p {
+              margin: 0;
+              font-weight: bold;
+              font-size: 26px;
+              line-height: 54px;
+            }
+          }
+
+          .chartContainer {
+            >div {
+              height: 270px !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

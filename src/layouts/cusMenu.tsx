@@ -2,8 +2,8 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-24 17:21:12
- * @LastEditTime: 2021-09-23 11:37:07
- * @LastEditors: gxh
+ * @LastEditTime: 2021-09-28 10:50:33
+ * @LastEditors: Sissle Lynn
  */
 // 配置路由
 import React from 'react';
@@ -223,11 +223,16 @@ export default {
         ]
       },
       {
-        path: '/chartspage',
-        name: '数据大屏',
-
+        path: '/statistics',
+        icon: <ProfileOutlined />,
+        name: '统计报表',
+        routes: [
+          {
+            path: '/statistics/graphic',
+            name: '图形统计',
+          },
+        ]
       },
-
       {
         path: '/courseInfo',
         name: '课程详情',
