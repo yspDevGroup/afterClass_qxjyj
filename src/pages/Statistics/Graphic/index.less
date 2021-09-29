@@ -105,6 +105,31 @@
               height: 270px !important;
             }
           }
+          .chartContainerMore{
+            >div {
+              height: 540px !important;
+            }
+          }
+
+          .serviceList {
+            p {
+              margin: 0;
+              width: 100%;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+
+              &::before {
+                display: inline-block;
+                content: '';
+                width: 3px;
+                height: 3px;
+                vertical-align: middle;
+                margin-right: 10px;
+                background-color: #fff;
+              }
+            }
+          }
         }
       }
     }

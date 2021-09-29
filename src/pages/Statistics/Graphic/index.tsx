@@ -6,6 +6,9 @@ import styles from './index.less';
 import NumberCollect from './component/NumberCollect';
 import { mock, textColor1, textColor2 } from './component/utils';
 import PieChart from './component/PieChart';
+import List from './component/List';
+import ColumnChart from './component/ColumnChart';
+import BarChart from './component/BarChart';
 
 const ChartsPage = (props: any) => {
   return (
@@ -56,6 +59,7 @@ const ChartsPage = (props: any) => {
                 开设服务学校
               </header>
               <div className={styles.container}>
+                <List data={mock.schoolNum} />
               </div>
             </div>
             <div>
@@ -64,15 +68,28 @@ const ChartsPage = (props: any) => {
                 本学期各校开课情况
               </header>
               <div className={styles.container}>
+                <ColumnChart data={mock.courseNum} />
               </div>
             </div>
           </Col>
           <Col span={7} className={styles.diaplay3} >
             <div>
               <span className={styles.boxfoot} />
+              <header>
+                各校报名情况
+              </header>
+              <div className={styles.container}>
+                <BarChart data={mock.enrollNum} />
+              </div>
             </div>
             <div>
               <span className={styles.boxfoot} />
+              <header>
+                开设服务机构
+              </header>
+              <div className={styles.container}>
+                <List data={mock.agentNum} />
+              </div>
             </div>
           </Col>
         </Row>
