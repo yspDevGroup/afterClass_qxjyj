@@ -14,7 +14,7 @@ import { updateKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
  * 待引入课程
  * @returns
  */
-const CoursesIntroduced = (props: { JYYData: any, reload: boolean }) => {
+const CoursesIntroduced = (props: { JYYData: any; reload: boolean }) => {
   const { JYYData, reload } = props;
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
@@ -86,7 +86,7 @@ const CoursesIntroduced = (props: { JYYData: any, reload: boolean }) => {
           <a
             onClick={() => {
               history.push({
-                pathname: `/courseManagement/courseInfo`,
+                pathname: `/courseManagement/courseManagement/courseInfo`,
                 state: { ...record }
               });
             }}
@@ -103,13 +103,7 @@ const CoursesIntroduced = (props: { JYYData: any, reload: boolean }) => {
           >
             机构详情
           </a>
-          <a
-            onClick={async () => {
 
-            }}
-          >
-
-          </a>
           <Popconfirm
             key="zr"
             title="确定引入该课程?"

@@ -107,52 +107,66 @@ export default {
         name: '课程管理',
         routes: [
           {
-            path: '/courseManagement/courseInfo',
-            name: '课程详情',
-            hideInMenu: 'true',
+            name: '课程管理',
+            path: '/courseManagement/courseManagement',
             routes: [
               {
-                path: '/courseManagement/courseInfo/TeacherInfo',
-                name: '教师详情',
-                hideInMenu: 'true'
-              }
-            ]
-          },
-          {
-            path: '/courseManagement/classInfo',
-            name: '班级列表',
-            hideInMenu: 'true',
-            routes: [
+                path: '/courseManagement/courseManagement/courseInfo',
+                name: '课程详情',
+                hideInMenu: 'true',
+                routes: [
+                  {
+                    path: '/courseManagement/courseManagement/courseInfo/TeacherInfo',
+                    name: '教师详情',
+                    hideInMenu: 'true'
+                  }
+                ]
+              },
               {
-                path: '/courseManagement/classInfo/studentList',
-                name: '学生列表',
-                hideInMenu: 'true'
-              }
-            ]
-          },
-          {
-            path: '/courseManagement/schoolList',
-            name: '学校列表',
-            hideInMenu: 'true',
-            routes: [
-              {
-                path: '/courseManagement/schoolList/classInfo',
+                path: '/courseManagement/courseManagement/classInfo',
                 name: '班级列表',
                 hideInMenu: 'true',
                 routes: [
                   {
-                    path: '/courseManagement/schoolList/classInfo/studentList',
+                    path: '/courseManagement/courseManagement/classInfo/studentList',
                     name: '学生列表',
                     hideInMenu: 'true'
                   }
                 ]
               },
               {
-                path: '/courseManagement/schoolList/schoolInfos',
-                name: '学校详情',
-                hideInMenu: 'true'
+                path: '/courseManagement/courseManagement/schoolList',
+                name: '学校列表',
+                hideInMenu: 'true',
+                routes: [
+                  {
+                    path: '/courseManagement/courseManagement/schoolList/classInfo',
+                    name: '班级列表',
+                    hideInMenu: 'true',
+                    routes: [
+                      {
+                        path: '/courseManagement/courseManagement/schoolList/classInfo/studentList',
+                        name: '学生列表',
+                        hideInMenu: 'true'
+                      }
+                    ]
+                  },
+                  {
+                    path: '/courseManagement/courseManagement/schoolList/schoolInfos',
+                    name: '学校详情',
+                    hideInMenu: 'true'
+                  }
+                ]
               }
             ]
+          },
+          {
+            name: '请假管理',
+            path: '/courseManagement/leaveManagement'
+          },
+          {
+            name: '退课管理',
+            path: '/courseManagement/reimbursementClass'
           }
         ]
       },
@@ -229,6 +243,7 @@ export default {
         routes: [
           {
             path: '/statistics/graphic',
+<<<<<<< HEAD
             name: '图形统计',
           },
           {
@@ -242,6 +257,10 @@ export default {
               }
             ]
           },
+=======
+            name: '图形统计'
+          }
+>>>>>>> bfa1003641fc7cf2c9547f6cc1d669357b9b6a8a
         ]
       },
       {

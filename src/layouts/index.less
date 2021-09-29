@@ -5,10 +5,10 @@
     }
 
     span {
-      color: #f0f5f9;
       display: block;
-      text-align: center;
+      color: #f0f5f9;
       font-size: 12px;
+      text-align: center;
     }
   }
 
@@ -17,6 +17,10 @@
       display: flex;
       justify-content: center;
       margin-top: 46px !important;
+    }
+    // 取消内容部分底部外边距
+    .ant-pro-basicLayout-content {
+      margin-bottom: 0;
     }
 
     // 调整左侧菜单
@@ -29,13 +33,13 @@
         background-color: rgba(33, 48, 69, 1);
 
         h1 {
+          display: block;
           margin: 0;
           color: #fff;
-          text-align: center;
-          line-height: 50px;
-          display: block;
           font-weight: normal;
           font-size: @font-size-lg;
+          line-height: 50px;
+          text-align: center;
         }
 
         img {
@@ -86,7 +90,7 @@
     // 调整底部菜单
     .ant-layout-footer {
       .ant-pro-global-footer {
-        margin: 24px 0;
+        margin: 10px 0;
 
         .ant-pro-global-footer-links {
           display: none;
@@ -97,13 +101,12 @@
 
   .customPageHeader {
     :global {
-
       .ant-page-header {
         display: flex;
         height: 6vh;
-        box-shadow: 0 1px 0 #e3e6f2;
-        line-height: 6vh;
         padding: 0 24px;
+        line-height: 6vh;
+        box-shadow: 0 1px 0 #e3e6f2;
 
         .ant-page-header-heading {
           flex: auto;
