@@ -2,8 +2,8 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-24 17:21:12
- * @LastEditTime: 2021-09-28 10:50:33
- * @LastEditors: Sissle Lynn
+ * @LastEditTime: 2021-09-29 19:02:29
+ * @LastEditors: zpl
  */
 // 配置路由
 import React from 'react';
@@ -243,7 +243,6 @@ export default {
         routes: [
           {
             path: '/statistics/graphic',
-<<<<<<< HEAD
             name: '图形统计',
           },
           {
@@ -257,10 +256,6 @@ export default {
               }
             ]
           },
-=======
-            name: '图形统计'
-          }
->>>>>>> bfa1003641fc7cf2c9547f6cc1d669357b9b6a8a
         ]
       },
       {
