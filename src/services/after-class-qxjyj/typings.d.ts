@@ -2416,6 +2416,7 @@ declare namespace API {
       BMJSSJ?: string;
       KCTP?: string;
       KHKCSJ?: { id?: string; KCMC?: string };
+      XQSJ?: { id?: any; XXJBSJ?: { XXMC?: any } };
     };
   };
 
@@ -2806,6 +2807,7 @@ declare namespace API {
         KSS?: number;
         FY?: number;
         KCTP?: string;
+        XQSJ?: { id?: any; XXJBSJ?: { XXMC?: any } };
       };
     }[];
   };

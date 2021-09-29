@@ -243,7 +243,7 @@ export default {
         routes: [
           {
             path: '/statistics/graphic',
-            name: '图形统计',
+            name: '数据大屏',
           },
           {
             path: '/statistics/afterSchoolCourse',
