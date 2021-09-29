@@ -49,7 +49,7 @@ const SchoolManagement = (props: any) => {
         return (
           <Link
             to={{
-              pathname: '/courseManagement/schoolList/schoolInfos',
+              pathname: '/courseManagement/courseManagement/schoolList/schoolInfos',
               state: record
             }}
           >
@@ -101,7 +101,7 @@ const SchoolManagement = (props: any) => {
         <div className={styles.operation}>
           <Link
             to={{
-              pathname: '/courseManagement/schoolList/classInfo',
+              pathname: '/courseManagement/courseManagement/schoolList/classInfo',
               state: record
             }}
           >

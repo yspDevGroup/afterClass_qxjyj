@@ -12,7 +12,7 @@ import { updateKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
  * 本区课程
  * @returns
  */
-const LocalCourses = (props: { JYYData: any, reload: boolean }) => {
+const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
   const { JYYData, reload } = props;
   const actionRef = useRef<ActionType>();
   if (reload) {
@@ -43,7 +43,7 @@ const LocalCourses = (props: { JYYData: any, reload: boolean }) => {
           <a
             onClick={() => {
               history.push({
-                pathname: `/courseManagement/courseInfo`,
+                pathname: `/courseManagement/courseManagement/courseInfo`,
                 state: { ...record }
               });
             }}
@@ -90,7 +90,7 @@ const LocalCourses = (props: { JYYData: any, reload: boolean }) => {
         return (
           <Link
             to={{
-              pathname: '/courseManagement/schoolList/schoolInfos',
+              pathname: '/courseManagement/courseManagement/schoolList/schoolInfos',
               state: record
             }}
           >
@@ -138,7 +138,7 @@ const LocalCourses = (props: { JYYData: any, reload: boolean }) => {
             <a
               onClick={() => {
                 history.push({
-                  pathname: `/courseManagement/schoolList`,
+                  pathname: `/courseManagement/courseManagement/schoolList`,
                   state: { ...record }
                 });
               }}
@@ -149,7 +149,7 @@ const LocalCourses = (props: { JYYData: any, reload: boolean }) => {
             <a
               onClick={() => {
                 history.push({
-                  pathname: `/courseManagement/classInfo`,
+                  pathname: `/courseManagement/courseManagement/classInfo`,
                   state: { ...record }
                 });
               }}
@@ -171,7 +171,7 @@ const LocalCourses = (props: { JYYData: any, reload: boolean }) => {
                     message.success('操作成功');
                     action?.reload();
                   } else {
-                    message.error(res.message||'操作失败');
+                    message.error(res.message || '操作失败');
                   }
                 }}
                 okText="确定"
