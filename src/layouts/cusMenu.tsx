@@ -231,6 +231,17 @@ export default {
             path: '/statistics/graphic',
             name: '图形统计',
           },
+          {
+            path: '/statistics/afterSchoolCourse',
+            name: '课后课程统计',
+            routes: [
+              {
+                path: '/statistics/afterSchoolCourse/detail',
+                name: '课后班级统计',
+                hideInMenu: 'true'
+              }
+            ]
+          },
         ]
       },
       {

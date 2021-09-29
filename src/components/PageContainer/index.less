@@ -1,0 +1,54 @@
+.customPageHeader {
+  :global {
+    .ant-page-header.has-breadcrumb {
+      padding-top: 16px;
+    }
+    .ant-page-header {
+      display: flex;
+      align-items: center;
+      height: 6vh;
+      box-shadow: 0 1px 0 #e3e6f2;
+
+      .ant-page-header-heading {
+        flex: auto;
+      }
+
+      .ant-breadcrumb {
+        display: flex;
+        flex: auto;
+        align-items: center;
+        min-width: 200px;
+        text-align: justify;
+
+        > span {
+          display: flex;
+        }
+
+        & + .ant-page-header-heading {
+          width: 200px;
+        }
+      }
+    }
+
+    .ant-pro-grid-content {
+      .ant-pro-table {
+        .ant-table-wrapper {
+          width: 100%;
+          overflow: auto;
+
+          .ant-table {
+            min-width: 700px;
+
+            .ui-table-col-elp {
+              display: inline-block;
+              width: 100%;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+      }
+    }
+  }
+}
