@@ -124,7 +124,7 @@ const OrderInquiry = () => {
     <>
       <div className={styles.searchs}>
         <span>
-          学校名称:
+          学校名称：
           <Select
             style={{ width: 200 }}
             onChange={(value: string) => {

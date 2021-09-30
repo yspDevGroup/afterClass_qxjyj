@@ -173,7 +173,7 @@ const AfterSchoolCourse = () => {
 
   return (
     <>
-      <div className={Style.TopSearchss}>
+      <div className={Style.searchs}>
         <span>
           所属学年学期：
           <Select

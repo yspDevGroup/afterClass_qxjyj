@@ -1,6 +1,17 @@
-.TopSearchss {
-  padding-bottom: 20px;
+.searchs {
+  display: flex;
+  padding: 16px 24px;
+  line-height: 2.3;
+  background: #fff;
 }
-.TopSearchss span {
+.searchs span {
   margin-right: 20px;
+}
+.searchs > div {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 16px;
+}
+.searchs > div > span {
+  display: inline-block;
 }
