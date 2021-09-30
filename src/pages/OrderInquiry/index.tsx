@@ -2,21 +2,22 @@
  * @description:
  * @author: gxh
  * @Date: 2021-09-22 11:54:38
- * @LastEditTime: 2021-09-23 16:25:43
- * @LastEditors: gxh
+ * @LastEditTime: 2021-09-30 19:20:14
+ * @LastEditors: Sissle Lynn
  */
 
-import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
+import ProTable, { ActionType, ProColumns, RequestData } from '@ant-design/pro-table';
 import React, { useEffect, useRef, useState } from 'react';
-import { Select, Space } from 'antd';
+import { Button, Select, Space } from 'antd';
 import { Link, useModel } from 'umi';
 import { getAllSchools } from '@/services/after-class-qxjyj/jyjgsj';
 const { Option } = Select;
 import styles from './index.less';
+import { TableListParams } from '@/constant';
 // 点击查询按钮
 const OrderInquiry = () => {
-  const SubmitTable = () => {};
-  const columns: ProColumns<API.KHXSDD>[] | undefined = [
+  const SubmitTable = () => { };
+  const columns: ProColumns<any>[] | undefined = [
     {
       title: '序号',
       align: 'center',
@@ -29,7 +30,6 @@ const OrderInquiry = () => {
       key: 'XXMC',
       align: 'center'
     },
-
     {
       title: '所属学段',
       key: 'XD',
@@ -80,15 +80,15 @@ const OrderInquiry = () => {
                 state: record
               }}
             >
-              课程订单详情
+              课程订单
             </Link>
             <Link
               to={{
-                pathname: '/orderinquiry/detatil/aa',
+                pathname: '/orderinquiry/serviceOrder',
                 state: record
               }}
             >
-              服务订单详情
+              服务订单
             </Link>
           </Space>
         );
@@ -97,28 +97,23 @@ const OrderInquiry = () => {
   ];
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
-  const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);
+  // 列表对象引用，可主动执行刷新等操作
+  const actionRef = useRef<ActionType>();
   const [SchoolList, setSchoolList] = useState<any>([]);
+  const [curSchool, setCurSchool] = useState<string>();
 
   useEffect(() => {
     (async () => {
       const res2 = await getAllSchools({
-        XZQHM: currentUser.XZQHM,
+        XZQHM: currentUser?.XZQHM,
         page: 0,
         pageSize: 0
       });
-      setDataSource(res2.data.rows);
-      if (res2.data.rows.length > 1) {
+      if (res2.data?.rows?.length) {
         setSchoolList(res2.data.rows);
       }
     })();
   }, []);
-
-  useEffect(() => {
-    (async () => {
-      console.log('数据发生变化');
-    })();
-  }, [SchoolList]);
 
   return (
     <>
@@ -128,8 +123,10 @@ const OrderInquiry = () => {
           <Select
             style={{ width: 200 }}
             onChange={(value: string) => {
-              setSchoolList(value);
+              setCurSchool(value);
+              actionRef.current?.reload();
             }}
+            allowClear
           >
             {SchoolList.map((item: any) => {
               return (
@@ -146,6 +143,7 @@ const OrderInquiry = () => {
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         onSubmit={SubmitTable}
         columns={columns}
+        actionRef={actionRef}
         search={false}
         options={{
           setting: false,
@@ -153,8 +151,36 @@ const OrderInquiry = () => {
           density: false,
           reload: false
         }}
-        // request 获取 dataSource 的方法
-        dataSource={dataSource}
+        request={async (
+          params: any & {
+            pageSize?: number;
+            current?: number;
+            keyword?: string;
+          },
+          sort,
+          filter,
+        ): Promise<Partial<RequestData<any>>> => {
+          // 表单搜索项会从 params 传入，传递给后端接口。
+          const opts: TableListParams = {
+            ...params,
+            sorter: sort && Object.keys(sort).length ? sort : undefined,
+            filter,
+          };
+          const res = await getAllSchools({
+            XZQHM: currentUser?.XZQHM,
+            XXMC: curSchool || "",
+            page: 0,
+            pageSize: 0
+          });
+          if (res.status === 'ok') {
+            return {
+              data: res.data?.rows,
+              total: res.data?.count,
+              success: true,
+            };
+          }
+          return {};
+        }}
       />
     </>
   );

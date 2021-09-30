@@ -36,7 +36,7 @@
         min-height: 20vh;
 
         &+div {
-          margin-top: 2vh;
+          margin-top: 1.5vh;
         }
 
         span.boxfoot::after,
@@ -86,11 +86,11 @@
         }
 
         .container {
-          padding: 2vh 1vh;
+          padding: 1vh;
 
           .serviceNum {
             div[class*='ant-col']{
-              padding: 0 1vh;
+              padding: 1vh;
             }
             h3 {
               font-weight: normal;
@@ -109,16 +109,19 @@
           .chartContainer {
             >div {
               height: 25vh !important;
+              overflow: hidden;
             }
           }
 
           .chartContainerMore {
             >div {
-              height: 47vh !important;
+              height: 51vh !important;
+              overflow: hidden;
             }
           }
 
           .serviceList {
+            overflow: hidden;
             div[class*='ant-col']{
               height: 4vh;
               line-height: 4vh;
@@ -143,6 +146,16 @@
               }
             }
           }
+        }
+      }
+    }
+    .diaplay2{
+      .serviceNum{
+        div[class*='ant-col']{
+        padding:0.5vh 1vh !important;
+      }
+        p{
+          font-size: 1.5em !important;
         }
       }
     }
