@@ -171,13 +171,15 @@ const AfterSchoolClass: React.FC = (props: any) => {
               setCurXNXQId(value);
             }}
           >
-            {termList?.map((item: any) => {
+            {/* {termList?.map((item: any) => {
               return (
                 <Option key={item.value} value={item.value}>
                   {item.text}
                 </Option>
               );
-            })}
+            })} */}
+            <Option value="第一学期">第一学期</Option>
+            <Option value="第二学期">第二学期</Option>
           </Select>
         </span>
       </div>

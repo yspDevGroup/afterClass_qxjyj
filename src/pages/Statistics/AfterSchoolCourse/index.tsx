@@ -224,7 +224,7 @@ const AfterSchoolCourse = () => {
             <Option value="第二学期">第二学期</Option>
           </Select>
         </Form.Item>
-        <Form.Item label="所属学校：" className={Style.formItem} style={{ display: 'inline-flex', width: 'calc(30% - 20px)'}}  name="XX" rules={[{ required: true, message: '请选择学期!' }]}>
+        <Form.Item label="所属学校：" className={Style.formItem} style={{ display: 'inline-flex', width: 'calc(30% - 20px)'}}  name="XX" rules={[{ required: true, message: '请选择所属学校!' }]}>
           <Select
             value={curXNXQId}
             style={{ width: '100%' }}
