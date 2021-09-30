@@ -251,7 +251,7 @@ export default {
             routes: [
               {
                 path: '/statistics/afterSchoolCourse/detail',
-                name: '课后班级统计',
+                name: '班级统计',
                 hideInMenu: 'true'
               }
             ]

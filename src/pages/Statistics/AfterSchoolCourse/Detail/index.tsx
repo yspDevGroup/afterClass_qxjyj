@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 // import { message } from 'antd';
 import type { ProColumns } from '@ant-design/pro-table';
 
-import { useModel, Link } from 'umi';
-import { Select, Tag } from 'antd';
+import { useModel, history } from 'umi';
+import { Button, Select, Tag } from 'antd';
+import { LeftOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { getClasses } from '@/services/after-class-qxjyj/reports';
 import { queryXNXQList } from '@/services/local-services/xnxq';
@@ -35,15 +36,15 @@ const AfterSchoolClass: React.FC = (props: any) => {
       width: 58,
       align: 'center'
     },
-    {
-      title: '上课时段',
-      dataIndex: 'SKSD',
-      key: 'SKSD',
-      align: 'center',
-      render: (test: any, record: any) => {
-        return moment(record?.KKSJ).format('YYYY.MM.DD') + '~' + moment(record?.JKSJ).format('YYYY.MM.DD');
-      },
-    },
+    // {
+    //   title: '上课时段',
+    //   dataIndex: 'SKSD',
+    //   key: 'SKSD',
+    //   align: 'center',
+    //   render: (test: any, record: any) => {
+    //     return moment(record?.KKSJ).format('YYYY.MM.DD') + '~' + moment(record?.JKSJ).format('YYYY.MM.DD');
+    //   },
+    // },
     {
       title: '班级名称',
       dataIndex: 'BJMC',
@@ -160,7 +161,7 @@ const AfterSchoolClass: React.FC = (props: any) => {
   },[])
   return (
     <>
-      <div className={Style.TopSearchss}>
+      {/* <div className={Style.TopSearchss}>
         <span>
           所属学年学期：
           <Select
@@ -171,19 +172,31 @@ const AfterSchoolClass: React.FC = (props: any) => {
               setCurXNXQId(value);
             }}
           >
-            {/* {termList?.map((item: any) => {
+            {termList?.map((item: any) => {
               return (
                 <Option key={item.value} value={item.value}>
                   {item.text}
                 </Option>
               );
-            })} */}
+            })}
             <Option value="第一学期">第一学期</Option>
             <Option value="第二学期">第二学期</Option>
           </Select>
         </span>
-      </div>
+      </div> */}
       <div>
+        <Button
+          type="primary"
+          onClick={() => {
+            history.goBack();
+          }}
+          style={{
+            marginBottom: '24px'
+          }}
+        >
+          <LeftOutlined />
+          返回上一页
+        </Button>
         <ProTable
           columns={columns}
           dataSource={dataSource}

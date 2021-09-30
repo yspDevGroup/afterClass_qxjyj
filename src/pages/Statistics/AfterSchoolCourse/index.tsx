@@ -196,7 +196,7 @@ const AfterSchoolCourse = () => {
   },[])
   return (
     <>
-      <div className={Style.searchs}>
+      {/* <div className={Style.searchs}>
       <Form
         labelCol={{ span: 0 }}
         wrapperCol={{ span: 0 }}
@@ -257,7 +257,7 @@ const AfterSchoolCourse = () => {
           </Button>
         </Form.Item>
       </Form>
-        {/* <span>
+       <span>
           所属学年学期：
           <Select
             value={curXNXQId}
@@ -276,8 +276,7 @@ const AfterSchoolCourse = () => {
             })}
           </Select>
         </span>
-        */}
-      </div>
+      </div> */}
       <div>
         <ProTable
           columns={columns}
