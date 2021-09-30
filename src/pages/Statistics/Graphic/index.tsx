@@ -9,7 +9,7 @@ import BarChart from './component/BarChart';
 import { useEffect, useState } from 'react';
 import { getScreenInfo } from '@/services/after-class-qxjyj/jyjgsj';
 
-import bgImg from '@/assets/dispalyBgc.png';
+import bgImg from '@/assets/dispalyBgc.jpg';
 import headerImg from '@/assets/headLine.png';
 import should from '@/assets/should.png';
 import real from '@/assets/real.png';
