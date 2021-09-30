@@ -155,7 +155,9 @@ const AfterSchoolClass: React.FC = (props: any) => {
       setDataSource(res3?.data?.rows);
     }
   };
-  ChoseSelect('');
+  useEffect(()=>{
+    ChoseSelect('');
+  },[])
   return (
     <>
       <div className={Style.TopSearchss}>

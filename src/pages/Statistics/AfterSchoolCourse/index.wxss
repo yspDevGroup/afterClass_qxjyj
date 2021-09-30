@@ -12,3 +12,6 @@
 .searchs > div > span {
   display: inline-block;
 }
+.formItem {
+  margin-right: 20px;
+}

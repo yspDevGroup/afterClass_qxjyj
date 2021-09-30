@@ -182,13 +182,15 @@ const AfterSchoolCourse = () => {
       setDataSource(res3?.data?.rows);
     }
   };
-  ChoseSelect('');
+  useEffect(()=>{
+    ChoseSelect('');
+  },[])
   return (
     <>
       <div className={Style.searchs}>
       <Form
-        labelCol={{ span: 5 }}
-        wrapperCol={{ span: 16 }}
+        labelCol={{ span: 0 }}
+        wrapperCol={{ span: 0 }}
         form={form}
         style={{width: "100%"}}
         initialValues={(() => {
@@ -214,7 +216,7 @@ const AfterSchoolCourse = () => {
           <Input />
         </Form.Item>
         <Form.Item label="学年" style={{ display: 'inline-flex', width: '28%'}} name="XNs" rules={[{ required: true, message: '请选择学年!' }]}>
-          <RangePicker picker="year" />
+          <RangePicker style = {{width: "100%"}} picker="year" />
         </Form.Item>
         <Form.Item label="学期" style={{ display: 'inline-flex', width: '20%'}}  name="XQ" rules={[{ required: true, message: '请选择学期!' }]}>
           <Select>
@@ -240,8 +242,8 @@ const AfterSchoolCourse = () => {
             })}
           </Select>
         </Form.Item>
-        <Form.Item style={{ display: 'inline-flex'}}>
-          <Button type="primary" htmlType="submit">
+        <Form.Item style={{ display: 'inline-flex', width: '22%'}}>
+          <Button style={{float:'right'}} type="primary" htmlType="submit">
             确认
           </Button>
         </Form.Item>
