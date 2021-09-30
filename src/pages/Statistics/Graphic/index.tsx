@@ -105,12 +105,12 @@ const ChartsPage = (props: any) => {
           defaultData.courseNum.push({
             type: '校内课程',
             school: item.XXMC,
-            value: item.xxkc_count
+            value: item.xxkc_count,
           });
           defaultData.courseNum.push({
             type: '机构课程',
             school: item.XXMC,
-            value: item.jgkc_count
+            value: item.jgkc_count,
           })
         });
         defaultData.enrollNum = data.xxbm?.length ? [].map.call(data.xxbm, (item: any) => {

@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-24 19:59:45
- * @LastEditTime: 2021-09-09 11:48:52
+ * @LastEditTime: 2021-09-30 10:34:47
  * @LastEditors: Sissle Lynn
  */
 export const bgColor = [
@@ -75,6 +75,9 @@ export const columnConfig: any = {
   },
   columnStyle: {},
   maxColumnWidth: 30,
+  scrollbar: {
+    type: 'horizontal',
+  },
   meta: {
     type: { alias: '学校名称' },
     value: { alias: '课程数量' },
@@ -116,9 +119,18 @@ export const lineConfig: any = {
   seriesField: 'category',
   legend: false,
   yAxis: {},
+  xAxis:{
+    label: {
+      autoHide: true,
+      autoRotate: false
+    }
+  },
   grid:{
     containLabel: true,
     bottom: 40
+  },
+  scrollbar: {
+    type: 'horizontal',
   },
   color: ['#1979C9', '#D62A0D', '#FAA219'],
 };

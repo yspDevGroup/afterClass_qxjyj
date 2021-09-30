@@ -9,12 +9,20 @@ export const textColor1 = ['#FF715C', '#60DD95', '#4FC4E7', '#FFA729'];
 export const textColor2 = ['#FFA729', '#60DD95', '#FF715C'];
 
 export const columnConfig: any = {
-  appendPadding: 20,
+  appendPadding: 10,
   data: [],
   xField: 'school',
   yField: 'value',
   seriesField: 'type',
   isStack: true,
+  color: ['#ff6e76', '#fddd60'],
+  legend: {
+    itemName: {
+      style: {
+        fill: '#fff'
+      }
+    }
+  },
   xAxis: {
     label: {
       autoHide: true,
@@ -39,6 +47,12 @@ export const columnConfig: any = {
   label: {
     position: 'middle',
     style: { fill: '#fff' },
+  },
+  scrollbar: {
+    type: 'horizontal',
+    style: {
+      trackColor: '#fff',
+    },
   },
 };
 export const pieConfig: any = {
@@ -83,7 +97,12 @@ export const barConfig: any = {
     }
   },
   maxBarWidth: 30,
-  scrollbar: { type: 'vertical' },
+  scrollbar: {
+    type: 'vertical',
+    style: {
+      trackColor: '#fff',
+    },
+  },
 };
 export const defaultData: any = {
   serviceNum: [],
