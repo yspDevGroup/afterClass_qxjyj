@@ -165,7 +165,7 @@ const CourseInfo = (props: any) => {
           <a
             onClick={() => {
               history.push({
-                pathname: `/courseManagement/courseInfo/teacherInfo`,
+                pathname: `/courseManagement/courseManagement/courseInfo/teacherInfo`,
                 state: {
                   type: 'detail',
                   data: record

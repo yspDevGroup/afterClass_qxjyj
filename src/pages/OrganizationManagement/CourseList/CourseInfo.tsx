@@ -146,7 +146,7 @@ const CourseInfo = (props: any) => {
             <Link
               key="xq"
               to={{
-                pathname: '/schoolManagement/courseList/teacherInfo',
+                pathname: '/OrganizationManagement/courseList/teacherInfo',
                 state: record
               }}
             >

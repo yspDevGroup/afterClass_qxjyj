@@ -2,8 +2,8 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-24 17:21:12
- * @LastEditTime: 2021-09-29 19:02:29
- * @LastEditors: zpl
+ * @LastEditTime: 2021-09-30 19:21:29
+ * @LastEditors: Sissle Lynn
  */
 // 配置路由
 import React from 'react';
@@ -50,7 +50,14 @@ export default {
           {
             path: '/organizationManagement/courseList/courseInfo',
             hideInMenu: 'true',
-            name: '课程详情'
+            name: '课程详情',
+            routes: [
+              {
+                path:'/OrganizationManagement/courseList/teacherInfo',
+                name: '教师详情',
+                hideInMenu: 'true'
+              }
+            ]
           }
         ]
       },
@@ -78,7 +85,7 @@ export default {
               {
                 path: '/schoolManagement/courseList/teacherInfo',
                 hideInMenu: 'true',
-                name: '老师详情'
+                name: '教师详情'
               },
               {
                 path: '/schoolManagement/courseList/classList',
@@ -226,12 +233,17 @@ export default {
       },
       {
         path: '/orderinquiry',
-        name: '订单详情',
+        name: '订单查询',
         icon: <NotificationOutlined />,
         routes: [
           {
             path: '/orderinquiry/detatil',
-            name: ' 课程订单详情',
+            name: ' 课程订单',
+            hideInMenu: 'true'
+          },
+          {
+            path: '/orderinquiry/serviceOrder',
+            name: ' 服务订单',
             hideInMenu: 'true'
           }
         ]

@@ -2,8 +2,8 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-26 16:24:39
- * @LastEditTime: 2021-09-10 16:44:05
- * @LastEditors: wsl
+ * @LastEditTime: 2021-09-30 18:33:19
+ * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useState } from 'react';
 import { useModel, history } from 'umi';
@@ -28,7 +28,6 @@ type PropsType = {
 };
 const TeacherInfo = (props: any) => {
   const { state } = props.location;
-  console.log(state, '=====');
   const values = state;
   const { setForm, readonly = true } = props;
   const { initialState } = useModel('@@initialState');

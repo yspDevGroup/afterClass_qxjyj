@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Tabs } from 'antd';
+import { Button, Tabs } from 'antd';
 import { TableListItem } from '../data';
 import styles from '../index.less';
+import { LeftOutlined } from '@ant-design/icons';
 import CannotAccess from '../components/CannotAccess';
 import HaveIntroduced from '../components/HaveIntroduced';
 import ToIntroduce from '../components/ToIntroduce';
@@ -15,6 +16,18 @@ const OrganizationManagement = (props: any) => {
   };
   return (
     <div className={styles.OrganizationManagement}>
+      <Button
+        type="primary"
+        onClick={() => {
+          history.go(-1);
+        }}
+        style={{
+          marginBottom: '24px'
+        }}
+      >
+        <LeftOutlined />
+        返回上一页
+      </Button>
       <Tabs defaultActiveKey="YZR" onChange={callback}>
         {state.type ? (
           <></>
