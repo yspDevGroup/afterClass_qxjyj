@@ -215,19 +215,19 @@ const AfterSchoolCourse = () => {
         <Form.Item label="XXJBSJId" name="XXJBSJId" hidden={true}>
           <Input />
         </Form.Item>
-        <Form.Item label="学年" style={{ display: 'inline-flex', width: '28%'}} name="XNs" rules={[{ required: true, message: '请选择学年!' }]}>
+        <Form.Item label="学年" className={Style.formItem} style={{ display: 'inline-flex', width: 'calc(28% - 20px)'}} name="XNs" rules={[{ required: true, message: '请选择学年!' }]}>
           <RangePicker style = {{width: "100%"}} picker="year" />
         </Form.Item>
-        <Form.Item label="学期" style={{ display: 'inline-flex', width: '20%'}}  name="XQ" rules={[{ required: true, message: '请选择学期!' }]}>
+        <Form.Item label="学期" className={Style.formItem} style={{ display: 'inline-flex', width: 'calc(20% - 20px)'}}  name="XQ" rules={[{ required: true, message: '请选择学期!' }]}>
           <Select>
             <Option value="第一学期">第一学期</Option>
             <Option value="第二学期">第二学期</Option>
           </Select>
         </Form.Item>
-        <Form.Item label="所属学校：" style={{ display: 'inline-flex', width: '30%'}}  name="XX" rules={[{ required: true, message: '请选择学期!' }]}>
+        <Form.Item label="所属学校：" className={Style.formItem} style={{ display: 'inline-flex', width: 'calc(30% - 20px)'}}  name="XX" rules={[{ required: true, message: '请选择学期!' }]}>
           <Select
             value={curXNXQId}
-            style={{ width: 200 }}
+            style={{ width: '100%' }}
             onChange={(value: string) => {
               // 选择不同学期从新更新页面的数据
               setCurXNXQId(value);
@@ -242,7 +242,7 @@ const AfterSchoolCourse = () => {
             })}
           </Select>
         </Form.Item>
-        <Form.Item style={{ display: 'inline-flex', width: '22%'}}>
+        <Form.Item style={{ display: 'inline-flex', width: 'calc(22% - 20px)'}}>
           <Button style={{float:'right'}} type="primary" htmlType="submit">
             确认
           </Button>
