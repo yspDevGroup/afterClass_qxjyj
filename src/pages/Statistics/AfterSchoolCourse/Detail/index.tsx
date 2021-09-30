@@ -26,7 +26,6 @@ const AfterSchoolClass: React.FC = (props: any) => {
   const [dataSource, setDataSource] = useState<any>([]);
   const { state } = props.location;
   const { id, KHKCSJId } = state.data;
-  console.log('state.data: ', state.data);
   /// table表格数据
   const columns: ProColumns<any>[] = [
     {
@@ -138,24 +137,25 @@ const AfterSchoolClass: React.FC = (props: any) => {
     })();
   }, []);
   // 学年学期变化
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    if (curXNXQId) {
-      ChoseSelect(curXNXQId);
-    }
-  }, [curXNXQId]);
+  // useEffect(() => {
+  //   // eslint-disable-next-line @typescript-eslint/no-use-before-define
+  //   if (curXNXQId) {
+  //     ChoseSelect(curXNXQId);
+  //   }
+  // }, [curXNXQId]);
   // 学年学期选相框触发的函数
   const ChoseSelect = async (SelectData: string) => {
     const res3 = await getClasses({
-      XNXQId: SelectData,
-      KHKCSJId: KHKCSJId
+      XNXQ: "2021-2022 第一学期",
+      // XNXQId: SelectData,
+      KHKCSJId: KHKCSJId,
+      XZQHM: currentUser?.XZQHM,
     });
-    console.log('res3: ', res3);
     if (res3.status === 'ok') {
       setDataSource(res3?.data?.rows);
     }
   };
-
+  ChoseSelect('');
   return (
     <>
       <div className={Style.TopSearchss}>

@@ -4,9 +4,6 @@
   line-height: 2.3;
   background: #fff;
 }
-.searchs span {
-  margin-right: 20px;
-}
 .searchs > div {
   display: flex;
   flex-wrap: wrap;

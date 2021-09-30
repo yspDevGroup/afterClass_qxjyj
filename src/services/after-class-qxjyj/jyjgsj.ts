@@ -256,6 +256,41 @@ export async function getCourses(
   });
 }
 
+/** 获取课后服务课程统计报表 POST /jyjgsj/getCoursesInfo */
+export async function getCoursesInfo(
+  body: {
+    XZQHM: any,
+    KCMC?: string;
+    KCLX?: string;
+    /** 课程来源 */
+    KCLY?: string;
+    /** 学校ID */
+    XXJBSJId?: string;
+    /** 机构ID */
+    KHJYJGId?: string;
+    /** 学年学期ID */
+    XNXQ?: string;
+    /** 页数 */
+    page?: number;
+    /** 每页记录数 */
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{
+    status?: 'ok' | 'error';
+    data?: { count?: number; rows?: API.KHKCTJSJ[] };
+    message?: string;
+  }>('/jyjgsj/getCoursesInfo', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
 /** 获取学校的课程列表 POST /jyjgsj/getCoursesBySchool */
 export async function getCoursesBySchool(
   body: {
