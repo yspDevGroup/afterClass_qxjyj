@@ -1,4 +1,3 @@
-import PageContainer from '@/components/PageContainer';
 import { useEffect, useState } from 'react';
 // import { message } from 'antd';
 import type { ProColumns } from '@ant-design/pro-table';
@@ -141,7 +140,7 @@ const AfterSchoolClass: React.FC = (props: any) => {
   // 学年学期变化
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    if(curXNXQId){
+    if (curXNXQId) {
       ChoseSelect(curXNXQId);
     }
   }, [curXNXQId]);
@@ -158,8 +157,7 @@ const AfterSchoolClass: React.FC = (props: any) => {
   };
 
   return (
-    /// PageContainer组件是顶部的信息
-    <PageContainer>
+    <>
       <div className={Style.TopSearchss}>
         <span>
           所属学年学期：
@@ -195,8 +193,7 @@ const AfterSchoolClass: React.FC = (props: any) => {
           }}
         />
       </div>
-      {/* <Link to={{ pathname: '/afterSchoolClass/detail',}}>详情</Link> */}
-    </PageContainer>
+    </>
   );
 };
 export default AfterSchoolClass;

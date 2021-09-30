@@ -1,4 +1,3 @@
-import PageContainer from '@/components/PageContainer';
 import { useEffect, useState } from 'react';
 // import { message } from 'antd';
 import type { ProColumns } from '@ant-design/pro-table';
@@ -13,7 +12,7 @@ import Style from './index.less';
 
 const { Option } = Select;
 
-const AfterSchoolCourse: React.FC = () => {
+const AfterSchoolCourse = () => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
   // 选择学年学期
@@ -231,4 +230,6 @@ const AfterSchoolCourse: React.FC = () => {
     </>
   );
 };
+
+AfterSchoolCourse.wrappers = ['@/wrappers/auth'];
 export default AfterSchoolCourse;
