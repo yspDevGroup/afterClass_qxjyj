@@ -247,7 +247,7 @@ export default {
           },
           {
             path: '/statistics/afterSchoolCourse',
-            name: '课后课程统计',
+            name: '课程统计',
             routes: [
               {
                 path: '/statistics/afterSchoolCourse/detail',

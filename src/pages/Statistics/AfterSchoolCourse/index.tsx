@@ -61,6 +61,24 @@ const AfterSchoolCourse = () => {
       },
     },
     {
+      title: '所属学校',
+      dataIndex: 'XXMC',
+      key: 'XXMC',
+      align: 'center',
+      render: (test: any,record) => {
+        return test;
+      },
+    },
+    {
+      title: '所属机构',
+      dataIndex: 'JGMC',
+      key: 'JGMC',
+      align: 'center',
+      render: (test: any,record) => {
+        return test;
+      },
+    },
+    {
       title: '班级数量',
       dataIndex: 'BJS',
       key: 'BJS',
@@ -73,15 +91,6 @@ const AfterSchoolCourse = () => {
       title: '报名人数',
       dataIndex: 'BMRS',
       key: 'BMRS',
-      align: 'center',
-      render: (test: any,) => {
-        return test;
-      },
-    },
-    {
-      title: '所属学校',
-      dataIndex: 'XXMC',
-      key: 'XXMC',
       align: 'center',
       render: (test: any,) => {
         return test;
