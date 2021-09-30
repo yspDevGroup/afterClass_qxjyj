@@ -13,7 +13,6 @@ export async function getXNXQ(
   },
   options?: { [key: string]: any },
 ) {
-  console.log('body: ', body);
   return request<{
     status?: 'ok' | 'error';
     data: { id?: string; XN?: string; XQ?: string; KSRQ?: string; JSRQ?: string };

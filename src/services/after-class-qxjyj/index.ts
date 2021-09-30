@@ -9,8 +9,8 @@ import * as bjsj from './bjsj';
 import * as jzgjbsj from './jzgjbsj';
 import * as fjlx from './fjlx';
 import * as fjsj from './fjsj';
-import * as jcsj from './jcsj';
 import * as jcxx from './jcxx';
+import * as jcsj from './jcsj';
 import * as jxjhsj from './jxjhsj';
 import * as jyjgsj from './jyjgsj';
 import * as jyjgtzgg from './jyjgtzgg';
@@ -35,8 +35,8 @@ import * as khkcsj from './khkcsj';
 import * as khkcsq from './khkcsq';
 import * as khpksj from './khpksj';
 import * as khtksj from './khtksj';
-import * as khxkjl from './khxkjl';
 import * as khxksj from './khxksj';
+import * as khxkjl from './khxkjl';
 import * as khxscq from './khxscq';
 import * as khxsdd from './khxsdd';
 import * as khxspj from './khxspj';
@@ -65,8 +65,8 @@ import * as xxjbpz from './xxjbpz';
 import * as xxjbsj from './xxjbsj';
 import * as xxpz from './xxpz';
 import * as xxsjpz from './xxsjpz';
-import * as xxtzgg from './xxtzgg';
 import * as zxfa from './zxfa';
+import * as xxtzgg from './xxtzgg';
 import * as zxsj from './zxsj';
 export default {
   other,
@@ -76,8 +76,8 @@ export default {
   jzgjbsj,
   fjlx,
   fjsj,
-  jcsj,
   jcxx,
+  jcsj,
   jxjhsj,
   jyjgsj,
   jyjgtzgg,
@@ -102,8 +102,8 @@ export default {
   khkcsq,
   khpksj,
   khtksj,
-  khxkjl,
   khxksj,
+  khxkjl,
   khxscq,
   khxsdd,
   khxspj,
@@ -132,7 +132,7 @@ export default {
   xxjbsj,
   xxpz,
   xxsjpz,
-  xxtzgg,
   zxfa,
+  xxtzgg,
   zxsj,
 };

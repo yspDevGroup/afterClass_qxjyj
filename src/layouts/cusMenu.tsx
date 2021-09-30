@@ -265,9 +265,14 @@ export default {
                 path: '/statistics/afterSchoolCourse/detail',
                 name: '班级统计',
                 hideInMenu: 'true'
-              }
+              },
+              
             ]
           },
+          {
+            path: '/statistics/MutualEvaluation',
+            name: '互评统计',
+          }
         ]
       },
       {

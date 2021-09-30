@@ -11,7 +11,6 @@ const { Option } = Select;
 
 const Class =(props:any)=>{
    const{id,KCMC}=props.location.state.data
-   console.log(props.location.state.data);
    
     
     const columns: ProColumns<TermItem>[]=[
@@ -30,17 +29,36 @@ const Class =(props:any)=>{
             // render:(text:any)=>text.BJMC
           
           },
-  
           {
-            title: '教育机构',
-            dataIndex: 'KHJYJG',
-            key: 'KHJYJG',
+            title: '主讲师',
+            dataIndex: '',
+            key: '',
             align: 'center',
-            render:(text:any,record:any)=>record.KHKCSJ.KHJYJG.QYMC
+            render:(_,record)=>{
+              return record.KHBJJs.map((item) => {
+                return <div>{item.KHJSSJ.XM}</div>;
+              });
+              }
+            },
+            {
+              title: '评价人数',
+              dataIndex: 'pj_count',
+              key: ' pj_count',
+              align: 'center',
+              render:(text:any)=>text
+             
+            },
+  
+          // {
+          //   title: '教育机构',
+          //   dataIndex: 'KHJYJG',
+          //   key: 'KHJYJG',
+          //   align: 'center',
+          //   // render:(text:any,record:any)=>record.KHKCSJ.KHJYJG.QYMC
 
           
           
-          },
+          // },
           {
             title: '班级评分',
             dataIndex: 'pj_avg',
@@ -71,7 +89,8 @@ const Class =(props:any)=>{
             ),
           },
     ]
-   
+    const { initialState } = useModel('@@initialState');
+    const { currentUser } = initialState || {};
   const [classList, SetclassList] = useState<any>();
   const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);
 
@@ -80,7 +99,7 @@ const choseclass=()=>{
 }
 useEffect(()=>{
   (async()=>{
-    const res =await getClassesEvaluation({KHKCSJId:id})
+    const res =await getClassesEvaluation({XNXQId:currentUser?.XNXQId})
     console.log(res);
     
     setDataSource(res.data.rows)

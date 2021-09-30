@@ -40,44 +40,11 @@ export async function getCourses(
   });
 }
 
-/** 获取课后服务课程统计报表 POST /reports/getCoursesInfo */
-export async function getCoursesInfo(
-  body: {
-    XZQHM: any,
-    KCMC?: string;
-    KCLX?: string;
-    /** 课程来源 */
-    KCLY?: string;
-    /** 学校ID */
-    XXJBSJId?: string;
-    /** 机构ID */
-    KHJYJGId?: string;
-    /** 学年学期ID */
-    XNXQ?: string;
-    /** 页数 */
-    page?: number;
-    /** 每页记录数 */
-    pageSize?: number;
-  },
-  options?: { [key: string]: any },
-) {
-  return request<{
-    status?: 'ok' | 'error';
-    data?: { count?: number; rows?: API.KHKCTJSJ[] };
-    message?: string;
-  }>('/reports/getCoursesInfo', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: body,
-    ...(options || {}),
-  });
-}
-
 /** 获取课后服务班级统计报表 POST /reports/getClasses */
 export async function getClasses(
   body: {
+    /** 学年学期 */
+    XNXQ?: string;
     /** 班级名称 */
     BJMC?: string;
     /** 招生方式 */
@@ -86,11 +53,8 @@ export async function getClasses(
     KHBJSJId?: string;
     /** 学年学期ID */
     XNXQId?: string;
-    XZQHM?: string;
     /** 课后课程ID */
     KHKCSJId?: string;
-    /** 学年学期 */
-    XNXQ?: string;
     /** 页数 */
     page?: number;
     /** 每页记录数 */
