@@ -2,7 +2,9 @@ import ProTable from '@ant-design/pro-table';
 import { Link, useModel } from 'umi';
 
 import { useEffect, useState } from 'react';
-import { Select,Rate } from 'antd';
+import { Select,Rate,Button } from 'antd';
+import { LeftOutlined,} from '@ant-design/icons';
+
 import {getClassesEvaluation}from '@/services/after-class-qxjyj/khbjsj'
 // import styles from './index.less'
 
@@ -47,6 +49,14 @@ const Class =(props:any)=>{
               align: 'center',
               render:(text:any)=>text
              
+            },
+            {
+              title: '班级人数',
+              dataIndex: 'pj_count',
+              key: 'pj_count ',
+              align: 'center',
+              render:(text:any)=>text
+
             },
   
           // {
@@ -108,6 +118,18 @@ useEffect(()=>{
 },[])
     return(
         <>
+              <Button 
+          type="primary"
+          onClick={() => {
+            history.go(-1);
+          }}
+          style={{
+            marginBottom: '24px',
+          }}
+        >
+          <LeftOutlined />
+          返回上一页
+        </Button>
            <div >
              <div style={{fontWeight:'bold',fontSize:'25px',padding:'24px 0'}}>课程名称:{KCMC}</div>
         <span>

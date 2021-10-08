@@ -1,10 +1,4 @@
-/*
- * @description:
- * @author: Sissle Lynn
- * @Date: 2021-08-24 17:21:12
- * @LastEditTime: 2021-09-30 19:21:29
- * @LastEditors: Sissle Lynn
- */
+
 // 配置路由
 import React from 'react';
 import {
@@ -272,7 +266,15 @@ export default {
           {
             path: '/statistics/MutualEvaluation',
             name: '互评统计',
+          },
+          {
+            path:'/statistics/MutualEvaluation/course',
+            name:'互评统计课程',
+           hideInMenu: 'true'
+
           }
+         
+
         ]
       },
       {

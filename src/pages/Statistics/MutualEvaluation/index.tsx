@@ -1,146 +1,173 @@
-import { Select,Rate } from 'antd';
-import { useEffect, useState } from 'react';
-import ProTable from '@ant-design/pro-table';
-import{getCoursesEvaluation} from '@/services/after-class-qxjyj/jyjgsj'
+import ProTable, { ActionType, ProColumns, RequestData } from '@ant-design/pro-table';
+import React, { useEffect, useRef, useState } from 'react';
+import { Button, Select, Space } from 'antd';
 import { Link, useModel } from 'umi';
-import { await } from '@umijs/deps/compiled/signale';
-import styles from'./index.less'
-
-
-
+import { getAllSchools } from '@/services/after-class-qxjyj/jyjgsj';
 const { Option } = Select;
-
-const MutualEvaluation=()=>{
-    const { initialState } = useModel('@@initialState');
-  const { currentUser } = initialState || {};
-  console.log(currentUser);
-  
-  // 学年学期列表数据
-  const [termList, setTermList] = useState<any>();
-  const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);
-
-  useEffect(()=>{
-      (async()=>{
-          const res=await getCoursesEvaluation({XZQHM:currentUser?.XZQHM})
-          setDataSource(res.data.rows)
-          
-   })()
-
-  },[])
-  const columns: ProColumns<TermItem>[] = [
+import styles from './index.less';
+import { TableListParams } from '@/constant';
+// 点击查询按钮
+const OrderInquiry = () => {
+  const SubmitTable = () => { };
+  const columns: ProColumns<any>[] | undefined = [
     {
       title: '序号',
+      align: 'center',
       dataIndex: 'index',
-      valueType: 'index',
-      width: 58,
+      valueType: 'index'
+    },
+    {
+      title: '学校名称',
+      dataIndex: 'XXMC',
+      key: 'XXMC',
       align: 'center'
     },
     {
-      title: '课程名称',
-      dataIndex: 'KCMC',
-      key: 'KCMC',
+      title: '所属学段',
+      key: 'XD',
+      dataIndex: 'XD',
       align: 'center',
-    
+      search: false
     },
     {
-      title: '课程类型',
-      dataIndex: 'KHKCLX',
-      key: 'KHKCLX',
+      title: '联系人',
+      key: 'LXR',
+      dataIndex: 'LXR',
       align: 'center',
-      render: (test: any) => {
-        return test?.KCTAG;
-      },
+      width: 110,
+      search: false
     },
     {
-        title: '所属学校',
-        dataIndex: 'XXJBSJ',
-        key: 'XXJBSJ',
-        align: 'center',
-         render:(test:any,record: any)=>{
-             return record.XXJBSJ ? record?.XXJBSJ.XXMC : '—'
-            }
-
-    },
-    {
-        title: '开课机构',
-        dataIndex: 'KHJYJG',
-        key: 'KHJYJG',
-        align: 'center',
-        render: (test:any,record:any) =>{
-         return  record.SSJGLX?record?.SSJGLX:'-'
-        }
-        
-    },
-    {
-      title: '课程评分',
-      dataIndex: 'PJFS',
-      key: 'PJFS',
+      title: '联系电话',
+      key: 'LXDH',
+      dataIndex: 'LXDH',
       align: 'center',
-      width: 200,
-      render: (text:any) => <Rate count={5} defaultValue={text} disabled={true} />,
+      width: 180,
+      search: false
     },
-   
+    {
+      title: '课程数量',
+      key: 'KHKCSQs',
+      dataIndex: 'KHKCSQs',
+      align: 'center',
+      width: 90,
+      search: false,
+      render: (_, record) => {
+        const num1 = record.KHKCSQs?.length;
+        const num2 = record.KHKCSJs?.length;
+        const num = num1! + num2!;
+        return <div>{num}</div>;
+      }
+    },
     {
       title: '操作',
-      dataIndex: 'XSXM',
-      key: 'XSXM',
       align: 'center',
-      render: (_, record) => (
-        <>
-          <Link
-            to={{
-              pathname: '/statistics/MutualEvaluation/Class',
-              state: {
-                type: 'detail',
-                data: record,
-              },
-            }}
-          >
-            详情
-          </Link>
-        </>
-      ),
-    },
+      search: false,
+      render: (_, record) => {
+        return (
+          <Space>
+            <Link
+              to={{
+                pathname: '/statistics/MutualEvaluation/course',
+                state: record
+              }}
+            >
+              详情
+            </Link>
+           
+          </Space>
+        );
+      }
+    }
   ];
-    return(
-        <>
-         <div className={styles.TopBoxserch}>
-        <span >
-          课程名称:
+  const { initialState } = useModel('@@initialState');
+  const { currentUser } = initialState || {};
+  // 列表对象引用，可主动执行刷新等操作
+  const actionRef = useRef<ActionType>();
+  const [SchoolList, setSchoolList] = useState<any>([]);
+  const [curSchool, setCurSchool] = useState<string>();
+
+  useEffect(() => {
+    (async () => {
+      const res2 = await getAllSchools({
+        XZQHM: currentUser?.XZQHM,
+        page: 0,
+        pageSize: 0
+      });
+      if (res2.data?.rows?.length) {
+        setSchoolList(res2.data.rows);
+      }
+    })();
+  }, []);
+
+  return (
+    <>
+      <div className={styles.searchs}>
+        <span>
+          学校名称：
           <Select
-            // value={}
             style={{ width: 200 }}
             onChange={(value: string) => {
-              // 选择不同学期从新更新页面的数据
-            //   setCurXNXQId(value);
+              setCurSchool(value);
+              actionRef.current?.reload();
             }}
+            allowClear
           >
-            {termList?.map((item: any) => {
+            {SchoolList.map((item: any) => {
               return (
-                <Option key={item.value} value={item.value}>
-                  {item.text}
+                <Option value={item.XXMC} key={item.XXMC}>
+                  {item.XXMC}
                 </Option>
               );
             })}
           </Select>
         </span>
       </div>
-      <ProTable
-       columns={columns}
-       dataSource={dataSource}
-       rowKey="id"
-       search={false}
-       options={{
-         setting: false,
-         fullScreen: false,
-         density: false,
-         reload: false,
-       }}
 
+      <ProTable
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        onSubmit={SubmitTable}
+        columns={columns}
+        actionRef={actionRef}
+        search={false}
+        options={{
+          setting: false,
+          fullScreen: false,
+          density: false,
+          reload: false
+        }}
+        request={async (
+          params: any & {
+            pageSize?: number;
+            current?: number;
+            keyword?: string;
+          },
+          sort,
+          filter,
+        ): Promise<Partial<RequestData<any>>> => {
+          // 表单搜索项会从 params 传入，传递给后端接口。
+          const opts: TableListParams = {
+            ...params,
+            sorter: sort && Object.keys(sort).length ? sort : undefined,
+            filter,
+          };
+          const res = await getAllSchools({
+            XZQHM: currentUser?.XZQHM,
+            XXMC: curSchool || "",
+            page: 0,
+            pageSize: 0
+          });
+          if (res.status === 'ok') {
+            return {
+              data: res.data?.rows,
+              total: res.data?.count,
+              success: true,
+            };
+          }
+          return {};
+        }}
       />
-        </>
-    )
-   
-}
-MutualEvaluation.wrappers = ['@/wrappers/auth'];
-export default MutualEvaluation
+    </>
+  );
+};
+export default OrderInquiry;
