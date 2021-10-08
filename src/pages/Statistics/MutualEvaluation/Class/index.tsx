@@ -109,7 +109,7 @@ const choseclass=()=>{
 }
 useEffect(()=>{
   (async()=>{
-    const res =await getClassesEvaluation({XNXQId:currentUser?.XNXQId})
+    const res =await getClassesEvaluation({XNXQId:currentUser?.XNXQId,KHKCSJId:id})
     console.log(res);
     
     setDataSource(res.data.rows)
