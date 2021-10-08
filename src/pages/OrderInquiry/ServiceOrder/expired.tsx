@@ -42,8 +42,8 @@ const StateTab = (props: any) => {
     },
     {
       title: '付款时间',
-      dataIndex: '',
-      key: '',
+      dataIndex: 'ZFSJ',
+      key: 'ZFSJ',
       align: 'center',
     },
     {
@@ -64,6 +64,8 @@ const StateTab = (props: any) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     (async () => {
       const res = await getOrders({ XZQHM: currentUser?.XZQHM, DDZT, DDLX: 1, XXJBSJId: id });
+      console.log(res.data.rows);
+      
       setDataSource(res.data.rows);
     })();
   }, []);
