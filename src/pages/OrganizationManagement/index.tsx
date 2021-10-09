@@ -7,15 +7,15 @@ import CannotAccess from './components/CannotAccess';
 import { history } from 'umi';
 
 const { TabPane } = Tabs;
-const OrganizationManagement = () => {
+const OrganizationManagement = (props: any) => {
   const [Keys, setKeys] = useState<string>();
-
+  const { defaultIndex } = props.history.location.query;
   const callback = (key: any) => {
     setKeys(key);
   };
   return (
     <div className={styles.OrganizationManagement}>
-      <Tabs defaultActiveKey="YZR" onChange={callback}>
+      <Tabs defaultActiveKey={defaultIndex || "YZR"} onChange={callback}>
         <TabPane tab="已准入机构" key="YZR">
           <HaveAccess Keys={Keys} />
         </TabPane>

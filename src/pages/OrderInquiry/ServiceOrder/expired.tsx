@@ -64,8 +64,6 @@ const StateTab = (props: any) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     (async () => {
       const res = await getOrders({ XZQHM: currentUser?.XZQHM, DDZT, DDLX: 1, XXJBSJId: id });
-      console.log(res.data.rows);
-      
       setDataSource(res.data.rows);
     })();
   }, []);

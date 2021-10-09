@@ -79,19 +79,47 @@
             display: block;
             display: flex;
             line-height: 22px;
-
-            span:nth-child(1) {
+            .Headlines {
+              display: inline-block;
+              width: 36px;
+              height: 22px;
+              margin-right: 6px;
+              color: #fff;
+              font-size: 12px;
+              line-height: 22px;
+              text-align: center;
+              background: #ff4646;
+              border-radius: 11px;
+            }
+            .Organization {
+              display: inline-block;
+              height: 22px;
+              margin-right: 6px;
+              color: @normal-color;
+              padding: 0 4px;
+              font-size: 12px;
+              line-height: 22px;
+              text-align: center;
+              background: #efefef;
+              border-radius: 4px;
+            }
+            span:nth-of-type(1) {
               flex: 1 1 140px;
               overflow: hidden;
               color: @text-color;
               white-space: nowrap;
               text-overflow: ellipsis;
 
-              &+span {
-                width: 140px;
-                color: @normal-color;
-                text-align: right;
-              }
+              // &+span {
+              //   color: @normal-color;
+              //   width: 140px;
+              //   text-align: right;
+              // }
+            }
+            span:nth-of-type(2) {
+              width: 140px;
+              color: @normal-color;
+              text-align: right;
             }
 
             &:nth-last-child(1) {
@@ -104,6 +132,24 @@
       :global {
         .ant-empty {
           padding: 0;
+        }
+      }
+    }
+    .dobuleList {
+      height: 144px;
+
+      div[class*="ant-col"] {
+        line-height: 48px;
+
+        &::before {
+          display: inline-block;
+          content: '';
+          width: 3px;
+          height: 3px;
+          border-radius: 3px;
+          background: @primary-color;
+          vertical-align: middle;
+          margin-right: @padding-sm;
         }
       }
     }

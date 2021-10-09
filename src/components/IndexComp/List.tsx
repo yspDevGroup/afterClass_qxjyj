@@ -18,7 +18,7 @@ const List = (props: { type: string, data?: any, noDataImg?: any, noDataText?: s
   return (
     <div className={styles.annceList}>
       {data?.length ? <ul>
-        {data.map((item: { BT?: string, RQ?: string }) => {
+        {data.map((item: { BT?: string, updatedAt?: string ,RQ?: string,SFTT?: number, KCMC?: string, SSJGLX?: string, QYMC?: string }) => {
           return <li key={item.BT}>
             <Link
               key="ck"
@@ -27,8 +27,9 @@ const List = (props: { type: string, data?: any, noDataImg?: any, noDataText?: s
                 state: item
               }}
             >
-              <span>{item.BT}</span>
-              <span>{moment(item.RQ).format('M月D日 hh:mm')}</span>
+              {item.SFTT === 1 ? <div className={styles.Headlines}>头条</div> : <></>}
+              <span>{item.BT || item.KCMC || item.QYMC}{'\u00A0\u00A0\u00A0'}{item.SSJGLX ? <div className={styles.Organization}>{item.SSJGLX}</div> : <></>}</span>
+              <span>{item.updatedAt||item.RQ}</span>
             </Link>
           </li>
         })}

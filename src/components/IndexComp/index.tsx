@@ -6,28 +6,30 @@
  * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useState } from 'react';
-import { Card, Col, Row } from 'antd';
+import { Card, Col, message, Row } from 'antd';
 import { useModel } from 'umi';
+import { TableListItem, TableListParams } from '../data';
 import { RightOutlined } from '@ant-design/icons';
 import Topbar from './Topbar';
 import List from './List';
-import ColumnChart from './ColumnChart';
 import noAnnoce from '@/assets/noAnnoce.png';
+import noData from '@/assets/noData.png';
 import noCourse from '@/assets/noCourse.png';
 
 import styles from './index.less';
-import { homePage } from '@/services/after-class-qxjyj/jyjgsj';
-import PieChart from './PieChart';
-import LineChart from './LineChart';
+import { getAllInstitutions, JYJGSJ, toIntroduceCourses, homePage } from '@/services/after-class-qxjyj/jyjgsj';
+import { getJYJGTZGG } from '@/services/after-class-qxjyj/jyjgtzgg';
 
 
 const Index = () => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
+  const { jyjId } = currentUser!;
   const [homeData, setHomeData] = useState<any>();
-  const [xxkcData, setXxkcData] = useState<any>([]);
-  const [kclxData, setKclxData] = useState<any>();
-  const [xxbmData, setXxbmData] = useState<any>([]);
+  const [dzrjgData, setDzrjgData] = useState<any>([]);
+  const [dyrkcData, setDyrkc] = useState<any>([]);
+  const [tzggData, setTzggData] = useState<any>([]);
+  const [zcggData, setZcggData] = useState<any>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -38,44 +40,67 @@ const Index = () => {
         const { xxbm, xxkc, kclx, ...rest } = res.data;
         // 配置头部统计栏目数据
         setHomeData({ ...rest });
-        // 配置各校开课数量数据
-        if (xxkc?.length) {
-          const newXxkc = [].map.call(xxkc, (item: any) => {
-            return {
-              type: item.XXMC,
-              value: item.KHKCSJs.length + item.KHKCSQs.length
-            }
-          });
-          setXxkcData(newXxkc);
-        }
-        // 配置课程类型占比数据
-        if (kclx?.length) {
-          const newKclx: { type: any; value: any; }[] = [];
-          kclx.forEach((item: { KCTAG: any; count: any; }) => {
-            if (item.count !== 0) {
-              newKclx.push({
-                type: item.KCTAG,
-                value: item.count
-              })
-            }
-          });
-          setKclxData(newKclx);
-        }
-        // 配置各校报名情况数据
-        if (xxbm?.length) {
-          const newXxbm: { category: string; type: any; value: any; }[] = [];
-          xxbm.forEach((item: any) => {
-            if (item.id) {
-              newXxbm.push({
-                category: "报名人数",
-                type: item.XXMC,
-                value: item.count
-              })
-            }
-          });
-          setXxbmData(newXxbm);
-        }
       };
+      const resJYJGSJ = await JYJGSJ({ id: jyjId! });
+      if (resJYJGSJ.status === 'ok') {
+
+        //待引入课程
+        const dyrkcDataRes = await toIntroduceCourses({
+          page: 1,
+          pageSize: 3,
+          XZQHM: resJYJGSJ.data.XZQH,
+          // KCMC: param.KCMC
+        });
+        if (dyrkcDataRes.status === 'ok') {
+          console.log('dyrkcDataRes: ', dyrkcDataRes);
+          setDyrkc(dyrkcDataRes.data?.rows);
+        } else {
+          message.error(dyrkcDataRes.message);
+          return {};
+        }
+
+        //待准入机构
+        const dzrjgDataRes = await getAllInstitutions(
+          {
+            ZT: [0],
+            LX: 0,
+            XZQHM: resJYJGSJ.data.XZQH,
+            page: 1,
+            pageSize: 3
+          },
+        );
+        if (dzrjgDataRes.status === 'ok') {
+          setDzrjgData(dzrjgDataRes.data?.rows);
+        } else {
+          message.error(dzrjgDataRes.message);
+          return {};
+        }
+        }
+
+        //通知公告
+        const tzggDataRes = await getJYJGTZGG({
+          BT: '',
+          ZT: ['已发布', '草稿'],
+          LX: 0,
+          page: 1,
+          pageSize: 3
+        });
+        if (tzggDataRes.status === 'ok') {
+          setTzggData(tzggDataRes.data?.rows);
+        }
+
+        //政策公告
+        const zcggRes = await getJYJGTZGG({
+          BT: '',
+          LX: 1,
+          ZT: ['已发布', '草稿'],
+          page: 1,
+          pageSize: 3
+        });
+        if (zcggRes.status === 'ok') {
+          console.log('zcggRes: ', zcggRes);
+          setZcggData(zcggRes.data?.rows);
+        }
     };
     fetchData();
   }, []);
@@ -83,22 +108,63 @@ const Index = () => {
   return (
     <div className={styles.pageWrapper}>
       <Topbar data={homeData} />
-      <Row className={`${styles.chartWrapper} ${styles.rowWrapper}`}>
+      <Row className={`${styles.listWrapper} ${styles.rowWrapper}`}>
         <Col span={12}>
-          <Card title="各校开课数量" bordered={false}>
-            <ColumnChart data={xxkcData} color='#6186EE' />
+          <Card
+            title="待准入机构"
+            bordered={false}
+            extra={
+              <a href="/organizationManagement?defaultIndex=WZR">
+                更多
+                <RightOutlined style={{ fontSize: '12px' }} />
+              </a>
+            }
+          >
+            <List type="policy" data={dzrjgData} noDataImg={noAnnoce} noDataText="暂无信息" />
           </Card>
         </Col>
         <Col span={12}>
-          <Card title="课程类型占比" bordered={false}>
-            <PieChart data={kclxData} />
+          <Card
+            title="待引入课程"
+            bordered={false}
+            extra={
+              <a href="/courseManagement/courseManagement?defaultIndex=2">
+                更多
+                <RightOutlined style={{ fontSize: '12px' }} />
+              </a>
+            }
+          >
+            <List type="policy" data={dyrkcData} noDataImg={noData} noDataText="暂无信息" />
           </Card>
         </Col>
       </Row>
-      <Row className={styles.chartWrapper}>
-        <Col span={24}>
-          <Card title="各校报名情况" bordered={false}>
-            <LineChart data={xxbmData} noDataText='暂无报名信息' />
+      <Row className={`${styles.listWrapper} ${styles.rowWrapper}`}>
+        <Col span={12}>
+          <Card
+            title="通知公告"
+            bordered={false}
+            extra={
+              <a href="/announcements/announcementsList">
+                更多
+                <RightOutlined style={{ fontSize: '12px' }} />
+              </a>
+            }
+          >
+            <List type="policy" data={tzggData} noDataImg={noAnnoce} noDataText="暂无信息" />
+          </Card>
+        </Col>
+        <Col span={12}>
+          <Card
+            title="政策公告"
+            bordered={false}
+            extra={
+              <a href="/policyIssued/policyIssuedList">
+                更多
+                <RightOutlined style={{ fontSize: '12px' }} />
+              </a>
+            }
+          >
+            <List type="policy" data={zcggData} noDataImg={noData} noDataText="暂无信息" />
           </Card>
         </Col>
       </Row>
