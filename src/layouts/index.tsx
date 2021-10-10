@@ -47,6 +47,9 @@ const CommonLayout: FC<IRouteComponentProps> = ({ children, location, route, his
     setHiddenHeader(isLoginPage || idGraphic);
   }, [location.pathname]);
 
+  if(location.pathname === '/mobile/homepage'){
+    return <div>{children}</div>
+  }
   return (
     <div
       className={styles.bodyLayout}

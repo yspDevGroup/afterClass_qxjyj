@@ -13,8 +13,8 @@ import styles from './index.less';
 import moment from 'moment';
 import { Link } from 'umi';
 
-const List = (props: { type: string, data?: any, noDataImg?: any, noDataText?: string }) => {
-  const { type, data, noDataImg = noData, noDataText = '暂无信息' } = props;
+const List = (props: { type: string, data?: any, noDataImg?: any, noDataText?: string ,detailsPath?: string }) => {
+  const { type, data, noDataImg = noData, noDataText = '暂无信息' ,detailsPath} = props;
   return (
     <div className={styles.annceList}>
       {data?.length ? <ul>
@@ -23,7 +23,7 @@ const List = (props: { type: string, data?: any, noDataImg?: any, noDataText?: s
             <Link
               key="ck"
               to={{
-                pathname: `/announcements/${type}/articleDetails`,
+                pathname: detailsPath,
                 state: item
               }}
             >

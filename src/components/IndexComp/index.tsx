@@ -120,7 +120,7 @@ const Index = () => {
               </a>
             }
           >
-            <List type="policy" data={dzrjgData} noDataImg={noAnnoce} noDataText="暂无信息" />
+            <List type="policy" data={dzrjgData} noDataImg={noAnnoce} noDataText="暂无信息" detailsPath='/organizationManagement/agencyDetails'/>
           </Card>
         </Col>
         <Col span={12}>
@@ -134,7 +134,7 @@ const Index = () => {
               </a>
             }
           >
-            <List type="policy" data={dyrkcData} noDataImg={noData} noDataText="暂无信息" />
+            <List type="policy" data={dyrkcData} noDataImg={noData} noDataText="暂无信息" detailsPath='/courseManagement/courseManagement/courseInfo'/>
           </Card>
         </Col>
       </Row>
@@ -150,7 +150,7 @@ const Index = () => {
               </a>
             }
           >
-            <List type="policy" data={tzggData} noDataImg={noAnnoce} noDataText="暂无信息" />
+            <List type="policy" data={tzggData} noDataImg={noAnnoce} noDataText="暂无信息" detailsPath='/announcements/announcementsList/articleDetails'/>
           </Card>
         </Col>
         <Col span={12}>
@@ -164,7 +164,7 @@ const Index = () => {
               </a>
             }
           >
-            <List type="policy" data={zcggData} noDataImg={noData} noDataText="暂无信息" />
+            <List type="policy" data={zcggData} noDataImg={noData} noDataText="暂无信息" detailsPath='/policyIssued/policyIssuedList/articleDetails'/>
           </Card>
         </Col>
       </Row>
