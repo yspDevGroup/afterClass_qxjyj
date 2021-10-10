@@ -1,0 +1,72 @@
+.indexPage {
+  background-color: #f5f5f5;
+  .pageContent {
+    position: relative;
+    padding: 10px;
+    .noticeArea {
+      display: flex;
+      align-items: center;
+      height: 100px;
+      padding: 10px @padding-md;
+      margin: 20px 0;
+      background-color: #fff;
+      border-radius: 6px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      .gengduo {
+        svg {
+          width: 18px;
+          height: 18px;
+          color: #999;
+        }
+      }
+    }
+  }
+  :global {
+    .ant-tabs-tab + .ant-tabs-tab {
+      margin-left: 28px;
+    }
+
+    .ant-tabs-top > .ant-tabs-nav,
+    .ant-tabs-bottom > .ant-tabs-nav,
+    .ant-tabs-top > div > .ant-tabs-nav,
+    .ant-tabs-bottom > div > .ant-tabs-nav {
+      height: 22px;
+      margin-bottom: 12px;
+      line-height: 22px;
+    }
+
+    .ant-tabs-top > .ant-tabs-nav::before,
+    .ant-tabs-bottom > .ant-tabs-nav::before,
+    .ant-tabs-top > div > .ant-tabs-nav::before,
+    .ant-tabs-bottom > div > .ant-tabs-nav::before {
+      border-bottom: 0;
+    }
+
+    .ant-tabs-ink-bar {
+      display: none;
+    }
+
+    .ant-tabs-tab:hover {
+      color: #333;
+      font-weight: 600;
+      font-size: @font-size-lg;
+    }
+
+    .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+      color: #333;
+      font-weight: 400;
+      font-size: @font-size-lg;
+    }
+
+    .ant-tabs-tab-btn {
+      font-size: @font-size-lg;
+    }
+
+    .ant-tabs-extra-content {
+      a {
+        color: #999;
+        font-size: @font-size-sm;
+      }
+    }
+  }
+}
