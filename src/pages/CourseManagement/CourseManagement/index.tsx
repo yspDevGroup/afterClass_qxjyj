@@ -16,6 +16,8 @@ const index = (props: any) => {
   const { defaultIndex } = props.history.location.query;
   const [JYYData, setXZQH] = useState<any>();
   const [reload, setReload] = useState<boolean>(false);
+  const { state } = props.history.location;
+
   useEffect(() => {
     (async () => {
       const res = await JYJGSJ({ id: currentUser?.jyjId || '' });
@@ -29,7 +31,7 @@ const index = (props: any) => {
   };
   return (
     <div className={classes.content}>
-      <Tabs defaultActiveKey={defaultIndex || 1} onChange={callback}>
+      <Tabs defaultActiveKey={state ? '2' :(defaultIndex || '1')} onChange={callback}>
         <TabPane tab="本区课程" key="1">
           {JYYData ? <LocalCourses JYYData={JYYData} reload={reload} /> : ''}
         </TabPane>

@@ -4,9 +4,11 @@ import noData from '@/assets/noCourse.png';
 import moment from 'moment';
 import styles from '../index.less';
 import { Link } from 'umi';
-import { Tabs } from 'antd';
+import { Col, Row, Tabs } from 'antd';
 import IconFont from '@/components/CustomIcon';
 import ListComp from '../components/ListComponent';
+
+const style = { background: '#0092ff', padding: '8px 0' };
 
 const { TabPane } = Tabs;
 const Overview = () => {
@@ -60,7 +62,35 @@ const Overview = () => {
         centered={false}
       >
         <TabPane tab="本学期概述" key="elective">
-          {/* <ListComp listData={dataSource} /> */}
+          <Row gutter={[8, 8]}>
+            <Col className="gutter-row" span={8}>
+              <div style={style}>col-6</div>
+            </Col>
+            <Col className="gutter-row" span={8}>
+              <div style={style}>col-6</div>
+            </Col>
+            <Col className="gutter-row" span={8}>
+              <div style={style}>col-6</div>
+            </Col>
+            <Col className="gutter-row" span={8}>
+              <div style={style}>col-6</div>
+            </Col>
+            <Col className="gutter-row" span={8}>
+              <div style={style}>col-6</div>
+            </Col>
+            <Col className="gutter-row" span={8}>
+              <div style={style}>col-6</div>
+            </Col>
+            <Col className="gutter-row" span={8}>
+              <div style={style}>col-6</div>
+            </Col>
+            <Col className="gutter-row" span={8}>
+              <div style={style}>col-6</div>
+            </Col>
+            <Col className="gutter-row" span={8}>
+              <div style={style}>col-6</div>
+            </Col>
+          </Row>
         </TabPane>
       </Tabs>
     </div>

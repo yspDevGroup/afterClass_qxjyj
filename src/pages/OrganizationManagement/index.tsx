@@ -10,12 +10,13 @@ const { TabPane } = Tabs;
 const OrganizationManagement = (props: any) => {
   const [Keys, setKeys] = useState<string>();
   const { defaultIndex } = props.history.location.query;
+  const { state } = props.history.location;
   const callback = (key: any) => {
     setKeys(key);
   };
   return (
     <div className={styles.OrganizationManagement}>
-      <Tabs defaultActiveKey={defaultIndex || "YZR"} onChange={callback}>
+      <Tabs defaultActiveKey={state ? "WZR" : (defaultIndex || "YZR")} onChange={callback}>
         <TabPane tab="已准入机构" key="YZR">
           <HaveAccess Keys={Keys} />
         </TabPane>

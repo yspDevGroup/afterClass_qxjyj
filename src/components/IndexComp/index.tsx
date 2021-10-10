@@ -52,7 +52,6 @@ const Index = () => {
           // KCMC: param.KCMC
         });
         if (dyrkcDataRes.status === 'ok') {
-          console.log('dyrkcDataRes: ', dyrkcDataRes);
           setDyrkc(dyrkcDataRes.data?.rows);
         } else {
           message.error(dyrkcDataRes.message);
@@ -98,7 +97,6 @@ const Index = () => {
           pageSize: 3
         });
         if (zcggRes.status === 'ok') {
-          console.log('zcggRes: ', zcggRes);
           setZcggData(zcggRes.data?.rows);
         }
     };
@@ -120,7 +118,7 @@ const Index = () => {
               </a>
             }
           >
-            <List type="policy" data={dzrjgData} noDataImg={noAnnoce} noDataText="暂无信息" detailsPath='/organizationManagement/agencyDetails'/>
+            <List type="policy" data={dzrjgData} noDataImg={noAnnoce} noDataText="暂无信息" detailsPath='/organizationManagement'/>
           </Card>
         </Col>
         <Col span={12}>
@@ -134,7 +132,7 @@ const Index = () => {
               </a>
             }
           >
-            <List type="policy" data={dyrkcData} noDataImg={noData} noDataText="暂无信息" detailsPath='/courseManagement/courseManagement/courseInfo'/>
+            <List type="policy" data={dyrkcData} noDataImg={noData} noDataText="暂无信息" detailsPath='/courseManagement/courseManagement'/>
           </Card>
         </Col>
       </Row>
