@@ -6,66 +6,108 @@
     .noticeArea {
       display: flex;
       align-items: center;
-      height: 100px;
-      padding: 10px @padding-md;
+      height: 116px;
       margin: 20px 0;
-      background-color: #fff;
+      background-image: url('../../../../assets/banner.png');
+      background-repeat: no-repeat;
+      background-size:100% 100%;
       border-radius: 6px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      .gengduo {
-        svg {
-          width: 18px;
-          height: 18px;
-          color: #999;
-        }
+      box-shadow: 0 0 0px rgba(0, 0, 0, 0.1);
+    }
+  }
+  .things{
+    margin-bottom: 10px;
+  }
+  .overview{
+    margin-bottom: 20px;
+    .card{
+      height: '95.7px';
+      padding: 0;
+      p:nth-child(1){
+        color: #999999;
+        font-size: 12px;
+        line-height: 17px;
+      }
+      p:nth-child(2){
+        color: #333333;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 22px;
+      }
+      .bgImg{
+        position: absolute;
+        right: 0;
+        bottom: 0;
       }
     }
   }
-  :global {
-    .ant-tabs-tab + .ant-tabs-tab {
-      margin-left: 28px;
-    }
+  .notice{
+    :global{
+      .ant-tabs-top > .ant-tabs-nav::before,
+      .ant-tabs-bottom > .ant-tabs-nav::before,
+      .ant-tabs-top > div > .ant-tabs-nav::before,
+      .ant-tabs-bottom > div > .ant-tabs-nav::before {
+        border-bottom: 0;
+      }
+      .ant-btn-primary{
+        border: 0;
+      }
+      button[ant-click-animating-without-extra-node]:after {
+        border: 0 none;
+        opacity: 0;
+        animation:none 0 ease 0 1 normal;
+      }
 
-    .ant-tabs-top > .ant-tabs-nav,
-    .ant-tabs-bottom > .ant-tabs-nav,
-    .ant-tabs-top > div > .ant-tabs-nav,
-    .ant-tabs-bottom > div > .ant-tabs-nav {
-      height: 22px;
-      margin-bottom: 12px;
-      line-height: 22px;
     }
+  }
+  .overview,.things{
+    :global {
+      .ant-tabs-tab + .ant-tabs-tab {
+        margin-left: 28px;
+      }
 
-    .ant-tabs-top > .ant-tabs-nav::before,
-    .ant-tabs-bottom > .ant-tabs-nav::before,
-    .ant-tabs-top > div > .ant-tabs-nav::before,
-    .ant-tabs-bottom > div > .ant-tabs-nav::before {
-      border-bottom: 0;
-    }
+      .ant-tabs-top > .ant-tabs-nav,
+      .ant-tabs-bottom > .ant-tabs-nav,
+      .ant-tabs-top > div > .ant-tabs-nav,
+      .ant-tabs-bottom > div > .ant-tabs-nav {
+        height: 22px;
+        margin-bottom: 12px;
+        line-height: 22px;
+        padding: 0 5px;
+      }
 
-    .ant-tabs-ink-bar {
-      display: none;
-    }
+      .ant-tabs-top > .ant-tabs-nav::before,
+      .ant-tabs-bottom > .ant-tabs-nav::before,
+      .ant-tabs-top > div > .ant-tabs-nav::before,
+      .ant-tabs-bottom > div > .ant-tabs-nav::before {
+        border-bottom: 0;
+      }
 
-    .ant-tabs-tab:hover {
-      color: #333;
-      font-weight: 600;
-      font-size: @font-size-lg;
-    }
+      .ant-tabs-ink-bar {
+        display: none;
+      }
 
-    .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-      color: #333;
-      font-weight: 400;
-      font-size: @font-size-lg;
-    }
+      .ant-tabs-tab:hover {
+        color: #333;
+        font-weight: 600;
+        font-size: @font-size-lg;
+      }
 
-    .ant-tabs-tab-btn {
-      font-size: @font-size-lg;
-    }
+      .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+        color: #333;
+        font-weight: 400;
+        font-size: @font-size-lg;
+      }
 
-    .ant-tabs-extra-content {
-      a {
-        color: #999;
-        font-size: @font-size-sm;
+      .ant-tabs-tab-btn {
+        font-size: @font-size-lg;
+      }
+
+      .ant-tabs-extra-content {
+        a {
+          color: #999;
+          font-size: @font-size-sm;
+        }
       }
     }
   }

@@ -15,8 +15,8 @@ import styles from'../index.less'
 const { Option } = Select;
 
 const MutualEvaluation=(data:any)=>{
-  const {id,KHKCSQs}=data.location.state
-  console.log(KHKCSQs[0].KHJYJGId);
+  const {id}=data.location.state
+  console.log(data);
   
     const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
@@ -27,7 +27,7 @@ const MutualEvaluation=(data:any)=>{
 
   useEffect(()=>{
       (async()=>{
-      
+        // XXJBSJId:id
           const res=await getCoursesEvaluation({XZQHM:currentUser?.XZQHM,XXJBSJId:id})
           console.log(res.data);
           

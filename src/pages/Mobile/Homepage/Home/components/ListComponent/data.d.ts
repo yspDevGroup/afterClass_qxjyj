@@ -16,9 +16,13 @@ export type ListItem = {
   enrollLink?: string; // 针对课程点名使用
   recordLink?: string; // 针对考勤记录使用
   bjid?: string;
+  KHJYJG?: any;
+  BT: string;
+  SFTT: number;
+  createdAt: string;
 };
-// 无图片仅左边描述列表 | 图片描述列表 | 无图片左右两边描述列表 | 一行有左右两边的列表 | 一行中仅有左边的列表
-type ListType = 'list' | 'picList' | 'descList' | 'onlyList' | 'onlyLeftList';
+// 无图片仅左边描述列表 | 待办事项列表 | 公告列表
+type ListType = 'list' | 'picList'| 'actList';
 export type ListData = {
   type: ListType;
   cls?: string; // 组件自定义类名

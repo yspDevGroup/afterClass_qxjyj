@@ -1,6 +1,7 @@
 import styles from './index.less';
 import Things from './components/Things';
 import Overview from './components/Overview';
+import Notice from './components/Notice';
 
 const Home = () => {
   return (
@@ -9,6 +10,7 @@ const Home = () => {
         <div className={styles.noticeArea}></div>
         <Things/>
         <Overview/>
+        <Notice/>
     </div>
   </div>
   )

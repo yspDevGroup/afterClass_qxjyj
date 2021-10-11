@@ -1,7 +1,9 @@
 import type { ListData, ListItem, ListType } from './data';
 import { List } from 'antd';
 import { Link, history } from 'umi';
+import moment from 'moment';
 import styles from './index.less';
+import IconFont from '@/components/CustomIcon';
 
 const NewsList = (props: { data: ListItem[]; type: ListType; operation: any }) => {
   const { data, type, operation } = props;
@@ -17,52 +19,36 @@ const NewsList = (props: { data: ListItem[]; type: ListType; operation: any }) =
               <div className={operation ? 'ui-listItemContent' : ''}>
                 <Link to={v.link!}>
                   <List.Item.Meta
-                    style={
-                      type === 'descList'
-                        ? {
-                            background:
-                              v.titleRight?.text === '待上课'
-                                ? 'rgba(69, 201, 119, 0.05)'
-                                : 'rgba(102, 102, 102, 0.05)',
-                          }
-                        : {}
-                    }
-
                     title={
                       <div className={styles.TitleRow}>
-                        <div className={styles.Title}>{v.title}</div>
+                        <div className={styles.Title}>
+                          {v.SFTT === 1 ? <div className={styles.Headlines}>头条</div> : <></>}
+                          {
+                            type === 'actList' ? <span>{v.BT}</span> : <span>{v.KHJYJG.QYMC}</span>
+                          }
+
+                        </div>
                         <div className={styles.TitleRight}>
-                          {v.titleRight?.text === '待上课' ? (
-                            <span style={{ color: '#45C977' }}>{v.titleRight?.text}</span>
-                          ) : (
-                            <span style={{ color: '#999999' }}>{v.titleRight?.text}</span>
-                          )}
+                         {
+                            type === 'actList' ? '' : <span>{moment(v.createdAt).format('YYYY.MM.DD')}</span>
+                         }
                         </div>
                       </div>
                     }
                     description={
                       <>
-                        {v.desc?.map((item, index) => {
-                          return (
-                            <div className={styles.descRow} key={`${v.title}${index.toString()}`}>
-                              <div className={styles.descleft}>
-                                {item.left.map((t, i) => {
-                                  return (
-                                    <span key={t} className={styles.descleftspan}>
-                                      {i === 0 ? (
-                                        ''
-                                      ) : (
-                                        <span className={styles.descleftInspan}>|</span>
-                                      )}
-                                      {t}
-                                    </span>
-                                  );
-                                })}
-                              </div>
-                              <div className={styles.descright}>{item.right}</div>
-                            </div>
-                          );
-                        })}
+                        <div className={styles.descRow} key={`${v.title}`}>
+                          <div className={styles.descleft}>
+                            {
+                               type === 'actList' ? <span>{moment(v.createdAt).format('YYYY.MM.DD h:mm:ss')}</span> : <span>类型：机构准入申请</span>
+                            }
+                          </div>
+                          <div className={styles.descright}>
+                            {
+                              type === 'actList' ? <IconFont type="icon-gengduo" className={styles.gengduo} /> : ''
+                            }
+                          </div>
+                        </div>
                       </>
                     }
                   />

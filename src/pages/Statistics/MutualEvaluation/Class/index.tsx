@@ -2,134 +2,136 @@ import ProTable from '@ant-design/pro-table';
 import { Link, useModel } from 'umi';
 
 import { useEffect, useState } from 'react';
-import { Select, Rate, Button } from 'antd';
-import { LeftOutlined, } from '@ant-design/icons';
+import { Select,Rate,Button } from 'antd';
+import { LeftOutlined,} from '@ant-design/icons';
 
-import { getClassesEvaluation } from '@/services/after-class-qxjyj/khbjsj'
+import {getClassesEvaluation}from '@/services/after-class-qxjyj/khbjsj'
 // import styles from './index.less'
 
 
 const { Option } = Select;
 
-const Class = (props: any) => {
-  const { id, KCMC } = props.location.state.data
+const Class =(props:any)=>{
+   const{id,KCMC}=props.location.state.data
+   
+    
+    const columns: ProColumns<TermItem>[]=[
+        {
+            title: '序号',
+            dataIndex: 'index',
+            valueType: 'index',
+            width: 58,
+            align: 'center'
+          },
+          {
+            title: '班级名称',
+            dataIndex: 'BJMC',
+            key: 'BJMC',
+            align: 'center',
+            // render:(text:any)=>text.BJMC
+          
+          },
+          {
+            title: '主讲师',
+            dataIndex: '',
+            key: '',
+            align: 'center',
+            render:(_,record)=>{
+              return record.KHBJJs.map((item) => {
+                return <div>{item.KHJSSJ.XM}</div>;
+              });
+              }
+            },
+            {
+              title: '评价人数',
+              dataIndex: 'pj_count',
+              key: ' pj_count',
+              align: 'center',
+              render:(text:any)=>text
+             
+            },
+            {
+              title: '班级人数',
+              dataIndex: 'pj_count',
+              key: 'pj_count ',
+              align: 'center',
+              render:(text:any)=>text
 
+            },
+  
+          // {
+          //   title: '教育机构',
+          //   dataIndex: 'KHJYJG',
+          //   key: 'KHJYJG',
+          //   align: 'center',
+          //   // render:(text:any,record:any)=>record.KHKCSJ.KHJYJG.QYMC
 
-  const columns: ProColumns<TermItem>[] = [
-    {
-      title: '序号',
-      dataIndex: 'index',
-      valueType: 'index',
-      width: 58,
-      align: 'center'
-    },
-    {
-      title: '班级名称',
-      dataIndex: 'BJMC',
-      key: 'BJMC',
-      align: 'center',
-      // render:(text:any)=>text.BJMC
-
-    },
-    {
-      title: '主讲师',
-      dataIndex: '',
-      key: '',
-      align: 'center',
-      render: (_, record) => {
-        return record.KHBJJs.map((item) => {
-          return <div>{item.KHJSSJ.XM}</div>;
-        });
-      }
-    },
-    {
-      title: '评价人数',
-      dataIndex: 'pj_count',
-      key: ' pj_count',
-      align: 'center',
-      render: (text: any) => text
-
-    },
-    {
-      title: '班级人数',
-      dataIndex: 'pj_count',
-      key: 'pj_count ',
-      align: 'center',
-      render: (text: any) => text
-
-    },
-
-    // {
-    //   title: '教育机构',
-    //   dataIndex: 'KHJYJG',
-    //   key: 'KHJYJG',
-    //   align: 'center',
-    //   // render:(text:any,record:any)=>record.KHKCSJ.KHJYJG.QYMC
-
-
-
-    // },
-    {
-      title: '班级评分',
-      dataIndex: 'pj_avg',
-      key: 'pj_avg',
-      align: 'center',
-      render: (text: any) => <Rate count={5} defaultValue={text} disabled={true} />,
-
-    },
-    {
-      title: '操作',
-      dataIndex: 'XSXM',
-      key: 'XSXM',
-      align: 'center',
-      render: (_, record) => (
-        <>
-          <Link
-            to={{
-              pathname: '/statistics/MutualEvaluation/Details',
-              state: {
-                type: 'detail',
-                data: record,
-              },
-            }}
-          >
-            详情
-          </Link>
-        </>
-      ),
-    },
-  ]
-  const { initialState } = useModel('@@initialState');
-  const { currentUser } = initialState || {};
+          
+          
+          // },
+          {
+            title: '班级评分',
+            dataIndex: 'pj_avg',
+            key: 'pj_avg',
+            align: 'center',
+         render: (text:any) => <Rate count={5} defaultValue={text} disabled={true} />,
+            
+          },
+          {
+            title: '操作',
+            dataIndex: 'XSXM',
+            key: 'XSXM',
+            align: 'center',
+            render: (_, record) => (
+              <>
+                <Link
+                  to={{
+                    pathname: '/statistics/MutualEvaluation/Details',
+                    state: {
+                      type: 'detail',
+                      data: record,
+                    },
+                  }}
+                >
+                  详情
+                </Link>
+              </>
+            ),
+          },
+    ]
+    const { initialState } = useModel('@@initialState');
+    const { currentUser } = initialState || {};
   const [classList, SetclassList] = useState<any>();
   const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);
 
-  const choseclass = () => {
+const choseclass=()=>{
+    
+}
+useEffect(()=>{
+  (async()=>{
+    const res =await getClassesEvaluation({XNXQId:currentUser?.XNXQId,KHKCSJId:id})
+    console.log(res);
+    
+    setDataSource(res.data.rows)
+     })()
 
-  }
-  useEffect(() => {
-    (async () => {
-      const res = await getClassesEvaluation({ XNXQId: currentUser?.XNXQId, KHKCSJId: id })
-      setDataSource(res.data.rows)
-    })()
-
-  }, [])
-  return (
-    <>
-      <Button
-        type="primary"
-        onClick={() => {
-          history.go(-1);
-        }}
-        style={{
-          marginBottom: '24px',
-        }}
-      >
-        <LeftOutlined />
-        返回上一页
-      </Button>
-      <div >
-        <div style={{ fontWeight: 'bold', fontSize: '25px', padding: '24px 0' }}>课程名称:{KCMC}</div>
+},[])
+    return(
+        <>
+              <Button 
+          type="primary"
+          onClick={() => {
+            history.go(-1);
+          }}
+          style={{
+            marginBottom: '24px',
+          }}
+        >
+          <LeftOutlined />
+          返回上一页
+        </Button>
+           <div >
+             <div style={{fontWeight:'bold',fontSize:'25px',padding:'24px 0'}}>课程名称:{KCMC}</div>
         <span>
           班级名称:
           <Select
@@ -151,7 +153,7 @@ const Class = (props: any) => {
         </span>
       </div>
 
-      <ProTable
+        <ProTable
         columns={columns}
         dataSource={dataSource}
         rowKey="id"
@@ -163,9 +165,9 @@ const Class = (props: any) => {
           reload: false,
         }}
 
-      />
-
-    </>
-  )
+        />
+         
+        </>
+    )
 }
 export default Class
