@@ -8,7 +8,8 @@ import {
   AppstoreAddOutlined,
   NotificationOutlined,
   AuditOutlined,
-  ProfileOutlined
+  ProfileOutlined,
+  TeamOutlined
 } from '@ant-design/icons';
 export default {
   route: {
@@ -35,6 +36,24 @@ export default {
             hideInMenu: 'true'
           }
         ]
+      },
+      {
+        path: '/PatrolClassManagement',
+        name: '巡课管理',
+        icon: <TeamOutlined />,
+        routes:[
+          {
+            path: '/PatrolClassManagement/PatrolClass',
+            name: '巡课查询',
+          },
+          {
+            path: '/PatrolClassManagement/PatrolClass/Detail',
+            name: '巡课查询详情',
+            hideInMenu: 'true',
+          }
+
+        ]
+
       },
       {
         path: '/organizationManagement/courseList',
