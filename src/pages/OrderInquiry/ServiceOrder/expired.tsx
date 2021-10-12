@@ -61,7 +61,6 @@ const StateTab = (props: any) => {
   ];
   const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     (async () => {
       const res = await getOrders({ XZQHM: currentUser?.XZQHM, DDZT, DDLX: 1, XXJBSJId: id });
       setDataSource(res.data.rows);
@@ -70,9 +69,6 @@ const StateTab = (props: any) => {
   return (
     <>
       <div>
-        {/* <div className={styles.searchs}>
-
-        </div> */}
         <ProTable
           columns={columns}
           // bordered
