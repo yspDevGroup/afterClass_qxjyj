@@ -326,6 +326,8 @@ export async function getScreenInfo(
     XZQHM?: string;
     XN?: string;
     XQ?: string;
+    /** 是否为市教育局 */
+    isCity?: boolean;
   },
   options?: { [key: string]: any },
 ) {
@@ -365,6 +367,35 @@ export async function getCoursesEvaluation(
   options?: { [key: string]: any },
 ) {
   return request<any>('/jyjgsj/getCoursesEvaluation', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 区县教育局获取课程的各学校评价信息 POST /jyjgsj/getSchoolCoursesEvaluation */
+export async function getSchoolCoursesEvaluation(
+  body: {
+    XZQHM?: string;
+    /** 课程ID */
+    KHKCSJId?: string;
+    /** 学校名称 */
+    XXMC?: string;
+    /** 学校ID */
+    XXJBSJId?: string;
+    /** 课程所属机构 */
+    SSJGLX?: string;
+    /** 页数 */
+    page?: number;
+    /** 每页记录数 */
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<any>('/jyjgsj/getSchoolCoursesEvaluation', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -450,6 +481,44 @@ export async function getClassesByCourse(
   options?: { [key: string]: any },
 ) {
   return request<any>('/jyjgsj/getClassesByCourse', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 区县教育局按日期统计收费信息 POST /jyjgsj/getTotalCost */
+export async function getTotalCost(
+  body: {
+    XZQHM?: string;
+    startDate?: string;
+    endDate?: string;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<any>('/jyjgsj/getTotalCost', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 区县教育局查看考勤趋势 POST /jyjgsj/getAttendanceTrend */
+export async function getAttendanceTrend(
+  body: {
+    XZQHM?: string;
+    startDate?: string;
+    endDate?: string;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<any>('/jyjgsj/getAttendanceTrend', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

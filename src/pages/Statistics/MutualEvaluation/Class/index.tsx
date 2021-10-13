@@ -31,6 +31,7 @@ const Class = (props: any) => {
       dataIndex: 'BJMC',
       key: 'BJMC',
       width: 180,
+      ellipsis: true,
       align: 'center',
     },
     {

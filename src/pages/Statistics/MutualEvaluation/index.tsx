@@ -2,28 +2,41 @@
 
 import { useEffect, useState } from 'react';
 import { Link, useModel } from 'umi';
-import { Rate, message, Input } from 'antd';
+import { Rate, message, Input, Select } from 'antd';
 import ProTable, { ProColumns } from '@ant-design/pro-table';
 import { getCoursesEvaluation } from '@/services/after-class-qxjyj/jyjgsj'
 
 import styles from './index.less';
+import { getAllKHKCLX } from '@/services/after-class-qxjyj/khkclx';
 
 const { Search } = Input;
+const { Option } = Select;
 const MutualEvaluation = (data: any) => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
   const [KCMC, setKCMC] = useState<string>('');
+  const [KCLX, setKCLX] = useState<string>('');
+  const [KCLY, setKCLY] = useState<string>('');
+  const [KCLXData, setKCLXData] = useState<any>();
   const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);
   useEffect(() => {
     (async () => {
-      const res = await getCoursesEvaluation({ XZQHM: currentUser?.XZQHM, });
+      const res = await getAllKHKCLX({});
+      if (res.status === 'ok') {
+        setKCLXData(res.data);
+      }
+    })();
+  }, [])
+  useEffect(() => {
+    (async () => {
+      const res = await getCoursesEvaluation({ XZQHM: currentUser?.XZQHM, KCMC, KCLX, KCLY });
       if (res.status === 'ok' && res?.data) {
         setDataSource(res?.data?.rows);
       } else {
         message.error(res.message || '数据获取失败，请联系系统管理员或稍后再试');
       }
     })()
-  }, [])
+  }, [KCMC, KCLX, KCLY])
   const columns: ProColumns<any>[] = [
     {
       title: '序号',
@@ -81,7 +94,7 @@ const MutualEvaluation = (data: any) => {
       width: 180,
       ellipsis: true,
       render: (_, record) => {
-        return record.SSJGLX === '校内课程' ? 1 : record.HZXXS
+        return record.SSJGLX === '校内课程' ? 1 : record.xx_count
       }
     },
     {
@@ -95,8 +108,8 @@ const MutualEvaluation = (data: any) => {
     },
     {
       title: '操作',
-      dataIndex: 'XSXM',
-      key: 'XSXM',
+      dataIndex: 'operation',
+      key: 'operation',
       align: 'center',
       ellipsis: true,
       width: 150,
@@ -108,8 +121,9 @@ const MutualEvaluation = (data: any) => {
               state: {
                 type: 'detail',
                 data: {
-                  KCId: record?.KHKCSJId,
-                  KCMC: record?.KCMC
+                  KCId: record?.id,
+                  KCMC: record?.KCMC,
+                  SSJGLX: record?.SSJGLX
                 },
               },
             }}
@@ -127,11 +141,44 @@ const MutualEvaluation = (data: any) => {
           课程名称:
           <Search
             allowClear
-            style={{ width: 200,marginLeft:16 }}
+            style={{ width: 200, marginLeft: 16 }}
             onSearch={(val) => {
               setKCMC(val)
             }}
           />
+        </span>
+        <span style={{ marginLeft: 24 }}>
+          课程来源：
+          <Select
+            allowClear
+            style={{ width: 200 }}
+            onChange={(value: string) => {
+              setKCLY(value);
+            }}
+          >
+            <Option key='机构课程' value='机构课程'>
+              机构课程
+            </Option>
+            <Option key='校内课程' value='校内课程'>
+              校内课程
+            </Option>
+          </Select>
+        </span>
+        <span style={{ marginLeft: 24 }}>
+          课程类型：
+          <Select
+            allowClear
+            style={{ width: 200 }}
+            onChange={(value: string) => {
+              setKCLX(value);
+            }}
+          >
+            {KCLXData?.map((item: any) => {
+              return <Option key={item.id} value={item.KCTAG}>
+                {item.KCTAG}
+              </Option>
+            })}
+          </Select>
         </span>
       </div>
       <ProTable

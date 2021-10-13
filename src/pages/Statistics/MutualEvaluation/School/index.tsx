@@ -1,22 +1,23 @@
-import ProTable, { ActionType, ProColumns, RequestData } from '@ant-design/pro-table';
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Rate, Select, Space } from 'antd';
+import ProTable, { ActionType, ProColumns, RequestData } from '@ant-design/pro-table';
+import { Button, Input, Rate,Space } from 'antd';
 import { Link, useModel } from 'umi';
 import { LeftOutlined, } from '@ant-design/icons';
-import { getAllSchools } from '@/services/after-class-qxjyj/jyjgsj';
+import { getSchoolCoursesEvaluation } from '@/services/after-class-qxjyj/jyjgsj';
 import styles from '../index.less';
 import { TableListParams } from '@/constant';
 
-const { Option } = Select;
+const { Search } = Input;
 // 点击查询按钮
 const OrderInquiry = (props: any) => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
   const { state } = props.location;
-  const { KCId, KCMC } = state.data;
+  const { KCId, KCMC,SSJGLX } = state.data;
   // 列表对象引用，可主动执行刷新等操作
   const actionRef = useRef<ActionType>();
-  const [SchoolList, setSchoolList] = useState<any>([]);
+  // 表格数据源
+  const [dataSource, setDataSource] = useState<any>([]);
   const [curSchool, setCurSchool] = useState<string>();
 
   const columns: ProColumns<any>[] | undefined = [
@@ -92,19 +93,22 @@ const OrderInquiry = (props: any) => {
       }
     }
   ];
+  const ChoseSelect = async () => {
+    const res = await getSchoolCoursesEvaluation({
+      XZQHM: currentUser?.XZQHM,
+      XXMC: curSchool || "",
+      KHKCSJId: KCId,
+      SSJGLX,
+      page: 0,
+      pageSize: 0
+    });
+    if (res.status === 'ok') {
+      setDataSource(res?.data?.rows);
+    }
+  };
   useEffect(() => {
-    (async () => {
-      const res = await getAllSchools({
-        XZQHM: currentUser?.XZQHM,
-        page: 0,
-        pageSize: 0
-      });
-      if (res.status === 'ok' && res.data) {
-        setSchoolList(res.data.rows);
-      }
-    })();
-  }, []);
-
+    ChoseSelect();
+  }, [curSchool])
   return (
     <>
       <Button
@@ -122,25 +126,15 @@ const OrderInquiry = (props: any) => {
       <div className={styles.searchs}>
         <span>
           学校名称：
-          <Select
-            style={{ width: 200 }}
-            onChange={(value: string) => {
-              setCurSchool(value);
-              actionRef.current?.reload();
-            }}
-            allowClear
-          >
-            {SchoolList.map((item: any) => {
-              return (
-                <Option value={item.XXMC} key={item.XXMC}>
-                  {item.XXMC}
-                </Option>
-              );
-            })}
-          </Select>
+          <Search
+              allowClear
+              style={{ width: 200 }}
+              onSearch={(val) => {
+                setCurSchool(val);
+              }}
+            />
         </span>
       </div>
-
       <ProTable
         headerTitle={KCMC}
         columns={columns}
@@ -152,40 +146,7 @@ const OrderInquiry = (props: any) => {
           density: false,
           reload: false
         }}
-        request={async (
-          params: any & {
-            pageSize?: number;
-            current?: number;
-            keyword?: string;
-          },
-          sort,
-          filter,
-        ): Promise<Partial<RequestData<any>>> => {
-          // 表单搜索项会从 params 传入，传递给后端接口。
-          const opts: TableListParams = {
-            ...params,
-            sorter: sort && Object.keys(sort).length ? sort : undefined,
-            filter,
-          };
-          const res = await getAllSchools({
-            XZQHM: currentUser?.XZQHM,
-            XXMC: curSchool || "",
-            page: 0,
-            pageSize: 0
-          }, opts);
-          if (res.status === 'ok') {
-            return {
-              data: res.data?.rows,
-              total: res.data?.count,
-              success: true,
-            };
-          }
-          return {
-            data: [],
-            total: 0,
-            success: true,
-          };
-        }}
+        dataSource={dataSource}
       />
     </>
   );
