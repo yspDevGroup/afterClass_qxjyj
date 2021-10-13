@@ -13,11 +13,11 @@ const NewsList = (props: { data: ListItem[]; type: ListType; operation: any }) =
     <div className={styles[type]}>
       <List
         dataSource={data}
-        renderItem={(v) => {
+        renderItem={(v,index) => {
           return (
             <div className={operation ? 'ui-listItemWrapper' : ''}>
               <div className={operation ? 'ui-listItemContent' : ''}>
-                <Link to={v.link!}>
+                <Link to={{pathname: type === 'actList' ? '/mobile/homepage/home/noticeDetails' : '/mobile/homepage', state: { allDataSource: data, index }}}>
                   <List.Item.Meta
                     title={
                       <div className={styles.TitleRow}>

@@ -54,7 +54,7 @@ const Homepage = () => {
                 <span>
                   <IconFont
                     style={{ fontSize: '16px' }}
-                    type={activeKey === 'mine' ? 'icon-wodefill' : 'icon-wode'}
+                    type={activeKey === 'mine' ? 'icon-tongjifill' : 'icon-tongji'}
                   />
                   统计
                 </span>

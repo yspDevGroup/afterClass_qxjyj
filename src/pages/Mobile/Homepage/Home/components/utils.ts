@@ -27,12 +27,12 @@ export const topNum = [
   },
   {
     title: '学校课程',
-    type: 'bjNum',
+    type: 'xxkc_count',
     bgImg: schoolCourse,
   },
   {
     title: '机构课程',
-    type: 'bjNum',
+    type: 'jgkc_count',
     bgImg: organizationCourse,
   },
   {
@@ -42,12 +42,12 @@ export const topNum = [
   },
   {
     title: '报名人次',
-    type: 'amount',
+    type: 'xsbj_count',
     bgImg: applyNumber,
   },
   {
     title: '参与教师数',
-    type: 'amount',
+    type: 'js_count',
     bgImg: joinTeacher,
   },
   {

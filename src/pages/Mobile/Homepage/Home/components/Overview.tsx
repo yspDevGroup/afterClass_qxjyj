@@ -24,7 +24,6 @@ const Overview = () => {
         JYJGSJId: currentUser?.jyjId
       });
       if (res.status === 'ok') {
-        console.log('res: ', res);
         const { xxbm, xxkc, kclx, ...rest } = res.data;
         // 配置头部统计栏目数据
         setHomeData({ ...rest });
@@ -37,7 +36,7 @@ const Overview = () => {
   const ItemCard = (props: any) => {
     const {title,count,bgImg} = props;
     return (
-      <Card className={styles.card} bodyStyle={{paddingTop: 8.8, paddingLeft: 8.8}}>
+      <Card className={styles.card} bodyStyle={{paddingTop: 8.8, paddingLeft: 8.8, minHeight: '101.7px'}}>
         <p>{title}</p>
         <p>{count}</p>
         <img className={styles.bgImg} src={bgImg} alt="" />
@@ -54,7 +53,7 @@ const Overview = () => {
           <Row gutter={[8, 8]}>
             {topNum.map((item)=>{
               return <Col className="gutter-row" span={8}>
-                      <ItemCard title={item.title} count={homeData?.[item.type]} bgImg={item.bgImg}/>
+                      <ItemCard title={item.title} count={homeData?.[item.type]} bgImg={item.bgImg} key={item.title}/>
                     </Col>
             })}
           </Row>

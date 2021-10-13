@@ -8,6 +8,7 @@
 import { notification, message } from 'antd';
 import type { RequestConfig } from 'umi';
 import type { ResponseError } from 'umi-request';
+import 'moment/locale/zh-cn';
 import { currentUser as getCurrentUser } from './services/after-class-qxjyj/user';
 import { currentWechatUser } from './services/after-class-qxjyj/wechat';
 import { getAuthorization, getCookie } from './utils';

@@ -1,5 +1,8 @@
+@import '../theme.less' ;
+
 .indexPage {
-  background-color: #f5f5f5;
+  background-color: @pageBgColor;
+  min-height: 900px;
   .pageContent {
     position: relative;
     padding: 10px;
@@ -111,4 +114,10 @@
       }
     }
   }
+}
+
+.allThings,.allNotice{
+  min-height: 900px;
+  background-color: @pageBgColor;
+  padding: 10px;
 }
