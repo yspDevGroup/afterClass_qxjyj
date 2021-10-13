@@ -24,6 +24,9 @@ const StateTab = (props: any) => {
       dataIndex: 'XSXM',
       key: 'XSXM',
       align: 'center',
+      render: (text: any, record: any)=>{
+        return record?.XSJBSJ?.XM
+      }
     },
     {
       title: '服务名称',

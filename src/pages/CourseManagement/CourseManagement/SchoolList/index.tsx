@@ -105,7 +105,7 @@ const SchoolManagement = (props: any) => {
               state: record
             }}
           >
-            班级列表
+            课程班列表
           </Link>
         </div>
       )

@@ -406,3 +406,55 @@ export async function getCoursesInfo(
     ...(options || {}),
   });
 }
+
+/** 区县教育局获取全部课程的统计报表 POST /jyjgsj/getAllCoursesInfo */
+export async function getAllCoursesInfo(
+  body: {
+    XZQHM?: string;
+    /** 课程名称 */
+    KCMC?: string;
+    /** 课程类型 */
+    KCLX?: string;
+    /** 学校名称 */
+    XXMC?: string;
+    /** 页数 */
+    page?: number;
+    /** 每页记录数 */
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<any>('/jyjgsj/getAllCoursesInfo', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 区县教育局获取课程的全部班级统计报表 POST /jyjgsj/getClassesByCourse */
+export async function getClassesByCourse(
+  body: {
+    XZQHM?: string;
+    /** 课程ID */
+    KHKCSJId?: string;
+    /** 学校名称 */
+    XXMC?: string;
+    /** 页数 */
+    page?: number;
+    /** 每页记录数 */
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<any>('/jyjgsj/getClassesByCourse', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}

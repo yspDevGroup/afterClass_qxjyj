@@ -3,15 +3,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-09-10 10:45:01
- * @LastEditors: wsl
- */
-/*
- * @description:
- * @author: wsl
- * @Date: 2021-08-26 11:45:40
- * @LastEditTime: 2021-08-29 14:54:30
- * @LastEditors: wsl
+ * @LastEditTime: 2021-10-13 09:54:38
+ * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useRef } from 'react';
 import { message, Popconfirm, Form, Tag, Button } from 'antd';
@@ -46,6 +39,7 @@ const HaveIntroduced = (props: any) => {
       key: 'KCMC',
       align: 'center',
       search: false,
+      width: 150,
       ellipsis: true
     },
     {
@@ -54,6 +48,7 @@ const HaveIntroduced = (props: any) => {
       key: 'KCLX',
       align: 'center',
       search: false,
+      width: 120,
       ellipsis: true
     },
     {
@@ -62,6 +57,7 @@ const HaveIntroduced = (props: any) => {
       key: 'KCLY',
       align: 'center',
       search: false,
+      width: 120,
       ellipsis: true
     },
     {
@@ -70,6 +66,7 @@ const HaveIntroduced = (props: any) => {
       key: 'JGMC',
       align: 'center',
       search: false,
+      width: 150,
       ellipsis: true
     },
     {
@@ -90,25 +87,6 @@ const HaveIntroduced = (props: any) => {
         );
       }
     },
-    {
-      title: '任课教师',
-      dataIndex: 'DKLS',
-      key: 'DKLS',
-      align: 'center',
-      search: false,
-      width: 200,
-      render: (text: any) => {
-        return (
-          <EllipsisHint
-            width="100%"
-            text={text?.map((item: any) => {
-              return <Tag key={item.KHJSSJ.id}>{item.KHJSSJ.XM}</Tag>;
-            })}
-          />
-        );
-      }
-    },
-
     {
       title: '操作',
       key: 'option',
@@ -137,7 +115,7 @@ const HaveIntroduced = (props: any) => {
                 }
               }}
             >
-              班级列表
+              课程班列表
             </Link>
           </div>
         );
@@ -226,7 +204,7 @@ const HaveIntroduced = (props: any) => {
             return {};
           }}
           dateFormatter="string"
-          toolBarRender={() => [<span key="XXMC">{state.XXMC}</span>]}
+          toolBarRender={() => [<span key="XXMC">{state?.XXMC}</span>]}
         />
       </div>
     </>

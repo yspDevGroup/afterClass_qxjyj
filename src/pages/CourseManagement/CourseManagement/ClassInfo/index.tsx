@@ -5,7 +5,7 @@ import classes from './index.less';
 import { history, Link } from 'umi';
 import { LeftOutlined } from '@ant-design/icons';
 /**
- * 班级详情
+ * 课程班详情
  * @returns
  */
 const ClassInfo = (props: any) => {
@@ -35,7 +35,7 @@ const ClassInfo = (props: any) => {
       align: 'center'
     },
     {
-      title: '班级名称',
+      title: '课程班名称',
       dataIndex: 'BJMC',
       key: 'BJMC',
       align: 'center',
@@ -101,6 +101,9 @@ const ClassInfo = (props: any) => {
       title: '学生姓名',
       dataIndex: 'XSXM',
       key: 'XSXM',
+      render: (text: any, record: any)=>{
+        return record?.XSJBSJ?.XM
+      },
       align: 'center'
     }
   ];

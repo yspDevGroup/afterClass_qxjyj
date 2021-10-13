@@ -2,8 +2,8 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-24 14:37:02
- * @LastEditTime: 2021-09-23 10:58:18
- * @LastEditors: gxh
+ * @LastEditTime: 2021-10-13 09:46:07
+ * @LastEditors: Sissle Lynn
  */
 import React, { useRef } from 'react';
 import ProTable, { RequestData } from '@ant-design/pro-table';
@@ -133,8 +133,6 @@ const SchoolManagement = () => {
             pageSize: 0
           });
           if (resgetAllSchools.status === 'ok') {
-            console.log(resgetAllSchools);
-
             return {
               data: resgetAllSchools.data?.rows,
               total: resgetAllSchools.data.count,

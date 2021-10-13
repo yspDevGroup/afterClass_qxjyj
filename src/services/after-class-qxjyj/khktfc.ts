@@ -2,11 +2,11 @@
 /* eslint-disable */
 import { request } from 'umi';
 
-/** 获取教师评价记录详情 GET /khjspj/${param0} */
-export async function getKHJSPJ(
+/** 获取课堂风采记录详情 GET /khktfc/${param0} */
+export async function getKHKTFC(
   params: {
     // path
-    /** 教师评价记录ID */
+    /** 课堂风采记录ID */
     id: string;
   },
   options?: { [key: string]: any },
@@ -16,22 +16,22 @@ export async function getKHJSPJ(
     status?: 'ok' | 'error';
     data: {
       id?: string;
-      PJFS?: number;
-      PY?: string;
-      JSId?: string;
+      NR?: string;
+      TP?: string;
+      createdAt?: string;
       KHBJSJId?: string;
-      XSJBSJ?: { id?: string; XH?: string; XM?: string; WechatUserId?: string };
+      JZGJBSJId?: string;
     };
     message?: string;
-  }>(`/khjspj/${param0}`, {
+  }>(`/khktfc/${param0}`, {
     method: 'GET',
     params: { ...queryParams },
     ...(options || {}),
   });
 }
 
-/** 删除教师评价记录 DELETE /khjspj/${param0} */
-export async function deleteKHJSPJ(
+/** 删除课堂风采记录 DELETE /khktfc/${param0} */
+export async function deleteKHKTFC(
   params: {
     // path
     /** 类型ID */
@@ -40,28 +40,36 @@ export async function deleteKHJSPJ(
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<{ status?: 'ok' | 'error'; message?: string }>(`/khjspj/${param0}`, {
+  return request<{ status?: 'ok' | 'error'; message?: string }>(`/khktfc/${param0}`, {
     method: 'DELETE',
     params: { ...queryParams },
     ...(options || {}),
   });
 }
 
-/** 查询所有教师评价记录 POST /khjspj/ */
-export async function getAllKHJSPJ(
+/** 查询所有课堂风采记录 POST /khktfc/ */
+export async function getAllKHKTFC(
   body: {
-    /** 学生ID */
-    XSJBSJId?: string;
+    /** 教师ID */
+    JZGJBSJId?: string;
+    /** 学年学期ID */
+    XNXQId?: string;
     /** 班级ID */
-    bjId?: string;
-    /** 评价类型 */
-    PJLX?: string;
-    /** 评价日期 */
-    PJRQ?: string;
+    KHBJSJId?: string;
+    /** 学校ID */
+    XXJBSJId?: string;
+    /** 页数 */
+    page?: number;
+    /** 每页记录数 */
+    pageSize?: number;
   },
   options?: { [key: string]: any },
 ) {
-  return request<{ status?: 'ok' | 'error'; data?: API.KHJSPJ[]; message?: string }>('/khjspj/', {
+  return request<{
+    status?: 'ok' | 'error';
+    data?: { count?: number; rows?: API.KHKTFC[] };
+    message?: string;
+  }>('/khktfc/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -71,20 +79,20 @@ export async function getAllKHJSPJ(
   });
 }
 
-/** 创建教师评价记录 PUT /khjspj/create */
-export async function createKHJSPJ(body: API.CreateKHJSPJ, options?: { [key: string]: any }) {
+/** 创建课堂风采记录 PUT /khktfc/create */
+export async function createKHKTFC(body: API.CreateKHKTFC, options?: { [key: string]: any }) {
   return request<{
     status?: 'ok' | 'error';
     data: {
       id?: string;
-      PJFS?: number;
-      PY?: string;
-      JSId?: string;
+      NR?: string;
+      TP?: string;
+      createdAt?: string;
       KHBJSJId?: string;
-      XSJBSJ?: { id?: string; XH?: string; XM?: string; WechatUserId?: string };
+      JZGJBSJId?: string;
     };
     message?: string;
-  }>('/khjspj/create', {
+  }>('/khktfc/create', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -94,18 +102,18 @@ export async function createKHJSPJ(body: API.CreateKHJSPJ, options?: { [key: str
   });
 }
 
-/** 更新教师评价记录 PUT /khjspj/update/${param0} */
-export async function updateKHJSPJ(
+/** 更新课堂风采记录 PUT /khktfc/update/${param0} */
+export async function updateKHKTFC(
   params: {
     // path
-    /** 教师评价记录ID */
+    /** 课堂风采记录ID */
     id: string;
   },
-  body: API.UpdateKHJSPJ,
+  body: API.UpdateKHKTFC,
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<{ status?: 'ok' | 'error'; message?: string }>(`/khjspj/update/${param0}`, {
+  return request<{ status?: 'ok' | 'error'; message?: string }>(`/khktfc/update/${param0}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

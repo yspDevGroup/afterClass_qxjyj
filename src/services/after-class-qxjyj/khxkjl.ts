@@ -46,6 +46,8 @@ export async function getKHXKJL(
     XKJSId?: string;
     /** 班级ID */
     KHBJSJId?: string;
+    /** 课程ID */
+    KHKCSJId?: string;
     /** 场地ID */
     FJSJId?: string;
     /** 学校ID */

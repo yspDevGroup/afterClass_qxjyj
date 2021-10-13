@@ -57,7 +57,10 @@ const ReimbursementClass = () => {
       title: '学生姓名',
       dataIndex: 'XSXM',
       key: 'XSXM',
-      align: 'center'
+      align: 'center',
+      render: (text: any, record: any)=>{
+        return record?.XSJBSJ?.XM
+      }
     },
     {
       title: '课程名称 ',
@@ -69,7 +72,7 @@ const ReimbursementClass = () => {
       }
     },
     {
-      title: '班级名称  ',
+      title: '课程班名称  ',
       dataIndex: 'KHBJSJ',
       key: 'KHBJSJ',
       align: 'center',

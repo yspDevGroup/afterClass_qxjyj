@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-09-06 17:02:23
- * @LastEditTime: 2021-09-10 16:45:49
- * @LastEditors: wsl
+ * @LastEditTime: 2021-10-13 10:25:40
+ * @LastEditors: Sissle Lynn
  */
 /* eslint-disable max-nested-callbacks */
 import React, { useEffect, useState } from 'react';
@@ -66,7 +66,7 @@ const ClassInfo = (props: any) => {
       groupItems: [
         {
           type: 'input',
-          label: '班级名称',
+          label: '课程班名称',
           placeholder: '——',
           name: 'BJMC',
           key: 'BJMC',
@@ -169,7 +169,7 @@ const ClassInfo = (props: any) => {
       key: 'JSXM',
       align: 'center',
       render: (text: any, record: any) => {
-        return record.KHJSSJ?.XM;
+        return record.JZGJBSJ?.XM;
       }
     },
     {
@@ -178,14 +178,17 @@ const ClassInfo = (props: any) => {
       key: 'XB',
       align: 'center',
       render: (text: any, record: any) => {
-        return record.KHJSSJ?.XB === '女性' ? '女' : '男';
+        return record.JZGJBSJ?.XBM === '女性' ? '女' : '男';
       }
     },
     {
       title: '教师类型',
       dataIndex: 'JSLX',
       key: 'JSLX',
-      align: 'center'
+      align: 'center',
+      render: (_: any, record: any) => {
+        return record.JSLX === '主教师' ? '主班' : '副班';
+      }
     },
     {
       title: '联系电话',
@@ -193,7 +196,7 @@ const ClassInfo = (props: any) => {
       key: 'LXDH',
       align: 'center',
       render: (text: any, record: any) => {
-        return record.KHJSSJ.LXDH;
+        return record?.JZGJBSJ?.LXDH;
       }
     },
     {
@@ -209,7 +212,7 @@ const ClassInfo = (props: any) => {
               key="xq"
               to={{
                 pathname: '/schoolManagement/courseList/teacherInfo',
-                state: record.KHJSSJ
+                state: record?.JZGJBSJ
               }}
             >
               详情

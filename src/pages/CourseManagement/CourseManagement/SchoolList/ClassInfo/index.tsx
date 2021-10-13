@@ -6,7 +6,7 @@ import { history, Link } from 'umi';
 import { LeftOutlined } from '@ant-design/icons';
 import { getKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
 /**
- * 班级详情
+ * 课程班详情
  * @returns
  */
 const ClassInfo = (props: any) => {
@@ -51,14 +51,14 @@ const ClassInfo = (props: any) => {
       align: 'center'
     },
     {
-      title: '班级名称',
+      title: '课程班名称',
       dataIndex: 'BJMC',
       key: 'BJMC',
       align: 'center',
       search: false
     },
     {
-      title: '班级人数',
+      title: '课程班人数',
       dataIndex: 'BJRS',
       key: 'BJRS',
       align: 'center',

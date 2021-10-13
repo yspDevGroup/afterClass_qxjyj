@@ -47,7 +47,7 @@ export default {
             name: '课程详情',
             routes: [
               {
-                path:'/OrganizationManagement/courseList/teacherInfo',
+                path: '/OrganizationManagement/courseList/teacherInfo',
                 name: '教师详情',
                 hideInMenu: 'true'
               }
@@ -84,12 +84,12 @@ export default {
               {
                 path: '/schoolManagement/courseList/classList',
                 hideInMenu: 'true',
-                name: '班级列表',
+                name: '课程班列表',
                 routes: [
                   {
                     path: '/schoolManagement/courseList/classList/classInfo',
                     hideInMenu: 'true',
-                    name: '班级详情'
+                    name: '课程班详情'
                   },
                   {
                     path: '/schoolManagement/courseList/classList/studentList',
@@ -125,7 +125,7 @@ export default {
               },
               {
                 path: '/courseManagement/courseManagement/classInfo',
-                name: '班级列表',
+                name: '课程班列表',
                 hideInMenu: 'true',
                 routes: [
                   {
@@ -142,7 +142,7 @@ export default {
                 routes: [
                   {
                     path: '/courseManagement/courseManagement/schoolList/classInfo',
-                    name: '班级列表',
+                    name: '课程班列表',
                     hideInMenu: 'true',
                     routes: [
                       {
@@ -256,11 +256,17 @@ export default {
             name: '课程统计',
             routes: [
               {
-                path: '/statistics/afterSchoolCourse/detail',
-                name: '班级统计',
-                hideInMenu: 'true'
+                path:'/statistics/afterSchoolCourse/school',
+                name: '开设课程学校',
+                hideInMenu: 'true',
+                routes: [
+                  {
+                    path: '/statistics/afterSchoolCourse/detail',
+                    name: '课程班统计',
+                    hideInMenu: 'true'
+                  },
+                ]
               },
-              
             ]
           },
           {
@@ -268,13 +274,10 @@ export default {
             name: '互评统计',
           },
           {
-            path:'/statistics/MutualEvaluation/course',
-            name:'互评统计课程',
-           hideInMenu: 'true'
-
+            path: '/statistics/MutualEvaluation/course',
+            name: '互评统计课程',
+            hideInMenu: 'true'
           }
-         
-
         ]
       },
       {
@@ -284,7 +287,7 @@ export default {
       },
       {
         path: '/classInfo',
-        name: '班级详情',
+        name: '课程班详情',
         hideInMenu: 'true'
       }
     ]

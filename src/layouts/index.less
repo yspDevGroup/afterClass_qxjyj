@@ -18,6 +18,7 @@
       justify-content: center;
       margin-top: 46px !important;
     }
+
     // 取消内容部分底部外边距
     .ant-pro-basicLayout-content {
       margin-bottom: 0;
@@ -56,6 +57,7 @@
 
         .ant-menu-item,
         .ant-menu-submenu {
+
           .ant-pro-menu-item-title,
           .anticon,
           .ant-menu-submenu-arrow {
@@ -110,6 +112,7 @@
 
         .ant-page-header-heading {
           flex: auto;
+
           .ant-page-header-heading-extra {
             margin: 0;
           }
@@ -122,11 +125,11 @@
           min-width: 200px;
           text-align: justify;
 
-          > span {
+          >span {
             display: flex;
           }
 
-          & + .ant-page-header-heading {
+          &+.ant-page-header-heading {
             width: 200px;
             margin: 0;
           }
@@ -157,6 +160,12 @@
                 white-space: nowrap;
                 text-overflow: ellipsis;
               }
+
+              .ant-typography-single-line {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
             }
           }
         }
@@ -164,9 +173,10 @@
     }
   }
 }
+
 :global {
   .ant-menu-sub {
     color: rgba(255, 255, 255, 0.65);
-    background-color: @second-color !important;
+    background-color: @second-color  !important;
   }
 }

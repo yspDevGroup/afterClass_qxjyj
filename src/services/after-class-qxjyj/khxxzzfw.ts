@@ -146,13 +146,13 @@ export async function updateKHXXZZFW(
 export async function getStudent(
   body: {
     /** 学生ID */
-    XSId?: string;
+    XSJBSJId?: string;
     /** 学生姓名 */
     XSXM?: string;
     /** 学年学期ID */
     XNXQId?: string;
-    /** 课后增值服务ID */
-    KHZZFWId?: string;
+    /** 课后学校增值服务ID */
+    KHXXZZFWId?: string;
     /** 页数 */
     page?: number;
     /** 每页记录数 */
@@ -165,8 +165,8 @@ export async function getStudent(
     data?: {
       count?: number;
       rows?: {
-        XSId?: string;
-        XSXM?: string;
+        createdAt?: string;
+        XSJBSJ?: { id?: string; XH?: string; XM?: string; WechatUserId?: string };
         KHXXZZFWId?: string;
         KHXXZZFW: {
           id?: string;

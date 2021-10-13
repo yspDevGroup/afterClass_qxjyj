@@ -13,7 +13,7 @@ import { history, Link } from 'umi';
 import { LeftOutlined } from '@ant-design/icons';
 import { paginationConfig } from '@/constant';
 /**
- * 班级详情
+ * 课程班详情
  * @returns
  */
 const ClassList = (props: any) => {
@@ -31,14 +31,14 @@ const ClassList = (props: any) => {
       align: 'center'
     },
     {
-      title: '班级名称',
+      title: '课程班名称',
       dataIndex: 'BJMC',
       key: 'BJMC',
       align: 'center',
       search: false
     },
     {
-      title: '班级人数',
+      title: '课程班人数',
       dataIndex: 'BJRS',
       key: 'BJRS',
       align: 'center',
@@ -111,7 +111,7 @@ const ClassList = (props: any) => {
                 state: record
               }}
             >
-              班级详情
+              课程班详情
             </Link>
             <Link
               key="bjxq"

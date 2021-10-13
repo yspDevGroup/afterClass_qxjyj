@@ -8,8 +8,8 @@ import Style from './index.less';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { getAllSchools } from '@/services/after-class-qxjyj/jyjgsj';
-const { Option } = Select;
 
+const { Option } = Select;
 const LeaveManagement = () => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
@@ -60,6 +60,9 @@ const LeaveManagement = () => {
       key: 'XSXM',
       align: 'center',
       width: 80,
+      render: (text: any, record: any)=>{
+        return record?.XSJBSJ?.XM
+      },
       ellipsis: true
     },
     {
@@ -89,8 +92,8 @@ const LeaveManagement = () => {
       dataIndex: 'QJYY',
       key: 'QJYY',
       align: 'center',
-      width: 100,
-      ellipsis: true
+      ellipsis: true,
+      width: 120,
     },
     {
       title: '请假状态',

@@ -27,13 +27,6 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
       align: 'center'
     },
     {
-      title: '课程来源',
-      dataIndex: 'SSJGLX',
-      key: 'SSJGLX',
-      align: 'center',
-      search: false
-    },
-    {
       title: '课程名称',
       dataIndex: 'KCMC',
       key: 'KCMC',
@@ -54,50 +47,11 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
       }
     },
     {
-      title: '所属机构',
-      dataIndex: 'KHJYJG',
-      key: 'KHJYJG',
+      title: '课程来源',
+      dataIndex: 'SSJGLX',
+      key: 'SSJGLX',
       align: 'center',
-      search: false,
-      render: (text: any, record: any) => {
-        return (
-          <>
-            {record?.SSJGLX === '校内课程' ? (
-              <>-</>
-            ) : (
-              <a
-                onClick={() => {
-                  history.push({
-                    pathname: `/organizationManagement/agencyDetails`,
-                    state: { value: record.KHJYJG }
-                  });
-                }}
-              >
-                {text?.QYMC}
-              </a>
-            )}
-          </>
-        );
-      }
-    },
-    {
-      title: '所属学校',
-      dataIndex: 'XXJBSJ',
-      key: 'XXJBSJ',
-      align: 'center',
-      search: false,
-      render: (text: any, record: any) => {
-        return (
-          <Link
-            to={{
-              pathname: '/courseManagement/courseManagement/schoolList/schoolInfos',
-              state: record
-            }}
-          >
-            {text?.XXMC || '-'}
-          </Link>
-        );
-      }
+      search: false
     },
     {
       title: '课程类型',
@@ -107,6 +61,29 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
       search: false,
       render: (text: any) => {
         return text?.KCTAG || '-';
+      }
+    },
+    {
+      title: '所属机构/学校',
+      dataIndex: 'JGMC',
+      key: 'JGMC',
+      align: 'center',
+      render: (text: any, record: any) => {
+        return record.SSJGLX === '校内课程' ? <Link
+          to={{
+            pathname: '/courseManagement/courseManagement/schoolList/schoolInfos',
+            state: record
+          }}
+        >
+          {record?.XXJBSJ?.XXMC}
+        </Link> : <Link
+          to={{
+            pathname: `/organizationManagement/agencyDetails`,
+            state: { value: record.KHJYJG }
+          }}
+        >
+          {record?.KHJYJG?.QYMC}
+        </Link>
       }
     },
     {
@@ -154,7 +131,7 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
                 });
               }}
             >
-              班级列表
+              课程班列表
             </a>
           )}
 

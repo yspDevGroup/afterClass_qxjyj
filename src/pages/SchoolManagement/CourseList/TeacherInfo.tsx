@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-26 16:24:39
- * @LastEditTime: 2021-09-30 18:33:19
+ * @LastEditTime: 2021-10-13 10:27:27
  * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useState } from 'react';
@@ -116,7 +116,6 @@ const TeacherInfo = (props: any) => {
           label: '姓名',
           name: 'XM',
           key: 'XM',
-          rules: [{ required: true, message: '请输入姓名' }],
           placeholder: readonly ? '——' : ''
         },
         {
@@ -135,8 +134,8 @@ const TeacherInfo = (props: any) => {
         {
           type: 'input',
           label: '性别',
-          name: 'XB',
-          key: 'XB',
+          name: 'XBM',
+          key: 'XBM',
           placeholder: readonly ? '——' : ''
         },
         {
@@ -199,7 +198,6 @@ const TeacherInfo = (props: any) => {
           name: 'LXDH',
           key: 'LXDH',
           placeholder: readonly ? '——' : '',
-          rules: [{ required: true, message: '请输入联系电话' }]
         },
         {
           type: 'inputNumber',
@@ -310,10 +308,10 @@ const TeacherInfo = (props: any) => {
           <CustomForm
             values={(() => {
               if (info) {
-                const { CSRQ, XB, ...rest } = info;
+                const { CSRQ, XBM, ...rest } = info;
                 return {
                   CSRQ: CSRQ ? moment(CSRQ) : '',
-                  XB: XB === '男性' ? '男' : '女',
+                  XBM: XBM === '男性' ? '男' : '女',
                   ...rest
                 };
               }

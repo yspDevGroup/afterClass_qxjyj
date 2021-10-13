@@ -1,20 +1,27 @@
+/*
+ * @description:
+ * @author: Sissle Lynn
+ * @Date: 2021-10-12 14:46:08
+ * @LastEditTime: 2021-10-13 12:33:27
+ * @LastEditors: Sissle Lynn
+ */
 import { useEffect, useState } from 'react';
-import { Input, Select } from 'antd';
-import { useModel, Link } from 'umi';
 import type { ProColumns } from '@ant-design/pro-table';
+import { useModel, Link } from 'umi';
+import { LeftOutlined } from '@ant-design/icons';
 import ProTable from '@ant-design/pro-table';
-import { getAllCoursesInfo, } from '@/services/after-class-qxjyj/jyjgsj';
-import styles from './index.less';
-import { getAllKHKCLX } from '@/services/after-class-qxjyj/khkclx';
+import { Button, Input, Select } from 'antd';
+import { getAllSchools, getClassesByCourse, getCoursesInfo } from '@/services/after-class-qxjyj/jyjgsj';
 
-const { Option } = Select;
+import styles from './index.less';
+
 const { Search } = Input;
-const AfterSchoolCourse = () => {
+const School = (props: any) => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
-  const [KCMC, setKCMC] = useState<string>('');
-  const [KCLX, setKCLX] = useState<string>('');
-  const [KCLXData, setKCLXData] = useState<any>();
+  const { state } = props.location;
+  const { KCId, KCMC } = state.data;
+  const [XXMC, setXXMC] = useState<string>('');
   // 表格数据源
   const [dataSource, setDataSource] = useState<any>([]);
   // table表格数据
@@ -27,40 +34,28 @@ const AfterSchoolCourse = () => {
       align: 'center'
     },
     {
-      title: '课程名称',
-      dataIndex: 'KCMC',
-      key: 'KCMC',
+      title: '学校名称',
+      dataIndex: 'XXMC',
+      key: 'XXMC',
       align: 'center',
-    },
-    {
-      title: '课程来源',
-      dataIndex: 'KCLY',
-      key: 'KCLY',
-      align: 'center',
-    },
-    {
-      title: '课程类型',
-      dataIndex: 'KCLX',
-      key: 'KCLX',
-      align: 'center',
-    },
-    {
-      title: '所属机构/学校',
-      dataIndex: 'JGMC',
-      key: 'JGMC',
-      align: 'center',
-      render: (_, record) => {
-        return record.KCLY === '校内课程' ? record.XXMC : record.JGMC
+      render:(_,record)=>{
+        return record?.XXJBSJ?.XXMC
       }
     },
     {
-      title: '开设课程学校数量',
-      dataIndex: 'HZXXS',
-      key: 'HZXXS',
+      title: '学段',
+      dataIndex: 'XD',
+      key: 'XD',
       align: 'center',
-      render: (_, record) => {
-        return record.KCLY === '校内课程' ? 1 : record.HZXXS
+      render:(_,record)=>{
+        return record?.XXJBSJ?.XD
       }
+    },
+    {
+      title: '课程班数量',
+      dataIndex: 'bj_count',
+      key: 'bj_count',
+      align: 'center',
     },
     {
       title: '报名人数',
@@ -79,8 +74,8 @@ const AfterSchoolCourse = () => {
       dataIndex: 'TKBL',
       key: 'TKBL',
       align: 'center',
-      render: (test: any, record: any) => {
-        const num = record.TKRS != 0 ? (record.TKRS / record.BMRS) * 100 + '%' : 0;
+      render: (test: any,record: any) => {
+        const num =  record.TKRS!=0 ? (record.TKRS/ record.BMRS)*100 + '%':0;
         return num;
       },
     },
@@ -105,12 +100,14 @@ const AfterSchoolCourse = () => {
         <>
           <Link
             to={{
-              pathname: '/statistics/afterSchoolCourse/school',
+              pathname: '/statistics/afterSchoolCourse/detail',
               state: {
                 type: 'detail',
                 data: {
-                  KCId: record?.KHKCSJId,
-                  KCMC: record?.KCMC
+                  XXJBSJId: record?.XXJBSJId,
+                  KHKCSJId: KCId,
+                  XXMC: record?.XXJBSJ?.XXMC,
+                  KCMC: KCMC
                 },
               },
             }}
@@ -122,58 +119,47 @@ const AfterSchoolCourse = () => {
     },
   ];
   const ChoseSelect = async () => {
-    const res3 = await getAllCoursesInfo({
+    const res3 = await getClassesByCourse({
       XZQHM: currentUser?.XZQHM,
-      KCMC,
-      KCLX
+      KHKCSJId: KCId,
+      XXMC
     });
     if (res3.status === 'ok') {
       setDataSource(res3?.data?.rows);
     }
   };
   useEffect(() => {
-    (async () => {
-      const res = await getAllKHKCLX({});
-      if (res.status === 'ok') {
-        setKCLXData(res.data);
-      }
-    })();
-  }, [])
-  useEffect(() => {
     ChoseSelect();
-  }, [KCLX, KCMC])
+  }, [XXMC])
   return (
     <>
       <div>
+        <Button
+          type="primary"
+          onClick={() => {
+            history.go(-1);
+          }}
+          style={{
+            marginBottom: '24px'
+          }}
+        >
+          <LeftOutlined />
+          返回上一页
+        </Button>
         <div className={styles.searchs}>
           <span>
-            课程名称：
+            学校名称：
             <Search
               allowClear
               style={{ width: 200 }}
               onSearch={(val) => {
-                setKCMC(val)
+                setXXMC(val)
               }}
             />
           </span>
-          <span style={{ marginLeft: 24 }}>
-            课程类型：
-            <Select
-              allowClear
-              style={{ width: 200 }}
-              onChange={(value: string) => {
-                setKCLX(value);
-              }}
-            >
-              {KCLXData?.map((item: any) => {
-                return <Option key={item.id} value={item.KCTAG}>
-                  {item.KCTAG}
-                </Option>
-              })}
-            </Select>
-          </span>
         </div>
         <ProTable
+          headerTitle={KCMC}
           columns={columns}
           dataSource={dataSource}
           rowKey="id"
@@ -190,5 +176,6 @@ const AfterSchoolCourse = () => {
   );
 };
 
-AfterSchoolCourse.wrappers = ['@/wrappers/auth'];
-export default AfterSchoolCourse;
+School.wrappers = ['@/wrappers/auth'];
+School.title = '测试信息';
+export default School;

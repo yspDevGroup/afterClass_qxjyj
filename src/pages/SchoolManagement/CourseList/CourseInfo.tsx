@@ -16,7 +16,6 @@ const formItemLayout = {
 };
 const CourseInfo = (props: any) => {
   const { state } = props.location;
-  console.log(state, '----------');
   const [disabled, setDisabled] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
   const [NJDataOption, setNJDataOption] = useState<any>([]);
@@ -179,13 +178,13 @@ const CourseInfo = (props: any) => {
       <div className={styles.content}>
         <div style={{ width: '85%', minWidth: '850px', margin: '0 auto' }} className={styles.formType}>
           <CustomForm values={formValues || {}} formItems={basicForm} formLayout={formItemLayout} hideBtn={true} />
-          <Table
+          {state.SSJGLX === '机构课程' ? <Table
             title={() => '任课教师列表'}
             columns={columns}
             dataSource={teacherData}
             pagination={false}
             size="small"
-          />
+          /> : ''}
         </div>
       </div>
     </>

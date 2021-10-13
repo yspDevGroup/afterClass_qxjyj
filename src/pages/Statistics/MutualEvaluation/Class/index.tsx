@@ -1,159 +1,170 @@
-import ProTable from '@ant-design/pro-table';
-import { Link, useModel } from 'umi';
-
 import { useEffect, useState } from 'react';
-import { Select,Rate,Button } from 'antd';
-import { LeftOutlined,} from '@ant-design/icons';
+import { Rate, Button, Input, Select, message } from 'antd';
+import { Link } from 'umi';
+import ProTable, { ProColumns } from '@ant-design/pro-table';
+import { LeftOutlined, } from '@ant-design/icons';
+import { getClassesEvaluation } from '@/services/after-class-qxjyj/khbjsj';
+import styles from '../index.less';
+import { getAllXNXQ } from '@/services/after-class-qxjyj/xnxq';
+import { getCurrentXQ } from '@/utils/utils';
 
-import {getClassesEvaluation}from '@/services/after-class-qxjyj/khbjsj'
-// import styles from './index.less'
-
-
+const { Search } = Input;
 const { Option } = Select;
-
-const Class =(props:any)=>{
-   const{id,KCMC}=props.location.state.data
-   
-    
-    const columns: ProColumns<TermItem>[]=[
-        {
-            title: '序号',
-            dataIndex: 'index',
-            valueType: 'index',
-            width: 58,
-            align: 'center'
-          },
-          {
-            title: '班级名称',
-            dataIndex: 'BJMC',
-            key: 'BJMC',
-            align: 'center',
-            // render:(text:any)=>text.BJMC
-          
-          },
-          {
-            title: '主讲师',
-            dataIndex: '',
-            key: '',
-            align: 'center',
-            render:(_,record)=>{
-              return record.KHBJJs.map((item) => {
-                return <div>{item.KHJSSJ.XM}</div>;
-              });
-              }
-            },
-            {
-              title: '评价人数',
-              dataIndex: 'pj_count',
-              key: ' pj_count',
-              align: 'center',
-              render:(text:any)=>text
-             
-            },
-            {
-              title: '班级人数',
-              dataIndex: 'pj_count',
-              key: 'pj_count ',
-              align: 'center',
-              render:(text:any)=>text
-
-            },
-  
-          // {
-          //   title: '教育机构',
-          //   dataIndex: 'KHJYJG',
-          //   key: 'KHJYJG',
-          //   align: 'center',
-          //   // render:(text:any,record:any)=>record.KHKCSJ.KHJYJG.QYMC
-
-          
-          
-          // },
-          {
-            title: '班级评分',
-            dataIndex: 'pj_avg',
-            key: 'pj_avg',
-            align: 'center',
-         render: (text:any) => <Rate count={5} defaultValue={text} disabled={true} />,
-            
-          },
-          {
-            title: '操作',
-            dataIndex: 'XSXM',
-            key: 'XSXM',
-            align: 'center',
-            render: (_, record) => (
-              <>
-                <Link
-                  to={{
-                    pathname: '/statistics/MutualEvaluation/Details',
-                    state: {
-                      type: 'detail',
-                      data: record,
-                    },
-                  }}
-                >
-                  详情
-                </Link>
-              </>
-            ),
-          },
-    ]
-    const { initialState } = useModel('@@initialState');
-    const { currentUser } = initialState || {};
-  const [classList, SetclassList] = useState<any>();
+const Class = (props: any) => {
+  const { state } = props.location;
+  const { XXJBSJId, KHKCSJId, XXMC, KCMC } = state;
+  // 选择学年学期
+  const [term, setTerm] = useState<string>();
+  // 学年学期列表数据
+  const [termList, setTermList] = useState<any>();
   const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);
-
-const choseclass=()=>{
-    
-}
-useEffect(()=>{
-  (async()=>{
-    const res =await getClassesEvaluation({XNXQId:currentUser?.XNXQId,KHKCSJId:id})
-    console.log(res);
-    
-    setDataSource(res.data.rows)
-     })()
-
-},[])
-    return(
+  const columns: ProColumns<any>[] = [
+    {
+      title: '序号',
+      dataIndex: 'index',
+      valueType: 'index',
+      width: 60,
+      align: 'center'
+    },
+    {
+      title: '课程班名称',
+      dataIndex: 'BJMC',
+      key: 'BJMC',
+      width: 180,
+      align: 'center',
+    },
+    {
+      title: '主班',
+      dataIndex: 'KHBJJs',
+      key: 'KHBJJs',
+      width: 150,
+      align: 'center',
+      render: (_, record) => {
+        return record?.KHBJJs.map((item: any) => {
+          return <div>{item?.JZGJBSJ?.XM}</div>;
+        });
+      }
+    },
+    {
+      title: '评价人数',
+      dataIndex: 'pj_count',
+      key: ' pj_count',
+      align: 'center',
+      width: 150,
+    },
+    {
+      title: '课程班人数',
+      dataIndex: 'pj_count',
+      key: 'pj_count ',
+      align: 'center',
+      width: 150,
+    },
+    {
+      title: '课程班评分',
+      dataIndex: 'pj_avg',
+      key: 'pj_avg',
+      align: 'center',
+      width: 200,
+      render: (text: any) => <Rate count={5} defaultValue={text} disabled={true} />,
+    },
+    {
+      title: '操作',
+      dataIndex: 'XSXM',
+      key: 'XSXM',
+      align: 'center',
+      width: 150,
+      render: (_, record) => (
         <>
-              <Button 
-          type="primary"
-          onClick={() => {
-            history.go(-1);
-          }}
-          style={{
-            marginBottom: '24px',
-          }}
-        >
-          <LeftOutlined />
-          返回上一页
-        </Button>
-           <div >
-             <div style={{fontWeight:'bold',fontSize:'25px',padding:'24px 0'}}>课程名称:{KCMC}</div>
-        <span>
-          班级名称:
-          <Select
-            // value={}
-            style={{ width: 200 }}
-            onChange={(value: string) => {
-              // 选择不同课程
-              choseclass(value);
+          <Link
+            to={{
+              pathname: '/statistics/MutualEvaluation/Details',
+              state: {
+                type: 'detail',
+                data: {
+                  ...record,
+                  XNXQId: term
+                },
+              },
             }}
           >
-            {classList?.map((item: any) => {
-              return (
-                <Option key={item.value} value={item.value}>
-                  {item.text}
-                </Option>
-              );
+            详情
+          </Link>
+        </>
+      ),
+    },
+  ];
+  const getCourseList = async (kcdm: string, xnxq?: string) => {
+    const res = await getClassesEvaluation({
+      XNXQId: xnxq,
+      KHKCSJId: kcdm,
+    });
+    if (res?.status === 'ok') {
+      setDataSource(res?.data?.rows);
+    }
+  };
+  const getXNXQ = async (xxdm: string) => {
+    const res = await getAllXNXQ({
+      XXJBSJId: xxdm,
+    });
+    if (res?.status === 'ok') {
+      const { data = [] } = res;
+      const currentXQ = getCurrentXQ(data);
+      const term = [].map.call(data, (item: any) => {
+        return {
+          value: item.id,
+          text: `${item.XN} ${item.XQ}`
+        };
+      });
+      setTermList(term);
+      setTerm(currentXQ?.id || data[0].id);
+      getCourseList(KHKCSJId, currentXQ?.id || data[0].id);
+    } else {
+      message.error(res.message);
+    }
+  };
+  useEffect(() => {
+    getXNXQ(XXJBSJId);
+  }, [])
+  return (
+    <>
+      <Button
+        type="primary"
+        onClick={() => {
+          history.go(-1);
+        }}
+        style={{
+          marginBottom: '24px',
+        }}
+      >
+        <LeftOutlined />
+        返回上一页
+      </Button>
+      <div className={styles.searchs}>
+        {/* <span>
+          课程班名称:
+          <Search
+            allowClear
+            style={{ width: 200, marginLeft: 16 }}
+          />
+        </span> */}
+        <span>
+          所属学年学期：
+          <Select
+            value={term}
+            style={{ width: 200 }}
+            onChange={(value: string) => {
+              setTerm(value);
+              getCourseList(KHKCSJId, value);
+            }}
+          >
+            {termList?.map((item: any) => {
+              return <Option key={item.value} value={item.value}>{item.text}</Option>;
             })}
           </Select>
         </span>
       </div>
-
-        <ProTable
+      <ProTable
+        headerTitle={KCMC + ' / ' + XXMC}
         columns={columns}
         dataSource={dataSource}
         rowKey="id"
@@ -164,10 +175,9 @@ useEffect(()=>{
           density: false,
           reload: false,
         }}
-
-        />
-         
-        </>
-    )
+      />
+    </>
+  )
 }
-export default Class
+Class.wrappers = ['@/wrappers/auth'];
+export default Class;

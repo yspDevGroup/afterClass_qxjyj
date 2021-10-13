@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-09-07 08:30:40
- * @LastEditTime: 2021-09-10 08:53:16
+ * @LastEditTime: 2021-10-13 10:38:56
  * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useState } from 'react';
@@ -53,7 +53,7 @@ const StudentList = (props: any) => {
                             display: 'flex',
                             alignItems: 'center'
                           }}
-                          title={item.XSXM}
+                          title={item?.XSJBSJ?.XM}
                         />
                       </Card>
                     </Col>

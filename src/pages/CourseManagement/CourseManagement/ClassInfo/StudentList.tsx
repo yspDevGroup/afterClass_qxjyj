@@ -2,8 +2,8 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-09-07 08:30:40
- * @LastEditTime: 2021-09-10 15:34:01
- * @LastEditors: wsl
+ * @LastEditTime: 2021-10-13 10:56:00
+ * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useState } from 'react';
 import { LeftOutlined } from '@ant-design/icons';
@@ -53,7 +53,7 @@ const StudentList = (props: any) => {
                             display: 'flex',
                             alignItems: 'center'
                           }}
-                          title={item.XSXM}
+                          title={item?.XSJBSJ?.XM}
                         />
                       </Card>
                     </Col>

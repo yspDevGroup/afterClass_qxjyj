@@ -25,10 +25,13 @@ const StateTab = (props: any) => {
       dataIndex: 'XSXM',
       key: 'XSXM',
       align: 'center',
-      search: false
+      search: false,
+      render: (text: any, record: any)=>{
+        return record?.XSJBSJ?.XM
+      }
     },
     {
-      title: '班级',
+      title: '课程班',
       dataIndex: 'BJMC',
       key: 'BJMC',
       align: 'center',
