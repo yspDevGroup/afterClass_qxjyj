@@ -60,7 +60,7 @@ const LeaveManagement = () => {
       key: 'XSXM',
       align: 'center',
       width: 80,
-      render: (text: any, record: any)=>{
+      render: (text: any, record: any) => {
         return record?.XSJBSJ?.XM
       },
       ellipsis: true
@@ -136,32 +136,32 @@ const LeaveManagement = () => {
   ];
   return (
     <>
-      <div className={Style.TopSearchs}>
-        <span>
-          学校名称：
-          <Select
-            value={XXMC || ''}
-            showSearch
-            style={{ width: 200 }}
-            onChange={(value: string, key: any) => {
-              setXXMC(value);
-              setXXId(key?.key);
-            }}
-          >
-            <Option key="" value="">
-              全部
-            </Option>
-            {SchoolData?.map((item: any) => {
-              return (
-                <Option key={item.id} value={item.XXMC}>
-                  {item.XXMC}
-                </Option>
-              );
-            })}
-          </Select>
-        </span>
-      </div>
-      <div className={Style.leaveWrapper}>
+      <div className={Style.bodyContainer}>
+        <div className={Style.TopSearchs}>
+          <span>
+            学校名称：
+            <Select
+              value={XXMC || ''}
+              showSearch
+              style={{ width: 200 }}
+              onChange={(value: string, key: any) => {
+                setXXMC(value);
+                setXXId(key?.key);
+              }}
+            >
+              <Option key="" value="">
+                全部
+              </Option>
+              {SchoolData?.map((item: any) => {
+                return (
+                  <Option key={item.id} value={item.XXMC}>
+                    {item.XXMC}
+                  </Option>
+                );
+              })}
+            </Select>
+          </span>
+        </div>
         <ProTable<any>
           actionRef={actionRef}
           columns={columns}

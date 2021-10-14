@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-09-06 17:00:58
- * @LastEditTime: 2021-09-10 16:01:23
- * @LastEditors: wsl
+ * @LastEditTime: 2021-10-14 10:02:16
+ * @LastEditors: Sissle Lynn
  */
 import ProTable, { ActionType } from '@ant-design/pro-table';
 import { Button, Modal, Table, Tag } from 'antd';
@@ -18,7 +18,6 @@ import { paginationConfig } from '@/constant';
  */
 const ClassList = (props: any) => {
   const { state } = props.location;
-  console.log(state, '----');
   const actionRef = useRef<ActionType>();
   const { KHBJSJs } = state.value;
 

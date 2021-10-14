@@ -58,7 +58,7 @@ const ReimbursementClass = () => {
       dataIndex: 'XSXM',
       key: 'XSXM',
       align: 'center',
-      render: (text: any, record: any)=>{
+      render: (text: any, record: any) => {
         return record?.XSJBSJ?.XM
       }
     },
@@ -104,35 +104,35 @@ const ReimbursementClass = () => {
   ];
   return (
     <>
-      <div className={Style.TopSearchs}>
-        <span>
-          学校名称：
-          <Select
-            value={XXMC || ''}
-            showSearch
-            style={{ width: 200 }}
-            onChange={(value: string, key: any) => {
-              setXXMC(value);
-              setXXId(key?.key);
-              if (value === '') {
-                setXXId(null);
-              }
-            }}
-          >
-            <Option key="" value="">
-              全部
-            </Option>
-            {SchoolData?.map((item: any) => {
-              return (
-                <Option key={item.id} value={item.XXMC}>
-                  {item.XXMC}
-                </Option>
-              );
-            })}
-          </Select>
-        </span>
-      </div>
-      <div>
+      <div className={Style.bodyContainer}>
+        <div className={Style.TopSearchs}>
+          <span>
+            学校名称：
+            <Select
+              value={XXMC || ''}
+              showSearch
+              style={{ width: 200 }}
+              onChange={(value: string, key: any) => {
+                setXXMC(value);
+                setXXId(key?.key);
+                if (value === '') {
+                  setXXId(null);
+                }
+              }}
+            >
+              <Option key="" value="">
+                全部
+              </Option>
+              {SchoolData?.map((item: any) => {
+                return (
+                  <Option key={item.id} value={item.XXMC}>
+                    {item.XXMC}
+                  </Option>
+                );
+              })}
+            </Select>
+          </span>
+        </div>
         <ProTable<any>
           actionRef={actionRef}
           columns={columns}

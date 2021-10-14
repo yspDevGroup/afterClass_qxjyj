@@ -2,7 +2,7 @@
  * @description:
  * @author: gxh
  * @Date: 2021-09-22 11:54:38
- * @LastEditTime: 2021-09-30 19:20:14
+ * @LastEditTime: 2021-10-14 13:46:57
  * @LastEditors: Sissle Lynn
  */
 
@@ -185,4 +185,5 @@ const OrderInquiry = () => {
     </>
   );
 };
+OrderInquiry.wrappers = ['@/wrappers/auth'];
 export default OrderInquiry;

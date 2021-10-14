@@ -50,8 +50,12 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
       title: '课程来源',
       dataIndex: 'SSJGLX',
       key: 'SSJGLX',
-      align: 'center',
-      search: false
+      valueType: 'select',
+      valueEnum: {
+        校内课程: { text: '校内课程' },
+        机构课程: { text: '机构课程' },
+      },
+      align: 'center'
     },
     {
       title: '课程类型',
@@ -68,6 +72,7 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
       dataIndex: 'JGMC',
       key: 'JGMC',
       align: 'center',
+      search: false,
       render: (text: any, record: any) => {
         return record.SSJGLX === '校内课程' ? <Link
           to={{
@@ -178,7 +183,8 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
               page: param.current,
               pageSize: param.pageSize,
               XZQHM: JYYData?.XZQH,
-              KCMC: param.KCMC
+              KCMC: param.KCMC,
+              KCLY: param.SSJGLX,
             };
             const res = await getAllCourses(params);
             if (res.status === 'ok') {

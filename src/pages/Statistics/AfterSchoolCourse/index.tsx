@@ -13,6 +13,7 @@ const AfterSchoolCourse = () => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
   const [KCMC, setKCMC] = useState<string>('');
+  const [KCLY, setKCLY] = useState<string>('');
   const [KCLX, setKCLX] = useState<string>('');
   const [KCLXData, setKCLXData] = useState<any>();
   // 表格数据源
@@ -59,7 +60,7 @@ const AfterSchoolCourse = () => {
       key: 'HZXXS',
       align: 'center',
       render: (_, record) => {
-        return record.KCLY === '校内课程' ? 1 : record.HZXXS
+        return record.SSJGLX === '校内课程' ? 1 : record.xx_count
       }
     },
     {
@@ -125,6 +126,7 @@ const AfterSchoolCourse = () => {
     const res3 = await getAllCoursesInfo({
       XZQHM: currentUser?.XZQHM,
       KCMC,
+      KCLY,
       KCLX
     });
     if (res3.status === 'ok') {
@@ -141,7 +143,7 @@ const AfterSchoolCourse = () => {
   }, [])
   useEffect(() => {
     ChoseSelect();
-  }, [KCLX, KCMC])
+  }, [KCLX,KCLY, KCMC])
   return (
     <>
       <div>
@@ -155,6 +157,23 @@ const AfterSchoolCourse = () => {
                 setKCMC(val)
               }}
             />
+          </span>
+          <span style={{ marginLeft: 24 }}>
+            课程来源：
+            <Select
+              allowClear
+              style={{ width: 200 }}
+              onChange={(value: string) => {
+                setKCLY(value);
+              }}
+            >
+              <Option key='机构课程' value='机构课程'>
+                机构课程
+              </Option>
+              <Option key='校内课程' value='校内课程'>
+                校内课程
+              </Option>
+            </Select>
           </span>
           <span style={{ marginLeft: 24 }}>
             课程类型：
