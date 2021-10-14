@@ -1,6 +1,6 @@
 import IconFont from '@/components/CustomIcon';
-import { Link } from '@umijs/runtime';
 import { Col, Row } from 'antd';
+import { Link } from 'umi';
 
 import styles from '../index.less';
 
