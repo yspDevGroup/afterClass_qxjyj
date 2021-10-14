@@ -7,7 +7,6 @@ import { JYJGTZGG } from '@/services/after-class-qxjyj/jyjgtzgg';
 
 const ArticleDetails = (props: any) => {
   const { state } = props.history.location;
-  console.log('state: ', state);
   const [nrInfo, setNrInfo] = useState<any>();
 
   useEffect(()=>{
@@ -16,8 +15,6 @@ const ArticleDetails = (props: any) => {
 
   const getData = async () => {
     const result = await JYJGTZGG({ id: state.id });
-
-    console.log('result: ', result);
     setNrInfo(result.data.NR);
   }
 
