@@ -79,7 +79,7 @@ const Index = () => {
         //通知公告
         const tzggDataRes = await getJYJGTZGG({
           BT: '',
-          ZT: ['已发布', '草稿'],
+          ZT: ['已发布'],
           LX: 0,
           page: 1,
           pageSize: 3
@@ -92,7 +92,7 @@ const Index = () => {
         const zcggRes = await getJYJGTZGG({
           BT: '',
           LX: 1,
-          ZT: ['已发布', '草稿'],
+          ZT: ['已发布'],
           page: 1,
           pageSize: 3
         });
