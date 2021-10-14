@@ -1,7 +1,7 @@
 export const textColor1 = ['#FF715C', '#60DD95', '#4FC4E7', '#FFA729'];
 export const textColor2 = ['#FFA729', '#60DD95', '#FF715C'];
 
-export const lineConfig: any = {
+export const teacherConfig: any = {
   appendPadding: 20,
   autoFit: true,
   height: 500,
@@ -13,8 +13,27 @@ export const lineConfig: any = {
   legend: {
     position: 'bottom',
   },
-  xField: 'month',
-  yField: 'yuan',
+  xField: 'time',
+  yField: 'count',
+  seriesField: 'date',
+  tooltip: { showMarkers: false },
+  point: { shape: 'breath-point' },
+};
+
+export const studentConfig: any = {
+  appendPadding: 20,
+  autoFit: true,
+  height: 500,
+  meta: {
+    yuan: {
+      time: { type: 'cat' },
+    },
+  },
+  legend: {
+    position: 'bottom',
+  },
+  xField: 'time',
+  yField: 'count',
   seriesField: 'date',
   tooltip: { showMarkers: false },
   point: { shape: 'breath-point' },

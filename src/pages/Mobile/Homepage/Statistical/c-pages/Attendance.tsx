@@ -1,25 +1,29 @@
 import { useEffect, useState } from 'react';
 import { useModel } from 'umi';
-import { ConfigProvider, DatePicker, Space } from 'antd';
+import { ConfigProvider, DatePicker, Empty, Space } from 'antd';
 import { Line } from '@ant-design/charts';
 import locale from 'antd/lib/locale/zh_CN';
 
-import { getTerm, lineConfig } from '../utils';
-import { getScreenInfo } from '@/services/after-class-qxjyj/jyjgsj';
+import { getTerm, teacherConfig, studentConfig } from '../utils';
+import { getAttendanceTrend, getScreenInfo } from '@/services/after-class-qxjyj/jyjgsj';
 
-import should from '@/assets/should.png';
-import real from '@/assets/real.png';
-import leave from '@/assets/leave.png';
+import noData from '@/assets/noData.png';
 
 import styles from '../index.less';
 import ModuleTitle from '../components/ModuleTitle';
 import NumberCollect from '../components/NumberCollect';
+import moment from 'moment';
 
 
 const attendance = () => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
   const [currentData, setCurrentData] = useState<any>();
+  const [startTime, setStartTime] = useState<any>("2021-10-01");
+  const [endTime, setEndTime] = useState<any>("2021-10-01");
+  const [xskqConfig, setXskqConfig] = useState<any>({...studentConfig});
+  const [jskqConfig, setJskqConfig] = useState<any>({...teacherConfig});
+
   const { RangePicker } = DatePicker;
 
   const data = [
@@ -38,10 +42,46 @@ const attendance = () => {
     }
   ]
 
-  lineConfig.data = [
-    { "date": "实际出勤人数", "month": "一月", "yuan": 150 }, { "date": "实际出勤人数", "month": "二月", "yuan": 160 }, { "date": "实际出勤人数", "month": "三月", "yuan": 140 },
-   { "date": "请假人数" , "month": "一月", "yuan": 50}, {  "date": "请假人数", "month": "二月" ,"yuan": 30}, {  "date": "请假人数" ,"month": "三月", "yuan": 10}
-  ]
+  const handleStartTime = (date: any) => {
+    setStartTime(moment(date).format('YYYY-MM-DD'));
+  }
+  const handleEndTime = (date: any) => {
+    setEndTime(moment(date).format('YYYY-MM-DD'));
+  }
+
+    useEffect(()=>{
+      getCQData();
+    },[endTime])
+
+  const getCQData = async () => {
+    const attenRes = await getAttendanceTrend({
+      XZQHM: currentUser?.XZQHM,
+      startDate: startTime,
+      endDate: endTime
+    });
+    if(attenRes.status === 'ok'){
+        console.log('attenRes: ', attenRes);
+        let newData: { date: string; time: any; count: any; }[] = [];
+
+        attenRes.data.jscq.forEach((item: any)=>{
+          newData.push(
+            { date: "实际出勤人数", time: item.CQRQ, count: item.normal},
+            { date: "请假人数", time: item.CQRQ, count: item.abnormal},
+          );
+        })
+        setJskqConfig({...jskqConfig, data: [...newData]});
+        console.log('teacherConfig.data: ', teacherConfig.data);
+        newData = [];
+        attenRes.data.xscq.forEach((item: any)=>{
+          newData.push(
+            { date: "实际出勤人数", time: item.CQRQ, count: item.normal},
+            { date: "请假人数", time: item.CQRQ, count: item.abnormal},
+          );
+        })
+        setXskqConfig({...xskqConfig, data: [...newData]});
+    }
+
+  }
 
   const getData = async (res: any) => {
 
@@ -55,6 +95,7 @@ const attendance = () => {
       enrollNum: [],
       agentNum: []
     };
+
     const result = await getScreenInfo({
       ...res,
       XZQHM: currentUser?.XZQHM
@@ -162,19 +203,33 @@ const attendance = () => {
       <ModuleTitle data='考勤趋势'/>
       <Space direction="vertical" style={{marginTop: '20px'}} size={12}>
           <ConfigProvider locale={locale}>
-            <DatePicker placeholder='请选择开始日期'/>  -  <DatePicker placeholder='请选择结束日期'/>
+            <DatePicker placeholder='请选择开始日期' onChange={handleStartTime}/>  -  <DatePicker placeholder='请选择结束日期' onChange={handleEndTime}/>
           </ConfigProvider>
       </Space>
-      <div style = {{height:'50%', marginTop: '20px'}}>
+      <div style = {{height:'48%', marginTop: '20px'}}>
         学生考勤
         <div className={styles.chartsContainer} style={{marginTop: '-20px', paddingBottom: 0}}>
-          <Line {...lineConfig}></Line>
+          {
+            xskqConfig.data?.length ? <Line {...xskqConfig}></Line> : <Empty
+            image={noData}
+            imageStyle={{
+              height: 80,
+            }}
+            description={'暂无信息'} />
+          }
         </div>
       </div>
-      <div style = {{height:'50%'}}>
+      <div style = {{height:'48%', marginBottom: '20px'}}>
         教师考勤
         <div className={styles.chartsContainer} >
-          <Line {...lineConfig}></Line>
+          {
+            jskqConfig.data?.length ? <Line {...jskqConfig}></Line> : <Empty
+            image={noData}
+            imageStyle={{
+              height: 80,
+            }}
+            description={'暂无信息'} />
+          }
         </div>
       </div>
     </div>

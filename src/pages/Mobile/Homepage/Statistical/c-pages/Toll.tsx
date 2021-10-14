@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useModel } from 'umi';
-import { ConfigProvider, DatePicker, Space } from 'antd';
+import { ConfigProvider, DatePicker, Empty, Space } from 'antd';
 import locale from 'antd/lib/locale/zh_CN';
 import { Bar } from '@ant-design/charts';
+import moment from 'moment';
 
 import { getTerm, barConfig } from '../utils';
-import { getScreenInfo } from '@/services/after-class-qxjyj/jyjgsj';
+import { getScreenInfo , getTotalCost } from '@/services/after-class-qxjyj/jyjgsj';
 
 import should from '@/assets/should.png';
 import real from '@/assets/real.png';
 import leave from '@/assets/leave.png';
+import noData from '@/assets/noData.png';
 
 import styles from '../index.less';
 import ModuleTitle from '../components/ModuleTitle';
@@ -20,16 +22,37 @@ const Toll = () => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
   const [currentData, setCurrentData] = useState<any>();
-
-  const data = [
+  const [startTime, setStartTime] = useState<any>();
+  const [intervalData, setIntervalData] = useState<any>([
     {
-      num: '1234.00',
+      num: '--',
       title: '收款金额（元）'
     }, {
-      num: '123.00',
+      num: '--',
       title: '退款金额（元）'
     }
-  ]
+  ]);
+
+const handleStartTime = (date: any) => {
+  setStartTime(moment(date).format('YYYY-MM-DD'));
+}
+const handleEndTime = async (date: any) => {
+  const totalRes = await getTotalCost({
+    XZQHM: currentUser?.XZQHM,
+    startDate: startTime,
+    endDate: moment(date).format('YYYY-MM-DD')
+  });
+  setIntervalData([
+    {
+      num: totalRes.data.sk_amount,
+      title: '收款金额（元）'
+    }, {
+      num: totalRes.data.tk_amount,
+      title: '退款金额（元）'
+    }
+  ]);
+}
+
 
 
   const getData = async (res: any) => {
@@ -45,6 +68,8 @@ const Toll = () => {
       agentNum: [],
       trendNum: [],
     };
+
+
     const result = await getScreenInfo({
       ...res,
       XZQHM: currentUser?.XZQHM
@@ -150,13 +175,18 @@ const Toll = () => {
     <div className={styles.toll}>
       <div className={styles.container} style={{ height: '136px' }}>
         <ModuleTitle data='本学期收费总计' />
-        <NumberCollect data={currentData} col={data.length} />
+        <NumberCollect data={currentData} col={currentData?.length} />
       </div>
       <div className={styles.container} style={{ height: '374px' }}>
         <ModuleTitle data='收退款趋势' />
         <div className={styles.chartsContainer}>
           {
-            barConfig.data ? <Bar {...barConfig} /> : ''
+            barConfig.data?.length ? <Bar {...barConfig} /> : <Empty
+            image={noData}
+            imageStyle={{
+              height: 80,
+            }}
+            description={'暂无信息'} />
           }
         </div>
       </div>
@@ -164,10 +194,10 @@ const Toll = () => {
         <ModuleTitle data='收费统计查询' showRight={true} />
         <Space direction="vertical" style={{marginTop: '20px'}} size={12}>
           <ConfigProvider locale={locale}>
-            <DatePicker placeholder='请选择开始日期'/>  -  <DatePicker placeholder='请选择结束日期'/>
+            <DatePicker placeholder='请选择开始日期' onChange={handleStartTime} format="YYYY-MM-DD"/>  -  <DatePicker placeholder='请选择结束日期' onChange={handleEndTime} format="YYYY-MM-DD"/>
           </ConfigProvider>
         </Space>
-        <NumberCollect data={data} col={data.length} />
+        <NumberCollect data={intervalData} col={intervalData?.length} />
       </div>
     </div>)
 }

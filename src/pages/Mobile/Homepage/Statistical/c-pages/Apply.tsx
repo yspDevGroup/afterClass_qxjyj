@@ -3,7 +3,7 @@ import { useModel } from 'umi';
 import { Bar } from '@ant-design/charts';
 
 import { getTerm, barConfig } from '../utils';
-import { getAttendanceTrend, getScreenInfo, getTotalCost, homePage } from '@/services/after-class-qxjyj/jyjgsj';
+import { getScreenInfo, homePage } from '@/services/after-class-qxjyj/jyjgsj';
 
 import should from '@/assets/should.png';
 import real from '@/assets/real.png';
@@ -60,16 +60,6 @@ const apply = () => {
         title: '参与学生'
       }];
     };
-    const totalRes = await getTotalCost({
-      XZQHM: currentUser?.XZQHM,
-      startDate: "2021-10-0",
-      endDate: "2021-10-14"
-    });
-    const attenRes = await getAttendanceTrend({
-      XZQHM: currentUser?.XZQHM,
-      startDate: "2021-10-0",
-      endDate: "2021-10-14"
-    });
 
     const result = await getScreenInfo({
       ...res,
