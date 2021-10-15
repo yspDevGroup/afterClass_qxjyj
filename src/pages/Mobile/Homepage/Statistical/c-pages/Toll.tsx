@@ -97,12 +97,12 @@ useEffect(()=>{
       if (data) {
         defaultData.serviceNum = [
         {
-          title: '收款金额（元',
+          title: '收款金额（元）',
           num: data?.sk_count || 0
         },
         {
           title: '退款金额（元）',
-          num: data?.tk_amount || 0
+          num: data?.tk_count || 0
         }];
         defaultData.checkOut = [{
           icon: should,
