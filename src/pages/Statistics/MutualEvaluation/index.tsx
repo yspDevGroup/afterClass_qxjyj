@@ -104,7 +104,10 @@ const MutualEvaluation = (data: any) => {
       align: 'center',
       width: 200,
       ellipsis: true,
-      render: (text: any) => <Rate count={5} defaultValue={text} disabled={true} />,
+      render: (_: any,record: any) => {
+        const fs = Number(record.PJFS).toFixed(0);
+        return <Rate count={5} value={fs} disabled={true} />
+      },
     },
     {
       title: '操作',

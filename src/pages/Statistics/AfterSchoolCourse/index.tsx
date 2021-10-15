@@ -81,7 +81,7 @@ const AfterSchoolCourse = () => {
       key: 'TKBL',
       align: 'center',
       render: (test: any, record: any) => {
-        const num = record.TKRS != 0 ? (record.TKRS / record.BMRS) * 100 + '%' : 0;
+        const num = record.TKRS != 0 ? (record.TKRS / record.BMRS).toFixed(2) * 100 + '%' : 0;
         return num;
       },
     },

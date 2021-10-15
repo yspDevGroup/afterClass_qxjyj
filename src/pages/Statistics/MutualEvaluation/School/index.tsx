@@ -65,7 +65,9 @@ const OrderInquiry = (props: any) => {
       key: 'PJFS',
       align: 'center',
       width: 200,
-      render: (text: any) => <Rate count={5} defaultValue={text} disabled={true} />,
+      render: (_: any,record: any) => {
+        return <Rate count={5} value={record.PJFS} disabled={true} />
+      },
     },
     {
       title: '操作',
