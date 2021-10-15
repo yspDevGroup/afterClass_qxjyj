@@ -4,7 +4,6 @@ import { LeftOutlined } from '@ant-design/icons';
 import styles from '../index.less';
 
 const TopNav = (props: any) => {
-  console.log('props: ', props);
   const { title } = props;
 
 
