@@ -93,7 +93,7 @@ const Things = () => {
             imageStyle={{
               minHeight: 250
             }}
-            style={{background: '#fff', minHeight: 355}}
+            style={{ minHeight: 355 }}
             description={'暂无待办事项'} />
           }
         </TabPane>

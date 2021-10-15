@@ -76,17 +76,17 @@ useEffect(()=>{
       startDate: startTime,
       endDate: endTime
     });
-    console.log('totalRes: ', totalRes);
-    setIntervalData([
-      {
-        num: totalRes.data.sk_amount,
-        title: '收款金额（元）'
-      }, {
-        num: totalRes.data.tk_amount,
-        title: '退款金额（元）'
-      }
-    ]);
-
+    if(totalRes.status === 'ok'){
+      setIntervalData([
+        {
+          num: totalRes.data.sk_amount,
+          title: '收款金额（元）'
+        }, {
+          num: totalRes.data.tk_amount,
+          title: '退款金额（元）'
+        }
+      ]);
+    }
 
     const result = await getScreenInfo({
       ...res,

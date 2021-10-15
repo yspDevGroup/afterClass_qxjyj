@@ -1,9 +1,15 @@
 @import '../theme.less' ;
 
+
 .indexPage {
   background-color: @pageBgColor;
   min-height: 900px;
   padding-top: 36px;
+  :global {
+    .ant-empty-description{
+      color: #999;
+    }
+  }
   .pageContent {
     position: relative;
     padding: 10px;

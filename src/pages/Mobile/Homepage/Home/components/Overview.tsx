@@ -37,7 +37,7 @@ const Overview = () => {
     const {title,count,bgImg} = props;
     return (
       <Card className={styles.card} bodyStyle={{paddingTop: 8.8, paddingLeft: 8.8, minHeight: '101.7px'}}>
-        <p>{title}</p>
+        <p style={{whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>{title}</p>
         <p>{count}</p>
         <img className={styles.bgImg} src={bgImg} alt="" />
       </Card>

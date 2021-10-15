@@ -5,13 +5,12 @@ import { Bar } from '@ant-design/charts';
 import { getTerm, barConfig } from '../utils';
 import { getScreenInfo, homePage } from '@/services/after-class-qxjyj/jyjgsj';
 
-import should from '@/assets/should.png';
-import real from '@/assets/real.png';
-import leave from '@/assets/leave.png';
+import noData from '@/assets/noData.png';
 
 import styles from '../index.less';
 import ModuleTitle from '../components/ModuleTitle';
 import NumberCollect from '../components/NumberCollect';
+import { Empty } from 'antd';
 
 
 
@@ -124,7 +123,13 @@ const apply = () => {
         <ModuleTitle data='各校报名情况' showRight={true} />
         <div className={styles.chartsContainer}>
           {
-            (barConfig.data && barConfig.data?.length!==0) ? <Bar {...barConfig} /> : ''
+            (barConfig.data && barConfig.data?.length!==0) ? <Bar {...barConfig} /> : <Empty
+            image={noData}
+            imageStyle={{
+              minHeight: 250
+            }}
+            style={{minHeight: 355}}
+            description={'暂无信息'} />
           }
         </div>
       </div>

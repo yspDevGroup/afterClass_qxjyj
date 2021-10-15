@@ -3,6 +3,9 @@
   min-height: 900px;
   padding-top: 42px;
 }
+.statisticalPage :global .ant-empty-description {
+  color: #999;
+}
 .statisticalPage .topText {
   width: 100%;
   height: 20px;

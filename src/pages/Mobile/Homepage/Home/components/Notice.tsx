@@ -106,8 +106,9 @@ const Notice = () => {
             </> : <Empty
             image={noData}
             imageStyle={{
-              height: 80,
+              minHeight: 250
             }}
+            style={{background: '#999', minHeight: 355}}
             description={'暂无公告'} />
           }
 
@@ -122,8 +123,9 @@ const Notice = () => {
             </> : <Empty
               image={noData}
               imageStyle={{
-                height: 80,
+                minHeight: 250
               }}
+              style={{background: '#999', minHeight: 355}}
               description={'暂无公告'} />
           }
 

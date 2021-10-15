@@ -219,8 +219,9 @@ const attendance = () => {
              (xskqConfig.data && xskqConfig.data?.length!==0) ? <Line {...xskqConfig}></Line> : <Empty
             image={noData}
             imageStyle={{
-              height: 80,
+              minHeight: 250
             }}
+            style={{fontSize: '#999', minHeight: 355}}
             description={'暂无信息'} />
           }
         </div>
@@ -232,8 +233,9 @@ const attendance = () => {
             (jskqConfig.data && jskqConfig.data?.length!==0)? <Line {...jskqConfig}></Line> : <Empty
             image={noData}
             imageStyle={{
-              height: 80,
+              minHeight: 250
             }}
+            style={{background: '#999', minHeight: 355}}
             description={'暂无信息'} />
           }
         </div>
