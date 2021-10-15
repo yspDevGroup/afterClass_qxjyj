@@ -17,20 +17,20 @@ const NewsList = (props: { data: ListItem[]; type: ListType; operation: any }) =
           return (
             <div className={operation ? 'ui-listItemWrapper' : ''}>
               <div className={operation ? 'ui-listItemContent' : ''}>
-                <Link to={{pathname: type === 'actList' ? '/mobile/homepage/home/noticeDetails' : '/mobile/homepage', state: { allDataSource: data, index }}}>
+                <Link to={{pathname: '/mobile/homepage/home/noticeDetails', state: { allDataSource: data, index }}}>
                   <List.Item.Meta
                     title={
                       <div className={styles.TitleRow}>
                         <div className={styles.Title}>
                           {v.SFTT === 1 ? <div className={styles.Headlines}>头条</div> : <></>}
                           {
-                            type === 'actList' ? <span>{v.BT}</span> : <span>{v.KHJYJG.QYMC}</span>
+                             <span style={{fontSize: '14px', fontWeight: 'bold'}}>{v.BT}</span>
                           }
 
                         </div>
                         <div className={styles.TitleRight}>
                          {
-                            type === 'actList' ? '' : <span>{moment(v.createdAt).format('YYYY.MM.DD')}</span>
+                            <span>{moment(v.createdAt).format('YYYY.MM.DD')}</span>
                          }
                         </div>
                       </div>
@@ -40,7 +40,7 @@ const NewsList = (props: { data: ListItem[]; type: ListType; operation: any }) =
                         <div className={styles.descRow} key={`${v.title}`}>
                           <div className={styles.descleft}>
                             {
-                               type === 'actList' ? <span>{moment(v.createdAt).format('YYYY.MM.DD h:mm:ss')}</span> : <span>类型：机构准入申请</span>
+                              <span style={{fontSize: '12px'}}>{moment(v.createdAt).format('YYYY.MM.DD h:mm:ss')}</span>
                             }
                           </div>
                           <div className={styles.descright}>

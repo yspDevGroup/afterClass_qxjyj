@@ -21,12 +21,16 @@
   }
   .things{
     margin-bottom: 10px;
+    min-height: 355px;
   }
   .overview{
     margin-bottom: 20px;
     .card{
       height: '95.7px';
       padding: 0;
+      box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.1);
+      -webkit-box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.1);
+      -moz-box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.1);
       p:nth-child(1){
         color: #999999;
         font-size: 12px;
@@ -54,6 +58,12 @@
       .ant-tabs-top > div > .ant-tabs-nav::before,
       .ant-tabs-bottom > div > .ant-tabs-nav::before {
         border-bottom: 0;
+      }
+      .ant-tabs-tab .ant-tabs-tab-btn{
+        font-size: 16px;
+      }
+      .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+        font-weight: bold;
       }
       .ant-btn-primary{
         border: 0;

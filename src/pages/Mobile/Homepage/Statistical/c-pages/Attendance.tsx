@@ -33,8 +33,8 @@ const attendance = () => {
       title: '实际出勤教师'
     }
   ]});
-  const [startTime, setStartTime] = useState<any>("2021-10-01");
-  const [endTime, setEndTime] = useState<any>("2021-10-01");
+  const [startTime, setStartTime] = useState<any>(moment().subtract(30, "days").format("YYYY-MM-DD"));
+  const [endTime, setEndTime] = useState<any>(moment().format("YYYY-MM-DD"));
   const [xskqConfig, setXskqConfig] = useState<any>({...studentConfig});
   const [jskqConfig, setJskqConfig] = useState<any>({...teacherConfig});
 
@@ -68,7 +68,6 @@ const attendance = () => {
           );
         })
         setJskqConfig({...jskqConfig, data: [...newData]});
-        console.log('teacherConfig.data: ', teacherConfig.data);
         newData = [];
         attenRes.data.xscq.forEach((item: any)=>{
           newData.push(
@@ -204,11 +203,11 @@ const attendance = () => {
           <Row>
             <ConfigProvider locale={locale}>
               <Col span={11}>
-                <DatePicker placeholder='请选择开始日期' onChange={handleStartTime} format="YYYY-MM-DD"/>
+                <DatePicker placeholder='请选择开始日期' defaultValue={moment(moment().subtract(30, "days"), 'YYYY-MM-DD')} onChange={handleStartTime} format="YYYY-MM-DD"/>
               </Col>
               <Col span={2}>-</Col>
               <Col span={11}>
-                <DatePicker placeholder='请选择结束日期' onChange={handleEndTime} format="YYYY-MM-DD"/>
+                <DatePicker placeholder='请选择结束日期' defaultValue={moment(moment(), 'YYYY-MM-DD')} onChange={handleEndTime} format="YYYY-MM-DD"/>
               </Col>
             </ConfigProvider>
           </Row>
@@ -217,7 +216,7 @@ const attendance = () => {
         学生考勤
         <div className={styles.chartsContainer}>
           {
-            xskqConfig.data?.length ? <Line {...xskqConfig}></Line> : <Empty
+             (xskqConfig.data && xskqConfig.data?.length!==0) ? <Line {...xskqConfig}></Line> : <Empty
             image={noData}
             imageStyle={{
               height: 80,
@@ -230,7 +229,7 @@ const attendance = () => {
         教师考勤
         <div className={styles.chartsContainer}>
           {
-            jskqConfig.data?.length ? <Line {...jskqConfig}></Line> : <Empty
+            (jskqConfig.data && jskqConfig.data?.length!==0)? <Line {...jskqConfig}></Line> : <Empty
             image={noData}
             imageStyle={{
               height: 80,

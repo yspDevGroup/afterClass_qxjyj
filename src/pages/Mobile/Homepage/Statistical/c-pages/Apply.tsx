@@ -124,7 +124,7 @@ const apply = () => {
         <ModuleTitle data='各校报名情况' showRight={true} />
         <div className={styles.chartsContainer}>
           {
-            barConfig.data ? <Bar {...barConfig} /> : ''
+            (barConfig.data && barConfig.data?.length!==0) ? <Bar {...barConfig} /> : ''
           }
         </div>
       </div>

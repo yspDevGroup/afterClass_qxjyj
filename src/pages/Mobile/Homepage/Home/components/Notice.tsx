@@ -46,7 +46,7 @@ const Notice = () => {
         //通知公告
         const resgetXXTZGG = await getJYJGTZGG({
           BT: '',
-          ZT: ['已发布', '草稿'],
+          ZT: ['已发布'],
           LX: 0,
           page: 0,
           pageSize: 0
@@ -59,30 +59,30 @@ const Notice = () => {
             noDataText: '暂无待办',
             noDataImg: noData,
           };
-          setTZGGData(newData);
+          setZCGGData(newData);
           newData.list = resgetXXTZGG.data?.rows || [];
-          setAllTZDataSource(newData)
+          setAllZCDataSource(newData)
         }
 
         //政策公告
         const resgetXXZCGG = await getJYJGTZGG({
           BT: '',
           LX: 1,
-          ZT: ['已发布', '草稿'],
+          ZT: ['已发布'],
           page: 0,
           pageSize: 0
         });
         if (resgetXXZCGG.status === 'ok') {
           let newData = {
-            type: 'actList',
-            cls: 'actList',
+            type: 'azeList',
+            cls: 'azeList',
             list: resgetXXZCGG.data?.rows?.slice(0, 3) || [],
             noDataText: '暂无待办',
             noDataImg: noData,
           };
-          setZCGGData(newData);
+          setTZGGData(newData);
           newData.list = resgetXXZCGG.data?.rows || [];
-          setAllZCDataSource(newData);
+          setAllTZDataSource(newData);
         }
       }
     }
@@ -98,9 +98,9 @@ const Notice = () => {
       >
         <TabPane tab="政策公告" key="policy">
           {
-            dataTZGG?.length ?  <>
+            dataTZGG ?  <>
               <ListComp listData={dataTZGG} />
-              <Link to={{ pathname: '/mobile/homepage/home/allNotice', state: { allDataSource: allTZDataSource } }}>
+              <Link to={{ pathname: '/mobile/homepage/home/allNotice', state: { allDataSource: allTZDataSource , type: 'zc'} }}>
                 <Col span={12} offset={8}><Button type="primary" onClick={() => enterLoading(1)} className={styles.moreBtn} loading={loadings[1]} ghost={true} icon={<ArrowDownOutlined />}>查看更多</Button></Col>
               </Link>
             </> : <Empty
@@ -114,9 +114,9 @@ const Notice = () => {
         </TabPane>
         <TabPane tab="通知公告" key="notify">
           {
-            dataZCGG?.legth ? <>
+            dataZCGG ? <>
               <ListComp listData={dataZCGG} />
-              <Link to={{ pathname: '/mobile/homepage/home/allNotice', state: { allDataSource: allZCDataSource } }}>
+              <Link to={{ pathname: '/mobile/homepage/home/allNotice', state: { allDataSource: allZCDataSource , type: 'tz' } }}>
                 <Col span={12} offset={8}><Button type="primary" onClick={() => enterLoading(2)} className={styles.moreBtn} loading={loadings[2]} ghost={true} icon={<ArrowDownOutlined />}>查看更多</Button></Col>
               </Link>
             </> : <Empty

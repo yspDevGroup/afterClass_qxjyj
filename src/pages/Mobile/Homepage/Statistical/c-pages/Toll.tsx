@@ -21,16 +21,17 @@ import NumberCollect from '../components/NumberCollect';
 const Toll = () => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
+  const [startTime, setStartTime] = useState<any>(moment().subtract(30, "days").format("YYYY-MM-DD"));
+  const [endTime, setEndTime] = useState<any>(moment().format("YYYY-MM-DD"));
   const [currentData, setCurrentData] = useState<any>([
     {
-      title: '收款金额（元',
+      title: '收款金额（元）',
       num: '--'
     },
     {
       title: '退款金额（元）',
       num: '--'
     }]);
-  const [startTime, setStartTime] = useState<any>();
   const [intervalData, setIntervalData] = useState<any>([
     {
       num: '--',
@@ -45,21 +46,14 @@ const handleStartTime = (date: any) => {
   setStartTime(moment(date).format('YYYY-MM-DD'));
 }
 const handleEndTime = async (date: any) => {
-  const totalRes = await getTotalCost({
-    XZQHM: currentUser?.XZQHM,
-    startDate: startTime,
-    endDate: moment(date).format('YYYY-MM-DD')
-  });
-  setIntervalData([
-    {
-      num: totalRes.data.sk_amount,
-      title: '收款金额（元）'
-    }, {
-      num: totalRes.data.tk_amount,
-      title: '退款金额（元）'
-    }
-  ]);
+  setEndTime(moment(date).format('YYYY-MM-DD'));
 }
+
+useEffect(()=>{
+    const res = getTerm();
+  console.log('res: ', res);
+    getData(res);
+},[endTime])
 
 
 
@@ -76,6 +70,22 @@ const handleEndTime = async (date: any) => {
       agentNum: [],
       trendNum: [],
     };
+
+    const totalRes = await getTotalCost({
+      XZQHM: currentUser?.XZQHM,
+      startDate: startTime,
+      endDate: endTime
+    });
+    console.log('totalRes: ', totalRes);
+    setIntervalData([
+      {
+        num: totalRes.data.sk_amount,
+        title: '收款金额（元）'
+      }, {
+        num: totalRes.data.tk_amount,
+        title: '退款金额（元）'
+      }
+    ]);
 
 
     const result = await getScreenInfo({
@@ -186,10 +196,10 @@ const handleEndTime = async (date: any) => {
         <NumberCollect data={currentData} col={currentData?.length} />
       </div>
       <div className={styles.container} style={{ height: '374px' }}>
-        <ModuleTitle data='收退款趋势' />
+        <ModuleTitle data='各校收退款情况' />
         <div className={styles.chartsContainer}>
           {
-            barConfig.data?.length ? <Bar {...barConfig} /> : <Empty
+            (barConfig.data && barConfig.data?.length!==0) ? <Bar {...barConfig} /> : <Empty
             image={noData}
             imageStyle={{
               height: 80,
@@ -204,11 +214,11 @@ const handleEndTime = async (date: any) => {
           <Row>
             <ConfigProvider locale={locale}>
               <Col span={11}>
-                <DatePicker placeholder='请选择开始日期' onChange={handleStartTime} format="YYYY-MM-DD"/>
+                <DatePicker placeholder='请选择开始日期' defaultValue={moment(moment().subtract(30, "days"), 'YYYY-MM-DD')} onChange={handleStartTime} format="YYYY-MM-DD"/>
               </Col>
               <Col span={2}>-</Col>
               <Col span={11}>
-                <DatePicker placeholder='请选择结束日期' onChange={handleEndTime} format="YYYY-MM-DD"/>
+                <DatePicker placeholder='请选择结束日期' defaultValue={moment(moment(), 'YYYY-MM-DD')} onChange={handleEndTime} format="YYYY-MM-DD"/>
               </Col>
             </ConfigProvider>
           </Row>

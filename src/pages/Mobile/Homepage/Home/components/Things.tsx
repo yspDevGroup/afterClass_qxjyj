@@ -91,8 +91,9 @@ const Things = () => {
             dataSource?.length ? <ListComp listData={dataSource} /> :<Empty
             image={noData}
             imageStyle={{
-              height: 80,
+              minHeight: 250
             }}
+            style={{background: '#fff', minHeight: 355}}
             description={'暂无待办事项'} />
           }
         </TabPane>

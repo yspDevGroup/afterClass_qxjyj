@@ -32,12 +32,13 @@
   line-height: 22px;
 }
 .statisticalPage .theTabs :global .ant-tabs-nav .ant-tabs-tab-active {
-  border-bottom-color: #dde2e8;
+  border-color: rgba(0, 102, 255, 0);
   background: rgba(0, 102, 255, 0.2);
   color: #0066FF;
 }
 .statisticalPage .moduleTitle {
   font-size: 16px;
+  font-weight: bold;
   line-height: 22px;
   text-align: left;
 }

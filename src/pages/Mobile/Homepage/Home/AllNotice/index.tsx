@@ -3,9 +3,10 @@ import ListComp from '../components/ListComponent';
 import styles from '../index.less';
 import { history } from 'umi';
 import { LeftOutlined } from '@ant-design/icons';
+import { JYJGTZGG } from '@/services/after-class-qxjyj/jyjgtzgg';
 
 const AllNotice = (props: any) => {
-const { allDataSource } = props.location.state
+const { allDataSource , type } = props.location.state
 
   return (
     <div className={styles.allNotice}>

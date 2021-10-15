@@ -5,9 +5,7 @@ import { Pie, Bar } from '@ant-design/charts';
 import { getTerm, pieConfig, barConfig, proportionConfig} from '../utils';
 import { getScreenInfo, homePage } from '@/services/after-class-qxjyj/jyjgsj';
 
-import should from '@/assets/should.png';
-import real from '@/assets/real.png';
-import leave from '@/assets/leave.png';
+import noData from '@/assets/noData.png';
 
 import styles from '../index.less';
 import ModuleTitle from '../components/ModuleTitle';
@@ -104,20 +102,34 @@ const course = () => {
     <div className={styles.container} style={{height: '282px'}}>
       <ModuleTitle data='课程类型分布'/>
       <div className={styles.chartsContainer}>
-       <Pie {...pieConfig} />
+      {
+          (pieConfig.data && pieConfig.data?.length!==0) ? <Pie {...pieConfig} /> : <Empty
+          image={noData}
+          imageStyle={{
+            height: 80,
+          }}
+          description={'暂无信息'} />
+        }
       </div>
     </div>
     <div className={styles.container} style={{height: '355px'}}>
       <ModuleTitle data='学校、机构课程对比'/>
       <div className={styles.chartsContainer}>
-       <Pie {...proportionConfig} />
+      {
+          (proportionConfig.data && proportionConfig.data?.length!==0) ? <Pie {...proportionConfig} /> : <Empty
+          image={noData}
+          imageStyle={{
+            height: 80,
+          }}
+          description={'暂无信息'} />
+        }
       </div>
     </div>
     <div className={styles.container} style={{height: '413px'}}>
       <ModuleTitle data='各校课程数' showRight={false}/>
       <div className={styles.chartsContainer}>
         {
-          barConfig.data ? <Bar {...barConfig} /> : <Empty
+          (barConfig.data && barConfig.data?.length!==0) ? <Bar {...barConfig} /> : <Empty
           image={noData}
           imageStyle={{
             height: 80,
