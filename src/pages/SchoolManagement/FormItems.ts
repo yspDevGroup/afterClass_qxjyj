@@ -99,7 +99,6 @@ export const basicForm: FormItemType[] = [
     type: 'group',
     key: 'group8',
     groupItems: [
-      {},
       {
         type: 'textArea',
         label: '学校简介',

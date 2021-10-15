@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Rate, Button, Input, Select, message } from 'antd';
 import { Link } from 'umi';
 import ProTable, { ProColumns } from '@ant-design/pro-table';
-import { LeftOutlined, } from '@ant-design/icons';
+import { LeftOutlined } from '@ant-design/icons';
 import { getClassesEvaluation } from '@/services/after-class-qxjyj/khbjsj';
 import styles from '../index.less';
 import { getAllXNXQ } from '@/services/after-class-qxjyj/xnxq';
@@ -32,7 +32,7 @@ const Class = (props: any) => {
       key: 'BJMC',
       width: 180,
       ellipsis: true,
-      align: 'center',
+      align: 'center'
     },
     {
       title: '主班',
@@ -42,7 +42,7 @@ const Class = (props: any) => {
       align: 'center',
       render: (_, record) => {
         return record?.KHBJJs.map((item: any) => {
-          return <div>{item?.JZGJBSJ?.XM}</div>;
+          return <div key={item.id}>{item?.JZGJBSJ?.XM}</div>;
         });
       }
     },
@@ -51,14 +51,14 @@ const Class = (props: any) => {
       dataIndex: 'pj_count',
       key: ' pj_count',
       align: 'center',
-      width: 150,
+      width: 150
     },
     {
       title: '课程班人数',
       dataIndex: 'pj_count',
       key: 'pj_count ',
       align: 'center',
-      width: 150,
+      width: 150
     },
     {
       title: '课程班评分',
@@ -66,7 +66,7 @@ const Class = (props: any) => {
       key: 'pj_avg',
       align: 'center',
       width: 200,
-      render: (text: any) => <Rate count={5} defaultValue={text} disabled={true} />,
+      render: (text: any) => <Rate count={5} defaultValue={text} disabled={true} />
     },
     {
       title: '操作',
@@ -84,20 +84,20 @@ const Class = (props: any) => {
                 data: {
                   ...record,
                   XNXQId: term
-                },
-              },
+                }
+              }
             }}
           >
             详情
           </Link>
         </>
-      ),
-    },
+      )
+    }
   ];
   const getCourseList = async (kcdm: string, xnxq?: string) => {
     const res = await getClassesEvaluation({
       XNXQId: xnxq,
-      KHKCSJId: kcdm,
+      KHKCSJId: kcdm
     });
     if (res?.status === 'ok') {
       setDataSource(res?.data?.rows);
@@ -105,7 +105,7 @@ const Class = (props: any) => {
   };
   const getXNXQ = async (xxdm: string) => {
     const res = await getAllXNXQ({
-      XXJBSJId: xxdm,
+      XXJBSJId: xxdm
     });
     if (res?.status === 'ok') {
       const { data = [] } = res;
@@ -125,7 +125,7 @@ const Class = (props: any) => {
   };
   useEffect(() => {
     getXNXQ(XXJBSJId);
-  }, [])
+  }, []);
   return (
     <>
       <Button
@@ -134,7 +134,7 @@ const Class = (props: any) => {
           history.go(-1);
         }}
         style={{
-          marginBottom: '24px',
+          marginBottom: '24px'
         }}
       >
         <LeftOutlined />
@@ -159,7 +159,11 @@ const Class = (props: any) => {
             }}
           >
             {termList?.map((item: any) => {
-              return <Option key={item.value} value={item.value}>{item.text}</Option>;
+              return (
+                <Option key={item.value} value={item.value}>
+                  {item.text}
+                </Option>
+              );
             })}
           </Select>
         </span>
@@ -174,11 +178,11 @@ const Class = (props: any) => {
           setting: false,
           fullScreen: false,
           density: false,
-          reload: false,
+          reload: false
         }}
       />
     </>
-  )
-}
+  );
+};
 Class.wrappers = ['@/wrappers/auth'];
 export default Class;
