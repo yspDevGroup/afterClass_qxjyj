@@ -17,15 +17,26 @@ const StateTab = (props: any) => {
       dataIndex: 'index',
       valueType: 'index',
       align: 'center',
-      width: 60,
+      width: 60
     },
     {
       title: '学生姓名',
       dataIndex: 'XSXM',
       key: 'XSXM',
       align: 'center',
-      render: (text: any, record: any)=>{
-        return record?.XSJBSJ?.XM
+      render: (text: any, record: any) => {
+        return record?.XSJBSJ?.XM;
+      }
+    },
+    {
+      title: '行政班名称',
+      dataIndex: 'XZBJSJ',
+      key: 'XZBJSJ',
+      align: 'center',
+      width: 100,
+      ellipsis: true,
+      render: (_text: any, record: any) => {
+        return `${record?.XSJBSJ?.BJSJ?.NJSJ?.NJMC}${record?.XSJBSJ?.BJSJ?.BJ}`;
       }
     },
     {
@@ -35,32 +46,32 @@ const StateTab = (props: any) => {
       align: 'center',
       render: (text: any) => {
         return <div>{text?.FWMC}</div>;
-      },
+      }
     },
     {
       title: '下单时间',
       dataIndex: 'XDSJ',
       key: 'XDSJ',
-      align: 'center',
+      align: 'center'
     },
     {
       title: '付款时间',
       dataIndex: 'ZFSJ',
       key: 'ZFSJ',
-      align: 'center',
+      align: 'center'
     },
     {
       title: '订单费用(元)',
       dataIndex: 'DDFY',
       key: 'DDFY',
-      align: 'center',
+      align: 'center'
     },
     {
       title: '订单状态',
       dataIndex: 'DDZT',
       key: 'DDZT',
-      align: 'center',
-    },
+      align: 'center'
+    }
   ];
   const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);
   useEffect(() => {

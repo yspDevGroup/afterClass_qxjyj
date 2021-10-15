@@ -46,7 +46,7 @@ const ClassInfo = (props: any) => {
         BJMC: state?.BJMC,
         KCMS: state?.KCMS || '',
         njIds: state?.NJSJs?.map((item: any) => (item.XD === '初中' ? item?.NJMC : `${item.XD}${item?.NJMC}`)) || '',
-        jsIds: state?.KHKCJs?.map((item: any) => item?.KHJSSJ?.XM) || '',
+        jsIds: state?.KHKCJs?.map((item: any) => item?.JZGJBSJ?.XM) || '',
         SSXQ: `${state?.XNXQ.XN}${state?.XNXQ.XQ}`,
         BMRS: `${state?.KHXSBJs.length} / ${state?.BJRS}`,
         SKSD: `${state?.KKRQ} - ${state?.JKRQ}`,
@@ -170,15 +170,6 @@ const ClassInfo = (props: any) => {
       align: 'center',
       render: (text: any, record: any) => {
         return record.JZGJBSJ?.XM;
-      }
-    },
-    {
-      title: '性别',
-      dataIndex: 'XB',
-      key: 'XB',
-      align: 'center',
-      render: (text: any, record: any) => {
-        return record.JZGJBSJ?.XBM === '女性' ? '女' : '男';
       }
     },
     {

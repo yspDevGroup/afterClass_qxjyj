@@ -35,7 +35,7 @@ const CourseInfo = (props: any) => {
         KCMC: state?.KCMC || '',
         KCMS: state?.KCMS || '',
         njIds: state?.NJSJs?.map((item: any) => (item.XD === '初中' ? item?.NJMC : `${item.XD}${item?.NJMC}`)) || '',
-        jsIds: state?.KHKCJs?.map((item: any) => item?.KHJSSJ?.XM) || '',
+        jsIds: state?.KHKCJs?.map((item: any) => item?.JZGJBSJ?.XM) || '',
         KCTP: state?.KCTP || '',
         KHKCLX: state?.KHKCLX?.KCTAG || ''
       };
@@ -118,25 +118,28 @@ const CourseInfo = (props: any) => {
       title: '姓名',
       dataIndex: 'XM',
       key: 'XM',
-      align: 'center'
-    },
-    {
-      title: '性别',
-      dataIndex: 'XB',
-      key: 'XB',
-      align: 'center'
+      align: 'center',
+      render: (text: any, record: any) => {
+        return record.JZGJBSJ?.XM;
+      }
     },
     {
       title: '联系电话',
       dataIndex: 'LXDH',
       key: 'LXDH',
-      align: 'center'
+      align: 'center',
+      render: (text: any, record: any) => {
+        return record?.JZGJBSJ?.LXDH;
+      }
     },
     {
       title: '邮箱',
       dataIndex: 'DZXX',
       key: 'DZXX',
-      align: 'center'
+      align: 'center',
+      render: (text: any, record: any) => {
+        return record?.JZGJBSJ?.DZXX;
+      }
     },
     {
       title: '操作',
@@ -144,14 +147,14 @@ const CourseInfo = (props: any) => {
       valueType: 'option',
       align: 'center',
       width: 200,
-      render: (text: any, record: { value: any }) => {
+      render: (text: any, record: any) => {
         return (
           <div className={styles.operation}>
             <Link
               key="xq"
               to={{
                 pathname: '/schoolManagement/courseList/teacherInfo',
-                state: record
+                state: record?.JZGJBSJ
               }}
             >
               详情
@@ -178,13 +181,17 @@ const CourseInfo = (props: any) => {
       <div className={styles.content}>
         <div style={{ width: '85%', minWidth: '850px', margin: '0 auto' }} className={styles.formType}>
           <CustomForm values={formValues || {}} formItems={basicForm} formLayout={formItemLayout} hideBtn={true} />
-          {state.SSJGLX === '机构课程' ? <Table
-            title={() => '任课教师列表'}
-            columns={columns}
-            dataSource={teacherData}
-            pagination={false}
-            size="small"
-          /> : ''}
+          {state.SSJGLX === '机构课程' ? (
+            <Table
+              title={() => '任课教师列表'}
+              columns={columns}
+              dataSource={teacherData}
+              pagination={false}
+              size="small"
+            />
+          ) : (
+            ''
+          )}
         </div>
       </div>
     </>

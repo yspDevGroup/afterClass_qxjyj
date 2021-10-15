@@ -59,7 +59,18 @@ const ReimbursementClass = () => {
       key: 'XSXM',
       align: 'center',
       render: (text: any, record: any) => {
-        return record?.XSJBSJ?.XM
+        return record?.XSJBSJ?.XM;
+      }
+    },
+    {
+      title: '行政班名称',
+      dataIndex: 'XZBJSJ',
+      key: 'XZBJSJ',
+      align: 'center',
+      width: 100,
+      ellipsis: true,
+      render: (_text: any, record: any) => {
+        return `${record?.XSJBSJ?.BJSJ?.NJSJ?.NJMC}${record?.XSJBSJ?.BJSJ?.BJ}`;
       }
     },
     {

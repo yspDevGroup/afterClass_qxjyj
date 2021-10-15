@@ -55,17 +55,6 @@ const LeaveManagement = () => {
       render: (text: any, record: any) => record.KHQJKCs?.[0].KHBJSJ.XQSJ.XXJBSJ.XXMC
     },
     {
-      title: '学生姓名',
-      dataIndex: 'XSXM',
-      key: 'XSXM',
-      align: 'center',
-      width: 80,
-      render: (text: any, record: any) => {
-        return record?.XSJBSJ?.XM
-      },
-      ellipsis: true
-    },
-    {
       title: '课程名称',
       dataIndex: 'KHQJKCs',
       key: 'KHQJKCs',
@@ -93,7 +82,7 @@ const LeaveManagement = () => {
       key: 'QJYY',
       align: 'center',
       ellipsis: true,
-      width: 120,
+      width: 120
     },
     {
       title: '请假状态',

@@ -26,12 +26,23 @@ const StateTab = (props: any) => {
       key: 'XSXM',
       align: 'center',
       search: false,
-      render: (text: any, record: any)=>{
-        return record?.XSJBSJ?.XM
+      render: (text: any, record: any) => {
+        return record?.XSJBSJ?.XM;
       }
     },
     {
-      title: '课程班',
+      title: '行政班名称',
+      dataIndex: 'XZBJSJ',
+      key: 'XZBJSJ',
+      align: 'center',
+      width: 100,
+      ellipsis: true,
+      render: (_text: any, record: any) => {
+        return `${record?.XSJBSJ?.BJSJ?.NJSJ?.NJMC}${record?.XSJBSJ?.BJSJ?.BJ}`;
+      }
+    },
+    {
+      title: '课程班名称',
       dataIndex: 'BJMC',
       key: 'BJMC',
       align: 'center',
@@ -83,7 +94,7 @@ const StateTab = (props: any) => {
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     (async () => {
-      const res = await getOrders({ XZQHM: currentUser?.XZQHM, DDZT,DDLX:0, XXJBSJId: id });
+      const res = await getOrders({ XZQHM: currentUser?.XZQHM, DDZT, DDLX: 0, XXJBSJId: id });
       setDataSource(res.data.rows);
     })();
   }, []);

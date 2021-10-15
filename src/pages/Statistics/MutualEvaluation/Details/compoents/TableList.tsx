@@ -24,14 +24,14 @@ const TabList = (props: any) => {
       dataIndex: 'PJR',
       key: 'PJR',
       align: 'center',
-      width: 150,
+      width: 150
     },
     {
       title: '评价时间',
       dataIndex: 'createdAt',
       key: 'createdAt',
       align: 'center',
-      width: 200,
+      width: 200
     },
     {
       title: '课程评分',
@@ -39,7 +39,7 @@ const TabList = (props: any) => {
       key: 'PJFS',
       align: 'center',
       width: 200,
-      render: (_, record) => <Rate count={5} defaultValue={record?.PJFS} disabled={true} />,
+      render: (_, record) => <Rate count={5} defaultValue={record?.PJFS} disabled={true} />
     },
     {
       title: '评价内容',
@@ -48,7 +48,7 @@ const TabList = (props: any) => {
       align: 'center',
       width: 240,
       ellipsis: true
-    },
+    }
   ];
 
   const student: ProColumns<any>[] = [
@@ -65,17 +65,28 @@ const TabList = (props: any) => {
       key: 'XSXM',
       align: 'center',
       render: (text: any, record: any) => {
-        return record?.XSJBSJ?.XM
-      },
+        return record?.XSJBSJ?.XM;
+      }
     },
     {
-      title: '课程班',
+      title: '行政班名称',
+      dataIndex: 'XZBJSJ',
+      key: 'XZBJSJ',
+      align: 'center',
+      width: 100,
+      ellipsis: true,
+      render: (_text: any, record: any) => {
+        return `${record?.XSJBSJ?.BJSJ?.NJSJ?.NJMC}${record?.XSJBSJ?.BJSJ?.BJ}`;
+      }
+    },
+    {
+      title: '课程班名称',
       dataIndex: 'BJMC',
       key: 'BJMC',
       align: 'center',
       render: () => {
         return <span>{ListState.BJMC}</span>;
-      },
+      }
     },
     {
       title: '评价教师',
@@ -83,16 +94,16 @@ const TabList = (props: any) => {
       key: 'JZGJBSJ',
       align: 'center',
       width: 200,
-      render: (_,record) => {
+      render: (_, record) => {
         return <span>{record?.JZGJBSJ?.XM}</span>;
-      },
+      }
     },
     {
       title: '评价时间',
       dataIndex: 'createdAt',
       key: 'createdAt',
       align: 'center',
-      width: 200,
+      width: 200
     },
     {
       title: '课程评分',
@@ -100,7 +111,7 @@ const TabList = (props: any) => {
       key: 'PJFS',
       align: 'center',
       width: 200,
-      render: (_, record) => <Rate count={5} defaultValue={record?.PJFS} disabled={true} />,
+      render: (_, record) => <Rate count={5} defaultValue={record?.PJFS} disabled={true} />
     },
     {
       title: '该学生课堂表现',
@@ -111,15 +122,15 @@ const TabList = (props: any) => {
         return (
           <a
             onClick={() => {
-              setDetailsValue(text)
-              setIsModalVisible(true)
+              setDetailsValue(text);
+              setIsModalVisible(true);
             }}
           >
             课堂表现
           </a>
         );
-      },
-    },
+      }
+    }
   ];
   // 弹出框显示隐藏
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -133,16 +144,16 @@ const TabList = (props: any) => {
       (async () => {
         const res2 = await getAllKHXSPJ({
           KHBJSJId: ListState.id,
-          XNXQId:ListState?.XNXQId,
+          XNXQId: ListState?.XNXQId,
           JSId: '',
           page: 0,
-          pageSize: 0,
+          pageSize: 0
         });
         if (res2.status === 'ok') {
           // 老师给学生的评语
-          setStuList(res2.data?.rows)
+          setStuList(res2.data?.rows);
         }
-      })()
+      })();
     } else {
       (async () => {
         const res = await getKHBJPJ({
@@ -150,12 +161,12 @@ const TabList = (props: any) => {
           KHBJSJId: ListState.id,
           XSJBSJId: '',
           XXJBSJId: '',
-          XNXQId:ListState?.XNXQId,
+          XNXQId: ListState?.XNXQId,
           page: 0,
-          pageSize: 0,
+          pageSize: 0
         });
         if (res?.data?.rows) {
-          //家长给老师的评价
+          // 家长给老师的评价
           setTeacherList(res.data.rows);
         }
       })();
@@ -172,16 +183,14 @@ const TabList = (props: any) => {
           setting: false,
           fullScreen: false,
           density: false,
-          reload: false,
+          reload: false
         }}
       />
-      <Modal visible={isModalVisible} onCancel={handleCancel} title='表现详情'
-        footer={null}
-      >
+      <Modal visible={isModalVisible} onCancel={handleCancel} title="表现详情" footer={null}>
         <span>{DetailsValue}</span>
       </Modal>
     </div>
-  )
-}
+  );
+};
 
 export default TabList;

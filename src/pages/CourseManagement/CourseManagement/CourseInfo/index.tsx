@@ -41,7 +41,7 @@ const CourseInfo = (props: any) => {
         KCMC: state?.KCMC || '',
         KCMS: state?.KCMS || '',
         njIds: state?.NJSJs?.map((item: any) => (item.XD === '初中' ? item?.NJMC : `${item.XD}${item?.NJMC}`)) || '',
-        jsIds: state?.KHKCJs?.map((item: any) => item?.KHJSSJ?.XM) || '',
+        jsIds: state?.KHKCJs?.map((item: any) => item?.JZGJBSJ?.XM) || '',
         KCTP: state?.KCTP || '',
         KHKCLX: state?.KHKCLX?.KCTAG || ''
       };
@@ -141,19 +141,28 @@ const CourseInfo = (props: any) => {
       title: '姓名',
       dataIndex: 'XM',
       key: 'XM',
-      align: 'center'
+      align: 'center',
+      render: (text: any, record: any) => {
+        return record.JZGJBSJ?.XM;
+      }
     },
     {
       title: '联系电话',
       dataIndex: 'LXDH',
       key: 'LXDH',
-      align: 'center'
+      align: 'center',
+      render: (text: any, record: any) => {
+        return record?.JZGJBSJ?.LXDH;
+      }
     },
     {
       title: '邮箱',
       dataIndex: 'DZXX',
       key: 'DZXX',
-      align: 'center'
+      align: 'center',
+      render: (text: any, record: any) => {
+        return record?.JZGJBSJ?.DZXX;
+      }
     },
     {
       title: '操作',
@@ -168,7 +177,7 @@ const CourseInfo = (props: any) => {
                 pathname: `/courseManagement/courseManagement/courseInfo/teacherInfo`,
                 state: {
                   type: 'detail',
-                  data: record
+                  data: record?.JZGJBSJ
                 }
               });
             }}
@@ -179,6 +188,7 @@ const CourseInfo = (props: any) => {
       }
     }
   ];
+
   return (
     <>
       <Button
