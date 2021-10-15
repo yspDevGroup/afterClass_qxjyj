@@ -99,6 +99,9 @@ export const barConfig: any = {
   legend: {
     position: 'bottom',
   },
+  items:{
+    min: 0.000001
+  },
   label: {
     position: 'middle',
     layout: [

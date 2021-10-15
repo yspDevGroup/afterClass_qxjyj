@@ -98,7 +98,7 @@ const course = () => {
   }, []);
 
   return (
-  <div className={styles.toll}>
+  <div className={styles.course}>
     <div className={styles.container} style={{height: '282px'}}>
       <ModuleTitle data='课程类型分布'/>
       <div className={styles.chartsContainer}>
@@ -106,9 +106,10 @@ const course = () => {
           (pieConfig.data && pieConfig.data?.length!==0) ? <Pie {...pieConfig} /> : <Empty
           image={noData}
           imageStyle={{
-            height: 80,
+            minHeight: 150
           }}
-          description={'暂无信息'} />
+          style={{minHeight: '282px'}}
+          description={'暂无课程类型信息'} />
         }
       </div>
     </div>
@@ -119,9 +120,10 @@ const course = () => {
           (proportionConfig.data && proportionConfig.data?.length!==0) ? <Pie {...proportionConfig} /> : <Empty
           image={noData}
           imageStyle={{
-            height: 80,
+            minHeight: 200
           }}
-          description={'暂无信息'} />
+          style={{minHeight: 355}}
+          description={'暂无课程对比信息'} />
         }
       </div>
     </div>
@@ -132,9 +134,10 @@ const course = () => {
           (barConfig.data && barConfig.data?.length!==0) ? <Bar {...barConfig} /> : <Empty
           image={noData}
           imageStyle={{
-            height: 80,
+            minHeight: 230
           }}
-          description={'暂无信息'} />
+          style={{minHeight: 355}}
+          description={'暂无课程数信息'} />
         }
       </div>
     </div>

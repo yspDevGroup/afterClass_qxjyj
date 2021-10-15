@@ -116,20 +116,20 @@ const apply = () => {
   return (
     <div className={styles.apply}>
       <div className={styles.container} style={{ height: '136px' }}>
-        <ModuleTitle data='报名统计' />
+        <ModuleTitle data='报名统计' showRight={false}/>
         <NumberCollect data={currentData?.applyNum} col={currentData?.applyNum.length} />
       </div>
       <div className={styles.container} style={{ height: '482px' }}>
-        <ModuleTitle data='各校报名情况' showRight={true} />
+        <ModuleTitle data='各校报名情况' showRight={false} />
         <div className={styles.chartsContainer}>
           {
             (barConfig.data && barConfig.data?.length!==0) ? <Bar {...barConfig} /> : <Empty
             image={noData}
             imageStyle={{
-              minHeight: 250
+              minHeight: 230
             }}
             style={{minHeight: 355}}
-            description={'暂无信息'} />
+            description={'暂无报名信息'} />
           }
         </div>
       </div>

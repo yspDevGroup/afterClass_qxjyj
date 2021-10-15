@@ -202,14 +202,15 @@ useEffect(()=>{
             (barConfig.data && barConfig.data?.length!==0) ? <Bar {...barConfig} /> : <Empty
             image={noData}
             imageStyle={{
-              height: 80,
+              minHeight: 200
             }}
-            description={'暂无信息'} />
+            style={{minHeight: 355}}
+            description={'暂无收退款信息'} />
           }
         </div>
       </div>
       <div className={styles.container} style={{ height: '192px' }}>
-        <ModuleTitle data='收费统计查询' showRight={true} />
+        <ModuleTitle data='收费统计查询' showRight={false} />
         <Space direction="vertical" style={{marginTop: '20px'}} size={12}>
           <Row>
             <ConfigProvider locale={locale}>

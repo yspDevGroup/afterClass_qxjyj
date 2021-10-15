@@ -191,7 +191,7 @@ const attendance = () => {
   }, []);
 
   return (
-  <div className={styles.toll}>
+  <div className={styles.attendance}>
     <div className={styles.container} style={{height: '216px'}}>
       <ModuleTitle data='考勤统计'/>
       <NumberCollect data={currentData?.checkOut} col={currentData?.checkOut.length > 3 ? 2 : currentData?.checkOut.length}/>
@@ -219,10 +219,10 @@ const attendance = () => {
              (xskqConfig.data && xskqConfig.data?.length!==0) ? <Line {...xskqConfig}></Line> : <Empty
             image={noData}
             imageStyle={{
-              minHeight: 250
+              minHeight: 160
             }}
-            style={{fontSize: '#999', minHeight: 355}}
-            description={'暂无信息'} />
+            style={{minHeight: 355}}
+            description={'暂无学生考勤信息'} />
           }
         </div>
       </div>
@@ -233,10 +233,10 @@ const attendance = () => {
             (jskqConfig.data && jskqConfig.data?.length!==0)? <Line {...jskqConfig}></Line> : <Empty
             image={noData}
             imageStyle={{
-              minHeight: 250
+              minHeight: 160
             }}
-            style={{background: '#999', minHeight: 355}}
-            description={'暂无信息'} />
+            style={{minHeight: 300}}
+            description={'暂无教师考勤信息'} />
           }
         </div>
       </div>
