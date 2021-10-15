@@ -12,6 +12,7 @@ import leave from '@/assets/leave.png';
 import styles from '../index.less';
 import ModuleTitle from '../components/ModuleTitle';
 import NumberCollect from '../components/NumberCollect';
+import { Empty } from 'antd';
 
 
 
@@ -113,10 +114,15 @@ const course = () => {
       </div>
     </div>
     <div className={styles.container} style={{height: '413px'}}>
-      <ModuleTitle data='各校课程数' showRight={true}/>
+      <ModuleTitle data='各校课程数' showRight={false}/>
       <div className={styles.chartsContainer}>
         {
-          barConfig.data ? <Bar {...barConfig} /> : ''
+          barConfig.data ? <Bar {...barConfig} /> : <Empty
+          image={noData}
+          imageStyle={{
+            height: 80,
+          }}
+          description={'暂无信息'} />
         }
       </div>
     </div>

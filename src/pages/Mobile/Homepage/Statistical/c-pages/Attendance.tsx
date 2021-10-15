@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useModel } from 'umi';
-import { ConfigProvider, DatePicker, Empty, Space } from 'antd';
+import { Col, ConfigProvider, DatePicker, Empty, Row, Space } from 'antd';
 import { Line } from '@ant-design/charts';
 import locale from 'antd/lib/locale/zh_CN';
 
@@ -18,29 +18,27 @@ import moment from 'moment';
 const attendance = () => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
-  const [currentData, setCurrentData] = useState<any>();
+  const [currentData, setCurrentData] = useState<any>({checkOut: [
+    {
+      num: '--',
+      title: '今日应出勤学生'
+    },{
+      num: '--',
+      title: '实际出勤学生'
+    },{
+      num: '--',
+      title: '今日应出勤教师'
+    },{
+      num: '--',
+      title: '实际出勤教师'
+    }
+  ]});
   const [startTime, setStartTime] = useState<any>("2021-10-01");
   const [endTime, setEndTime] = useState<any>("2021-10-01");
   const [xskqConfig, setXskqConfig] = useState<any>({...studentConfig});
   const [jskqConfig, setJskqConfig] = useState<any>({...teacherConfig});
 
   const { RangePicker } = DatePicker;
-
-  const data = [
-    {
-      num: '1234',
-      title: '今日应出勤学生'
-    },{
-      num: '1200',
-      title: '实际出勤学生'
-    },{
-      num: '123',
-      title: '今日应出勤教师'
-    },{
-      num: '111',
-      title: '实际出勤教师'
-    }
-  ]
 
   const handleStartTime = (date: any) => {
     setStartTime(moment(date).format('YYYY-MM-DD'));
@@ -199,16 +197,25 @@ const attendance = () => {
       <ModuleTitle data='考勤统计'/>
       <NumberCollect data={currentData?.checkOut} col={currentData?.checkOut.length > 3 ? 2 : currentData?.checkOut.length}/>
     </div>
-    <div className={styles.container} style={{height: '756px'}}>
+    <div className={styles.container} style={{height: '756px',paddingBottom: '50px'}}>
       <ModuleTitle data='考勤趋势'/>
       <Space direction="vertical" style={{marginTop: '20px'}} size={12}>
-          <ConfigProvider locale={locale}>
-            <DatePicker placeholder='请选择开始日期' onChange={handleStartTime}/>  -  <DatePicker placeholder='请选择结束日期' onChange={handleEndTime}/>
-          </ConfigProvider>
+
+          <Row>
+            <ConfigProvider locale={locale}>
+              <Col span={11}>
+                <DatePicker placeholder='请选择开始日期' onChange={handleStartTime} format="YYYY-MM-DD"/>
+              </Col>
+              <Col span={2}>-</Col>
+              <Col span={11}>
+                <DatePicker placeholder='请选择结束日期' onChange={handleEndTime} format="YYYY-MM-DD"/>
+              </Col>
+            </ConfigProvider>
+          </Row>
       </Space>
       <div style = {{height:'48%', marginTop: '20px'}}>
         学生考勤
-        <div className={styles.chartsContainer} style={{marginTop: '-20px', paddingBottom: 0}}>
+        <div className={styles.chartsContainer}>
           {
             xskqConfig.data?.length ? <Line {...xskqConfig}></Line> : <Empty
             image={noData}
@@ -219,9 +226,9 @@ const attendance = () => {
           }
         </div>
       </div>
-      <div style = {{height:'48%', marginBottom: '20px'}}>
+      <div style = {{height:'48%'}}>
         教师考勤
-        <div className={styles.chartsContainer} >
+        <div className={styles.chartsContainer}>
           {
             jskqConfig.data?.length ? <Line {...jskqConfig}></Line> : <Empty
             image={noData}

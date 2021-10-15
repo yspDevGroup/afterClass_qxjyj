@@ -22,36 +22,44 @@ const Statistical = () => {
               setActiveKey(key)}} type="card" centered>
         <TabPane tab={
         <div>
-          <IconFont className={styles.iconStyle}
+          <div className={styles.iconContainer}>
+           <IconFont className={styles.iconStyle}
                     type={'icon-baoming'}/>
-            <span>报名</span>
+          </div>
+            <span className={styles.iconAfter}>报名</span>
         </div>
       } key="1">
           <Apply/>
         </TabPane>
         <TabPane tab={
         <div>
+          <div className={styles.iconContainer}>
           <IconFont className={styles.iconStyle}
                     type={'icon-shoufei'}/>
-          <span>收费</span>
+          </div>
+          <span className={styles.iconAfter}>收费</span>
         </div>
       } key="2">
           <Toll/>
         </TabPane>
         <TabPane tab={
         <div>
+          <div className={styles.iconContainer}>
           <IconFont className={styles.iconStyle}
                     type={'icon-kaoqin'}/>
-          <span>考勤</span>
+          </div>
+          <span className={styles.iconAfter}>考勤</span>
         </div>
       } key="3">
           <Attendance/>
         </TabPane>
         <TabPane tab={
         <div>
+          <div className={styles.iconContainer}>
           <IconFont className={styles.iconStyle}
                     type={'icon-kecheng'}/>
-          <span>课程</span>
+          </div>
+          <span className={styles.iconAfter}>课程</span>
         </div>
       } key="4">
           <Course/>

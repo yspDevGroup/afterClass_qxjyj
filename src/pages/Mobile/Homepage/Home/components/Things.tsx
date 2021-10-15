@@ -3,7 +3,7 @@ import noData from '@/assets/noCourse.png';
 import styles from '../index.less';
 import { getAllInstitutions, JYJGSJ, toIntroduceCourses } from '@/services/after-class-qxjyj/jyjgsj';
 import { Link, useModel } from 'umi';
-import { message, Tabs } from 'antd';
+import { Empty, message, Tabs } from 'antd';
 import IconFont from '@/components/CustomIcon';
 import ListComp from '../components/ListComponent';
 
@@ -80,14 +80,21 @@ const Things = () => {
         centered={false}
         tabBarExtraContent={{
           right: (
-            <Link to={{ pathname: '/mobile/homepage/home/allThings', state: { allDataSource } }}>
+            dataSource?.length ? <Link to={{ pathname: '/mobile/homepage/home/allThings', state: { allDataSource } }}>
               查看更多 <IconFont type="icon-gengduo" className={styles.gengduo} />
-            </Link>
+            </Link> : ''
           ),
         }}
       >
         <TabPane tab="待办事项" key="upcoming">
-          <ListComp listData={dataSource} />
+          {
+            dataSource?.length ? <ListComp listData={dataSource} /> :<Empty
+            image={noData}
+            imageStyle={{
+              height: 80,
+            }}
+            description={'暂无待办事项'} />
+          }
         </TabPane>
       </Tabs>
     </div>

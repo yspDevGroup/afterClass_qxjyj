@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useModel } from 'umi';
-import { Tabs } from 'antd';
+import { Col, Row, Tabs } from 'antd';
 import IconFont from '@/components/CustomIcon';
 import Home from './Home';
 import Statistical from './Statistical';
@@ -11,6 +11,7 @@ const { TabPane } = Tabs;
 const Homepage = () => {
   const { initialState } = useModel('@@initialState');
   const [activeKey, setActiveKey] = useState<string>('index');
+  const [title, setTitle] = useState<string>('首页');
   const homeRef = useRef(null);
   const eduRef = useRef(null);
   const mineRef = useRef(null);
@@ -18,11 +19,22 @@ const Homepage = () => {
   return (
     <div className={styles.mobilePageHeader}>
       {/* <myContext.Provider value={{ ...dataSource, courseStatus, currentUserInfo: currentUser }}> */}
+        <Row className={styles.topContainer}>
+          <Col span={24}>
+            {title}
+          </Col>
+        </Row>
           <Tabs
             tabPosition="bottom"
             className={styles.menuTab}
             onTabClick={(key: string) => {
               setActiveKey(key);
+              if(key === 'mine'){
+                setTitle('统计');
+              }else {
+                setTitle('首页');
+              }
+
               if (homeRef.current) ((homeRef.current as unknown) as HTMLElement).scrollTop = 0;
               if (eduRef.current) ((eduRef.current as unknown) as HTMLElement).scrollTop = 0;
               if (mineRef.current) ((mineRef.current as unknown) as HTMLElement).scrollTop = 0;

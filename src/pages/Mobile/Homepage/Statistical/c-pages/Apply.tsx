@@ -18,7 +18,13 @@ import NumberCollect from '../components/NumberCollect';
 const apply = () => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
-  const [currentData, setCurrentData] = useState<any>();
+  const [currentData, setCurrentData] = useState<any>({applyNum:[{
+    num: '--',
+    title: '报名人次'
+  }, {
+    num: '--',
+    title: '参与学生'
+  }]});
 
   const data = [
     {

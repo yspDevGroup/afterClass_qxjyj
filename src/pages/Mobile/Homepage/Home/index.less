@@ -3,6 +3,7 @@
 .indexPage {
   background-color: @pageBgColor;
   min-height: 900px;
+  padding-top: 36px;
   .pageContent {
     position: relative;
     padding: 10px;
@@ -38,6 +39,8 @@
         line-height: 22px;
       }
       .bgImg{
+        width: 75%;
+        height: 75%;
         position: absolute;
         right: 0;
         bottom: 0;
@@ -67,6 +70,7 @@
     :global {
       .ant-tabs-tab + .ant-tabs-tab {
         margin-left: 28px;
+        font-weight: bold;
       }
 
       .ant-tabs-top > .ant-tabs-nav,
@@ -92,7 +96,7 @@
 
       .ant-tabs-tab:hover {
         color: #333;
-        font-weight: 600;
+        font-weight: bold;
         font-size: @font-size-lg;
       }
 

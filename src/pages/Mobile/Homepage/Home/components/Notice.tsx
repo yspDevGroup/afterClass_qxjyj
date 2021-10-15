@@ -4,7 +4,7 @@ import noData from '@/assets/noCourse.png';
 import moment from 'moment';
 import styles from '../index.less';
 import { Link, useModel } from 'umi';
-import { Button, Col, Row, Tabs } from 'antd';
+import { Button, Col, Empty, Row, Tabs } from 'antd';
 import IconFont from '@/components/CustomIcon';
 import ListComp from './ListComponent';
 import { JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
@@ -29,11 +29,11 @@ const Notice = () => {
 
   const enterLoading = (index: number) => {
     const newLoadings = [...loadings];
-      newLoadings[index] = true;
+    newLoadings[index] = true;
     setLoadings(newLoadings);
     setTimeout(() => {
       const newLoadings = [...loadings];
-        newLoadings[index] = false;
+      newLoadings[index] = false;
       setLoadings(newLoadings);
     }, 3000);
   };
@@ -97,16 +97,36 @@ const Notice = () => {
         onTabClick={handalTabClick}
       >
         <TabPane tab="政策公告" key="policy">
-          <ListComp listData={dataTZGG} />
-          <Link to={{ pathname: '/mobile/homepage/home/allNotice', state: { allDataSource: allTZDataSource } }}>
-            <Col span={12} offset={8}><Button type="primary" onClick={() => enterLoading(1)} className={styles.moreBtn} loading={loadings[1]} ghost={true} icon={<ArrowDownOutlined />}>查看更多</Button></Col>
-          </Link>
+          {
+            dataTZGG?.length ?  <>
+              <ListComp listData={dataTZGG} />
+              <Link to={{ pathname: '/mobile/homepage/home/allNotice', state: { allDataSource: allTZDataSource } }}>
+                <Col span={12} offset={8}><Button type="primary" onClick={() => enterLoading(1)} className={styles.moreBtn} loading={loadings[1]} ghost={true} icon={<ArrowDownOutlined />}>查看更多</Button></Col>
+              </Link>
+            </> : <Empty
+            image={noData}
+            imageStyle={{
+              height: 80,
+            }}
+            description={'暂无公告'} />
+          }
+
         </TabPane>
         <TabPane tab="通知公告" key="notify">
-          <ListComp listData={dataZCGG} />
-          <Link to={{ pathname: '/mobile/homepage/home/allNotice', state: { allDataSource: allZCDataSource } }}>
-            <Col span={12} offset={8}><Button type="primary"  onClick={() => enterLoading(2)} className={styles.moreBtn} loading={loadings[2]} ghost={true} icon={<ArrowDownOutlined />}>查看更多</Button></Col>
-          </Link>
+          {
+            dataZCGG?.legth ? <>
+              <ListComp listData={dataZCGG} />
+              <Link to={{ pathname: '/mobile/homepage/home/allNotice', state: { allDataSource: allZCDataSource } }}>
+                <Col span={12} offset={8}><Button type="primary" onClick={() => enterLoading(2)} className={styles.moreBtn} loading={loadings[2]} ghost={true} icon={<ArrowDownOutlined />}>查看更多</Button></Col>
+              </Link>
+            </> : <Empty
+              image={noData}
+              imageStyle={{
+                height: 80,
+              }}
+              description={'暂无公告'} />
+          }
+
         </TabPane>
       </Tabs>
     </div>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useModel } from 'umi';
-import { ConfigProvider, DatePicker, Empty, Space } from 'antd';
+import { Col, ConfigProvider, DatePicker, Empty, Row, Space } from 'antd';
 import locale from 'antd/lib/locale/zh_CN';
 import { Bar } from '@ant-design/charts';
 import moment from 'moment';
@@ -21,7 +21,15 @@ import NumberCollect from '../components/NumberCollect';
 const Toll = () => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
-  const [currentData, setCurrentData] = useState<any>();
+  const [currentData, setCurrentData] = useState<any>([
+    {
+      title: '收款金额（元',
+      num: '--'
+    },
+    {
+      title: '退款金额（元）',
+      num: '--'
+    }]);
   const [startTime, setStartTime] = useState<any>();
   const [intervalData, setIntervalData] = useState<any>([
     {
@@ -193,11 +201,23 @@ const handleEndTime = async (date: any) => {
       <div className={styles.container} style={{ height: '192px' }}>
         <ModuleTitle data='收费统计查询' showRight={true} />
         <Space direction="vertical" style={{marginTop: '20px'}} size={12}>
-          <ConfigProvider locale={locale}>
-            <DatePicker placeholder='请选择开始日期' onChange={handleStartTime} format="YYYY-MM-DD"/>  -  <DatePicker placeholder='请选择结束日期' onChange={handleEndTime} format="YYYY-MM-DD"/>
-          </ConfigProvider>
+          <Row>
+            <ConfigProvider locale={locale}>
+              <Col span={11}>
+                <DatePicker placeholder='请选择开始日期' onChange={handleStartTime} format="YYYY-MM-DD"/>
+              </Col>
+              <Col span={2}>-</Col>
+              <Col span={11}>
+                <DatePicker placeholder='请选择结束日期' onChange={handleEndTime} format="YYYY-MM-DD"/>
+              </Col>
+            </ConfigProvider>
+          </Row>
         </Space>
-        <NumberCollect data={intervalData} col={intervalData?.length} />
+        <Row>
+          <Col span={24}>
+          <NumberCollect data={intervalData} col={intervalData?.length} />
+          </Col>
+        </Row>
       </div>
     </div>)
 }

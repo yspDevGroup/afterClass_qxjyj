@@ -1,6 +1,7 @@
 .statisticalPage {
   background-color: #f5f5f5;
   min-height: 900px;
+  padding-top: 42px;
 }
 .statisticalPage .topText {
   width: 100%;
@@ -76,8 +77,15 @@
   height: 95%;
   padding: 20px 0;
 }
+.statisticalPage .iconContainer {
+  position: absolute;
+}
 .statisticalPage .iconStyle {
   position: relative;
-  margin: 2px 5px 0 3px;
   font-size: 21px;
+}
+.statisticalPage .iconAfter {
+  height: 100%;
+  line-height: 100%;
+  margin-left: 26px;
 }
