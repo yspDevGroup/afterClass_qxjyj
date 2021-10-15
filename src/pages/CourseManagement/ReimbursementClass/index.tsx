@@ -7,6 +7,7 @@ import { Select, Table, Popconfirm, Divider, message } from 'antd';
 import Style from './index.less';
 import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
 import { getAllSchools } from '@/services/after-class-qxjyj/jyjgsj';
+import WWOpenDataCom from '@/components/WWOpenDataCom';
 // import { text } from 'express';
 const { Option } = Select;
 // 退课
@@ -59,6 +60,10 @@ const ReimbursementClass = () => {
       key: 'XSXM',
       align: 'center',
       render: (text: any, record: any) => {
+        const showWXName = record?.XSJBSJ?.XM === '未知' && record.WechatUserId;
+        if (showWXName) {
+          return <WWOpenDataCom type="userName" openid={record.WechatUserId} />;
+        }
         return record?.XSJBSJ?.XM;
       }
     },

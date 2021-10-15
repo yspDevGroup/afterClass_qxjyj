@@ -4,6 +4,7 @@ import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { getKHBJPJ } from '@/services/after-class-qxjyj/khbjpj';
 import { getAllKHXSPJ } from '@/services/after-class-qxjyj/khxspj';
+import WWOpenDataCom from '@/components/WWOpenDataCom';
 
 const TabList = (props: any) => {
   const { ListName, ListState } = props.ListData;
@@ -65,7 +66,11 @@ const TabList = (props: any) => {
       key: 'XSXM',
       align: 'center',
       render: (text: any, record: any) => {
-        return record?.XSJBSJ?.XM;
+        const showWXName = record.XSJBSJ?.XM === '未知' && record.WechatUserId;
+        if (showWXName) {
+          return <WWOpenDataCom type="userName" openid={record.WechatUserId} />;
+        }
+        return record.XSJBSJ?.XM;
       }
     },
     {
@@ -95,6 +100,10 @@ const TabList = (props: any) => {
       align: 'center',
       width: 200,
       render: (_, record) => {
+        const showWXName = record?.JZGJBSJ?.XM === '未知' && record.WechatUserId;
+        if (showWXName) {
+          return <WWOpenDataCom type="userName" openid={record.WechatUserId} />;
+        }
         return <span>{record?.JZGJBSJ?.XM}</span>;
       }
     },

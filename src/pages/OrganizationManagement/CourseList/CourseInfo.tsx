@@ -6,6 +6,7 @@ import styles from './index.less';
 import { LeftOutlined } from '@ant-design/icons';
 import CustomForm from '@/components/CustomForm';
 import { FormItemType } from '@/components/CustomForm/interfice';
+import WWOpenDataCom from '@/components/WWOpenDataCom';
 /**
  * 课程详情
  * @returns
@@ -37,7 +38,7 @@ const CourseInfo = (props: any) => {
         KCMC: state?.KCMC || '',
         KCMS: state?.KCMS || '',
         njIds: state?.NJSJs?.map((item: any) => (item.XD === '初中' ? item?.NJMC : `${item.XD}${item?.NJMC}`)) || '',
-        jsIds: state?.KHKCJs?.map((item: any) => item?.KHJSSJ?.XM) || '',
+        jsIds: state?.KHKCJs?.map((item: any) => item?.JZGJBSJ?.XM) || '',
         KCTP: state?.KCTP || '',
         KHKCLX: state?.KHKCLX?.KCTAG || ''
       };
@@ -120,7 +121,14 @@ const CourseInfo = (props: any) => {
       title: '姓名 ',
       dataIndex: 'XM',
       key: 'XM',
-      align: 'center'
+      align: 'center',
+      render: (text: any, record: any) => {
+        const showWXName = record?.XM === '未知' && record.WechatUserId;
+        if (showWXName) {
+          return <WWOpenDataCom type="userName" openid={record.WechatUserId} />;
+        }
+        return <div key={record?.id}>{record?.XM}</div>;
+      }
     },
     {
       title: '联系电话',

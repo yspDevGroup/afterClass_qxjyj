@@ -11,6 +11,7 @@ import { Button, Card, Col, Avatar, Row, Empty } from 'antd';
 import stuImg from '@/assets/stu.png';
 
 import styles from './index.less';
+import WWOpenDataCom from '@/components/WWOpenDataCom';
 
 const { Meta } = Card;
 const StudentList = (props: any) => {
@@ -44,6 +45,7 @@ const StudentList = (props: any) => {
             {state?.value.KHXSBJs.length ? (
               <Row gutter={[24, 24]}>
                 {state?.value.KHXSBJs?.map((item: any) => {
+                  const showWXName = item?.XSJBSJ?.XM === '未知' && item?.XSJBSJ?.WechatUserId;
                   return (
                     <Col span={6} key={item.XSId}>
                       <Card style={{ display: 'flex' }}>
@@ -53,7 +55,13 @@ const StudentList = (props: any) => {
                             display: 'flex',
                             alignItems: 'center'
                           }}
-                          title={item?.XSJBSJ?.XM}
+                          title={
+                            showWXName ? (
+                              <WWOpenDataCom type="userName" openid={item?.XSJBSJ?.WechatUserId} />
+                            ) : (
+                              item?.XSJBSJ?.XM
+                            )
+                          }
                         />
                       </Card>
                     </Col>

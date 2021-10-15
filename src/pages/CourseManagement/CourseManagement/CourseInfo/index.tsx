@@ -6,6 +6,7 @@ import classes from './index.less';
 import { LeftOutlined } from '@ant-design/icons';
 import CustomForm from '@/components/CustomForm';
 import { FormItemType } from '@/components/CustomForm/interfice';
+import WWOpenDataCom from '@/components/WWOpenDataCom';
 /**
  * 课程详情
  * @returns
@@ -143,6 +144,10 @@ const CourseInfo = (props: any) => {
       key: 'XM',
       align: 'center',
       render: (text: any, record: any) => {
+        const showWXName = record.JZGJBSJ?.XM === '未知' && record.WechatUserId;
+        if (showWXName) {
+          return <WWOpenDataCom type="userName" openid={record.WechatUserId} />;
+        }
         return record.JZGJBSJ?.XM;
       }
     },

@@ -6,6 +6,7 @@ import styles from './index.less';
 import { LeftOutlined } from '@ant-design/icons';
 import CustomForm from '@/components/CustomForm';
 import { FormItemType } from '@/components/CustomForm/interfice';
+import WWOpenDataCom from '@/components/WWOpenDataCom';
 /**
  * 课程详情
  * @returns
@@ -26,7 +27,7 @@ const CourseInfo = (props: any) => {
     // 老师表格数据
     const thData: any[] = [];
     state?.KHKCJs?.forEach((item: any) => {
-      thData.push(item?.KHJSSJ);
+      thData.push(item?.JZGJBSJ);
     });
     setTeacherData(thData);
     if (state?.id) {
@@ -35,7 +36,7 @@ const CourseInfo = (props: any) => {
         KCMC: state?.KCMC || '',
         KCMS: state?.KCMS || '',
         njIds: state?.NJSJs?.map((item: any) => (item.XD === '初中' ? item?.NJMC : `${item.XD}${item?.NJMC}`)) || '',
-        jsIds: state?.KHKCJs?.map((item: any) => item?.JZGJBSJ?.XM) || '',
+        jsIds: state?.KHKCJs?.map((item: any) => item?.KHJSSJ?.XM) || '',
         KCTP: state?.KCTP || '',
         KHKCLX: state?.KHKCLX?.KCTAG || ''
       };
@@ -120,26 +121,24 @@ const CourseInfo = (props: any) => {
       key: 'XM',
       align: 'center',
       render: (text: any, record: any) => {
-        return record.JZGJBSJ?.XM;
+        const showWXName = record?.XM === '未知' && record.WechatUserId;
+        if (showWXName) {
+          return <WWOpenDataCom type="userName" openid={record.WechatUserId} />;
+        }
+        return record?.XM;
       }
     },
     {
       title: '联系电话',
       dataIndex: 'LXDH',
       key: 'LXDH',
-      align: 'center',
-      render: (text: any, record: any) => {
-        return record?.JZGJBSJ?.LXDH;
-      }
+      align: 'center'
     },
     {
       title: '邮箱',
       dataIndex: 'DZXX',
       key: 'DZXX',
-      align: 'center',
-      render: (text: any, record: any) => {
-        return record?.JZGJBSJ?.DZXX;
-      }
+      align: 'center'
     },
     {
       title: '操作',
@@ -147,14 +146,14 @@ const CourseInfo = (props: any) => {
       valueType: 'option',
       align: 'center',
       width: 200,
-      render: (text: any, record: any) => {
+      render: (text: any, record: { value: any }) => {
         return (
           <div className={styles.operation}>
             <Link
               key="xq"
               to={{
                 pathname: '/schoolManagement/courseList/teacherInfo',
-                state: record?.JZGJBSJ
+                state: record
               }}
             >
               详情

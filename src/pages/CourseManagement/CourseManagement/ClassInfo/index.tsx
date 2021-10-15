@@ -4,6 +4,7 @@ import React, { useRef, useState } from 'react';
 import classes from './index.less';
 import { history, Link } from 'umi';
 import { LeftOutlined } from '@ant-design/icons';
+import WWOpenDataCom from '@/components/WWOpenDataCom';
 /**
  * 课程班详情
  * @returns
@@ -101,8 +102,12 @@ const ClassInfo = (props: any) => {
       title: '学生姓名',
       dataIndex: 'XSXM',
       key: 'XSXM',
-      render: (text: any, record: any)=>{
-        return record?.XSJBSJ?.XM
+      render: (text: any, record: any) => {
+        const showWXName = record?.XSJBSJ?.XM === '未知' && record.WechatUserId;
+        if (showWXName) {
+          return <WWOpenDataCom type="userName" openid={record.WechatUserId} />;
+        }
+        return record?.XSJBSJ?.XM;
       },
       align: 'center'
     }

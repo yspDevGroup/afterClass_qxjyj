@@ -7,6 +7,7 @@ import { getClassesEvaluation } from '@/services/after-class-qxjyj/khbjsj';
 import styles from '../index.less';
 import { getAllXNXQ } from '@/services/after-class-qxjyj/xnxq';
 import { getCurrentXQ } from '@/utils/utils';
+import WWOpenDataCom from '@/components/WWOpenDataCom';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -42,6 +43,10 @@ const Class = (props: any) => {
       align: 'center',
       render: (_, record) => {
         return record?.KHBJJs.map((item: any) => {
+          const showWXName = item?.JZGJBSJ?.XM === '未知' && item.WechatUserId;
+          if (showWXName) {
+            return <WWOpenDataCom type="userName" openid={item.WechatUserId} />;
+          }
           return <div key={item.id}>{item?.JZGJBSJ?.XM}</div>;
         });
       }

@@ -15,6 +15,7 @@ import { Link, useModel } from 'umi';
 import { getCourses } from '@/services/after-class-qxjyj/jyjgsj';
 import EllipsisHint from '@/components/EllipsisHint';
 import { updateKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
+import WWOpenDataCom from '@/components/WWOpenDataCom';
 
 const HaveIntroduced = (props: { Keys: string | undefined; state: any; type?: string }) => {
   const { Keys, state, type } = props;
@@ -83,7 +84,11 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any; type?: st
           <EllipsisHint
             width="100%"
             text={teacher?.map((item: any) => {
-              return <Tag key={item.id}>{item.JZGJBSJ.XM}</Tag>;
+              const showWXName = item?.JZGJBSJ?.XM === '未知' && item.WechatUserId;
+              if (showWXName) {
+                return <WWOpenDataCom type="userName" openid={item.WechatUserId} />;
+              }
+              return <Tag key={item.id}>{item?.JZGJBSJ?.XM}</Tag>;
             })}
           />
         );

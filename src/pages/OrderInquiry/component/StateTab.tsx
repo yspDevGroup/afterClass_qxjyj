@@ -6,6 +6,7 @@ import { getOrders } from '@/services/after-class-qxjyj/jyjgsj';
 
 import { useModel } from 'umi';
 import styles from './index.less';
+import WWOpenDataCom from '@/components/WWOpenDataCom';
 
 const StateTab = (props: any) => {
   const { DDZT, id } = props.TabState;
@@ -27,6 +28,10 @@ const StateTab = (props: any) => {
       align: 'center',
       search: false,
       render: (text: any, record: any) => {
+        const showWXName = record?.XSJBSJ?.XM === '未知' && record.WechatUserId;
+        if (showWXName) {
+          return <WWOpenDataCom type="userName" openid={record.WechatUserId} />;
+        }
         return record?.XSJBSJ?.XM;
       }
     },
