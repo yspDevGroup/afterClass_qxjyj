@@ -222,7 +222,7 @@ const EditArticle = () => {
               </Form.Item>
             </Col>
             <Col className="gutter-row" sm={3} xs={6} style={{ minWidth: '142px' }}>
-              <Form.Item name="SFTJ" label="是否推荐：" valuePropName="checked" labelCol={{ sm: { span: 16 } }}>
+              <Form.Item name="SFTT" label="是否头条：" valuePropName="checked" labelCol={{ sm: { span: 16 } }}>
                 <Switch disabled={disabled} />
               </Form.Item>
             </Col>
