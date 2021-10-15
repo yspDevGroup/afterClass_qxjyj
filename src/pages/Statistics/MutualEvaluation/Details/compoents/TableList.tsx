@@ -7,7 +7,7 @@ import { getAllKHXSPJ } from '@/services/after-class-qxjyj/khxspj';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
 
 const TabList = (props: any) => {
-  const { ListName, ListState } = props.ListData;
+  const { ListName, ListState,XXJBSJId } = props.ListData;
   const{KHBJJs}=ListState
   console.log(ListState);
   
@@ -173,6 +173,7 @@ const TabList = (props: any) => {
           KHBJSJId: ListState.id,
           //学年学期
           XNXQId: ListState?.XNXQId,
+          XXJBSJId,
           page: 0,
           pageSize: 0
         });

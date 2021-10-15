@@ -88,6 +88,7 @@ const Class = (props: any) => {
                 type: 'detail',
                 data: {
                   ...record,
+                  XXJBSJId,
                   XNXQId: term
                 }
               }
