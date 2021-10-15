@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useModel } from 'umi';
+import { useModel, history } from 'umi';
 import { Col, Row, Tabs } from 'antd';
+import { LeftOutlined } from '@ant-design/icons';
 import IconFont from '@/components/CustomIcon';
 import Home from './Home';
 import Statistical from './Statistical';
+import TopNav from './Home/components/TopNav'
 import styles from './index.less';
 import myContext from '@/utils/MyContext';
 
@@ -19,11 +21,7 @@ const Homepage = () => {
   return (
     <div className={styles.mobilePageHeader}>
       {/* <myContext.Provider value={{ ...dataSource, courseStatus, currentUserInfo: currentUser }}> */}
-        <Row className={styles.topContainer}>
-          <Col span={24}>
-            {title}
-          </Col>
-        </Row>
+        <TopNav title={title}></TopNav>
           <Tabs
             tabPosition="bottom"
             className={styles.menuTab}

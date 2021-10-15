@@ -3,27 +3,21 @@ import ListComp from '../components/ListComponent';
 import { Button } from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import { history } from 'umi';
+import TopNav from './../components/TopNav'
 
 const AllThings = (props: any) => {
 const { allDataSource } = props.location.state
-console.log('allDataSource: ', allDataSource);
 
   return (
+    <div>
+      <TopNav />
     <div className={styles.allThings}>
-      <Button
-        type="primary"
-        onClick={() => {
-          history.goBack();
-        }}
-        style={{
-          marginBottom: '24px'
-        }}
-      >
-        <LeftOutlined />
-        返回上一页
-      </Button>
+        <div style={{marginTop: 50}}>
         <ListComp listData={allDataSource} />
+        </div>
     </div>
+    </div>
+
   );
 };
 
