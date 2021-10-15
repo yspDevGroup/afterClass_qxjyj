@@ -8,6 +8,9 @@ import WWOpenDataCom from '@/components/WWOpenDataCom';
 
 const TabList = (props: any) => {
   const { ListName, ListState } = props.ListData;
+  const{KHBJJs}=ListState
+  console.log(ListState);
+  
   const handleCancel = () => {
     setIsModalVisible(false);
   };
@@ -154,7 +157,7 @@ const TabList = (props: any) => {
         const res2 = await getAllKHXSPJ({
           KHBJSJId: ListState.id,
           XNXQId: ListState?.XNXQId,
-          JSId: '',
+          JSId: KHBJJs[0].JZGJBSJ.id,
           page: 0,
           pageSize: 0
         });
@@ -164,12 +167,11 @@ const TabList = (props: any) => {
         }
       })();
     } else {
-      (async () => {
+      (async () => { 
         const res = await getKHBJPJ({
-          // 课后课程班数据
+          // 班级ID
           KHBJSJId: ListState.id,
-          XSJBSJId: '',
-          XXJBSJId: '',
+          //学年学期
           XNXQId: ListState?.XNXQId,
           page: 0,
           pageSize: 0
