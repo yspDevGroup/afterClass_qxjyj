@@ -48,12 +48,6 @@ export const columnConfig: any = {
     position: 'middle',
     style: { fill: '#fff' },
   },
-  scrollbar: {
-    type: 'horizontal',
-    style: {
-      trackColor: '#fff',
-    },
-  },
 };
 export const pieConfig: any = {
   appendPadding: 20,
@@ -97,12 +91,6 @@ export const barConfig: any = {
     }
   },
   maxBarWidth: 30,
-  scrollbar: {
-    type: 'vertical',
-    style: {
-      trackColor: '#fff',
-    },
-  },
 };
 export const defaultData: any = {
   serviceNum: [],
