@@ -91,7 +91,7 @@ const Things = () => {
             dataSource?.length ? <ListComp listData={dataSource} /> :<Empty
             image={noData}
             imageStyle={{
-              minHeight: 200
+              minHeight: 210
             }}
             style={{ minHeight: 355,background: '#fff',borderRadius: '8px' }}
             description={'暂无待办事项'} />

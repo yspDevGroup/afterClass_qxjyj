@@ -45,7 +45,7 @@ const NewsList = (props: { data: ListItem[]; type: ListType; operation: any }) =
                           </div>
                           <div className={styles.descright}>
                             {
-                              type === 'actList' ? <IconFont type="icon-gengduo" className={styles.gengduo} /> : ''
+                              type === 'actList' ? '' : <IconFont type="icon-gengduo" className={styles.gengduo} />
                             }
                           </div>
                         </div>
