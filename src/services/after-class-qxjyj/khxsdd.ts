@@ -85,6 +85,8 @@ export async function getAllKHXSDD(
     DDLX?: number;
     /** 学生ID */
     XSJBSJId?: string;
+    /** 学生姓名 */
+    XSXM?: string;
     /** 学年学期ID */
     XNXQId?: string;
     /** 学校ID */
