@@ -2,7 +2,7 @@
  * @description:
  * @author: gxh
  * @Date: 2021-09-22 11:54:38
- * @LastEditTime: 2021-10-14 13:46:57
+ * @LastEditTime: 2021-10-18 10:00:36
  * @LastEditors: Sissle Lynn
  */
 
@@ -54,11 +54,11 @@ const OrderInquiry = () => {
       search: false
     },
     {
-      title: '课程数量',
+      title: '开设课程数量',
       key: 'KHKCSQs',
       dataIndex: 'KHKCSQs',
       align: 'center',
-      width: 90,
+      width: 120,
       search: false,
       render: (_, record) => {
         const num1 = record.KHKCSQs?.length;

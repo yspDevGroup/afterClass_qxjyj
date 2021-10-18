@@ -8,8 +8,7 @@ import WWOpenDataCom from '@/components/WWOpenDataCom';
 
 const TabList = (props: any) => {
   const { ListName, ListState,XXJBSJId } = props.ListData;
-  const{KHBJJs}=ListState
-  console.log(ListState);
+  const { KHBJJs } = ListState;
   
   const handleCancel = () => {
     setIsModalVisible(false);

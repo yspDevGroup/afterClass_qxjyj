@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-10-12 14:46:08
- * @LastEditTime: 2021-10-13 12:33:27
+ * @LastEditTime: 2021-10-18 10:05:03
  * @LastEditors: Sissle Lynn
  */
 import { useEffect, useState } from 'react';
@@ -37,6 +37,8 @@ const School = (props: any) => {
       title: '学校名称',
       dataIndex: 'XXMC',
       key: 'XXMC',
+      width: 120,
+      ellipsis: true,
       align: 'center',
       render:(_,record)=>{
         return record?.XXJBSJ?.XXMC
@@ -46,6 +48,8 @@ const School = (props: any) => {
       title: '学段',
       dataIndex: 'XD',
       key: 'XD',
+      width: 100,
+      ellipsis: true,
       align: 'center',
       render:(_,record)=>{
         return record?.XXJBSJ?.XD
@@ -56,24 +60,32 @@ const School = (props: any) => {
       dataIndex: 'bj_count',
       key: 'bj_count',
       align: 'center',
+      width: 100,
+      ellipsis: true,
     },
     {
       title: '报名人数',
       dataIndex: 'BMRS',
       key: 'BMRS',
       align: 'center',
+      width: 100,
+      ellipsis: true,
     },
     {
       title: '退课人数',
       dataIndex: 'TKRS',
       key: 'TKRS',
       align: 'center',
+      width: 100,
+      ellipsis: true,
     },
     {
       title: '退课比例',
       dataIndex: 'TKBL',
       key: 'TKBL',
       align: 'center',
+      width: 100,
+      ellipsis: true,
       render: (test: any,record: any) => {
         const num =  record.TKRS!=0 ? (record.TKRS/ record.BMRS)*100 + '%':0;
         return num;
@@ -84,18 +96,24 @@ const School = (props: any) => {
       dataIndex: 'SKJE',
       key: 'SKJE',
       align: 'center',
+      width: 100,
+      ellipsis: true,
     },
     {
       title: '退款金额',
       dataIndex: 'TKJE',
       key: 'TKJE',
       align: 'center',
+      width: 100,
+      ellipsis: true,
     },
     {
       title: '操作',
       dataIndex: 'XSXM',
       key: 'XSXM',
       align: 'center',
+      width: 120,
+      ellipsis: true,
       render: (_, record) => (
         <>
           <Link

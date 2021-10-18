@@ -4,7 +4,6 @@ const { TabPane } = Tabs;
 import TabList from './compoents/TableList'
 const Details = (props: any) => {
   const { state,XXJBSJId } = props.location;
-  console.log(XXJBSJId);
   
   return (
     <>

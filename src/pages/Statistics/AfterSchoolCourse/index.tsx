@@ -32,24 +32,32 @@ const AfterSchoolCourse = () => {
       dataIndex: 'KCMC',
       key: 'KCMC',
       align: 'center',
+      width: 120,
+      ellipsis: true,
     },
     {
       title: '课程来源',
       dataIndex: 'KCLY',
       key: 'KCLY',
       align: 'center',
+      width: 100,
+      ellipsis: true,
     },
     {
       title: '课程类型',
       dataIndex: 'KCLX',
       key: 'KCLX',
       align: 'center',
+      width: 120,
+      ellipsis: true,
     },
     {
       title: '所属机构/学校',
       dataIndex: 'JGMC',
       key: 'JGMC',
       align: 'center',
+      width: 120,
+      ellipsis: true,
       render: (_, record) => {
         return record.KCLY === '校内课程' ? record.XXMC : record.JGMC
       }
@@ -59,8 +67,10 @@ const AfterSchoolCourse = () => {
       dataIndex: 'HZXXS',
       key: 'HZXXS',
       align: 'center',
+      width: 110,
+      ellipsis: true,
       render: (_, record) => {
-        return record.SSJGLX === '校内课程' ? 1 : record.xx_count
+        return record.KCLY === '校内课程' ? 1 : record.xx_count
       }
     },
     {
@@ -68,20 +78,26 @@ const AfterSchoolCourse = () => {
       dataIndex: 'BMRS',
       key: 'BMRS',
       align: 'center',
+      width: 100,
+      ellipsis: true,
     },
     {
       title: '退课人数',
       dataIndex: 'TKRS',
       key: 'TKRS',
       align: 'center',
+      width: 100,
+      ellipsis: true,
     },
     {
       title: '退课比例',
       dataIndex: 'TKBL',
       key: 'TKBL',
       align: 'center',
+      width: 100,
+      ellipsis: true,
       render: (test: any, record: any) => {
-        const num = record.TKRS != 0 ? (record.TKRS / record.BMRS).toFixed(2) * 100 + '%' : 0;
+        const num = record.TKRS != 0 ? (Number((record.TKRS / record.BMRS))*100).toFixed(1) + '%' : 0;
         return num;
       },
     },
@@ -90,18 +106,24 @@ const AfterSchoolCourse = () => {
       dataIndex: 'SKJE',
       key: 'SKJE',
       align: 'center',
+      width: 100,
+      ellipsis: true,
     },
     {
       title: '退款金额',
       dataIndex: 'TKJE',
       key: 'TKJE',
       align: 'center',
+      width: 100,
+      ellipsis: true,
     },
     {
       title: '操作',
       dataIndex: 'XSXM',
       key: 'XSXM',
       align: 'center',
+      width: 120,
+      ellipsis: true,
       render: (_, record) => (
         <>
           <Link
