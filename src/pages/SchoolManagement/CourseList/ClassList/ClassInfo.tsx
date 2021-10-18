@@ -41,6 +41,8 @@ const ClassInfo = (props: any) => {
     state?.KHKCJCs?.forEach((item: any, index: number) => {
       jfData.push(`${index + 1}.${item.JCMC}，费用：${item.JCFY} ；\n`);
     });
+    // eslint-disable-next-line prefer-regex-literals
+    const reg = new RegExp(',', 'g');
     if (state?.id) {
       // form详情
       const params = {
@@ -53,7 +55,7 @@ const ClassInfo = (props: any) => {
         SKSD: `${state?.KKRQ} - ${state?.JKRQ}`,
         BMSD: `${moment(state?.BMKSSJ).format('YYYY-MM-DD')} - ${moment(state?.BMJSSJ).format('YYYY-MM-DD')}`,
         BMFY: state?.FY,
-        JF: jfData.toString().replace(',', '') || ''
+        JF: jfData.toString().replace(reg, '') || ''
       };
       setImageUrl(state?.KCTP || '');
       setFormValues(params);
