@@ -14,42 +14,46 @@ import ModuleTitle from '../components/ModuleTitle';
 import NumberCollect from '../components/NumberCollect';
 import moment from 'moment';
 
-
 const attendance = () => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
-  const [currentData, setCurrentData] = useState<any>({checkOut: [
-    {
-      num: '--',
-      title: '今日应出勤学生'
-    },{
-      num: '--',
-      title: '实际出勤学生'
-    },{
-      num: '--',
-      title: '今日应出勤教师'
-    },{
-      num: '--',
-      title: '实际出勤教师'
-    }
-  ]});
-  const [startTime, setStartTime] = useState<any>(moment().subtract(30, "days").format("YYYY-MM-DD"));
-  const [endTime, setEndTime] = useState<any>(moment().format("YYYY-MM-DD"));
-  const [xskqConfig, setXskqConfig] = useState<any>({...studentConfig});
-  const [jskqConfig, setJskqConfig] = useState<any>({...teacherConfig});
+  const [currentData, setCurrentData] = useState<any>({
+    checkOut: [
+      {
+        num: '--',
+        title: '今日应出勤学生'
+      },
+      {
+        num: '--',
+        title: '实际出勤学生'
+      },
+      {
+        num: '--',
+        title: '今日应出勤教师'
+      },
+      {
+        num: '--',
+        title: '实际出勤教师'
+      }
+    ]
+  });
+  const [startTime, setStartTime] = useState<any>(moment().subtract(30, 'days').format('YYYY-MM-DD'));
+  const [endTime, setEndTime] = useState<any>(moment().format('YYYY-MM-DD'));
+  const [xskqConfig, setXskqConfig] = useState<any>({ ...studentConfig });
+  const [jskqConfig, setJskqConfig] = useState<any>({ ...teacherConfig });
 
   const { RangePicker } = DatePicker;
 
   const handleStartTime = (date: any) => {
     setStartTime(moment(date).format('YYYY-MM-DD'));
-  }
+  };
   const handleEndTime = (date: any) => {
     setEndTime(moment(date).format('YYYY-MM-DD'));
-  }
+  };
 
-    useEffect(()=>{
-      getCQData();
-    },[endTime])
+  useEffect(() => {
+    getCQData();
+  }, [endTime]);
 
   const getCQData = async () => {
     const attenRes = await getAttendanceTrend({
@@ -57,31 +61,28 @@ const attendance = () => {
       startDate: startTime,
       endDate: endTime
     });
-    if(attenRes.status === 'ok'){
-        console.log('attenRes: ', attenRes);
-        let newData: { date: string; time: any; count: any; }[] = [];
+    if (attenRes.status === 'ok') {
+      let newData: { date: string; time: any; count: any }[] = [];
 
-        attenRes.data.jscq.forEach((item: any)=>{
-          newData.push(
-            { date: "实际出勤人数", time: item.CQRQ, count: item.normal},
-            { date: "请假人数", time: item.CQRQ, count: item.abnormal},
-          );
-        })
-        setJskqConfig({...jskqConfig, data: [...newData]});
-        newData = [];
-        attenRes.data.xscq.forEach((item: any)=>{
-          newData.push(
-            { date: "实际出勤人数", time: item.CQRQ, count: item.normal},
-            { date: "请假人数", time: item.CQRQ, count: item.abnormal},
-          );
-        })
-        setXskqConfig({...xskqConfig, data: [...newData]});
+      attenRes.data.jscq.forEach((item: any) => {
+        newData.push(
+          { date: '实际出勤人数', time: item.CQRQ, count: item.normal },
+          { date: '请假人数', time: item.CQRQ, count: item.abnormal }
+        );
+      });
+      setJskqConfig({ ...jskqConfig, data: [...newData] });
+      newData = [];
+      attenRes.data.xscq.forEach((item: any) => {
+        newData.push(
+          { date: '实际出勤人数', time: item.CQRQ, count: item.normal },
+          { date: '请假人数', time: item.CQRQ, count: item.abnormal }
+        );
+      });
+      setXskqConfig({ ...xskqConfig, data: [...newData] });
     }
-
-  }
+  };
 
   const getData = async (res: any) => {
-
     const defaultData: any = {
       serviceNum: [],
       courseCollect: [],
@@ -100,86 +101,108 @@ const attendance = () => {
     if (result.status === 'ok') {
       const { data } = result;
       if (data) {
-        defaultData.serviceNum = [{
-          title: '教师总数',
-          num: (data?.jgjs_count || 0) + (data?.xxjs_count || 0)
-        },
-        {
-          title: '学生总数',
-          num: data?.xs_count || 0
-        },
-        {
-          title: '收款总额',
-          num: data?.sk_count || 0
-        },
-        {
-          title: '退款总额',
-          num: data?.tk_count || 0
-        }];
-        defaultData.checkOut = [{
-          title: '今日应出勤学生',
-          num: data.ydxs_count
-        }, {
-          title: '实际出勤学生',
-          num: data.sdxs_count
-        }, {
-          title: '今日应出勤教师',
-          num: data.ydjs_count
-        }, {
-          title: '实际出勤教师',
-          num: data.sdjs_count
-        }];
-        defaultData.numCollect = [{
-          title: '学校总数',
-          num: data.xx_count
-        }, {
-          title: '机构总数',
-          num: data.jg_count
-        }, {
-          title: '课程总数',
-          num: data.kc_count
-        }, {
-          title: '课程班总数',
-          num: data.bj_count
-        }, {
-          title: '学校教师总数',
-          num: data.xxjs_count,
-        }, {
-          title: '机构教师总数',
-          num: data.jgjs_count
-        }];
-        data.kclx?.length && data.kclx.forEach((item: { KCTAG: any; count: any; }) => {
-          if (item.count !== 0) {
-            defaultData.courseCollect.push({
-              type: item.KCTAG,
-              value: item.count
-            })
+        defaultData.serviceNum = [
+          {
+            title: '教师总数',
+            num: (data?.jgjs_count || 0) + (data?.xxjs_count || 0)
+          },
+          {
+            title: '学生总数',
+            num: data?.xs_count || 0
+          },
+          {
+            title: '收款总额',
+            num: data?.sk_count || 0
+          },
+          {
+            title: '退款总额',
+            num: data?.tk_count || 0
           }
-        });
-        defaultData.schoolNum = data.xxs?.length ? [].map.call(data.xxs, (item: any) => {
-          return item.XXMC;
-        }) : [];
-        defaultData.agentNum = data.jgs?.length ? [].map.call(data.jgs, (item: any) => {
-          return item.QYMC;
-        }) : [];
-        data.xxkc?.length && data.xxkc.forEach((item: any) => {
-          defaultData.courseNum.push({
-            type: '校内课程',
-            school: item.XXMC,
-            value: item.xxkc_count,
+        ];
+        defaultData.checkOut = [
+          {
+            title: '今日应出勤学生',
+            num: data.ydxs_count
+          },
+          {
+            title: '实际出勤学生',
+            num: data.sdxs_count
+          },
+          {
+            title: '今日应出勤教师',
+            num: data.ydjs_count
+          },
+          {
+            title: '实际出勤教师',
+            num: data.sdjs_count
+          }
+        ];
+        defaultData.numCollect = [
+          {
+            title: '学校总数',
+            num: data.xx_count
+          },
+          {
+            title: '机构总数',
+            num: data.jg_count
+          },
+          {
+            title: '课程总数',
+            num: data.kc_count
+          },
+          {
+            title: '课程班总数',
+            num: data.bj_count
+          },
+          {
+            title: '学校教师总数',
+            num: data.xxjs_count
+          },
+          {
+            title: '机构教师总数',
+            num: data.jgjs_count
+          }
+        ];
+        data.kclx?.length &&
+          data.kclx.forEach((item: { KCTAG: any; count: any }) => {
+            if (item.count !== 0) {
+              defaultData.courseCollect.push({
+                type: item.KCTAG,
+                value: item.count
+              });
+            }
           });
-          defaultData.courseNum.push({
-            type: '机构课程',
-            school: item.XXMC,
-            value: item.jgkc_count,
-          })
-        });
-        defaultData.enrollNum = data.xxbm?.length ? [].map.call(data.xxbm, (item: any) => {
-          return {
-            school: item.XXMC,
-            value: item.bj_count,
-          };
-        }) : [];
+        defaultData.schoolNum = data.xxs?.length
+          ? [].map.call(data.xxs, (item: any) => {
+              return item.XXMC;
+            })
+          : [];
+        defaultData.agentNum = data.jgs?.length
+          ? [].map.call(data.jgs, (item: any) => {
+              return item.QYMC;
+            })
+          : [];
+        data.xxkc?.length &&
+          data.xxkc.forEach((item: any) => {
+            defaultData.courseNum.push({
+              type: '校内课程',
+              school: item.XXMC,
+              value: item.xxkc_count
+            });
+            defaultData.courseNum.push({
+              type: '机构课程',
+              school: item.XXMC,
+              value: item.jgkc_count
+            });
+          });
+        defaultData.enrollNum = data.xxbm?.length
+          ? [].map.call(data.xxbm, (item: any) => {
+              return {
+                school: item.XXMC,
+                value: item.bj_count
+              };
+            })
+          : [];
       }
     }
     setCurrentData(defaultData);
@@ -191,57 +214,76 @@ const attendance = () => {
   }, []);
 
   return (
-  <div className={styles.attendance}>
-    <div className={styles.container} style={{height: '216px'}}>
-      <ModuleTitle data='考勤统计'/>
-      <NumberCollect data={currentData?.checkOut} col={currentData?.checkOut.length > 3 ? 2 : currentData?.checkOut.length}/>
-    </div>
-    <div className={styles.container} style={{height: '756px',paddingBottom: '50px'}}>
-      <ModuleTitle data='考勤趋势'/>
-      <Space direction="vertical" style={{marginTop: '20px'}} size={12}>
-
+    <div className={styles.attendance}>
+      <div className={styles.container} style={{ height: '216px' }}>
+        <ModuleTitle data="考勤统计" />
+        <NumberCollect
+          data={currentData?.checkOut}
+          col={currentData?.checkOut.length > 3 ? 2 : currentData?.checkOut.length}
+        />
+      </div>
+      <div className={styles.container} style={{ height: '756px', paddingBottom: '50px' }}>
+        <ModuleTitle data="考勤趋势" />
+        <Space direction="vertical" style={{ marginTop: '20px' }} size={12}>
           <Row>
             <ConfigProvider locale={locale}>
               <Col span={11}>
-                <DatePicker placeholder='请选择开始日期' defaultValue={moment(moment().subtract(30, "days"), 'YYYY-MM-DD')} onChange={handleStartTime} format="YYYY-MM-DD"/>
+                <DatePicker
+                  placeholder="请选择开始日期"
+                  defaultValue={moment(moment().subtract(30, 'days'), 'YYYY-MM-DD')}
+                  onChange={handleStartTime}
+                  format="YYYY-MM-DD"
+                />
               </Col>
               <Col span={2}>-</Col>
               <Col span={11}>
-                <DatePicker placeholder='请选择结束日期' defaultValue={moment(moment(), 'YYYY-MM-DD')} onChange={handleEndTime} format="YYYY-MM-DD"/>
+                <DatePicker
+                  placeholder="请选择结束日期"
+                  defaultValue={moment(moment(), 'YYYY-MM-DD')}
+                  onChange={handleEndTime}
+                  format="YYYY-MM-DD"
+                />
               </Col>
             </ConfigProvider>
           </Row>
-      </Space>
-      <div style = {{height:'48%', marginTop: '20px'}}>
-        学生考勤
-        <div className={styles.chartsContainer}>
-          {
-             (xskqConfig.data && xskqConfig.data?.length!==0) ? <Line {...xskqConfig}></Line> : <Empty
-            image={noData}
-            imageStyle={{
-              minHeight: 160
-            }}
-            style={{minHeight: 355}}
-            description={'暂无学生考勤信息'} />
-          }
+        </Space>
+        <div style={{ height: '48%', marginTop: '20px' }}>
+          学生考勤
+          <div className={styles.chartsContainer}>
+            {xskqConfig.data && xskqConfig.data?.length !== 0 ? (
+              <Line {...xskqConfig} />
+            ) : (
+              <Empty
+                image={noData}
+                imageStyle={{
+                  minHeight: 160
+                }}
+                style={{ minHeight: 355 }}
+                description="暂无学生考勤信息"
+              />
+            )}
+          </div>
         </div>
-      </div>
-      <div style = {{height:'48%'}}>
-        教师考勤
-        <div className={styles.chartsContainer}>
-          {
-            (jskqConfig.data && jskqConfig.data?.length!==0)? <Line {...jskqConfig}></Line> : <Empty
-            image={noData}
-            imageStyle={{
-              minHeight: 160
-            }}
-            style={{minHeight: 300}}
-            description={'暂无教师考勤信息'} />
-          }
+        <div style={{ height: '48%' }}>
+          教师考勤
+          <div className={styles.chartsContainer}>
+            {jskqConfig.data && jskqConfig.data?.length !== 0 ? (
+              <Line {...jskqConfig} />
+            ) : (
+              <Empty
+                image={noData}
+                imageStyle={{
+                  minHeight: 160
+                }}
+                style={{ minHeight: 300 }}
+                description="暂无教师考勤信息"
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>
-  </div>)
-}
+  );
+};
 
 export default attendance;

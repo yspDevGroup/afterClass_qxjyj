@@ -20,7 +20,6 @@ const formItemLayout = {
 };
 const SchoolInfo = (props: any) => {
   const { state } = props.location;
-  console.log(state, '-----');
   return (
     <>
       <Button

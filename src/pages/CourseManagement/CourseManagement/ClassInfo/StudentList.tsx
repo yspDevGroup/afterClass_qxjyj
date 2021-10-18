@@ -2,20 +2,33 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-09-07 08:30:40
- * @LastEditTime: 2021-10-13 10:56:00
+ * @LastEditTime: 2021-10-13 10:38:56
  * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useState } from 'react';
 import { LeftOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Avatar, Row, Empty } from 'antd';
+import { Button, Card, Col, Avatar, Row, Empty, Tooltip } from 'antd';
 import stuImg from '@/assets/stu.png';
-
 import styles from './index.less';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
+import { getClassStudents } from '@/services/after-class-qxjyj/khbjsj';
 
 const { Meta } = Card;
 const StudentList = (props: any) => {
   const { state } = props.history.location;
+  const [Datas, setDatas] = useState<any>();
+  useEffect(() => {
+    (async () => {
+      const res = await getClassStudents({
+        KHBJSJId: state.value.id,
+        page: 0,
+        pageSize: 0
+      });
+      if (res.status === 'ok') {
+        setDatas(res.data);
+      }
+    })();
+  }, []);
   return (
     <div>
       <Button
@@ -31,7 +44,7 @@ const StudentList = (props: any) => {
         返回上一页
       </Button>
       <div>
-        <div className={styles.courseWrapper}>
+        <div className={styles.courseWrappers}>
           <div className={styles.searchWrapper}>
             <span style={{ fontSize: '16px', fontWeight: 'bold' }}>
               {state.xxmc}
@@ -42,12 +55,12 @@ const StudentList = (props: any) => {
             </span>
           </div>
           <div style={{ padding: '0 24px 24px' }}>
-            {state?.value.KHXSBJs.length ? (
+            {Datas?.length ? (
               <Row gutter={[24, 24]}>
-                {state?.value.KHXSBJs?.map((item: any) => {
+                {Datas?.map((item: any) => {
                   const showWXName = item?.XSJBSJ?.XM === '未知' && item?.XSJBSJ?.WechatUserId;
                   return (
-                    <Col span={6} key={item.XSId}>
+                    <Col key={item.XSId}>
                       <Card style={{ display: 'flex' }}>
                         <Meta
                           avatar={<Avatar src={stuImg} />}
@@ -63,6 +76,18 @@ const StudentList = (props: any) => {
                             )
                           }
                         />
+                        <Tooltip title={`${item?.XSJBSJ?.BJSJ?.NJSJ?.NJMC}${item?.XSJBSJ?.BJSJ?.BJ}`}>
+                          <p>
+                            行政班：{item?.XSJBSJ?.BJSJ?.NJSJ?.NJMC}
+                            {item?.XSJBSJ?.BJSJ?.BJ}
+                          </p>
+                        </Tooltip>
+                        <Tooltip title={item?.XSJBSJ?.XH}>
+                          <p>
+                            {' '}
+                            <span>学</span>号：{item?.XSJBSJ?.XH}
+                          </p>
+                        </Tooltip>
                       </Card>
                     </Col>
                   );

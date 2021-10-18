@@ -29,7 +29,7 @@ const CourseInfo = (props: any) => {
     // 老师表格数据
     const thData: any[] = [];
     state?.KHKCJs?.forEach((item: any) => {
-      thData.push(item?.KHJSSJ);
+      thData.push(item?.JZGJBSJ);
     });
     setTeacherData(thData);
     if (state?.id) {
@@ -127,7 +127,7 @@ const CourseInfo = (props: any) => {
         if (showWXName) {
           return <WWOpenDataCom type="userName" openid={record.WechatUserId} />;
         }
-        return <div key={record?.id}>{record?.XM}</div>;
+        return record?.XM;
       }
     },
     {

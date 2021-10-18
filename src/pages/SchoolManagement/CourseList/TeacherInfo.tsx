@@ -16,6 +16,7 @@ import { LeftOutlined } from '@ant-design/icons';
 
 import 'antd/es/modal/style';
 import styles from './index.less';
+import { getJZGJBSJ } from '@/services/after-class-qxjyj/jzgjbsj';
 
 const formItemLayout = {
   labelCol: { flex: '7em' },
@@ -36,12 +37,17 @@ const TeacherInfo = (props: any) => {
   const [zpUrl, setZPUrl] = useState('');
   const [zgzsUrl, setZGZSUrl] = useState('');
   useEffect(() => {
-    if (values) {
-      setZPUrl(values.ZP ? values.ZP : '');
-      setZGZSUrl(values.ZGZS ? values.ZGZS : '');
-      setInfo(values);
-    }
-  }, [values]);
+    (async () => {
+      const res = await getJZGJBSJ({
+        id: state.id
+      });
+      if (res.status === 'ok') {
+        setInfo(res.data);
+        setZPUrl(res.data.ZP ? res.data.ZP : '');
+        setZGZSUrl(res.data.ZGZS ? res.data.ZGZS : '');
+      }
+    })();
+  }, []);
   // 文件状态改变的回调
   const imageChange = (type: string, e?: any) => {
     if (e.file.status === 'done') {
@@ -197,7 +203,7 @@ const TeacherInfo = (props: any) => {
           label: '联系电话',
           name: 'LXDH',
           key: 'LXDH',
-          placeholder: readonly ? '——' : '',
+          placeholder: readonly ? '——' : ''
         },
         {
           type: 'inputNumber',
@@ -311,7 +317,7 @@ const TeacherInfo = (props: any) => {
                 const { CSRQ, XBM, ...rest } = info;
                 return {
                   CSRQ: CSRQ ? moment(CSRQ) : '',
-                  XBM: XBM === '男性' ? '男' : '女',
+                  XBM: XBM === '女性' ? '女' : XBM === '男性' ? '男' : '',
                   ...rest
                 };
               }

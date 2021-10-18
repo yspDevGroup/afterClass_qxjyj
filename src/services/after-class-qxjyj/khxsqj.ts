@@ -9,7 +9,7 @@ export async function getKHXSQJ(
     /** 类型ID */
     id: string;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
   return request<{
@@ -24,7 +24,13 @@ export async function getKHXSQJ(
       QJLX?: '按课时请假' | '按时间请假';
       createdAt?: string;
       updatedAt?: string;
-      XSJBSJ?: { id?: string; XH?: string; XM?: string; WechatUserId?: string };
+      XSJBSJ?: {
+        id?: string;
+        XH?: string;
+        XM?: string;
+        WechatUserId?: string;
+        BJSJ?: { id?: string; BJ?: string; NJSJ?: { id?: string; NJMC?: string; XD?: string } };
+      };
       KHQJKCs?: {
         QJRQ?: string;
         KCMC?: string;
@@ -38,7 +44,11 @@ export async function getKHXSQJ(
           FY?: number;
           KCTP?: string;
           XQSJ?: { id?: any; XXJBSJ?: { XXMC?: any } };
-          KHBJJs?: { JSLX?: string; id?: string; JZGJBSJ?: { id?: string; XM?: string } }[];
+          KHBJJs?: {
+            JSLX?: string;
+            id?: string;
+            JZGJBSJ?: { id?: string; XM?: string; WechatUserId?: string };
+          }[];
         };
       }[];
     };
@@ -46,7 +56,7 @@ export async function getKHXSQJ(
   }>(`/khxsqj/${param0}`, {
     method: 'GET',
     params: { ...queryParams },
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -57,13 +67,13 @@ export async function deleteKHXSQJ(
     /** 类型ID */
     id: string;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
   return request<{ status?: 'ok' | 'error'; message?: string }>(`/khxsqj/${param0}`, {
     method: 'DELETE',
     params: { ...queryParams },
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -89,7 +99,7 @@ export async function getAllKHXSQJ(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<{
     status?: 'ok' | 'error';
@@ -98,10 +108,10 @@ export async function getAllKHXSQJ(
   }>('/khxsqj/', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -119,7 +129,13 @@ export async function createKHXSQJ(body: API.CreateKHXSQJ, options?: { [key: str
       QJLX?: '按课时请假' | '按时间请假';
       createdAt?: string;
       updatedAt?: string;
-      XSJBSJ?: { id?: string; XH?: string; XM?: string; WechatUserId?: string };
+      XSJBSJ?: {
+        id?: string;
+        XH?: string;
+        XM?: string;
+        WechatUserId?: string;
+        BJSJ?: { id?: string; BJ?: string; NJSJ?: { id?: string; NJMC?: string; XD?: string } };
+      };
       KHQJKCs?: {
         QJRQ?: string;
         KCMC?: string;
@@ -133,7 +149,11 @@ export async function createKHXSQJ(body: API.CreateKHXSQJ, options?: { [key: str
           FY?: number;
           KCTP?: string;
           XQSJ?: { id?: any; XXJBSJ?: { XXMC?: any } };
-          KHBJJs?: { JSLX?: string; id?: string; JZGJBSJ?: { id?: string; XM?: string } }[];
+          KHBJJs?: {
+            JSLX?: string;
+            id?: string;
+            JZGJBSJ?: { id?: string; XM?: string; WechatUserId?: string };
+          }[];
         };
       }[];
     };
@@ -141,10 +161,10 @@ export async function createKHXSQJ(body: API.CreateKHXSQJ, options?: { [key: str
   }>('/khxsqj/create', {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -160,7 +180,7 @@ export async function getQJKSS(
     /** 学生ID */
     XSJBSJId?: string;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<{
     status?: 'ok' | 'error';
@@ -169,10 +189,10 @@ export async function getQJKSS(
   }>('/khxsqj/qjkss', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -184,17 +204,17 @@ export async function updateKHXSQJ(
     id: string;
   },
   body: API.UpdateKHXSQJ,
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
   return request<{ status?: 'ok' | 'error'; message?: string }>(`/khxsqj/update/${param0}`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     params: { ...queryParams },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -217,7 +237,7 @@ export async function getAllAbsences(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<{
     status?: 'ok' | 'error';
@@ -226,9 +246,9 @@ export async function getAllAbsences(
   }>('/khxsqj/getAllAbsences', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }

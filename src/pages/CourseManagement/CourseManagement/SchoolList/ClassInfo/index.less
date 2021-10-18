@@ -25,6 +25,24 @@
     padding: @padding-lg;
     box-shadow: 0px 1px 0px #e4e4e4;
   }
+  :global {
+    .ant-col {
+      width: 20%;
+      .ant-card-body {
+        width: 100%;
+        p {
+          margin-top: 10px;
+          margin-bottom: 0;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          span {
+            margin-right: 14px;
+          }
+        }
+      }
+    }
+  }
 
   .courseIntro {
     padding: 0 @padding-lg @padding-lg;

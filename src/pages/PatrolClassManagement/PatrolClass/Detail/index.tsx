@@ -6,8 +6,6 @@ import { LeftOutlined } from '@ant-design/icons';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
 
 const Detail = (props: any) => {
-  console.log(props.location.state);
-
   const { id, XXMC } = props.location.state;
   const columns: ProColumns<API.KHXSDD>[] | undefined = [
     {

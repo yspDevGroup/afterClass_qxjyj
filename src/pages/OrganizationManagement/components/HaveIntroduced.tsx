@@ -88,14 +88,13 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
       search: false,
       width: 200,
       render: (text: any, record: any) => {
-        const teacher = record.KHKCSJ?.KHKCJs;
         return (
           <EllipsisHint
             width="100%"
-            text={teacher?.map((item: any) => {
-              const showWXName = item?.JZGJBSJ?.XM === '未知' && item.WechatUserId;
+            text={record?.value?.KHKCJs?.map((item: any) => {
+              const showWXName = item?.JZGJBSJ?.XM === '未知' && item?.JZGJBSJ?.WechatUserId;
               if (showWXName) {
-                return <WWOpenDataCom type="userName" openid={item.WechatUserId} />;
+                return <WWOpenDataCom type="userName" openid={item?.JZGJBSJ?.WechatUserId} />;
               }
               return <Tag key={item.id}>{item?.JZGJBSJ?.XM}</Tag>;
             })}
@@ -114,9 +113,13 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
         return (
           <EllipsisHint
             width="100%"
-            text={text?.length ? text.map((item: any) => {
-              return <Tag key={item.XXJBSJ.id}>{item.XXJBSJ.XXMC}</Tag>;
-            }) : ''}
+            text={
+              text?.length
+                ? text.map((item: any) => {
+                    return <Tag key={item.XXJBSJ.id}>{item.XXJBSJ.XXMC}</Tag>;
+                  })
+                : ''
+            }
           />
         );
       }
@@ -130,13 +133,16 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
       ellipsis: true,
       width: 200,
       render: (text, record) => {
-        return <Tooltip placement="topLeft" title={record?.value?.KCMS}>
-          <span
-            className="ant-typography ant-typography-ellipsis ant-typography-single-line"
-            style={{ width: '100%', margin: '0px', padding: '0px' }}>
-            {record?.value?.KCMS}
-          </span>
-        </Tooltip>
+        return (
+          <Tooltip placement="topLeft" title={record?.value?.KCMS}>
+            <span
+              className="ant-typography ant-typography-ellipsis ant-typography-single-line"
+              style={{ width: '100%', margin: '0px', padding: '0px' }}
+            >
+              {record?.value?.KCMS}
+            </span>
+          </Tooltip>
+        );
       }
     },
     {
@@ -196,7 +202,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
         pagination={{
           showQuickJumper: true,
           pageSize: 10,
-          defaultCurrent: 1,
+          defaultCurrent: 1
         }}
         scroll={{ x: 1300 }}
         search={false}

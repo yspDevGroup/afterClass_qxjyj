@@ -32,7 +32,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any; type?: st
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
-      fixed:'left',
+      fixed: 'left',
       align: 'center'
     },
     {
@@ -42,7 +42,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any; type?: st
       align: 'center',
       search: false,
       width: 120,
-      fixed:'left',
+      fixed: 'left',
       ellipsis: true
     },
     {
@@ -52,7 +52,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any; type?: st
       align: 'center',
       width: 120,
       search: false,
-      ellipsis: true,
+      ellipsis: true
     },
     {
       title: '适用年级',
@@ -82,14 +82,13 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any; type?: st
       ellipsis: true,
       search: false,
       render: (text: any, record: any) => {
-        const teacher = record.KHKCSJ?.KHKCJs;
         return (
           <EllipsisHint
             width="100%"
-            text={teacher?.map((item: any) => {
-              const showWXName = item?.JZGJBSJ?.XM === '未知' && item.WechatUserId;
+            text={record?.value?.KHKCJs?.map((item: any) => {
+              const showWXName = item?.JZGJBSJ?.XM === '未知' && item?.JZGJBSJ?.WechatUserId;
               if (showWXName) {
-                return <WWOpenDataCom type="userName" openid={item.WechatUserId} />;
+                return <WWOpenDataCom type="userName" openid={item?.JZGJBSJ?.WechatUserId} />;
               }
               return <Tag key={item.id}>{item?.JZGJBSJ?.XM}</Tag>;
             })}
@@ -155,7 +154,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any; type?: st
         pagination={{
           showQuickJumper: true,
           pageSize: 10,
-          defaultCurrent: 1,
+          defaultCurrent: 1
         }}
         scroll={{ x: 1000 }}
         search={false}
