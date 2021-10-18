@@ -1,4 +1,3 @@
-
 // 配置路由
 import React from 'react';
 import {
@@ -168,6 +167,10 @@ export default {
           {
             name: '退课管理',
             path: '/courseManagement/reimbursementClass'
+          },
+          {
+            name: '退款管理',
+            path: '/courseManagement/refundManagement'
           }
         ]
       },
@@ -249,14 +252,14 @@ export default {
         routes: [
           {
             path: '/statistics/graphic',
-            name: '数据大屏',
+            name: '数据大屏'
           },
           {
             path: '/statistics/afterSchoolCourse',
             name: '课程统计',
             routes: [
               {
-                path:'/statistics/afterSchoolCourse/school',
+                path: '/statistics/afterSchoolCourse/school',
                 name: '开设课程学校',
                 hideInMenu: 'true',
                 routes: [
@@ -264,14 +267,14 @@ export default {
                     path: '/statistics/afterSchoolCourse/detail',
                     name: '课程班统计',
                     hideInMenu: 'true'
-                  },
+                  }
                 ]
-              },
+              }
             ]
           },
           {
             path: '/statistics/MutualEvaluation',
-            name: '互评统计',
+            name: '互评统计'
           },
           {
             path: '/statistics/MutualEvaluation/course',
