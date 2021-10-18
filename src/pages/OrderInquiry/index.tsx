@@ -2,18 +2,19 @@
  * @description:
  * @author: gxh
  * @Date: 2021-09-22 11:54:38
- * @LastEditTime: 2021-10-18 10:00:36
+ * @LastEditTime: 2021-10-18 16:47:59
  * @LastEditors: Sissle Lynn
  */
 
 import ProTable, { ActionType, ProColumns, RequestData } from '@ant-design/pro-table';
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Select, Space } from 'antd';
+import { Button, Select, Space, Tag } from 'antd';
 import { Link, useModel } from 'umi';
 import { getAllSchools } from '@/services/after-class-qxjyj/jyjgsj';
 const { Option } = Select;
 import styles from './index.less';
 import { TableListParams } from '@/constant';
+import EllipsisHint from '@/components/EllipsisHint';
 // 点击查询按钮
 const OrderInquiry = () => {
   const SubmitTable = () => { };
@@ -22,12 +23,16 @@ const OrderInquiry = () => {
       title: '序号',
       align: 'center',
       dataIndex: 'index',
-      valueType: 'index'
+      valueType: 'index',
+      fixed: 'left',
+      width: 50,
     },
     {
       title: '学校名称',
       dataIndex: 'XXMC',
       key: 'XXMC',
+      width: 160,
+      fixed: 'left',
       align: 'center'
     },
     {
@@ -35,7 +40,22 @@ const OrderInquiry = () => {
       key: 'XD',
       dataIndex: 'XD',
       align: 'center',
-      search: false
+      width: 130,
+      search: false,
+      render: (_: any,record: any) => {
+        const data = record?.XD?.split(/,/g);
+        return (
+          <EllipsisHint
+            width="100%"
+            text={
+              data?.length &&
+              data?.map((item: any) => {
+                return <Tag key={item}>{item}</Tag>;
+              })
+            }
+          />
+        );
+      }
     },
     {
       title: '联系人',
@@ -50,7 +70,7 @@ const OrderInquiry = () => {
       key: 'LXDH',
       dataIndex: 'LXDH',
       align: 'center',
-      width: 180,
+      width: 120,
       search: false
     },
     {
@@ -58,7 +78,7 @@ const OrderInquiry = () => {
       key: 'KHKCSQs',
       dataIndex: 'KHKCSQs',
       align: 'center',
-      width: 120,
+      width: 130,
       search: false,
       render: (_, record) => {
         const num1 = record.KHKCSQs?.length;
@@ -71,6 +91,8 @@ const OrderInquiry = () => {
       title: '操作',
       align: 'center',
       search: false,
+      width: 160,
+      fixed: 'right',
       render: (_, record) => {
         return (
           <Space>
@@ -145,6 +167,12 @@ const OrderInquiry = () => {
         columns={columns}
         actionRef={actionRef}
         search={false}
+        pagination={{
+          showQuickJumper: true,
+          pageSize: 10,
+          defaultCurrent: 1,
+        }}
+        scroll={{ x: 1000 }}
         options={{
           setting: false,
           fullScreen: false,

@@ -19,6 +19,7 @@ const StateTab = (props: any) => {
       valueType: 'index',
       align: 'center',
       width: 50,
+      fixed: 'left',
       search: false
     },
     {
@@ -27,6 +28,9 @@ const StateTab = (props: any) => {
       key: 'XSXM',
       align: 'center',
       search: false,
+      width: 110,
+      ellipsis: true,
+      fixed: 'left',
       render: (text: any, record: any) => {
         const showWXName = record?.XSJBSJ?.XM === '未知' && record.WechatUserId;
         if (showWXName) {
@@ -40,7 +44,7 @@ const StateTab = (props: any) => {
       dataIndex: 'XZBJSJ',
       key: 'XZBJSJ',
       align: 'center',
-      width: 100,
+      width: 130,
       ellipsis: true,
       render: (_text: any, record: any) => {
         return `${record?.XSJBSJ?.BJSJ?.NJSJ?.NJMC}${record?.XSJBSJ?.BJSJ?.BJ}`;
@@ -52,6 +56,8 @@ const StateTab = (props: any) => {
       key: 'BJMC',
       align: 'center',
       search: false,
+      width: 130,
+      ellipsis: true,
       render: (_text: any, record: any) => {
         return <div>{record?.KHBJSJ?.BJMC}</div>;
       }
@@ -62,6 +68,8 @@ const StateTab = (props: any) => {
       key: 'KCMC',
       align: 'center',
       search: false,
+      width: 150,
+      ellipsis: true,
       render: (_text: any, record: any) => {
         return <div>{record?.KHBJSJ?.KHKCSJ?.KCMC}</div>;
       }
@@ -70,6 +78,8 @@ const StateTab = (props: any) => {
       title: '下单时间',
       dataIndex: 'XDSJ',
       key: 'XDSJ',
+      width: 160,
+      ellipsis: true,
       align: 'center',
       search: false
     },
@@ -77,6 +87,7 @@ const StateTab = (props: any) => {
       title: '付款时间',
       dataIndex: 'ZFSJ',
       key: 'ZFSJ',
+      width: 160,
       align: 'center',
       search: false
     },
@@ -84,6 +95,7 @@ const StateTab = (props: any) => {
       title: '订单费用(元)',
       dataIndex: 'DDFY',
       key: 'DDFY',
+      width: 120,
       align: 'center',
       search: false
     },
@@ -91,6 +103,7 @@ const StateTab = (props: any) => {
       title: '订单状态',
       dataIndex: 'DDZT',
       key: 'DDZT',
+      width: 100,
       align: 'center',
       search: false
     }
@@ -106,12 +119,14 @@ const StateTab = (props: any) => {
   return (
     <>
       <div>
-        {/* <div className={styles.searchs}>
-
-        </div> */}
         <ProTable
           columns={columns}
-          // bordered
+          pagination={{
+            showQuickJumper: true,
+            pageSize: 10,
+            defaultCurrent: 1,
+          }}
+          scroll={{ x: 1000 }}
           dataSource={dataSource}
           options={{
             setting: false,

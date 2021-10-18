@@ -25,13 +25,15 @@ const Class = (props: any) => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
+      fixed:'left',
       align: 'center'
     },
     {
       title: '课程班名称',
       dataIndex: 'BJMC',
       key: 'BJMC',
-      width: 180,
+      width: 160,
+      fixed:'left',
       ellipsis: true,
       align: 'center'
     },
@@ -39,7 +41,7 @@ const Class = (props: any) => {
       title: '主班',
       dataIndex: 'KHBJJs',
       key: 'KHBJJs',
-      width: 150,
+      width: 100,
       align: 'center',
       render: (_, record) => {
         return record?.KHBJJs.map((item: any) => {
@@ -56,21 +58,21 @@ const Class = (props: any) => {
       dataIndex: 'pj_count',
       key: ' pj_count',
       align: 'center',
-      width: 150
+      width: 100
     },
     {
       title: '课程班人数',
       dataIndex: 'pj_count',
       key: 'pj_count ',
       align: 'center',
-      width: 150
+      width: 110
     },
     {
       title: '课程班评分',
       dataIndex: 'pj_avg',
       key: 'pj_avg',
       align: 'center',
-      width: 200,
+      width: 180,
       render: (text: any) => <Rate count={5} defaultValue={text} disabled={true} />
     },
     {
@@ -78,7 +80,8 @@ const Class = (props: any) => {
       dataIndex: 'XSXM',
       key: 'XSXM',
       align: 'center',
-      width: 150,
+      fixed:'right',
+      width: 100,
       render: (_, record) => (
         <>
           <Link
@@ -177,6 +180,12 @@ const Class = (props: any) => {
       <ProTable
         headerTitle={KCMC + ' / ' + XXMC}
         columns={columns}
+        pagination={{
+          showQuickJumper: true,
+          pageSize: 10,
+          defaultCurrent: 1,
+        }}
+        scroll={{ x: 950 }}
         dataSource={dataSource}
         rowKey="id"
         search={false}

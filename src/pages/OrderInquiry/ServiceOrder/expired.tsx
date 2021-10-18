@@ -18,6 +18,7 @@ const StateTab = (props: any) => {
       dataIndex: 'index',
       valueType: 'index',
       align: 'center',
+      fixed: 'left',
       width: 50
     },
     {
@@ -25,6 +26,9 @@ const StateTab = (props: any) => {
       dataIndex: 'XSXM',
       key: 'XSXM',
       align: 'center',
+      fixed: 'left',
+      width: 110,
+      ellipsis: true,
       render: (text: any, record: any) => {
         const showWXName = record?.XSJBSJ?.XM === '未知' && record.WechatUserId;
         if (showWXName) {
@@ -38,7 +42,7 @@ const StateTab = (props: any) => {
       dataIndex: 'XZBJSJ',
       key: 'XZBJSJ',
       align: 'center',
-      width: 100,
+      width: 130,
       ellipsis: true,
       render: (_text: any, record: any) => {
         return `${record?.XSJBSJ?.BJSJ?.NJSJ?.NJMC}${record?.XSJBSJ?.BJSJ?.BJ}`;
@@ -49,6 +53,8 @@ const StateTab = (props: any) => {
       dataIndex: 'KHXXZZFW',
       key: 'KHXXZZFW',
       align: 'center',
+      width: 180,
+      ellipsis: true,
       render: (text: any) => {
         return <div>{text?.FWMC}</div>;
       }
@@ -57,24 +63,28 @@ const StateTab = (props: any) => {
       title: '下单时间',
       dataIndex: 'XDSJ',
       key: 'XDSJ',
+      width: 160,
       align: 'center'
     },
     {
       title: '付款时间',
       dataIndex: 'ZFSJ',
       key: 'ZFSJ',
+      width: 160,
       align: 'center'
     },
     {
       title: '订单费用(元)',
       dataIndex: 'DDFY',
       key: 'DDFY',
+      width: 120,
       align: 'center'
     },
     {
       title: '订单状态',
       dataIndex: 'DDZT',
       key: 'DDZT',
+      width: 100,
       align: 'center'
     }
   ];
@@ -90,7 +100,12 @@ const StateTab = (props: any) => {
       <div>
         <ProTable
           columns={columns}
-          // bordered
+          pagination={{
+            showQuickJumper: true,
+            pageSize: 10,
+            defaultCurrent: 1,
+          }}
+          scroll={{ x: 1000 }}
           dataSource={dataSource}
           options={{
             setting: false,

@@ -20,29 +20,32 @@ const TabList = (props: any) => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
+      fixed:'left',
       align: 'center'
     },
     {
       title: '评价人',
       dataIndex: 'PJR',
       key: 'PJR',
+      fixed:'left',
       align: 'center',
-      width: 150
-    },
-    {
-      title: '评价时间',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-      align: 'center',
-      width: 200
+      width: 150,
+      ellipsis: true,
     },
     {
       title: '课程评分',
       dataIndex: 'PJFS',
       key: 'PJFS',
       align: 'center',
-      width: 200,
+      width: 180,
       render: (_, record) => <Rate count={5} defaultValue={record?.PJFS} disabled={true} />
+    },
+    {
+      title: '评价时间',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      align: 'center',
+      width: 160
     },
     {
       title: '评价内容',
@@ -60,6 +63,7 @@ const TabList = (props: any) => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
+      fixed:'left',
       align: 'center'
     },
     {
@@ -67,6 +71,8 @@ const TabList = (props: any) => {
       dataIndex: 'XSXM',
       key: 'XSXM',
       align: 'center',
+      width: 110,
+      fixed:'left',
       render: (text: any, record: any) => {
         const showWXName = record.XSJBSJ?.XM === '未知' && record.WechatUserId;
         if (showWXName) {
@@ -80,7 +86,7 @@ const TabList = (props: any) => {
       dataIndex: 'XZBJSJ',
       key: 'XZBJSJ',
       align: 'center',
-      width: 100,
+      width: 130,
       ellipsis: true,
       render: (_text: any, record: any) => {
         return `${record?.XSJBSJ?.BJSJ?.NJSJ?.NJMC}${record?.XSJBSJ?.BJSJ?.BJ}`;
@@ -90,6 +96,8 @@ const TabList = (props: any) => {
       title: '课程班名称',
       dataIndex: 'BJMC',
       key: 'BJMC',
+      width: 130,
+      ellipsis: true,
       align: 'center',
       render: () => {
         return <span>{ListState.BJMC}</span>;
@@ -100,7 +108,7 @@ const TabList = (props: any) => {
       dataIndex: 'JZGJBSJ',
       key: 'JZGJBSJ',
       align: 'center',
-      width: 200,
+      width: 130,
       render: (_, record) => {
         const showWXName = record?.JZGJBSJ?.XM === '未知' && record.WechatUserId;
         if (showWXName) {
@@ -114,14 +122,14 @@ const TabList = (props: any) => {
       dataIndex: 'createdAt',
       key: 'createdAt',
       align: 'center',
-      width: 200
+      width: 160
     },
     {
       title: '课程评分',
       dataIndex: 'PJFS',
       key: 'PJFS',
       align: 'center',
-      width: 200,
+      width: 180,
       render: (_, record) => <Rate count={5} defaultValue={record?.PJFS} disabled={true} />
     },
     {
@@ -129,6 +137,7 @@ const TabList = (props: any) => {
       dataIndex: 'PY',
       key: 'PY',
       align: 'center',
+      width: 130,
       render: (text: any) => {
         return (
           <a
@@ -188,6 +197,12 @@ const TabList = (props: any) => {
       <ProTable
         columns={ListName === '学生评价' ? student : teacher}
         dataSource={ListName === '学生评价' ? StuList : teacherList}
+        pagination={{
+          showQuickJumper: true,
+          pageSize: 10,
+          defaultCurrent: 1,
+        }}
+        scroll={{ x: ListName === '学生评价' ? 1200 : 1000 }}
         rowKey="id"
         search={false}
         options={{

@@ -43,6 +43,7 @@ const MutualEvaluation = (data: any) => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
+      fixed: 'left',
       align: 'center'
     },
     {
@@ -51,13 +52,14 @@ const MutualEvaluation = (data: any) => {
       key: 'KCMC',
       align: 'center',
       width: 150,
+      fixed: 'left',
       ellipsis: true
     },
     {
       title: '课程来源',
       dataIndex: 'KHJYJG',
       key: 'KHJYJG',
-      width: 150,
+      width: 120,
       ellipsis: true,
       align: 'center',
       render: (test: any, record: any) => {
@@ -69,7 +71,7 @@ const MutualEvaluation = (data: any) => {
       dataIndex: 'KHKCLX',
       key: 'KHKCLX',
       align: 'center',
-      width: 150,
+      width: 120,
       ellipsis: true,
       render: (_, record) => {
         return record?.KHKCLX?.KCTAG;
@@ -80,7 +82,7 @@ const MutualEvaluation = (data: any) => {
       dataIndex: 'JGMC',
       key: 'JGMC',
       align: 'center',
-      width: 180,
+      width: 160,
       ellipsis: true,
       render: (_, record) => {
         return record.SSJGLX === '校内课程' ? record?.XXJBSJ?.XXMC : record?.KHJYJG?.QYMC
@@ -91,7 +93,7 @@ const MutualEvaluation = (data: any) => {
       dataIndex: 'HZXXS',
       key: 'HZXXS',
       align: 'center',
-      width: 180,
+      width: 160,
       ellipsis: true,
       render: (_, record) => {
         return record.SSJGLX === '校内课程' ? 1 : record.xx_count
@@ -102,11 +104,11 @@ const MutualEvaluation = (data: any) => {
       dataIndex: 'PJFS',
       key: 'PJFS',
       align: 'center',
-      width: 200,
+      width: 180,
       ellipsis: true,
-      render: (_: any,record: any) => {
-        const fs = Number(record.PJFS).toFixed(0);
-        return <Rate count={5} value={fs} disabled={true} />
+      render: (_: any, record: any) => {
+        const fs = Number(record.PJFS).toFixed(0) || 0;
+        return <Rate count={5} value={fs as unknown as number} disabled={true} />
       },
     },
     {
@@ -115,7 +117,8 @@ const MutualEvaluation = (data: any) => {
       key: 'operation',
       align: 'center',
       ellipsis: true,
-      width: 150,
+      fixed: 'right',
+      width: 100,
       render: (_, record) => (
         <>
           <Link
@@ -187,6 +190,12 @@ const MutualEvaluation = (data: any) => {
       <ProTable
         columns={columns}
         dataSource={dataSource}
+        pagination={{
+          showQuickJumper: true,
+          pageSize: 10,
+          defaultCurrent: 1,
+        }}
+        scroll={{ x: 1100 }}
         rowKey="id"
         search={false}
         options={{

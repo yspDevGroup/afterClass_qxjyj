@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-10-12 14:46:08
- * @LastEditTime: 2021-10-18 10:37:32
+ * @LastEditTime: 2021-10-18 16:56:55
  * @LastEditors: Sissle Lynn
  */
 import { useEffect, useState } from 'react';
@@ -10,10 +10,11 @@ import type { ProColumns } from '@ant-design/pro-table';
 import { useModel, Link } from 'umi';
 import { LeftOutlined } from '@ant-design/icons';
 import ProTable from '@ant-design/pro-table';
-import { Button, Input, Select } from 'antd';
+import { Button, Input, Select, Tag } from 'antd';
 import { getAllSchools, getClassesByCourse, getCoursesInfo } from '@/services/after-class-qxjyj/jyjgsj';
 
 import styles from './index.less';
+import EllipsisHint from '@/components/EllipsisHint';
 
 const { Search } = Input;
 const School = (props: any) => {
@@ -31,6 +32,7 @@ const School = (props: any) => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
+      fixed:'left',
       align: 'center'
     },
     {
@@ -38,6 +40,7 @@ const School = (props: any) => {
       dataIndex: 'XXMC',
       key: 'XXMC',
       width: 120,
+      fixed:'left',
       ellipsis: true,
       align: 'center',
       render:(_,record)=>{
@@ -48,11 +51,22 @@ const School = (props: any) => {
       title: '学段',
       dataIndex: 'XD',
       key: 'XD',
-      width: 100,
+      width: 150,
       ellipsis: true,
       align: 'center',
-      render:(_,record)=>{
-        return record?.XXJBSJ?.XD
+      render: (_: any,record: any) => {
+        const data = record?.XXJBSJ?.XD?.split(/,/g);
+        return (
+          <EllipsisHint
+            width="100%"
+            text={
+              data?.length &&
+              data?.map((item: any) => {
+                return <Tag key={item}>{item}</Tag>;
+              })
+            }
+          />
+        );
       }
     },
     {
@@ -113,6 +127,7 @@ const School = (props: any) => {
       key: 'XSXM',
       align: 'center',
       width: 120,
+      fixed:'right',
       ellipsis: true,
       render: (_, record) => (
         <>
@@ -179,6 +194,12 @@ const School = (props: any) => {
         <ProTable
           headerTitle={KCMC}
           columns={columns}
+          pagination={{
+            showQuickJumper: true,
+            pageSize: 10,
+            defaultCurrent: 1,
+          }}
+          scroll={{ x: 1200 }}
           dataSource={dataSource}
           rowKey="id"
           search={false}

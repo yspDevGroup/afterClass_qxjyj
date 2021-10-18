@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ProTable, { ActionType, ProColumns, RequestData } from '@ant-design/pro-table';
-import { Button, Input, Rate,Space } from 'antd';
+import { Button, Input, Rate,Space, Tag } from 'antd';
 import { Link, useModel } from 'umi';
 import { LeftOutlined, } from '@ant-design/icons';
 import { getSchoolCoursesEvaluation } from '@/services/after-class-qxjyj/jyjgsj';
 import styles from '../index.less';
 import { TableListParams } from '@/constant';
+import EllipsisHint from '@/components/EllipsisHint';
 
 const { Search } = Input;
 // 点击查询按钮
@@ -25,6 +26,7 @@ const OrderInquiry = (props: any) => {
       title: '序号',
       align: 'center',
       dataIndex: 'index',
+      fixed: 'left',
       width: 50,
       valueType: 'index'
     },
@@ -32,6 +34,7 @@ const OrderInquiry = (props: any) => {
       title: '学校名称',
       dataIndex: 'XXMC',
       key: 'XXMC',
+      fixed: 'left',
       width: 160,
       align: 'center'
     },
@@ -40,8 +43,22 @@ const OrderInquiry = (props: any) => {
       key: 'XD',
       dataIndex: 'XD',
       align: 'center',
-      width: 120,
-      search: false
+      width: 140,
+      search: false,
+      render: (_: any,record: any) => {
+        const data = record?.XD?.split(/,/g);
+        return (
+          <EllipsisHint
+            width="100%"
+            text={
+              data?.length &&
+              data?.map((item: any) => {
+                return <Tag key={item}>{item}</Tag>;
+              })
+            }
+          />
+        );
+      }
     },
     {
       title: '联系人',
@@ -56,7 +73,7 @@ const OrderInquiry = (props: any) => {
       key: 'LXDH',
       dataIndex: 'LXDH',
       align: 'center',
-      width: 180,
+      width: 120,
       search: false
     },
     {
@@ -64,7 +81,7 @@ const OrderInquiry = (props: any) => {
       dataIndex: 'PJFS',
       key: 'PJFS',
       align: 'center',
-      width: 200,
+      width: 180,
       render: (_: any,record: any) => {
         return <Rate count={5} value={record.PJFS} disabled={true} />
       },
@@ -73,7 +90,8 @@ const OrderInquiry = (props: any) => {
       title: '操作',
       align: 'center',
       search: false,
-      width: 150,
+      width: 100,
+      fixed:'right',
       render: (_, record) => {
         return (
           <Space>
@@ -148,6 +166,12 @@ const OrderInquiry = (props: any) => {
           density: false,
           reload: false
         }}
+        pagination={{
+          showQuickJumper: true,
+          pageSize: 10,
+          defaultCurrent: 1,
+        }}
+        scroll={{ x: 1000 }}
         dataSource={dataSource}
       />
     </>

@@ -56,13 +56,14 @@ const AfterSchoolClass = (props: any) => {
       message.error(res.message);
     }
   };
-  /// table表格数据
+  // table表格数据
   const columns: ProColumns<any>[] = [
     {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
+      fixed: 'left',
       align: 'center'
     },
     {
@@ -70,6 +71,7 @@ const AfterSchoolClass = (props: any) => {
       dataIndex: 'BJMC',
       key: 'BJMC',
       align: 'center',
+      fixed: 'left',
       render: (test: any,) => {
         return test;
       },
@@ -197,6 +199,12 @@ const AfterSchoolClass = (props: any) => {
         <ProTable
           headerTitle={KCMC + ' / ' + XXMC}
           columns={columns}
+          pagination={{
+            showQuickJumper: true,
+            pageSize: 10,
+            defaultCurrent: 1,
+          }}
+          scroll={{ x: 1300 }}
           dataSource={dataSource}
           rowKey="id"
           search={false}
