@@ -13,6 +13,7 @@ import EllipsisHint from '@/components/EllipsisHint';
 import { getCurrentXQ } from '@/utils/utils';
 import { getAllXNXQ } from '@/services/after-class-qxjyj/xnxq';
 import styles from './index.less';
+import WWOpenDataCom from '@/components/WWOpenDataCom';
 
 const { Option } = Select;
 
@@ -30,7 +31,7 @@ const AfterSchoolClass = (props: any) => {
   const getCourseList = async (kcdm: string, xnxq?: string) => {
     const res = await getClasses({
       XNXQId: xnxq,
-      KHKCSJId: kcdm,
+      KHKCSJId: kcdm
     });
     if (res?.status === 'ok') {
       setDataSource(res?.data?.rows);
@@ -38,7 +39,7 @@ const AfterSchoolClass = (props: any) => {
   };
   const getXNXQ = async (xxdm: string) => {
     const res = await getAllXNXQ({
-      XXJBSJId: xxdm,
+      XXJBSJId: xxdm
     });
     if (res?.status === 'ok') {
       const { data = [] } = res;
@@ -56,14 +57,13 @@ const AfterSchoolClass = (props: any) => {
       message.error(res.message);
     }
   };
-  // table表格数据
+  // / table表格数据
   const columns: ProColumns<any>[] = [
     {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
-      fixed: 'left',
       align: 'center'
     },
     {
@@ -71,23 +71,34 @@ const AfterSchoolClass = (props: any) => {
       dataIndex: 'BJMC',
       key: 'BJMC',
       align: 'center',
-      fixed: 'left',
-      render: (test: any,) => {
+      render: (test: any) => {
         return test;
       },
       ellipsis: true,
-      width: 140,
+      width: 140
     },
     {
       title: '任课教师',
       dataIndex: 'RKJS',
       key: 'RKJS',
       align: 'center',
-      render: (test: any,) => {
-        return test;
+      render: (test: any, record: any) => {
+        console.log(record);
+        return (
+          <EllipsisHint
+            width="100%"
+            text={record?.KHBJSJ?.KHBJJs?.map((item: any) => {
+              const showWXName = item?.JZGJBSJ?.XM === '未知' && item?.JZGJBSJ?.WechatUserId;
+              if (showWXName) {
+                return <WWOpenDataCom type="userName" openid={item?.JZGJBSJ?.WechatUserId} />;
+              }
+              return <Tag key={item.id}>{item?.JZGJBSJ?.XM}</Tag>;
+            })}
+          />
+        );
       },
       width: 120,
-      ellipsis: true,
+      ellipsis: true
     },
     {
       title: '开课时段',
@@ -97,7 +108,7 @@ const AfterSchoolClass = (props: any) => {
       width: 180,
       render: (_, record: any) => {
         return moment(record?.KKSJ).format('YYYY.MM.DD') + '~' + moment(record?.JKSJ).format('YYYY.MM.DD');
-      },
+      }
     },
     {
       title: '适用年级',
@@ -108,17 +119,16 @@ const AfterSchoolClass = (props: any) => {
         return (
           <EllipsisHint
             width="100%"
-            text={text && text.split(',')?.map((item: any) => {
-              return (
-                <Tag key={item.id}>
-                  {item}
-                </Tag>
-              );
-            })}
+            text={
+              text &&
+              text.split(',')?.map((item: any) => {
+                return <Tag key={item.id}>{item}</Tag>;
+              })
+            }
           />
         );
       },
-      width: 150,
+      width: 150
     },
     {
       title: '课时数',
@@ -126,7 +136,7 @@ const AfterSchoolClass = (props: any) => {
       key: 'KSS',
       align: 'center',
       width: 90,
-      ellipsis: true,
+      ellipsis: true
     },
     {
       title: '报名人数',
@@ -134,7 +144,7 @@ const AfterSchoolClass = (props: any) => {
       key: 'BMRS',
       align: 'center',
       width: 90,
-      ellipsis: true,
+      ellipsis: true
     },
     {
       title: '退课人数',
@@ -142,7 +152,7 @@ const AfterSchoolClass = (props: any) => {
       key: 'TKRS',
       align: 'center',
       width: 100,
-      ellipsis: true,
+      ellipsis: true
     },
     {
       title: '收款金额',
@@ -150,7 +160,7 @@ const AfterSchoolClass = (props: any) => {
       key: 'SKJE',
       align: 'center',
       width: 100,
-      ellipsis: true,
+      ellipsis: true
     },
     {
       title: '退款金额',
@@ -158,12 +168,12 @@ const AfterSchoolClass = (props: any) => {
       key: 'TKJE',
       align: 'center',
       width: 100,
-      ellipsis: true,
-    },
+      ellipsis: true
+    }
   ];
   useEffect(() => {
     getXNXQ(XXJBSJId);
-  }, [])
+  }, []);
   return (
     <>
       <div>
@@ -191,7 +201,11 @@ const AfterSchoolClass = (props: any) => {
               }}
             >
               {termList?.map((item: any) => {
-                return <Option key={item.value} value={item.value}>{item.text}</Option>;
+                return (
+                  <Option key={item.value} value={item.value}>
+                    {item.text}
+                  </Option>
+                );
               })}
             </Select>
           </span>
@@ -199,12 +213,6 @@ const AfterSchoolClass = (props: any) => {
         <ProTable
           headerTitle={KCMC + ' / ' + XXMC}
           columns={columns}
-          pagination={{
-            showQuickJumper: true,
-            pageSize: 10,
-            defaultCurrent: 1,
-          }}
-          scroll={{ x: 1300 }}
           dataSource={dataSource}
           rowKey="id"
           search={false}
@@ -212,7 +220,7 @@ const AfterSchoolClass = (props: any) => {
             setting: false,
             fullScreen: false,
             density: false,
-            reload: false,
+            reload: false
           }}
         />
       </div>
