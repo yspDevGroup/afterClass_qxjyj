@@ -42,23 +42,17 @@ const ReimbursementClass = () => {
       dataIndex: 'index',
       valueType: 'index',
       align: 'center',
-      width: 60
-    },
-    {
-      title: '学校名称',
-      dataIndex: 'XXMC',
-      key: 'XXMC',
-      align: 'center',
-      ellipsis: true,
-      render: (text: any, record: any) => {
-        return record?.KHBJSJ?.XQSJ?.XXJBSJ?.XXMC;
-      }
+      width: 50,
+      fixed:'left'
     },
     {
       title: '学生姓名',
       dataIndex: 'XSXM',
       key: 'XSXM',
       align: 'center',
+      fixed:'left',
+      width: 110,
+      ellipsis: true,
       render: (text: any, record: any) => {
         const showWXName = record?.XSJBSJ?.XM === '未知' && record.WechatUserId;
         if (showWXName) {
@@ -68,11 +62,22 @@ const ReimbursementClass = () => {
       }
     },
     {
+      title: '学校名称',
+      dataIndex: 'XXMC',
+      key: 'XXMC',
+      align: 'center',
+      width: 130,
+      ellipsis: true,
+      render: (text: any, record: any) => {
+        return record?.KHBJSJ?.XQSJ?.XXJBSJ?.XXMC;
+      }
+    },
+    {
       title: '行政班名称',
       dataIndex: 'XZBJSJ',
       key: 'XZBJSJ',
       align: 'center',
-      width: 100,
+      width: 130,
       ellipsis: true,
       render: (_text: any, record: any) => {
         return `${record?.XSJBSJ?.BJSJ?.NJSJ?.NJMC}${record?.XSJBSJ?.BJSJ?.BJ}`;
@@ -83,6 +88,8 @@ const ReimbursementClass = () => {
       dataIndex: 'KHBJSJ',
       key: 'KHBJSJ',
       align: 'center',
+      width: 120,
+      ellipsis: true,
       render: (text: any) => {
         return text?.KHKCSJ?.KCMC;
       }
@@ -92,6 +99,8 @@ const ReimbursementClass = () => {
       dataIndex: 'KHBJSJ',
       key: 'KHBJSJ',
       align: 'center',
+      width: 150,
+      ellipsis: true,
       render: (text: any) => {
         return text?.BJMC;
       }
@@ -100,6 +109,8 @@ const ReimbursementClass = () => {
       title: '退课课时数',
       dataIndex: 'KSS',
       key: 'KSS',
+      width: 100,
+      ellipsis: true,
       align: 'center'
     },
     {
@@ -107,6 +118,8 @@ const ReimbursementClass = () => {
       dataIndex: 'ZT',
       key: 'ZT',
       align: 'center',
+      width: 100,
+      ellipsis: true,
       render: (record: any) => {
         return record.ZT === 0 ? '申请中' : '退课';
       }
@@ -115,6 +128,8 @@ const ReimbursementClass = () => {
       title: '申请时间',
       dataIndex: 'createdAt',
       key: 'createdAt',
+      width: 160,
+      ellipsis: true,
       align: 'center'
     }
   ];
@@ -153,6 +168,12 @@ const ReimbursementClass = () => {
           actionRef={actionRef}
           columns={columns}
           rowKey="id"
+          pagination={{
+            showQuickJumper: true,
+            pageSize: 10,
+            defaultCurrent: 1,
+          }}
+          scroll={{ x: 1300 }}
           request={async () => {
             const resAll = await getAllTK({
               XNXQId: '',

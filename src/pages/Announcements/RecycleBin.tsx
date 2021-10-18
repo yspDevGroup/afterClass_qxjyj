@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-09 17:41:43
- * @LastEditTime: 2021-10-18 10:41:20
+ * @LastEditTime: 2021-10-18 16:27:54
  * @LastEditors: Sissle Lynn
  */
 import React, { useState, useRef, useEffect } from 'react';
@@ -24,6 +24,7 @@ const TableList = () => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
+      fixed: 'left',
       align: 'center'
     },
     {
@@ -31,7 +32,8 @@ const TableList = () => {
       dataIndex: 'BT',
       ellipsis: true,
       align: 'center',
-      width: '18rem'
+      fixed:'left',
+      width: 180,
     },
     {
       title: '作者',
@@ -39,7 +41,7 @@ const TableList = () => {
       ellipsis: true,
       align: 'center',
       search: false,
-      width: '8rem'
+      width: 120,
     },
     {
       title: '发布时间',
@@ -48,12 +50,12 @@ const TableList = () => {
       hideInForm: true,
       search: false,
       align: 'center',
-      width: '10rem'
+      width: 160,
     },
     {
       title: '发布状态',
       dataIndex: 'ZT',
-      width: '10em',
+      width: 120,
       valueEnum: {
         草稿: { text: '草稿', status: 'Default' },
         已发布: { text: '已发布', status: 'Success' },
@@ -69,17 +71,17 @@ const TableList = () => {
       defaultSortOrder: 'descend',
       search: false,
       align: 'center',
-      width: '8em',
+      width: 120,
       render: (text, record) => {
         return <Switch defaultChecked={!!text} size="small" disabled={true} />;
       }
     },
-
     {
       title: '操作',
       dataIndex: 'option',
       valueType: 'option',
-      width: '15em',
+      width: 120,
+      fixed: 'right',
       render: (_, record) => (
         <div className={styles.optionCol}>
           <Option
@@ -106,6 +108,12 @@ const TableList = () => {
       rowKey="id"
       tableAlertRender={false}
       dataSource={dataSource}
+      pagination={{
+        showQuickJumper: true,
+        pageSize: 10,
+        defaultCurrent: 1,
+      }}
+      scroll={{ x: 1000 }}
       request={async (params, sorter, filter) => {
         // 表单搜索项会从 params 传入，传递给后端接口。
         const resgetXXTZGG = await getJYJGTZGG({

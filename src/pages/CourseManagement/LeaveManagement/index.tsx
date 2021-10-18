@@ -8,6 +8,7 @@ import Style from './index.less';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { getAllSchools } from '@/services/after-class-qxjyj/jyjgsj';
+import WWOpenDataCom from '@/components/WWOpenDataCom';
 
 const { Option } = Select;
 const LeaveManagement = () => {
@@ -43,14 +44,30 @@ const LeaveManagement = () => {
       dataIndex: 'index',
       valueType: 'index',
       align: 'center',
+      fixed:'left',
       width: 50
+    },
+    {
+      title: '学生姓名',
+      dataIndex: 'XSXM',
+      key: 'XSXM',
+      align: 'center',
+      fixed:'left',
+      width: 120,
+      render: (text: any, record: any) => {
+        const showWXName = record?.XSJBSJ?.XM === '未知' && record.WechatUserId;
+        if (showWXName) {
+          return <WWOpenDataCom type="userName" openid={record.WechatUserId} />;
+        }
+        return record?.XSJBSJ?.XM;
+      }
     },
     {
       title: '学校名称',
       dataIndex: 'XXMC',
       key: 'XXMC',
       align: 'center',
-      width: 130,
+      width: 150,
       ellipsis: true,
       render: (text: any, record: any) => record.KHQJKCs?.[0].KHBJSJ.XQSJ.XXJBSJ.XXMC
     },
@@ -89,7 +106,7 @@ const LeaveManagement = () => {
       dataIndex: 'QJZT',
       key: 'QJZT',
       align: 'center',
-      width: 80,
+      width: 100,
       render: (text: any) => (text ? '已取消' : '已通过')
     },
     {
@@ -97,7 +114,7 @@ const LeaveManagement = () => {
       dataIndex: 'KSSJ',
       key: 'KSSJ',
       align: 'center',
-      width: 120,
+      width: 160,
       ellipsis: true,
       render: (text: any, record: any) => {
         return (
@@ -112,7 +129,7 @@ const LeaveManagement = () => {
       dataIndex: 'JSSJ',
       key: 'JSSJ',
       align: 'center',
-      width: 120,
+      width: 160,
       ellipsis: true,
       render: (text: any, record: any) => {
         return (
@@ -155,6 +172,12 @@ const LeaveManagement = () => {
           actionRef={actionRef}
           columns={columns}
           rowKey="id"
+          pagination={{
+            showQuickJumper: true,
+            pageSize: 10,
+            defaultCurrent: 1,
+          }}
+          scroll={{ x: 1300 }}
           request={async () => {
             const resAll = await getAllAbsences({
               XNXQId: '',

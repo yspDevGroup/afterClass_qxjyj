@@ -18,7 +18,7 @@ const StateTab = (props: any) => {
       dataIndex: 'index',
       valueType: 'index',
       align: 'center',
-      width: 60
+      width: 50
     },
     {
       title: '学生姓名',

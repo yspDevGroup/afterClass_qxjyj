@@ -27,6 +27,7 @@ const TableList = () => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
+      fixed: 'left',
       align: 'center'
     },
     {
@@ -35,7 +36,8 @@ const TableList = () => {
       key: 'BT',
       ellipsis: true,
       align: 'center',
-      width: '18rem'
+      fixed: 'left',
+      width: 180,
     },
     {
       title: '作者',
@@ -43,7 +45,7 @@ const TableList = () => {
       key: 'ZZ',
       ellipsis: true,
       align: 'center',
-      width: '8rem',
+      width: 120,
       search: false
     },
     {
@@ -53,14 +55,14 @@ const TableList = () => {
       valueType: 'dateTime',
       hideInForm: true,
       align: 'center',
-      search: false,
-      width: '10rem'
+      width: 160,
+      search: false
     },
     {
       title: '发布状态',
       dataIndex: 'ZT',
       key: 'ZT',
-      width: '10em',
+      width: 120,
       align: 'center',
       valueEnum: {
         草稿: { text: '草稿', status: 'Default' },
@@ -74,7 +76,7 @@ const TableList = () => {
       defaultSortOrder: 'descend',
       search: false,
       align: 'center',
-      width: '8em',
+      width: 120,
       render: (text, record) => {
         return (
           <Switch
@@ -109,7 +111,8 @@ const TableList = () => {
       dataIndex: 'option',
       valueType: 'option',
       key: 'option',
-      width: '15em',
+      width: 120,
+      fixed: 'right',
       render: (_, record) => (
         <div className={styles.optionCol}>
           <Option
@@ -135,7 +138,12 @@ const TableList = () => {
         actionRef={actionRef}
         className={styles.proTableStyles}
         rowKey="id"
-        // eslint-disable-next-line react/no-unstable-nested-components
+        pagination={{
+          showQuickJumper: true,
+          pageSize: 10,
+          defaultCurrent: 1,
+        }}
+        scroll={{ x: 1000 }}
         toolBarRender={(_action) => [
           <Button
             key="xinjian"

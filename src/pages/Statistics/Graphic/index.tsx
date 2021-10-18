@@ -116,7 +116,7 @@ const ChartsPage = (props: any) => {
         defaultData.enrollNum = data.xxbm?.length ? [].map.call(data.xxbm, (item: any) => {
           return {
             school: item.XXMC,
-            value: item.bj_count,
+            value: item.xs_count,
           };
         }) : [];
       }

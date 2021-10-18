@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-09-01 20:20:28
- * @LastEditTime: 2021-10-18 10:41:25
+ * @LastEditTime: 2021-10-18 16:26:18
  * @LastEditors: Sissle Lynn
  */
 
@@ -28,6 +28,7 @@ const TableList = () => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
+      fixed: 'left',
       align: 'center'
     },
     {
@@ -36,7 +37,8 @@ const TableList = () => {
       key: 'BT',
       ellipsis: true,
       align: 'center',
-      width: '18rem'
+      fixed: 'left',
+      width: 180,
     },
     {
       title: '作者',
@@ -44,7 +46,7 @@ const TableList = () => {
       key: 'ZZ',
       ellipsis: true,
       align: 'center',
-      width: '8rem',
+      width: 120,
       search: false
     },
     {
@@ -54,14 +56,14 @@ const TableList = () => {
       valueType: 'dateTime',
       hideInForm: true,
       align: 'center',
-      width: '10rem',
+      width: 160,
       search: false
     },
     {
       title: '发布状态',
       dataIndex: 'ZT',
       key: 'ZT',
-      width: '10em',
+      width: 120,
       align: 'center',
       valueEnum: {
         草稿: { text: '草稿', status: 'Default' },
@@ -75,7 +77,7 @@ const TableList = () => {
       defaultSortOrder: 'descend',
       search: false,
       align: 'center',
-      width: '8em',
+      width: 120,
       render: (text, record) => {
         return (
           <Switch
@@ -110,7 +112,8 @@ const TableList = () => {
       dataIndex: 'option',
       valueType: 'option',
       key: 'option',
-      width: '15em',
+      width: 120,
+      fixed: 'right',
       render: (_, record) => (
         <div className={styles.optionCol}>
           <Option
@@ -119,7 +122,7 @@ const TableList = () => {
             record={record}
             refreshHandler={() => {
               if (actionRef.current) {
-                actionRef.current.reload();
+                actionRef?.current?.reload();
               }
             }}
           />
@@ -136,6 +139,12 @@ const TableList = () => {
         actionRef={actionRef}
         className={styles.proTableStyles}
         rowKey="id"
+        pagination={{
+          showQuickJumper: true,
+          pageSize: 10,
+          defaultCurrent: 1,
+        }}
+        scroll={{ x: 1000 }}
         toolBarRender={(action, { selectedRows }) => [
           <Button
             key="xinjian"
