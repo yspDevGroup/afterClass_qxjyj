@@ -1,20 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
 // import { queryXNXQList } from '@/services/local-services/xnxq';
-import { getAllAbsences } from '@/services/after-class-qxjyj/khxsqj';
-// import { message } from 'antd';
+import { getAllTK } from '@/services/after-class-qxjyj/khtksj';
 import { useModel } from 'umi';
-import { message, Select, Tag, Tooltip } from 'antd';
+import type { ColumnsType } from 'antd/lib/table';
+import { Select, Table, Popconfirm, Divider, message } from 'antd';
 import Style from './index.less';
-import type { ActionType, ProColumns } from '@ant-design/pro-table';
-import ProTable from '@ant-design/pro-table';
+import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
 import { getAllSchools } from '@/services/after-class-qxjyj/jyjgsj';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
 import { getAllXNXQ } from '@/services/after-class-qxjyj/xnxq';
 import { getCurrentXQ } from '@/utils/utils';
-import EllipsisHint from '@/components/EllipsisHint';
-
+// import { text } from 'express';
 const { Option } = Select;
-const SchoolLeave = (props: any) => {
+// 退课
+const SchoolReimbursement = (props: any) => {
   const actionRef = useRef<ActionType>();
   const { state } = props.location;
   const { id, xzqhm, xxmc } = state;
@@ -25,10 +24,12 @@ const SchoolLeave = (props: any) => {
   // 表格数据源
   const [dataSource, setDataSource] = useState<any>([]);
   const getList = async (xnxq?: string) => {
-    const resAll = await getAllAbsences({
+    const resAll = await getAllTK({
       XNXQId: xnxq,
       XZQHM: xzqhm,
-      XXJBSJId: id
+      XXJBSJId: id,
+      page: 0,
+      pageSize: 0
     });
     if (resAll.status === 'ok') {
       setDataSource(resAll?.data?.rows);
@@ -57,16 +58,14 @@ const SchoolLeave = (props: any) => {
   useEffect(() => {
     getXNXQ(id);
   }, [])
-
-  // table表格数据
   const columns: ProColumns<any>[] = [
     {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
       align: 'center',
-      fixed: 'left',
-      width: 50
+      width: 50,
+      fixed: 'left'
     },
     {
       title: '学生姓名',
@@ -74,7 +73,8 @@ const SchoolLeave = (props: any) => {
       key: 'XSXM',
       align: 'center',
       fixed: 'left',
-      width: 120,
+      width: 110,
+      ellipsis: true,
       render: (text: any, record: any) => {
         const showWXName = record?.XSJBSJ?.XM === '未知' && record.WechatUserId;
         if (showWXName) {
@@ -88,111 +88,60 @@ const SchoolLeave = (props: any) => {
       dataIndex: 'XZBJSJ',
       key: 'XZBJSJ',
       align: 'center',
+      width: 130,
+      ellipsis: true,
+      render: (_text: any, record: any) => {
+        return `${record?.XSJBSJ?.BJSJ?.NJSJ?.NJMC}${record?.XSJBSJ?.BJSJ?.BJ}`;
+      }
+    },
+    {
+      title: '课程名称 ',
+      dataIndex: 'KHBJSJ',
+      key: 'KHBJSJ',
+      align: 'center',
       width: 120,
       ellipsis: true,
       render: (_text: any, record: any) => {
-        return `${record?.XSJBSJ?.BJSJ?.NJSJ?.NJMC}${record?.XSJBSJ?.BJSJ?.BJ}`
-      },
+        return record?.KHBJSJ?.KHKCSJ?.KCMC;
+      }
     },
     {
-      title: '课程名称',
-      dataIndex: 'KHQJKCs',
-      key: 'KHQJKCs',
-      align: 'center',
-      width: 160,
-      ellipsis: true,
-      render: (text: any, record: any) => {
-        return (
-          <EllipsisHint
-            width="100%"
-            text={record.KHQJKCs?.map((item: any) => {
-              return (
-                <Tag key={item.KCMC}>
-                  {item.KCMC}
-                </Tag>
-              );
-            })}
-          />
-        )
-      },
-    },
-    {
-      title: '课程班名称',
-      dataIndex: 'KHQJKCs',
-      key: 'KHQJKCs_BJMC',
+      title: '课程班名称  ',
+      dataIndex: 'KHBJSJ',
+      key: 'KHBJSJ',
       align: 'center',
       width: 150,
       ellipsis: true,
-      render: (text: any, record: any) => {
-        return (
-          <EllipsisHint
-            width="100%"
-            text={record.KHQJKCs?.map((item: any) => {
-              return (
-                <Tag key={item.KHBJSJ?.id}>
-                  {item.KHBJSJ?.BJMC}
-                </Tag>
-              );
-            })}
-          />
-        )
-      },
-    },
-    {
-      title: '请假原因',
-      dataIndex: 'QJYY',
-      key: 'QJYY',
-      align: 'center',
-      ellipsis: true,
-      width: 160,
-      render: (_: any, record: any) => {
-        return <Tooltip placement="topLeft" title={record?.QJYY}>
-          <span
-            className="ant-typography ant-typography-ellipsis ant-typography-single-line"
-            style={{ width: '100%', margin: '0px', padding: '0px' }}
-          >
-            {record?.QJYY}
-          </span>
-        </Tooltip>
+      render: (_text: any, record: any) => {
+        return record?.KHBJSJ?.BJMC;
       }
     },
     {
-      title: '请假状态',
-      dataIndex: 'QJZT',
-      key: 'QJZT',
+      title: '退课课时数',
+      dataIndex: 'KSS',
+      key: 'KSS',
+      width: 100,
+      ellipsis: true,
+      align: 'center'
+    },
+    {
+      title: '状态',
+      dataIndex: 'ZT',
+      key: 'ZT',
       align: 'center',
       width: 100,
-      render: (text: any) => (text ? '已取消' : '已通过')
-    },
-    {
-      title: '请假开始时间',
-      dataIndex: 'KSSJ',
-      key: 'KSSJ',
-      align: 'center',
-      width: 160,
       ellipsis: true,
-      render: (text: any, record: any) => {
-        return (
-          <>
-            {record.KHQJKCs?.[0].QJRQ} {record.KSSJ}
-          </>
-        );
+      render: (_,record) => {
+        return record.ZT === 0 ? '申请中' : (record.ZT === 1 ? '已退课' : '已驳回');
       }
     },
     {
-      title: '请假结束时间',
-      dataIndex: 'JSSJ',
-      key: 'JSSJ',
-      align: 'center',
+      title: '申请时间',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
       width: 160,
       ellipsis: true,
-      render: (text: any, record: any) => {
-        return (
-          <>
-            {record.KHQJKCs?.[0].QJRQ} {record.JSSJ}
-          </>
-        );
-      }
+      align: 'center'
     }
   ];
   return (
@@ -218,7 +167,6 @@ const SchoolLeave = (props: any) => {
         <ProTable<any>
           actionRef={actionRef}
           columns={columns}
-          headerTitle={xxmc}
           rowKey="id"
           pagination={{
             showQuickJumper: true,
@@ -239,5 +187,5 @@ const SchoolLeave = (props: any) => {
     </>
   );
 };
-SchoolLeave.wrappers = ['@/wrappers/auth'];
-export default SchoolLeave;
+SchoolReimbursement.wrappers = ['@/wrappers/auth'];
+export default SchoolReimbursement;

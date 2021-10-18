@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 // import { queryXNXQList } from '@/services/local-services/xnxq';
 import { getAllTK } from '@/services/after-class-qxjyj/khtksj';
-import { useModel } from 'umi';
+import { Link, useModel } from 'umi';
 import type { ColumnsType } from 'antd/lib/table';
 import { Select, Table, Popconfirm, Divider, message } from 'antd';
 import Style from './index.less';
 import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
-import { getAllSchools } from '@/services/after-class-qxjyj/jyjgsj';
+import { getAllSchools, getSchoolsTK } from '@/services/after-class-qxjyj/jyjgsj';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
 // import { text } from 'express';
 const { Option } = Select;
@@ -36,101 +36,73 @@ const ReimbursementClass = () => {
       }
     })();
   }, []);
+  // table表格数据
   const columns: ProColumns<any>[] = [
     {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
       align: 'center',
-      width: 50,
-      fixed:'left'
-    },
-    {
-      title: '学生姓名',
-      dataIndex: 'XSXM',
-      key: 'XSXM',
-      align: 'center',
-      fixed:'left',
-      width: 110,
-      ellipsis: true,
-      render: (text: any, record: any) => {
-        const showWXName = record?.XSJBSJ?.XM === '未知' && record.WechatUserId;
-        if (showWXName) {
-          return <WWOpenDataCom type="userName" openid={record.WechatUserId} />;
-        }
-        return record?.XSJBSJ?.XM;
-      }
+      fixed: 'left',
+      width: 50
     },
     {
       title: '学校名称',
       dataIndex: 'XXMC',
       key: 'XXMC',
       align: 'center',
-      width: 130,
+      width: 150,
+      fixed: 'left',
       ellipsis: true,
-      render: (text: any, record: any) => {
-        return record?.KHBJSJ?.XQSJ?.XXJBSJ?.XXMC;
-      }
     },
     {
-      title: '行政班名称',
-      dataIndex: 'XZBJSJ',
-      key: 'XZBJSJ',
+      title: '联系人',
+      dataIndex: 'LXR',
+      key: 'LXR',
       align: 'center',
-      width: 130,
+      width: 100,
       ellipsis: true,
-      render: (_text: any, record: any) => {
-        return `${record?.XSJBSJ?.BJSJ?.NJSJ?.NJMC}${record?.XSJBSJ?.BJSJ?.BJ}`;
-      }
     },
     {
-      title: '课程名称 ',
-      dataIndex: 'KHBJSJ',
-      key: 'KHBJSJ',
-      align: 'center',
-      width: 120,
-      ellipsis: true,
-      render: (text: any) => {
-        return text?.KHKCSJ?.KCMC;
-      }
-    },
-    {
-      title: '课程班名称  ',
-      dataIndex: 'KHBJSJ',
-      key: 'KHBJSJ',
+      title: '联系电话',
+      dataIndex: 'LXDH',
+      key: 'LXDH',
       align: 'center',
       width: 150,
       ellipsis: true,
-      render: (text: any) => {
-        return text?.BJMC;
-      }
     },
     {
-      title: '退课课时数',
-      dataIndex: 'KSS',
-      key: 'KSS',
-      width: 100,
-      ellipsis: true,
-      align: 'center'
-    },
-    {
-      title: '状态',
-      dataIndex: 'ZT',
-      key: 'ZT',
+      title: '退课数量',
+      dataIndex: 'xs_count',
+      key: 'xs_count',
       align: 'center',
       width: 100,
-      ellipsis: true,
-      render: (record: any) => {
-        return record.ZT === 0 ? '申请中' : '退课';
-      }
     },
     {
-      title: '申请时间',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
+      title: '操作',
+      dataIndex: 'JSSJ',
+      key: 'JSSJ',
+      align: 'center',
       width: 160,
+      fixed: 'right',
       ellipsis: true,
-      align: 'center'
+      render: (text: any, record: any) => {
+        return (
+          <Link
+              key="kcxq"
+              to={{
+                pathname: '/courseManagement/reimbursementClass/schoolReimbursement',
+                state: {
+                  id: record.id,
+                  xzqhm: currentUser?.XZQHM,
+                  xxmc: record.XXMC
+                }
+              }}
+            >
+              详情
+            </Link>
+        );
+      }
     }
   ];
   return (
@@ -173,12 +145,12 @@ const ReimbursementClass = () => {
             pageSize: 10,
             defaultCurrent: 1,
           }}
-          scroll={{ x: 1300 }}
+          scroll={{ x: 800 }}
           request={async () => {
-            const resAll = await getAllTK({
-              XNXQId: '',
+            const resAll = await getSchoolsTK({
               XZQHM: currentUser?.XZQHM,
-              XXJBSJId: XXId || null
+              pageSize:0,
+              page:0
             });
             if (resAll.status === 'ok') {
               return {

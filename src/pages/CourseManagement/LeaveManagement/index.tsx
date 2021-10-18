@@ -154,7 +154,7 @@ const LeaveManagement = () => {
               return {
                 data: resAll?.data?.rows,
                 success: true,
-                total: resAll?.data?.count?.length
+                total: resAll?.data?.count
               };
             }
             return {
