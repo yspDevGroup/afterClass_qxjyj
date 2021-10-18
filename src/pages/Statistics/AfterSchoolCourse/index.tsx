@@ -24,13 +24,15 @@ const AfterSchoolCourse = () => {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      width: 58,
+      width: 60,
+      fixed: 'left',
       align: 'center'
     },
     {
       title: '课程名称',
       dataIndex: 'KCMC',
       key: 'KCMC',
+      fixed: 'left',
       align: 'center',
       width: 120,
       ellipsis: true,
@@ -67,7 +69,7 @@ const AfterSchoolCourse = () => {
       dataIndex: 'HZXXS',
       key: 'HZXXS',
       align: 'center',
-      width: 110,
+      width: 130,
       ellipsis: true,
       render: (_, record) => {
         return record.KCLY === '校内课程' ? 1 : record.xx_count
@@ -124,6 +126,7 @@ const AfterSchoolCourse = () => {
       align: 'center',
       width: 120,
       ellipsis: true,
+      fixed: 'right',
       render: (_, record) => (
         <>
           <Link
@@ -219,6 +222,7 @@ const AfterSchoolCourse = () => {
           dataSource={dataSource}
           rowKey="id"
           search={false}
+          scroll={{ x: 1300 }}
           options={{
             setting: false,
             fullScreen: false,

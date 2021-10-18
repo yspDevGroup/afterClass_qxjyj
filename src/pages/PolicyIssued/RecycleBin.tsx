@@ -22,7 +22,7 @@ const RecycleBin = () => {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      width: 58,
+      width: 60,
       align: 'center'
     },
     {

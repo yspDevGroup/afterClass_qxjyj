@@ -9,7 +9,7 @@ import WWOpenDataCom from '@/components/WWOpenDataCom';
 const TabList = (props: any) => {
   const { ListName, ListState,XXJBSJId } = props.ListData;
   const { KHBJJs } = ListState;
-  
+
   const handleCancel = () => {
     setIsModalVisible(false);
   };
@@ -59,7 +59,7 @@ const TabList = (props: any) => {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      width: 58,
+      width: 60,
       align: 'center'
     },
     {
@@ -166,7 +166,7 @@ const TabList = (props: any) => {
         }
       })();
     } else {
-      (async () => { 
+      (async () => {
         const res = await getKHBJPJ({
           // 班级ID
           KHBJSJId: ListState.id,

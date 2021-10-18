@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-10-12 14:46:08
- * @LastEditTime: 2021-10-18 10:05:03
+ * @LastEditTime: 2021-10-18 10:37:32
  * @LastEditors: Sissle Lynn
  */
 import { useEffect, useState } from 'react';
@@ -30,7 +30,7 @@ const School = (props: any) => {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      width: 58,
+      width: 60,
       align: 'center'
     },
     {
@@ -195,5 +195,4 @@ const School = (props: any) => {
 };
 
 School.wrappers = ['@/wrappers/auth'];
-School.title = '测试信息';
 export default School;

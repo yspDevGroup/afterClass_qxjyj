@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-09-09 17:50:48
- * @LastEditTime: 2021-09-10 11:55:18
- * @LastEditors: wsl
+ * @LastEditTime: 2021-10-18 10:41:42
+ * @LastEditors: Sissle Lynn
  */
 /*
  * @description:
@@ -35,7 +35,7 @@ const SchoolManagement = (props: any) => {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      width: 58,
+      width: 60,
       align: 'center'
     },
     {

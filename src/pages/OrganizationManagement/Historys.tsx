@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 10:01:58
- * @LastEditTime: 2021-09-08 16:16:54
- * @LastEditors: wsl
+ * @LastEditTime: 2021-10-18 10:41:51
+ * @LastEditors: Sissle Lynn
  */
 /*
  * @description:
@@ -40,7 +40,7 @@ const Historys = (props: { Keys: string | undefined }) => {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      width: 58,
+      width: 60,
       align: 'center'
     },
     {

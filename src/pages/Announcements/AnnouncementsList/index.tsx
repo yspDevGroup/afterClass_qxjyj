@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-09-01 20:20:28
- * @LastEditTime: 2021-09-07 18:43:51
- * @LastEditors: wsl
+ * @LastEditTime: 2021-10-18 10:41:25
+ * @LastEditors: Sissle Lynn
  */
 
 import React, { useState, useRef, useEffect } from 'react';
@@ -27,7 +27,7 @@ const TableList = () => {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      width: 58,
+      width: 60,
       align: 'center'
     },
     {

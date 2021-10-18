@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-09 17:41:43
- * @LastEditTime: 2021-09-07 18:44:45
- * @LastEditors: wsl
+ * @LastEditTime: 2021-10-18 10:41:20
+ * @LastEditors: Sissle Lynn
  */
 import React, { useState, useRef, useEffect } from 'react';
 import { Switch } from 'antd';
@@ -23,7 +23,7 @@ const TableList = () => {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      width: 58,
+      width: 60,
       align: 'center'
     },
     {

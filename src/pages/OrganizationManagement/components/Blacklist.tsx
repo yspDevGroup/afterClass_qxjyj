@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 09:50:10
- * @LastEditTime: 2021-09-07 18:46:51
- * @LastEditors: wsl
+ * @LastEditTime: 2021-10-18 10:41:55
+ * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useRef, useState } from 'react';
 import { Col, message, Popconfirm, Row, Image, Modal, Input, Form, Tooltip } from 'antd';
@@ -71,7 +71,7 @@ const Blacklist = (props: { Keys: string | undefined }) => {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      width: 58,
+      width: 60,
       align: 'center'
     },
     {

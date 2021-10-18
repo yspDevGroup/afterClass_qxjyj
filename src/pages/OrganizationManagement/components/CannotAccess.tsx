@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 10:16:11
- * @LastEditTime: 2021-09-08 17:58:48
- * @LastEditors: wsl
+ * @LastEditTime: 2021-10-18 10:42:14
+ * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useRef, useState } from 'react';
 import { Col, message, Modal, Popconfirm, Row, Tabs, Image, Form, Input } from 'antd';
@@ -66,7 +66,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      width: 58,
+      width: 60,
       align: 'center'
     },
     {
