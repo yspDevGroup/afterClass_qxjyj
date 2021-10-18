@@ -15,9 +15,12 @@ export default defineConfig({
     ENV_title: '课后服务平台',
     ENV_subTitle: '课后服务平台',
     ENV_copyRight: '2021 版权所有：陕西五育汇智信息技术有限公司',
+    // ENV_host: 'http://afterclassQxjyj.wuyu.imzhiliao.com',
+    // ENV_backUrl: 'http://api.wuyu.imzhiliao.com',
+    // ssoHost: 'http://sso.wuyu.imzhiliao.com',
     ENV_host: 'http://afterclassQxjyj.prod.xianyunshipei.com',
     ENV_backUrl: 'http://api.prod.xianyunshipei.com',
-    ssoHost: 'http://platform.prod.xianyunshipei.com',
+    ssoHost: 'http://sso.prod.xianyunshipei.com',
     authType: 'wechat',
     clientId: 'wwccc22183061ae39b',
     clientSecret: 'fyIAGkGZzBdoYun_Oka0NsGZqTmcovFTMMorCFrjRyg'
