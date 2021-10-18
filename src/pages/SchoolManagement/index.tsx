@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-24 14:37:02
- * @LastEditTime: 2021-10-13 09:46:07
+ * @LastEditTime: 2021-10-18 13:44:56
  * @LastEditors: Sissle Lynn
  */
 import React, { useRef } from 'react';
@@ -26,7 +26,8 @@ const SchoolManagement = () => {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      width: 60,
+      width: 50,
+      fixed:'left',
       align: 'center'
     },
     {
@@ -34,7 +35,8 @@ const SchoolManagement = () => {
       dataIndex: 'XXMC',
       key: 'XXMC',
       align: 'center',
-      width: 300,
+      width: 160,
+      fixed:'left',
       ellipsis: true
     },
     {
@@ -59,14 +61,14 @@ const SchoolManagement = () => {
       key: 'LXDH',
       dataIndex: 'LXDH',
       align: 'center',
-      width: 180
+      width: 120
     },
     {
       title: '课程数量',
       key: 'KHKCSQs',
       dataIndex: 'KHKCSQs',
       align: 'center',
-      width: 90,
+      width: 100,
       render: (_, record) => {
         const num1 = record.KHKCSQs?.length;
         const num2 = record.KHKCSJs?.length;
@@ -78,7 +80,7 @@ const SchoolManagement = () => {
       title: '操作',
       valueType: 'option',
       fixed: 'right',
-      width: 200,
+      width: 160,
       align: 'center',
       render: (_, record) => (
         <div className={styles.operation}>
@@ -110,6 +112,12 @@ const SchoolManagement = () => {
         className={styles.schoolTable}
         actionRef={actionRef}
         search={false}
+        pagination={{
+          showQuickJumper: true,
+          pageSize: 10,
+          defaultCurrent: 1,
+        }}
+        scroll={{ x: 1300 }}
         request={async (
           params: KHHZXYSJ & {
             pageSize?: number;

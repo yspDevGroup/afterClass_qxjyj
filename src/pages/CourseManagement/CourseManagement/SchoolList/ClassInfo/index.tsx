@@ -30,24 +30,13 @@ const ClassInfo = (props: any) => {
     })();
   }, []);
 
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
-
   const columns: any[] = [
     {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      width: 60,
+      width: 50,
+      fixed:'left',
       align: 'center'
     },
     {
@@ -55,6 +44,9 @@ const ClassInfo = (props: any) => {
       dataIndex: 'BJMC',
       key: 'BJMC',
       align: 'center',
+      fixed:'left',
+      width: 130,
+      ellipsis: true,
       search: false
     },
     {
@@ -63,6 +55,7 @@ const ClassInfo = (props: any) => {
       key: 'BJRS',
       align: 'center',
       search: false,
+      width: 120,
       render: (text: any, record: any) => {
         return record.BJRS;
       }
@@ -73,6 +66,7 @@ const ClassInfo = (props: any) => {
       key: 'BJRS',
       align: 'center',
       search: false,
+      width: 110,
       render: (_: any, record: any) => {
         return record.KHXSBJs.length;
       }
@@ -83,6 +77,7 @@ const ClassInfo = (props: any) => {
       key: 'KKRQ',
       valueType: 'date',
       align: 'center',
+      width: 110,
       search: false
     },
     {
@@ -91,6 +86,7 @@ const ClassInfo = (props: any) => {
       key: 'JKRQ',
       align: 'center',
       valueType: 'date',
+      width: 110,
       search: false
     },
     {
@@ -99,6 +95,8 @@ const ClassInfo = (props: any) => {
       key: 'XQSJ',
       align: 'center',
       search: false,
+      width: 120,
+      ellipsis: true,
       render: (text: any) => {
         return text?.XQMC;
       }
@@ -109,8 +107,10 @@ const ClassInfo = (props: any) => {
       key: 'XNXQ',
       align: 'center',
       search: false,
-      render: (text: any) => {
-        return `${text?.XN}${text.XQ}`;
+      width: 120,
+      ellipsis: true,
+      render: (text: any, record: any) => {
+        return `${record?.XNXQ?.XN} ${record?.XNXQ?.XQ}`;
       }
     },
     {
@@ -119,6 +119,9 @@ const ClassInfo = (props: any) => {
       key: 'option',
       align: 'center',
       search: false,
+      width: 100,
+      fixed: 'right',
+      ellipsis: true,
       render: (text: any, record: any) => {
         return (
           <Link
@@ -170,6 +173,12 @@ const ClassInfo = (props: any) => {
           columns={columns}
           dataSource={KHBJSJs}
           rowKey="id"
+          pagination={{
+            showQuickJumper: true,
+            pageSize: 10,
+            defaultCurrent: 1,
+          }}
+          scroll={{ x: 1200 }}
           dateFormatter="string"
           search={false}
           options={{

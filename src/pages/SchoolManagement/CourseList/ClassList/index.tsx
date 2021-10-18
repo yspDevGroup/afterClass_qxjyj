@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-09-06 17:00:58
- * @LastEditTime: 2021-10-14 10:02:16
+ * @LastEditTime: 2021-10-18 14:09:05
  * @LastEditors: Sissle Lynn
  */
 import ProTable, { ActionType } from '@ant-design/pro-table';
@@ -26,7 +26,8 @@ const ClassList = (props: any) => {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      width: 60,
+      width: 50,
+      fixed: 'left',
       align: 'center'
     },
     {
@@ -34,6 +35,9 @@ const ClassList = (props: any) => {
       dataIndex: 'BJMC',
       key: 'BJMC',
       align: 'center',
+      width: 120,
+      fixed: 'left',
+      ellipsis: true,
       search: false
     },
     {
@@ -42,6 +46,8 @@ const ClassList = (props: any) => {
       key: 'BJRS',
       align: 'center',
       search: false,
+      width: 110,
+      ellipsis: true,
       render: (text: any, record: any) => {
         return record.BJRS;
       }
@@ -52,18 +58,10 @@ const ClassList = (props: any) => {
       key: 'BMRS',
       align: 'center',
       search: false,
+      width: 100,
+      ellipsis: true,
       render: (text: any, record: any) => {
         return record.KHXSBJs?.length;
-      }
-    },
-    {
-      title: '所属校区',
-      dataIndex: 'XQSJ',
-      key: 'XQSJ',
-      align: 'center',
-      search: false,
-      render: (text: any) => {
-        return text?.XQMC;
       }
     },
     {
@@ -72,6 +70,8 @@ const ClassList = (props: any) => {
       key: 'XQSJ',
       align: 'center',
       search: false,
+      width: 120,
+      ellipsis: true,
       render: (text: any, record: any) => {
         return state?.xxmc;
       }
@@ -82,8 +82,10 @@ const ClassList = (props: any) => {
       key: 'XNXQ',
       align: 'center',
       search: false,
-      render: (text: any) => {
-        return `${text?.XN}${text.XQ}`;
+      width: 160,
+      ellipsis: true,
+      render: (text: any, record: any) => {
+        return `${record?.XNXQ?.XN} ${record?.XNXQ?.XQ}`;
       }
     },
     {
@@ -92,6 +94,8 @@ const ClassList = (props: any) => {
       key: 'KKRQ',
       align: 'center',
       valueType: 'date',
+      width: 120,
+      ellipsis: true,
       search: false
     },
     {
@@ -100,6 +104,8 @@ const ClassList = (props: any) => {
       key: 'option',
       align: 'center',
       search: false,
+      width: 160,
+      fixed: 'right',
       render: (text: any, record: any) => {
         return (
           <div className={styles.operation}>
@@ -160,6 +166,12 @@ const ClassList = (props: any) => {
           className={styles.proTableinfo}
           actionRef={actionRef}
           columns={columns}
+          pagination={{
+            showQuickJumper: true,
+            pageSize: 10,
+            defaultCurrent: 1,
+          }}
+          scroll={{ x: 1300 }}
           dataSource={KHBJSJs}
           rowKey="id"
           dateFormatter="string"

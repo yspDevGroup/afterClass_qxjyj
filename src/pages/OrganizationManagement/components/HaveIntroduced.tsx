@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-09-08 17:58:51
- * @LastEditors: wsl
+ * @LastEditTime: 2021-10-18 13:30:38
+ * @LastEditors: Sissle Lynn
  */
 /*
  * @description:
@@ -13,7 +13,7 @@
  * @LastEditors: wsl
  */
 import React, { useEffect, useRef } from 'react';
-import { message, Popconfirm, Form, Tag } from 'antd';
+import { message, Popconfirm, Form, Tag, Tooltip } from 'antd';
 import type { ActionType, ProColumns, RequestData } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { TableListItem, TableListParams } from '../data';
@@ -39,7 +39,8 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      width: 60,
+      width: 50,
+      fixed: 'left',
       align: 'center'
     },
     {
@@ -48,6 +49,8 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
       key: 'KCMC',
       align: 'center',
       search: false,
+      width: 160,
+      fixed: 'left',
       ellipsis: true
     },
     {
@@ -55,8 +58,9 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
       dataIndex: 'KCLX',
       key: 'KCLX',
       align: 'center',
-      search: false,
-      ellipsis: true
+      width: 120,
+      ellipsis: true,
+      search: false
     },
     {
       title: '适用年级',
@@ -105,25 +109,47 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
       key: 'ZRXX',
       align: 'center',
       search: false,
+      width: 200,
       render: (text: any) => {
         return (
           <EllipsisHint
             width="100%"
-            text={text?.map((item: any) => {
+            text={text?.length ? text.map((item: any) => {
               return <Tag key={item.XXJBSJ.id}>{item.XXJBSJ.XXMC}</Tag>;
-            })}
+            }) : ''}
           />
         );
       }
     },
-
+    {
+      title: '课程描述',
+      dataIndex: 'KCMS',
+      key: 'KCMS',
+      align: 'center',
+      search: false,
+      ellipsis: true,
+      width: 200,
+      render: (text, record) => {
+        return <Tooltip placement="topLeft" title={record?.value?.KCMS}>
+          <span
+            className="ant-typography ant-typography-ellipsis ant-typography-single-line"
+            style={{ width: '100%', margin: '0px', padding: '0px' }}>
+            {record?.value?.KCMS}
+          </span>
+        </Tooltip>
+      }
+    },
     {
       title: '操作',
       key: 'option',
       valueType: 'option',
       align: 'center',
+      fixed: 'right',
       width: 200,
       render: (text, record, action) => {
+        console.log(record.ZRXX);
+        console.log(record);
+
         return (
           <div className={styles.operation}>
             <Link
@@ -168,8 +194,11 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any }) => {
         rowKey="key"
         actionRef={actionRef1}
         pagination={{
-          showQuickJumper: true
+          showQuickJumper: true,
+          pageSize: 10,
+          defaultCurrent: 1,
         }}
+        scroll={{ x: 1300 }}
         search={false}
         options={{
           setting: false,

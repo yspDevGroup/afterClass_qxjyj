@@ -27,13 +27,17 @@ const CoursesIntroduced = (props: { JYYData: any; reload: boolean }) => {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      width: 60,
+      width: 50,
+      fixed:'left',
       align: 'center'
     },
     {
       title: '课程名称',
       dataIndex: 'KCMC',
       key: 'KCMC',
+      fixed:'left',
+      width: 160,
+      ellipsis: true,
       align: 'center'
     },
     {
@@ -42,8 +46,10 @@ const CoursesIntroduced = (props: { JYYData: any; reload: boolean }) => {
       key: 'KHJYJG',
       align: 'center',
       search: false,
-      render: (text: any) => {
-        return text?.QYMC || '-';
+      width: 130,
+      ellipsis: true,
+      render: (text: any, record: any) => {
+        return record?.KHJYJG?.QYMC || '-';
       }
     },
     {
@@ -52,8 +58,10 @@ const CoursesIntroduced = (props: { JYYData: any; reload: boolean }) => {
       key: 'KHKCLX',
       align: 'center',
       search: false,
-      render: (text: any) => {
-        return text?.KCTAG || '-';
+      width: 120,
+      ellipsis: true,
+      render: (text: any, record: any) => {
+        return record?.KHKCLX?.KCTAG || '-';
       }
     },
     {
@@ -62,6 +70,7 @@ const CoursesIntroduced = (props: { JYYData: any; reload: boolean }) => {
       dataIndex: 'NJSJs',
       search: false,
       align: 'center',
+      width: 200,
       render: (text: any) => {
         return (
           <EllipsisHint
@@ -81,6 +90,8 @@ const CoursesIntroduced = (props: { JYYData: any; reload: boolean }) => {
       key: 'action',
       search: false,
       align: 'center',
+      fixed: 'right',
+      width: 140,
       render: (text: any, record: any, index: any, action: any) => (
         <Space size="middle">
           <a
@@ -133,7 +144,12 @@ const CoursesIntroduced = (props: { JYYData: any; reload: boolean }) => {
         columns={columns}
         rowKey="id"
         dateFormatter="string"
-        // dataSource={[{},{}]}
+        pagination={{
+          showQuickJumper: true,
+          pageSize: 10,
+          defaultCurrent: 1,
+        }}
+        scroll={{ x: 1200 }}
         request={async (param = {}, sort, filter) => {
           const params = {
             ...sort,

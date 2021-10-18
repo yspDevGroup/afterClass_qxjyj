@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-26 11:45:40
- * @LastEditTime: 2021-09-08 17:24:01
- * @LastEditors: wsl
+ * @LastEditTime: 2021-10-18 11:42:59
+ * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useRef, useState } from 'react';
 import { Col, message, Popconfirm, Row, Tabs, Image, Modal, Form, Input } from 'antd';
@@ -79,7 +79,8 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      width: 60,
+      width: 50,
+      fixed:'left',
       align: 'center'
     },
     {
@@ -88,6 +89,9 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       key: 'JGMC',
       align: 'center',
       search: false,
+      width: 160,
+      fixed:'left',
+      ellipsis: true,
       render: (text: any, record: any) => {
         return (
           <Link
@@ -108,6 +112,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       dataIndex: 'LXRXM',
       key: 'LXRXM',
       align: 'center',
+      width: 120,
       ellipsis: true,
       search: false
     },
@@ -116,6 +121,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       dataIndex: 'LXRDH',
       key: 'LXRDH',
       align: 'center',
+      width: 120,
       ellipsis: true,
       search: false
     },
@@ -123,8 +129,8 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       title: '课程数量',
       dataIndex: 'KCSL',
       key: 'KCSL',
-      width: 80,
       align: 'center',
+      width: 100,
       ellipsis: true,
       search: false
     },
@@ -133,6 +139,8 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       dataIndex: 'JGFWFW',
       key: 'JGFWFW',
       align: 'center',
+      width: 180,
+      ellipsis: true,
       search: false
     },
     {
@@ -140,7 +148,8 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       key: 'option',
       valueType: 'option',
       align: 'center',
-      width: 300,
+      fixed: 'right',
+      width: 200,
       render: (text, record, action) => {
         return (
           <div className={styles.operation}>
@@ -213,8 +222,11 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
         rowKey="key"
         actionRef={actionRef1}
         pagination={{
-          showQuickJumper: true
+          showQuickJumper: true,
+          pageSize: 10,
+          defaultCurrent: 1,
         }}
+        scroll={{ x: 1300 }}
         search={false}
         options={{
           setting: false,

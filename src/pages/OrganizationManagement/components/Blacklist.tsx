@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 09:50:10
- * @LastEditTime: 2021-10-18 10:41:55
+ * @LastEditTime: 2021-10-18 11:56:49
  * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -71,7 +71,8 @@ const Blacklist = (props: { Keys: string | undefined }) => {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      width: 60,
+      width: 50,
+      fixed:'left',
       align: 'center'
     },
     {
@@ -79,6 +80,8 @@ const Blacklist = (props: { Keys: string | undefined }) => {
       dataIndex: 'JGMC',
       key: 'JGMC',
       align: 'center',
+      width: 160,
+      fixed:'left',
       search: false
     },
     {
@@ -87,6 +90,7 @@ const Blacklist = (props: { Keys: string | undefined }) => {
       key: 'JRHMDSJ',
       align: 'center',
       valueType: 'date',
+      width: 160,
       ellipsis: true,
       search: false
     },
@@ -110,6 +114,7 @@ const Blacklist = (props: { Keys: string | undefined }) => {
       dataIndex: 'SPR',
       key: 'SPR',
       align: 'center',
+      width: 160,
       ellipsis: true,
       search: false
     },
@@ -119,6 +124,8 @@ const Blacklist = (props: { Keys: string | undefined }) => {
       key: 'option',
       valueType: 'option',
       align: 'center',
+      fixed: 'right',
+      width: 160,
       render: (text, record, action) => {
         return (
           <>
@@ -149,8 +156,11 @@ const Blacklist = (props: { Keys: string | undefined }) => {
         actionRef={actionRef3}
         rowKey="key"
         pagination={{
-          showQuickJumper: true
+          showQuickJumper: true,
+          pageSize: 10,
+          defaultCurrent: 1,
         }}
+        scroll={{ x: 1300 }}
         search={false}
         options={{
           setting: false,

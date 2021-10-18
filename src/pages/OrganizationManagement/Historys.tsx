@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 10:01:58
- * @LastEditTime: 2021-10-18 10:41:51
+ * @LastEditTime: 2021-10-18 12:02:48
  * @LastEditors: Sissle Lynn
  */
 /*
@@ -40,7 +40,8 @@ const Historys = (props: { Keys: string | undefined }) => {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      width: 60,
+      width: 50,
+      fixed: 'left',
       align: 'center'
     },
     {
@@ -48,12 +49,17 @@ const Historys = (props: { Keys: string | undefined }) => {
       dataIndex: 'JGMC',
       key: 'JGMC',
       align: 'center',
+      width: 160,
+      fixed: 'left',
+      ellipsis: true,
       search: false
     },
     {
       title: '服务状态',
       dataIndex: 'KSZT',
       key: 'KSZT',
+      width: 120,
+      ellipsis: true,
       valueEnum: {
         申请中: { text: '申请中', status: 'Default' },
         黑名单: {
@@ -80,6 +86,7 @@ const Historys = (props: { Keys: string | undefined }) => {
       key: 'KSSJ',
       align: 'center',
       valueType: 'dateTime',
+      width: 160,
       ellipsis: true,
       search: false
     },
@@ -90,6 +97,7 @@ const Historys = (props: { Keys: string | undefined }) => {
       align: 'center',
       valueType: 'dateTime',
       ellipsis: true,
+      width: 160,
       search: false
     },
     {
@@ -97,6 +105,8 @@ const Historys = (props: { Keys: string | undefined }) => {
       dataIndex: 'ZT',
       key: 'ZT',
       align: 'center',
+      width: 120,
+      ellipsis: true,
       search: false
     },
     {
@@ -104,6 +114,7 @@ const Historys = (props: { Keys: string | undefined }) => {
       dataIndex: 'BZ',
       key: 'BZ',
       align: 'center',
+      width: 180,
       ellipsis: true,
       search: false
     },
@@ -112,6 +123,7 @@ const Historys = (props: { Keys: string | undefined }) => {
       dataIndex: 'SPR',
       key: 'SPR',
       align: 'center',
+      width: 120,
       ellipsis: true,
       search: false
     }
@@ -136,8 +148,11 @@ const Historys = (props: { Keys: string | undefined }) => {
           actionRef={actionRef4}
           rowKey="key"
           pagination={{
-            showQuickJumper: true
+            showQuickJumper: true,
+            pageSize: 10,
+            defaultCurrent: 1,
           }}
+          scroll={{ x: 1000 }}
           search={false}
           options={{
             setting: false,

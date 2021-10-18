@@ -3,7 +3,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-10-13 09:54:38
+ * @LastEditTime: 2021-10-18 14:02:07
  * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useRef } from 'react';
@@ -30,7 +30,8 @@ const HaveIntroduced = (props: any) => {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      width: 60,
+      width: 50,
+      fixed:'left',
       align: 'center'
     },
     {
@@ -39,6 +40,7 @@ const HaveIntroduced = (props: any) => {
       key: 'KCMC',
       align: 'center',
       search: false,
+      fixed:'left',
       width: 150,
       ellipsis: true
     },
@@ -92,7 +94,8 @@ const HaveIntroduced = (props: any) => {
       key: 'option',
       valueType: 'option',
       align: 'center',
-      width: 200,
+      width: 160,
+      fixed:'right',
       render: (text, record, action) => {
         return (
           <div className={styles.operation}>
@@ -142,8 +145,11 @@ const HaveIntroduced = (props: any) => {
           rowKey="key"
           actionRef={actionRef1}
           pagination={{
-            showQuickJumper: true
+            showQuickJumper: true,
+            pageSize: 10,
+            defaultCurrent: 1,
           }}
+          scroll={{ x: 1300 }}
           search={false}
           options={{
             setting: false,

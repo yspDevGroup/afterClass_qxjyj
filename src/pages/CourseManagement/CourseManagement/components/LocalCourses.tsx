@@ -23,7 +23,8 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      width: 60,
+      width: 50,
+      fixed:'left',
       align: 'center'
     },
     {
@@ -31,6 +32,9 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
       dataIndex: 'KCMC',
       key: 'KCMC',
       align: 'center',
+      fixed:'left',
+      width: 160,
+      ellipsis: true,
       render: (text: string, record: any) => {
         return (
           <a
@@ -51,6 +55,8 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
       dataIndex: 'SSJGLX',
       key: 'SSJGLX',
       valueType: 'select',
+      width: 120,
+      ellipsis: true,
       valueEnum: {
         校内课程: { text: '校内课程' },
         机构课程: { text: '机构课程' },
@@ -63,8 +69,10 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
       key: 'KHKCLX',
       align: 'center',
       search: false,
-      render: (text: any) => {
-        return text?.KCTAG || '-';
+      width: 120,
+      ellipsis: true,
+      render: (text: any, record: any) => {
+        return record?.KHKCLX?.KCTAG || '-';
       }
     },
     {
@@ -73,6 +81,8 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
       key: 'JGMC',
       align: 'center',
       search: false,
+      width: 160,
+      ellipsis: true,
       render: (text: any, record: any) => {
         return record.SSJGLX === '校内课程' ? <Link
           to={{
@@ -97,14 +107,14 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
       dataIndex: 'NJSJs',
       search: false,
       align: 'center',
-      width: '200px',
+      width: 200,
       render: (text: any) => {
         return (
           <EllipsisHint
             width="100%"
-            text={text?.map((item: any) => {
+            text={text?.length ? text.map((item: any) => {
               return <Tag key={item.id}>{item.XD === '初中' ? `${item.NJMC}` : `${item.XD}${item.NJMC}`}</Tag>;
-            })}
+            }) : ''}
           />
         );
       }
@@ -114,6 +124,8 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
       key: 'action',
       search: false,
       align: 'center',
+      fixed: 'right',
+      width: 140,
       render: (text: any, record: any, index: any, action: any) => (
         <Space size="middle">
           {record?.SSJGLX === '机构课程' ? (
@@ -175,6 +187,12 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
         columns={columns}
         rowKey="id"
         dateFormatter="string"
+        pagination={{
+          showQuickJumper: true,
+          pageSize: 10,
+          defaultCurrent: 1,
+        }}
+        scroll={{ x: 1100 }}
         request={async (param = {}, sort, filter) => {
           if (JYYData?.XZQH) {
             const params = {

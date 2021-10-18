@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-09-09 17:50:48
- * @LastEditTime: 2021-10-18 10:41:42
+ * @LastEditTime: 2021-10-18 15:10:53
  * @LastEditors: Sissle Lynn
  */
 /*
@@ -35,7 +35,7 @@ const SchoolManagement = (props: any) => {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      width: 60,
+      width: 50,
       align: 'center'
     },
     {
@@ -43,7 +43,7 @@ const SchoolManagement = (props: any) => {
       dataIndex: 'XXMC',
       key: 'XXMC',
       align: 'center',
-      width: 300,
+      width: 160,
       ellipsis: true,
       render: (_, record) => {
         return (
@@ -76,7 +76,7 @@ const SchoolManagement = (props: any) => {
       key: 'LXR',
       dataIndex: 'LXR',
       align: 'center',
-      width: 110,
+      width: 120,
       render: (_, record) => {
         return record.XXJBSJ.LXR;
       }
@@ -86,7 +86,7 @@ const SchoolManagement = (props: any) => {
       key: 'LXDH',
       dataIndex: 'LXDH',
       align: 'center',
-      width: 180,
+      width: 140,
       render: (_, record) => {
         return record.XXJBSJ.LXDH;
       }
@@ -95,7 +95,7 @@ const SchoolManagement = (props: any) => {
       title: '操作',
       valueType: 'option',
       fixed: 'right',
-      width: 200,
+      width: 120,
       align: 'center',
       render: (_, record) => (
         <div className={styles.operation}>
@@ -132,6 +132,12 @@ const SchoolManagement = (props: any) => {
           className={styles.schoolTable}
           actionRef={actionRef}
           search={false}
+          pagination={{
+            showQuickJumper: true,
+            pageSize: 10,
+            defaultCurrent: 1,
+          }}
+          scroll={{ x: 800 }}
           request={async (
             params: any & {
               pageSize?: number;

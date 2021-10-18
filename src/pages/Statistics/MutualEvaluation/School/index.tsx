@@ -25,7 +25,7 @@ const OrderInquiry = (props: any) => {
       title: '序号',
       align: 'center',
       dataIndex: 'index',
-      width: 60,
+      width: 50,
       valueType: 'index'
     },
     {

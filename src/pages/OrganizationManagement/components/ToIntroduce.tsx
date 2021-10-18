@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-09-08 17:59:15
- * @LastEditors: wsl
+ * @LastEditTime: 2021-10-18 12:09:26
+ * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useRef } from 'react';
 import { message, Popconfirm, Tag } from 'antd';
@@ -31,7 +31,8 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any; type?: st
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      width: 60,
+      width: 50,
+      fixed:'left',
       align: 'center'
     },
     {
@@ -40,7 +41,8 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any; type?: st
       key: 'KCMC',
       align: 'center',
       search: false,
-      width: '15%',
+      width: 120,
+      fixed:'left',
       ellipsis: true
     },
     {
@@ -48,9 +50,9 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any; type?: st
       dataIndex: 'KCLX',
       key: 'KCLX',
       align: 'center',
+      width: 120,
       search: false,
       ellipsis: true,
-      width: '15%'
     },
     {
       title: '适用年级',
@@ -58,7 +60,7 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any; type?: st
       key: 'SYNJ',
       align: 'center',
       search: false,
-      width: '30%',
+      width: 150,
       render: (text: any) => {
         return (
           <EllipsisHint
@@ -76,8 +78,9 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any; type?: st
       dataIndex: 'DKLS',
       key: 'DKLS',
       align: 'center',
+      width: 100,
+      ellipsis: true,
       search: false,
-      width: '30%',
       render: (text: any, record: any) => {
         const teacher = record.KHKCSJ?.KHKCJs;
         return (
@@ -100,7 +103,8 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any; type?: st
       key: 'option',
       valueType: 'option',
       align: 'center',
-      width: 200,
+      fixed: 'right',
+      width: 100,
       render: (text, record, action) => {
         return (
           <div className={styles.operation}>
@@ -149,8 +153,11 @@ const HaveIntroduced = (props: { Keys: string | undefined; state: any; type?: st
         rowKey="key"
         actionRef={actionRef1}
         pagination={{
-          showQuickJumper: true
+          showQuickJumper: true,
+          pageSize: 10,
+          defaultCurrent: 1,
         }}
+        scroll={{ x: 1000 }}
         search={false}
         options={{
           setting: false,

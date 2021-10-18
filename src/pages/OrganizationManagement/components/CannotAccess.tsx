@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 10:16:11
- * @LastEditTime: 2021-10-18 10:42:14
+ * @LastEditTime: 2021-10-18 12:05:20
  * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -66,7 +66,8 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      width: 60,
+      width: 50,
+      fixed:'left',
       align: 'center'
     },
     {
@@ -74,6 +75,8 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
       dataIndex: 'JGMC',
       key: 'JGMC',
       align: 'center',
+      width: 160,
+      fixed:'left',
       search: false,
       render: (text: any, record: any) => {
         return (
@@ -93,6 +96,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
       title: '联系人',
       dataIndex: 'LXRXM',
       key: 'LXRXM',
+      width: 120,
       align: 'center',
       ellipsis: true,
       search: false
@@ -102,6 +106,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
       dataIndex: 'LXRDH',
       key: 'LXRDH',
       align: 'center',
+      width: 140,
       ellipsis: true,
       search: false
     },
@@ -109,7 +114,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
       title: '课程数量',
       dataIndex: 'KCSL',
       key: 'KCSL',
-      width: 80,
+      width: 100,
       align: 'center',
       ellipsis: true,
       search: false
@@ -118,6 +123,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
       title: '服务范围',
       dataIndex: 'JGFWFW',
       key: 'JGFWFW',
+      width: 160,
       align: 'center',
       search: false
     },
@@ -126,7 +132,8 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
       key: 'option',
       valueType: 'option',
       align: 'center',
-      width: 300,
+      fixed: 'right',
+      width: 180,
       render: (text, record, action) => {
         return (
           <div className={styles.operation}>
@@ -187,8 +194,11 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
         actionRef={actionRef2}
         rowKey="key"
         pagination={{
-          showQuickJumper: true
+          showQuickJumper: true,
+          pageSize: 10,
+          defaultCurrent: 1,
         }}
+        scroll={{ x: 1100 }}
         search={false}
         options={{
           setting: false,
