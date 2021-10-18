@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 // import { queryXNXQList } from '@/services/local-services/xnxq';
 import { getAllAbsences } from '@/services/after-class-qxjyj/khxsqj';
 // import { message } from 'antd';
-import { useModel } from 'umi';
+import { Link, useModel } from 'umi';
 import { Select } from 'antd';
 import Style from './index.less';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { getAllSchools } from '@/services/after-class-qxjyj/jyjgsj';
+import { getAllSchools, getSchoolsQJ } from '@/services/after-class-qxjyj/jyjgsj';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
 
 const { Option } = Select;
@@ -44,23 +44,8 @@ const LeaveManagement = () => {
       dataIndex: 'index',
       valueType: 'index',
       align: 'center',
-      fixed:'left',
+      fixed: 'left',
       width: 50
-    },
-    {
-      title: '学生姓名',
-      dataIndex: 'XSXM',
-      key: 'XSXM',
-      align: 'center',
-      fixed:'left',
-      width: 120,
-      render: (text: any, record: any) => {
-        const showWXName = record?.XSJBSJ?.XM === '未知' && record.WechatUserId;
-        if (showWXName) {
-          return <WWOpenDataCom type="userName" openid={record.WechatUserId} />;
-        }
-        return record?.XSJBSJ?.XM;
-      }
     },
     {
       title: '学校名称',
@@ -68,74 +53,55 @@ const LeaveManagement = () => {
       key: 'XXMC',
       align: 'center',
       width: 150,
+      fixed: 'left',
       ellipsis: true,
-      render: (text: any, record: any) => record.KHQJKCs?.[0].KHBJSJ.XQSJ.XXJBSJ.XXMC
     },
     {
-      title: '课程名称',
-      dataIndex: 'KHQJKCs',
-      key: 'KHQJKCs',
+      title: '联系人',
+      dataIndex: 'LXR',
+      key: 'LXR',
       align: 'center',
       width: 100,
       ellipsis: true,
-      render: (text: any, record: any) => {
-        return record.KHQJKCs?.[0].KCMC;
-      }
     },
     {
-      title: '课程班名称',
-      dataIndex: 'KHQJKCs',
-      key: 'KHQJKCs_BJMC',
+      title: '联系电话',
+      dataIndex: 'LXDH',
+      key: 'LXDH',
+      align: 'center',
+      width: 150,
+      ellipsis: true,
+    },
+    {
+      title: '请假人次',
+      dataIndex: 'xs_count',
+      key: 'xs_count',
       align: 'center',
       width: 100,
-      ellipsis: true,
-      render: (text: any, record: any) => {
-        return record.KHQJKCs?.[0].KHBJSJ.BJMC;
-      }
     },
     {
-      title: '请假原因',
-      dataIndex: 'QJYY',
-      key: 'QJYY',
-      align: 'center',
-      ellipsis: true,
-      width: 120
-    },
-    {
-      title: '请假状态',
-      dataIndex: 'QJZT',
-      key: 'QJZT',
-      align: 'center',
-      width: 100,
-      render: (text: any) => (text ? '已取消' : '已通过')
-    },
-    {
-      title: '请假开始时间',
-      dataIndex: 'KSSJ',
-      key: 'KSSJ',
-      align: 'center',
-      width: 160,
-      ellipsis: true,
-      render: (text: any, record: any) => {
-        return (
-          <>
-            {record.KHQJKCs?.[0].QJRQ} {record.KSSJ}
-          </>
-        );
-      }
-    },
-    {
-      title: '请假结束时间',
+      title: '操作',
       dataIndex: 'JSSJ',
       key: 'JSSJ',
       align: 'center',
       width: 160,
+      fixed: 'right',
       ellipsis: true,
       render: (text: any, record: any) => {
         return (
-          <>
-            {record.KHQJKCs?.[0].QJRQ} {record.JSSJ}
-          </>
+          <Link
+              key="kcxq"
+              to={{
+                pathname: '/courseManagement/leaveManagement/schoolLeave',
+                state: {
+                  id: record.id,
+                  xzqhm: currentUser?.XZQHM,
+                  xxmc: record.XXMC
+                }
+              }}
+            >
+              详情
+            </Link>
         );
       }
     }
@@ -177,18 +143,18 @@ const LeaveManagement = () => {
             pageSize: 10,
             defaultCurrent: 1,
           }}
-          scroll={{ x: 1300 }}
+          scroll={{ x: 900 }}
           request={async () => {
-            const resAll = await getAllAbsences({
-              XNXQId: '',
+            const resAll = await getSchoolsQJ({
               XZQHM: currentUser?.XZQHM,
-              XXJBSJId: XXId || ''
+              page: 0,
+              pageSize: 0,
             });
             if (resAll.status === 'ok') {
               return {
                 data: resAll?.data?.rows,
                 success: true,
-                total: resAll?.data?.count
+                total: resAll?.data?.count?.length
               };
             }
             return {

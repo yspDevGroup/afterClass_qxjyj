@@ -192,6 +192,7 @@ export async function updateXXJBSJ(
 export async function homePage(
   body: {
     XXJBSJId?: string;
+    XNXQId?: string;
   },
   options?: { [key: string]: any },
 ) {

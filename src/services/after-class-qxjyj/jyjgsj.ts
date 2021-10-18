@@ -529,3 +529,45 @@ export async function getAttendanceTrend(
     ...(options || {}),
   });
 }
+
+/** 区县教育局查看所有学校的请假列表 POST /jyjgsj/getSchoolsQJ */
+export async function getSchoolsQJ(
+  body: {
+    XZQHM?: string;
+    /** 页数 */
+    page?: number;
+    /** 每页记录数 */
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<any>('/jyjgsj/getSchoolsQJ', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 区县教育局查看所有学校的退课退款 POST /jyjgsj/getSchoolsTK */
+export async function getSchoolsTK(
+  body: {
+    XZQHM?: string;
+    /** 页数 */
+    page?: number;
+    /** 每页记录数 */
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<any>('/jyjgsj/getSchoolsTK', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
