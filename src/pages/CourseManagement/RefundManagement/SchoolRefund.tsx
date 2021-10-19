@@ -7,6 +7,7 @@ import { queryXNXQList } from '@/services/local-services/xnxq';
 
 import styles from './index.less';
 import { getAllKHXSTK } from '@/services/after-class-qxjyj/khxstk';
+import WWOpenDataCom from '@/components/WWOpenDataCom';
 
 const { Option } = Select;
 // 退款
@@ -125,6 +126,10 @@ const SchoolRefund = (props: any) => {
       ellipsis: true,
       width: 100,
       render: (_, record) => {
+        const showWXName = record?.JZGJBSJ?.XM === '未知' && record?.WechatUserId;
+        if (showWXName) {
+          return <WWOpenDataCom type="userName" openid={record?.WechatUserId} />;
+        }
         return record?.JZGJBSJ?.XM;
       }
     },
