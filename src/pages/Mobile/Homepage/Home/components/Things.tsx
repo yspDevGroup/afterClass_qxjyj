@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import noData from '@/assets/noCourse.png';
+import noData from '@/assets/noData.png';
 import styles from '../index.less';
 import { getAllInstitutions, JYJGSJ, toIntroduceCourses } from '@/services/after-class-qxjyj/jyjgsj';
 import { Link, useModel } from 'umi';
@@ -91,7 +91,7 @@ const Things = () => {
             dataSource?.length ? <ListComp listData={dataSource} /> :<Empty
             image={noData}
             imageStyle={{
-              minHeight: 160
+              minHeight: 135
             }}
             style={{ minHeight: 200,background: '#fff',borderRadius: '8px' }}
             description={'暂无待办事项'} />

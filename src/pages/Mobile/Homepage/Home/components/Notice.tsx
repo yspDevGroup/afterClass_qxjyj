@@ -1,11 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
-import myContext from '@/utils/MyContext';
+import { useEffect, useState } from 'react';
 import noData from '@/assets/noCourse.png';
-import moment from 'moment';
 import styles from '../index.less';
 import { Link, useModel } from 'umi';
 import { Button, Col, Empty, Row, Tabs } from 'antd';
-import IconFont from '@/components/CustomIcon';
 import ListComp from './ListComponent';
 import { JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
 import { getJYJGTZGG } from '@/services/after-class-qxjyj/jyjgtzgg';
@@ -106,9 +103,9 @@ const Notice = () => {
             </> : <Empty
             image={noData}
             imageStyle={{
-              minHeight: 200
+              minHeight: 135
             }}
-            style={{ minHeight: 355,background: '#fff',borderRadius: '8px' }}
+            style={{ minHeight: 200,background: '#fff',borderRadius: '8px' }}
             description={'暂无公告'} />
           }
 
@@ -123,9 +120,9 @@ const Notice = () => {
             </> : <Empty
               image={noData}
               imageStyle={{
-                minHeight: 200
+                minHeight: 135
               }}
-              style={{ minHeight: 355,background: '#fff',borderRadius: '8px' }}
+              style={{ minHeight: 200,background: '#fff',borderRadius: '8px' }}
               description={'暂无公告'} />
           }
 

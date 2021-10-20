@@ -1,22 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
-import myContext from '@/utils/MyContext';
-import noData from '@/assets/noCourse.png';
-import moment from 'moment';
+import { useEffect, useState } from 'react';
 import styles from '../index.less';
-import { Link, useModel } from 'umi';
+import { useModel } from 'umi';
 import { Card, Col, Row, Tabs } from 'antd';
 import { topNum } from './utils';
-import IconFont from '@/components/CustomIcon';
-import ListComp from '../components/ListComponent';
 import { homePage } from '@/services/after-class-qxjyj/jyjgsj';
-
-const style = { background: '#0092ff', padding: '8px 0' };
 
 const { TabPane } = Tabs;
 const Overview = () => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
-  const { yxkc } = useContext(myContext);
   const [homeData, setHomeData] = useState<any>();
   useEffect(() => {
     async function fetchData() {
@@ -36,7 +28,7 @@ const Overview = () => {
   const ItemCard = (props: any) => {
     const {title,count,bgImg} = props;
     return (
-      <Card className={styles.card} bodyStyle={{paddingTop: 8.8, paddingLeft: 8.8, minHeight: '101.7px'}}>
+      <Card className={styles.card} bordered={false} bodyStyle={{paddingTop: 8.8, paddingLeft: 8.8, minHeight: '101.7px'}}>
         <p style={{whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>{title}</p>
         <p>{count}</p>
         <img className={styles.bgImg} src={bgImg} alt="" />

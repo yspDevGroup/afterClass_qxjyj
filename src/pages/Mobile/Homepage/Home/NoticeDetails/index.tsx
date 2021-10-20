@@ -1,9 +1,6 @@
-import styles from '../index.less';
-import { Button, Col, Row, Tabs } from 'antd';
+import { Col, Row } from 'antd';
 import { JYJGTZGG } from '@/services/after-class-qxjyj/jyjgtzgg';
-import { LeftOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
-import { history } from 'umi';
 import TopNav from './../components/TopNav'
 
 const NoticeDetails = (props: any) => {
