@@ -64,6 +64,7 @@ const AfterSchoolClass = (props: any) => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
+      fixed:'left',
       align: 'center'
     },
     {
@@ -71,10 +72,8 @@ const AfterSchoolClass = (props: any) => {
       dataIndex: 'BJMC',
       key: 'BJMC',
       align: 'center',
-      render: (test: any) => {
-        return test;
-      },
       ellipsis: true,
+      fixed:'left',
       width: 140
     },
     {
@@ -212,6 +211,12 @@ const AfterSchoolClass = (props: any) => {
         </div>
         <ProTable
           headerTitle={KCMC + ' / ' + XXMC}
+          pagination={{
+            showQuickJumper: true,
+            pageSize: 10,
+            defaultCurrent: 1,
+          }}
+          scroll={{ x: 1300 }}
           columns={columns}
           dataSource={dataSource}
           rowKey="id"

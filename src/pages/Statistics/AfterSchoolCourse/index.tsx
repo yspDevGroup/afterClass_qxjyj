@@ -121,8 +121,8 @@ const AfterSchoolCourse = () => {
     },
     {
       title: '操作',
-      dataIndex: 'XSXM',
-      key: 'XSXM',
+      dataIndex: 'operation',
+      key: 'operation',
       align: 'center',
       width: 120,
       ellipsis: true,
@@ -222,6 +222,11 @@ const AfterSchoolCourse = () => {
           dataSource={dataSource}
           rowKey="id"
           search={false}
+          pagination={{
+            showQuickJumper: true,
+            pageSize: 10,
+            defaultCurrent: 1,
+          }}
           scroll={{ x: 1300 }}
           options={{
             setting: false,
