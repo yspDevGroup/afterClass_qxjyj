@@ -40,14 +40,6 @@ const apply = () => {
   const getData = async (res: any) => {
 
     const defaultData: any = {
-      serviceNum: [],
-      courseCollect: [],
-      checkOut: [],
-      numCollect: [],
-      schoolNum: [],
-      courseNum: [],
-      enrollNum: [],
-      agentNum: [],
       applyNum: [],
       conditionNum: [],
     };
@@ -73,22 +65,6 @@ const apply = () => {
     if (result.status === 'ok') {
       const { data } = result;
       if (data) {
-        defaultData.serviceNum = [{
-          title: '教师总数',
-          num: (data?.jgjs_count || 0) + (data?.xxjs_count || 0)
-        },
-        {
-          title: '学生总数',
-          num: data?.xs_count || 0
-        },
-        {
-          title: '收款总额',
-          num: data?.sk_count || 0
-        },
-        {
-          title: '退款总额',
-          num: data?.tk_count || 0
-        }];
 
         data.xxbm?.length && data.xxbm.forEach((item: any) => {
           defaultData.conditionNum.push({

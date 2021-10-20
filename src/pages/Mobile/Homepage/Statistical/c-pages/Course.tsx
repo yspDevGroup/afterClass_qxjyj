@@ -22,14 +22,8 @@ const course = () => {
   const getData = async (res: any) => {
 
     const defaultData: any = {
-      serviceNum: [],
       courseCollect: [],
-      checkOut: [],
-      numCollect: [],
-      schoolNum: [],
       courseNum: [],
-      enrollNum: [],
-      agentNum: [],
       proportionNum: []
     };
     const resProportion = await homePage({
@@ -80,13 +74,6 @@ const course = () => {
         });
 
         barConfig.data = defaultData.courseNum;
-
-        defaultData.enrollNum = data.xxbm?.length ? [].map.call(data.xxbm, (item: any) => {
-          return {
-            school: item.XXMC,
-            value: item.bj_count,
-          };
-        }) : [];
       }
     }
     setCurrentData(defaultData);

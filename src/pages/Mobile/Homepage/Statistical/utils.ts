@@ -109,7 +109,7 @@ export const barConfig: any = {
       { type: 'interval-hide-overlap' },
       { type: 'adjust-color' },
     ],
-  },
+  }
 };
 export const conditionConfig: any = {
   appendPadding: 20,
