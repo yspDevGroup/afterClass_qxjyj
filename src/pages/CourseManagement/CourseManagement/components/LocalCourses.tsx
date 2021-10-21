@@ -24,7 +24,7 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
-      fixed:'left',
+      fixed: 'left',
       align: 'center'
     },
     {
@@ -32,12 +32,13 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
       dataIndex: 'KCMC',
       key: 'KCMC',
       align: 'center',
-      fixed:'left',
+      fixed: 'left',
       width: 160,
       ellipsis: true,
       render: (text: string, record: any) => {
         return (
           <a
+            style={{ color: '#4884ff' }}
             onClick={() => {
               history.push({
                 pathname: `/courseManagement/courseManagement/courseInfo`,
@@ -45,7 +46,7 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
               });
             }}
           >
-            {text}
+            {record.KCMC}
           </a>
         );
       }
@@ -59,7 +60,7 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
       ellipsis: true,
       valueEnum: {
         校内课程: { text: '校内课程' },
-        机构课程: { text: '机构课程' },
+        机构课程: { text: '机构课程' }
       },
       align: 'center'
     },
@@ -84,21 +85,25 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
       width: 160,
       ellipsis: true,
       render: (text: any, record: any) => {
-        return record.SSJGLX === '校内课程' ? <Link
-          to={{
-            pathname: '/courseManagement/courseManagement/schoolList/schoolInfos',
-            state: record
-          }}
-        >
-          {record?.XXJBSJ?.XXMC}
-        </Link> : <Link
-          to={{
-            pathname: `/organizationManagement/agencyDetails`,
-            state: { value: record.KHJYJG }
-          }}
-        >
-          {record?.KHJYJG?.QYMC}
-        </Link>
+        return record.SSJGLX === '校内课程' ? (
+          <Link
+            to={{
+              pathname: '/courseManagement/courseManagement/schoolList/schoolInfos',
+              state: record
+            }}
+          >
+            {record?.XXJBSJ?.XXMC}
+          </Link>
+        ) : (
+          <Link
+            to={{
+              pathname: `/organizationManagement/agencyDetails`,
+              state: { value: record.KHJYJG }
+            }}
+          >
+            {record?.KHJYJG?.QYMC}
+          </Link>
+        );
       }
     },
     {
@@ -112,9 +117,13 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
         return (
           <EllipsisHint
             width="100%"
-            text={text?.length ? text.map((item: any) => {
-              return <Tag key={item.id}>{item.XD === '初中' ? `${item.NJMC}` : `${item.XD}${item.NJMC}`}</Tag>;
-            }) : ''}
+            text={
+              text?.length
+                ? text.map((item: any) => {
+                    return <Tag key={item.id}>{item.XD === '初中' ? `${item.NJMC}` : `${item.XD}${item.NJMC}`}</Tag>;
+                  })
+                : ''
+            }
           />
         );
       }
@@ -190,7 +199,7 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
         pagination={{
           showQuickJumper: true,
           pageSize: 10,
-          defaultCurrent: 1,
+          defaultCurrent: 1
         }}
         scroll={{ x: 1100 }}
         request={async (param = {}, sort, filter) => {
@@ -202,7 +211,7 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
               pageSize: param.pageSize,
               XZQHM: JYYData?.XZQH,
               KCMC: param.KCMC,
-              KCLY: param.SSJGLX,
+              KCLY: param.SSJGLX
             };
             const res = await getAllCourses(params);
             if (res.status === 'ok') {
