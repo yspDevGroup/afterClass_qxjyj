@@ -99,12 +99,12 @@ useEffect(()=>{
           defaultData.trendNum.push({
             label: item.XXMC,
             type: '收款金额',
-            value: item.sk_count,
+            value: parseFloat(item.sk_count) || 0,
           })
           defaultData.trendNum.push({
             label: item.XXMC,
             type: '退款金额',
-            value: item.tk_count,
+            value: parseFloat(item.tk_count) || 0,
           })
         });
         barConfig.data = defaultData.trendNum;

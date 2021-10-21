@@ -70,12 +70,12 @@ const apply = () => {
           defaultData.conditionNum.push({
             label: item.XXMC,
             type: '报名人次',
-            value: item.xsbj_count,
+            value: parseInt(item.xsbj_count),
           });
           defaultData.conditionNum.push({
             label: item.XXMC,
             type: '参与学生',
-            value: item.xs_count,
+            value: parseInt(item.xs_count),
           })
         });
       }

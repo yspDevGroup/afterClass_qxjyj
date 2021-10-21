@@ -53,7 +53,7 @@ const course = () => {
           if (item.count !== 0) {
             defaultData.courseCollect.push({
               type: item.KCTAG,
-              value: item.count
+              value: parseFloat(item.count)
             })
           }
         });
@@ -63,12 +63,12 @@ const course = () => {
             defaultData.courseNum.push({
               label: item.XXMC,
               type: '学校课程',
-              value: item.xxkc_count,
+              value: parseFloat(item.xxkc_count),
             },)
             defaultData.courseNum.push({
               label: item.XXMC,
               type: '机构课程',
-              value: item.jgkc_count,
+              value: parseFloat(item.jgkc_count),
             },)
           }
         });
@@ -86,7 +86,7 @@ const course = () => {
 
   return (
   <div className={styles.course}>
-    <div className={styles.container} style={{height: '282px'}}>
+    <div className={styles.container} style={{height: '290px'}}>
       <ModuleTitle data='课程类型分布'/>
       <div className={styles.chartsContainer}>
       {
