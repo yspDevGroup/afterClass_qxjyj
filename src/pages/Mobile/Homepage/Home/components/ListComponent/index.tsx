@@ -30,7 +30,7 @@ const NewsList = (props: { data: ListItem[]; type: ListType; operation: any }) =
                         </div>
                         <div className={styles.TitleRight}>
                          {
-                            <span>{moment(v.createdAt).format('YYYY.MM.DD')}</span>
+                           type === 'actList' ? <span>{moment(v.createdAt).format('YYYY.MM.DD')}</span> : ''
                          }
                         </div>
                       </div>
@@ -45,7 +45,7 @@ const NewsList = (props: { data: ListItem[]; type: ListType; operation: any }) =
                           </div>
                           <div className={styles.descright}>
                             {
-                               ''
+                               type === 'actList' ? '' : <IconFont type="icon-gengduo" className={styles.gengduo} />
                             }
                           </div>
                         </div>
