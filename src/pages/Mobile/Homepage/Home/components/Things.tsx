@@ -29,17 +29,7 @@ const Things = () => {
           // KCMC: param.KCMC
         });
         if (dyrkcDataRes.status === 'ok') {
-          let newData = {
-            type: 'picList',
-            cls: 'picList',
-            list: dyrkcDataRes.data?.rows.slice(0, 3) || [],
-            noDataText: '暂无课程',
-            noDataImg: noData,
-          };
-          setDataSource(newData);
-          newData.list = dyrkcDataRes.data?.rows || [];
-          setAllDataSource(newData);
-          // setDyrkc(dyrkcDataRes.data?.rows);
+          console.log('dyrkcDataRes: ', dyrkcDataRes);
         } else {
           message.error(dyrkcDataRes.message);
           return {};
@@ -56,11 +46,19 @@ const Things = () => {
           },
         );
         if (dzrjgDataRes.status === 'ok') {
+          let newData = {
+            type: 'picList',
+            cls: 'picList',
+            list: [...dzrjgDataRes.data?.rows, ...dyrkcDataRes.data?.rows].slice(0, 3) || [],
+            noDataText: '暂无课程',
+            noDataImg: noData,
+          };
+          setDataSource(newData);
           setAllDataSource(
             {
               type: 'picList',
               cls: 'picList',
-              list: [...dzrjgDataRes.data?.rows] || [],
+              list: [...dzrjgDataRes.data?.rows, ...dyrkcDataRes.data?.rows] || [],
               noDataText: '暂无课代办',
               noDataImg: noData,
             }
@@ -88,7 +86,7 @@ const Things = () => {
       >
         <TabPane tab="待办事项" key="upcoming">
           {
-            dataSource?.length ? <ListComp listData={dataSource} /> :<Empty
+            dataSource?.list?.length ? <ListComp listData={dataSource} /> :<Empty
             image={noData}
             imageStyle={{
               minHeight: 135
