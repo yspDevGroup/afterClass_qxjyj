@@ -30,7 +30,7 @@ const NoticeDetails = (props: any) => {
         </Row>
         <Row gutter={[0, 32]}>
           <Col span={10} offset={7}>
-            {allDataSource[index].RQ || allDataSource[index].updatedAt}
+            {allDataSource[index].RQ || allDataSource[index].createdAt}
           </Col>
         </Row>
         <Row gutter={[0, 32]}>
