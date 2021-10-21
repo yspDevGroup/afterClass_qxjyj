@@ -5,7 +5,7 @@ import locale from 'antd/lib/locale/zh_CN';
 import { Bar } from '@ant-design/charts';
 import moment from 'moment';
 
-import { getTerm, barConfig } from '../utils';
+import { getTerm, tollBarConfig } from '../utils';
 import { getScreenInfo , getTotalCost } from '@/services/after-class-qxjyj/jyjgsj';
 
 import noData from '@/assets/noData.png';
@@ -107,7 +107,7 @@ useEffect(()=>{
             value: parseFloat(item.tk_count) || 0,
           })
         });
-        barConfig.data = defaultData.trendNum;
+        tollBarConfig.data = defaultData.trendNum;
       }
     }
     setCurrentData(defaultData.serviceNum);
@@ -128,7 +128,7 @@ useEffect(()=>{
         <ModuleTitle data='各校收退款情况' />
         <div className={styles.chartsContainer}>
           {
-            (barConfig.data && barConfig.data?.length!==0) ? <Bar {...barConfig} /> : <Empty
+            (tollBarConfig.data && tollBarConfig.data?.length!==0) ? <Bar {...tollBarConfig} /> : <Empty
             image={noData}
             imageStyle={{
               minHeight: 200
