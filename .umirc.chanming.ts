@@ -1,3 +1,10 @@
+/*
+ * @description: 蝉鸣配置
+ * @author: zpl
+ * @Date: 2021-10-21 09:06:57
+ * @LastEditTime: 2021-10-22 12:44:37
+ * @LastEditors: zpl
+ */
 import { defineConfig } from 'umi';
 import CompressionWebpackPlugin from 'compression-webpack-plugin';
 import theme from './theme';
@@ -14,7 +21,7 @@ export default defineConfig({
   define: {
     ENV_title: '课后服务平台',
     ENV_subTitle: '课后服务平台',
-    ENV_copyRight: '2021 版权所有：陕西五育汇智信息技术有限公司',
+    ENV_copyRight: '2021 版权所有：蝉鸣科技（西安）有限公司',
     ENV_host: 'http://afterclassQxjyj.wuyu.imzhiliao.com',
     ENV_backUrl: 'http://api.wuyu.imzhiliao.com',
     ssoHost: 'http://sso.wuyu.imzhiliao.com',
