@@ -86,7 +86,7 @@ const Things = () => {
       >
         <TabPane tab="待办事项" key="upcoming">
           {
-            dataSource?.list?.length ? <ListComp listData={dataSource} /> :<Empty
+            dataSource?.list?.length ? <ListComp listData={dataSource} showModal={true}/> :<Empty
             image={noData}
             imageStyle={{
               minHeight: 135

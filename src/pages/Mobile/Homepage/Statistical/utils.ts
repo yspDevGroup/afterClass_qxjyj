@@ -109,7 +109,8 @@ export const barConfig: any = {
       { type: 'interval-hide-overlap' },
       { type: 'adjust-color' },
     ],
-  }
+  },
+  maxBarWidth: 30
 };
 export const tollBarConfig: any = {
   appendPadding: 20,
@@ -131,7 +132,8 @@ export const tollBarConfig: any = {
       { type: 'interval-hide-overlap' },
       { type: 'adjust-color' },
     ],
-  }
+  },
+  maxBarWidth: 30
 };
 export const conditionConfig: any = {
   appendPadding: 20,

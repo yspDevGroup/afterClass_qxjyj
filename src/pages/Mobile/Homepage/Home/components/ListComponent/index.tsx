@@ -1,24 +1,38 @@
 import type { ListData, ListItem, ListType } from './data';
-import { List } from 'antd';
+import { List, Modal } from 'antd';
 import { Link, history } from 'umi';
 import moment from 'moment';
 import styles from './index.less';
 import IconFont from '@/components/CustomIcon';
 
-const NewsList = (props: { data: ListItem[]; type: any; operation: any }) => {
-  const { data, type, operation } = props;
+const NewsList = (props: { data: ListItem[]; type: any; operation: any; showModal: any }) => {
+  const { data, type, operation, showModal } = props;
   const teacher = history.location.pathname.indexOf('teacher') > -1;
+
+  function info() {
+    Modal.info({
+      content: (
+        <div>
+          <p>请在PC端企业微信进行审批操作</p>
+        </div>
+      ),
+      okText: '确定',
+      okButtonProps:{
+        block: true
+      },
+      onOk() {},
+    });
+  }
 
   return (
     <div className={styles[type]}>
       <List
         dataSource={data}
         renderItem={(v: any,index) => {
-          console.log('v: ', v);
           return (
-            <div className={operation ? 'ui-listItemWrapper' : ''}>
-              <div className={operation ? 'ui-listItemContent' : ''}>
-                <Link to={{pathname: '/mobile/homepage/home/noticeDetails', state: { allDataSource: data, index }}}>
+            <div className={styles.ModalStyle}>
+              <div className={operation ? 'ui-listItemContent' : ''} onClick={info}>
+                <Link to={showModal ? '/mobile/homepage' : {pathname: '/mobile/homepage/home/noticeDetails', state: { allDataSource: data, index }}}>
                   <List.Item.Meta
                     title={
                       <div className={styles.TitleRow}>
@@ -81,10 +95,10 @@ const NewsList = (props: { data: ListItem[]; type: any; operation: any }) => {
   );
 };
 
-const ListComp = (props: { listData?: ListData; cls?: string; operation?: any }) => {
+const ListComp = (props: { listData?: ListData; cls?: string; operation?: any; showModal?: any }) => {
   if (props.listData) {
     const { header, list, type, noDataImg, noDataText, noDataIcon } = props.listData;
-    const { cls, operation } = props;
+    const { cls, operation, showModal } = props;
 
     return (
       <div className={`${styles.ListComponentBigBox} ${cls}`}>
@@ -99,7 +113,7 @@ const ListComp = (props: { listData?: ListData; cls?: string; operation?: any })
           ''
         )}
         {list && list.length ? (
-          <NewsList data={list} type={type} operation={operation} />
+          <NewsList data={list} type={type} operation={operation} showModal/>
         ) : (
           <>
             {noDataIcon ? (
