@@ -1,7 +1,7 @@
 import { useModel } from 'umi';
 import { Row, Col } from 'antd';
 import NumberCollect from './component/NumberCollect';
-import { getTerm, textColor1, textColor2 } from './component/utils';
+import { getTerm, mock, textColor1, textColor2 } from './component/utils';
 import PieChart from './component/PieChart';
 import List from './component/List';
 import ColumnChart from './component/ColumnChart';
@@ -41,7 +41,7 @@ const ChartsPage = (props: any) => {
       if (data) {
         defaultData.serviceNum = [{
           title: '教师总数',
-          num: (data?.jgjs_count || 0) + (data?.xxjs_count || 0)
+          num: Number((data?.jgjs_count || 0) + (data?.xxjs_count || 0)).toFixed(2)
         },
         {
           title: '学生总数',
@@ -126,6 +126,7 @@ const ChartsPage = (props: any) => {
   useEffect(() => {
     const res = getTerm();
     getData(res);
+    // setCurrentData(mock);
   }, []);
 
   return (
