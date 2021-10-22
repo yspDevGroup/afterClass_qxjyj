@@ -2,7 +2,7 @@
  * @description: 运行时配置
  * @author: zpl
  * @Date: 2021-08-09 10:44:42
- * @LastEditTime: 2021-09-07 19:19:40
+ * @LastEditTime: 2021-10-21 12:21:13
  * @LastEditors: zpl
  */
 import { notification, message } from 'antd';
@@ -122,7 +122,7 @@ const errorHandler = (error: ResponseError) => {
 
   if (!response) {
     notification.error({
-      description: '您的网络发生异常，无法连接服务器',
+      description: `您的网络发生异常，无法连接服务器, ${JSON.stringify(error)}`,
       message: '网络异常'
     });
   }

@@ -50,8 +50,8 @@ const Notice = () => {
         });
         if (resgetXXTZGG.status === 'ok') {
           let newData = {
-            type: 'actList',
-            cls: 'actList',
+            type: 'azeList',
+            cls: 'azeList',
             list: resgetXXTZGG.data?.rows?.slice(0, 3) || [],
             noDataText: '暂无待办',
             noDataImg: noData,
