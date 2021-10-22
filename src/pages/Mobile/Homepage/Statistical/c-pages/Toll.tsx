@@ -83,13 +83,14 @@ useEffect(()=>{
       ...res,
       XZQHM: currentUser?.XZQHM
     });
+    console.log('result: ', result);
     if (result.status === 'ok') {
       const { data } = result;
       if (data) {
         defaultData.serviceNum = [
         {
           title: '收款金额（元）',
-          num: data?.sk_amount || 0
+          num: data?.sk_count || 0
         },
         {
           title: '退款金额（元）',
