@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { useModel } from 'umi';
-import { Select } from 'antd';
+import { Button, Select } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import { queryXNXQList } from '@/services/local-services/xnxq';
-
+import { LeftOutlined } from '@ant-design/icons';
 import styles from './index.less';
 import { getAllKHXSTK } from '@/services/after-class-qxjyj/khxstk';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
@@ -158,65 +158,79 @@ const SchoolRefund = (props: any) => {
   ];
 
   return (
-    <div className={styles.SchoolRefund}>
-      <div className={styles.TopSearchs}>
-        <span>
-          所属学年学期：
-          <Select
-            value={curXNXQId}
-            style={{ width: 200 }}
-            onChange={(value: string) => {
-              // 更新多选框的值
-              setCurXNXQId(value);
-            }}
-          >
-            {termList?.map((item: any) => {
-              return (
-                <Option key={item.value} value={item.value}>
-                  {item.text}
-                </Option>
-              );
-            })}
-          </Select>
-        </span>
-      </div>
-      <div>
-        <ProTable<any>
-          actionRef={actionRef}
-          columns={columns}
-          headerTitle={state?.xxmc}
-          rowKey="id"
-          request={async () => {
-            const resAll = await getAllKHXSTK({
-              XXJBSJId: state?.id,
-              XNXQId: curXNXQId,
-              TKZT: [3],
-              page: 0,
-              pageSize: 0
-            });
-            if (resAll.status === 'ok') {
+    <>
+      <Button
+        type="primary"
+        onClick={() => {
+          history.go(-1);
+        }}
+        style={{
+          marginBottom: '24px'
+        }}
+      >
+        <LeftOutlined />
+        返回上一页
+      </Button>
+      <div className={styles.SchoolRefund}>
+        <div className={styles.TopSearchs}>
+          <span>
+            所属学年学期：
+            <Select
+              value={curXNXQId}
+              style={{ width: 200 }}
+              onChange={(value: string) => {
+                // 更新多选框的值
+                setCurXNXQId(value);
+              }}
+            >
+              {termList?.map((item: any) => {
+                return (
+                  <Option key={item.value} value={item.value}>
+                    {item.text}
+                  </Option>
+                );
+              })}
+            </Select>
+          </span>
+        </div>
+        <div>
+          <ProTable<any>
+            actionRef={actionRef}
+            columns={columns}
+            headerTitle={state?.xxmc}
+            rowKey="id"
+            request={async () => {
+              const resAll = await getAllKHXSTK({
+                XXJBSJId: state?.id,
+                XNXQId: curXNXQId,
+                TKZT: [3],
+                page: 0,
+                pageSize: 0
+              });
+              if (resAll.status === 'ok') {
+                return {
+                  data: resAll?.data?.rows,
+                  success: true,
+                  total: resAll?.data?.count
+                };
+              }
               return {
-                data: resAll?.data?.rows,
-                success: true,
-                total: resAll?.data?.count
+                data: [],
+                success: false,
+                total: 0
               };
-            }
-            return {
-              data: [],
-              success: false,
-              total: 0
-            };
-          }}
-          options={{
-            setting: false,
-            fullScreen: false,
-            density: false,
-            reload: false
-          }}
-          search={false}
-        />
+            }}
+            options={{
+              setting: false,
+              fullScreen: false,
+              density: false,
+              reload: false
+            }}
+            search={false}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 SchoolRefund.wrappers = ['@/wrappers/auth'];

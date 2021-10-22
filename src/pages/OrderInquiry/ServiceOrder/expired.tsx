@@ -55,8 +55,8 @@ const StateTab = (props: any) => {
       align: 'center',
       width: 180,
       ellipsis: true,
-      render: (text: any) => {
-        return <div>{text?.FWMC}</div>;
+      render: (text: any, record: any) => {
+        return <div>{record?.KHXXZZFW?.FWMC}</div>;
       }
     },
     {
@@ -103,7 +103,7 @@ const StateTab = (props: any) => {
           pagination={{
             showQuickJumper: true,
             pageSize: 10,
-            defaultCurrent: 1,
+            defaultCurrent: 1
           }}
           scroll={{ x: 1000 }}
           dataSource={dataSource}

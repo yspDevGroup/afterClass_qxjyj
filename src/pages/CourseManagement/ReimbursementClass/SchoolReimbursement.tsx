@@ -3,14 +3,16 @@ import { useEffect, useRef, useState } from 'react';
 import { getAllTK } from '@/services/after-class-qxjyj/khtksj';
 import { useModel } from 'umi';
 import type { ColumnsType } from 'antd/lib/table';
-import { Select, Table, Popconfirm, Divider, message } from 'antd';
+import { Select, Table, Popconfirm, Divider, message, Button } from 'antd';
 import Style from './index.less';
 import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
 import { getAllSchools } from '@/services/after-class-qxjyj/jyjgsj';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
 import { getAllXNXQ } from '@/services/after-class-qxjyj/xnxq';
 import { getCurrentXQ } from '@/utils/utils';
+import { LeftOutlined } from '@ant-design/icons';
 // import { text } from 'express';
+
 const { Option } = Select;
 // 退课
 const SchoolReimbursement = (props: any) => {
@@ -37,7 +39,7 @@ const SchoolReimbursement = (props: any) => {
   };
   const getXNXQ = async (xxdm: string) => {
     const res = await getAllXNXQ({
-      XXJBSJId: xxdm,
+      XXJBSJId: xxdm
     });
     if (res?.status === 'ok') {
       const { data = [] } = res;
@@ -57,7 +59,7 @@ const SchoolReimbursement = (props: any) => {
   };
   useEffect(() => {
     getXNXQ(id);
-  }, [])
+  }, []);
   const columns: ProColumns<any>[] = [
     {
       title: '序号',
@@ -131,8 +133,8 @@ const SchoolReimbursement = (props: any) => {
       align: 'center',
       width: 100,
       ellipsis: true,
-      render: (_,record) => {
-        return record.ZT === 0 ? '申请中' : (record.ZT === 1 ? '已退课' : '已驳回');
+      render: (_, record) => {
+        return record.ZT === 0 ? '申请中' : record.ZT === 1 ? '已退课' : '已驳回';
       }
     },
     {
@@ -146,6 +148,18 @@ const SchoolReimbursement = (props: any) => {
   ];
   return (
     <>
+      <Button
+        type="primary"
+        onClick={() => {
+          history.go(-1);
+        }}
+        style={{
+          marginBottom: '24px'
+        }}
+      >
+        <LeftOutlined />
+        返回上一页
+      </Button>
       <div className={Style.bodyContainer}>
         <div className={Style.TopSearchs}>
           <span>
@@ -159,7 +173,11 @@ const SchoolReimbursement = (props: any) => {
               }}
             >
               {termList?.map((item: any) => {
-                return <Option key={item.value} value={item.value}>{item.text}</Option>;
+                return (
+                  <Option key={item.value} value={item.value}>
+                    {item.text}
+                  </Option>
+                );
               })}
             </Select>
           </span>
@@ -171,7 +189,7 @@ const SchoolReimbursement = (props: any) => {
           pagination={{
             showQuickJumper: true,
             pageSize: 10,
-            defaultCurrent: 1,
+            defaultCurrent: 1
           }}
           scroll={{ x: 1300 }}
           dataSource={dataSource}
