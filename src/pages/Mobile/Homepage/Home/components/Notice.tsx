@@ -40,7 +40,7 @@ const Notice = () => {
       const resJYJGSJ = await JYJGSJ({ id: jyjId! });
       if (resJYJGSJ.status === 'ok') {
 
-        //通知公告
+        // 通知公告
         const resgetXXTZGG = await getJYJGTZGG({
           BT: '',
           ZT: ['已发布'],
@@ -61,7 +61,7 @@ const Notice = () => {
           setAllZCDataSource(newData)
         }
 
-        //政策公告
+        // 政策公告
         const resgetXXZCGG = await getJYJGTZGG({
           BT: '',
           LX: 1,
@@ -106,7 +106,7 @@ const Notice = () => {
               minHeight: 135
             }}
             style={{ minHeight: 200,background: '#fff',borderRadius: '8px' }}
-            description={'暂无公告'} />
+            description="暂无公告" />
           }
 
         </TabPane>
@@ -123,7 +123,7 @@ const Notice = () => {
                 minHeight: 135
               }}
               style={{ minHeight: 200,background: '#fff',borderRadius: '8px' }}
-              description={'暂无公告'} />
+              description="暂无公告" />
           }
 
         </TabPane>

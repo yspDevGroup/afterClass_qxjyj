@@ -7,7 +7,7 @@ const Home = () => {
   return (
   <div className={styles.indexPage}>
     <div className={styles.pageContent}>
-        <div className={styles.noticeArea}></div>
+        <div className={styles.noticeArea} />
         <Things/>
         <Overview/>
         <Notice/>

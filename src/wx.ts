@@ -4,8 +4,8 @@
  * @description:
  * @author: zpl
  * @Date: 2021-06-09 08:57:20
- * @LastEditTime: 2021-09-10 17:49:06
- * @LastEditors: Sissle Lynn
+ * @LastEditTime: 2021-10-25 15:40:57
+ * @LastEditors: zpl
  */
 
 import { getQYJsSignature, getYYJsSignature } from "./services/after-class-qxjyj/wechat";
@@ -29,6 +29,9 @@ export const initWXConfig = async (jsApiList: string[]) => {
       signature, // 必填，签名，见 附录-JS-SDK使用权限签名算法
       jsApiList: jsApiList || ['checkJsApi'], // 必填，需要使用的JS接口列表，凡是要调用的接口都需要传进来
     };
+    console.log('------0------');    
+    console.log(window.location.href);    
+    console.log('------1------');    
     return new Promise((resolve, reject) => {
       wx.config(currentConf);
       wx.ready(resolve);

@@ -7,7 +7,7 @@ type PropsType = {
 export default function WWOpenDataCom({ type, openid }: PropsType) {
   const ref = useRef(null);
   useLayoutEffect(() => {
-    if (openid && WWOpenData?.bind) {
+    if (openid && typeof WWOpenData !== 'undefined' && WWOpenData?.bind) {
       WWOpenData.bind(ref.current);
     }
   }, [openid]);

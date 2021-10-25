@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 import { useEffect, useState } from 'react';
 import noData from '@/assets/noData.png';
 import styles from '../index.less';
@@ -21,7 +22,7 @@ const Things = () => {
       const resJYJGSJ = await JYJGSJ({ id: jyjId! });
       if (resJYJGSJ.status === 'ok') {
 
-        //待引入课程
+        // 待引入课程
         const dyrkcDataRes = await toIntroduceCourses({
           page: 1,
           pageSize: 3,
@@ -35,7 +36,7 @@ const Things = () => {
           return {};
         }
 
-        //待准入机构
+        // 待准入机构
         const dzrjgDataRes = await getAllInstitutions(
           {
             ZT: [0],
@@ -92,7 +93,7 @@ const Things = () => {
               minHeight: 135
             }}
             style={{ minHeight: 200,background: '#fff',borderRadius: '8px' }}
-            description={'暂无待办事项'} />
+            description="暂无待办事项" />
           }
         </TabPane>
       </Tabs>

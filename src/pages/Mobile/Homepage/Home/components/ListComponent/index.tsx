@@ -5,8 +5,8 @@ import moment from 'moment';
 import styles from './index.less';
 import IconFont from '@/components/CustomIcon';
 
-const NewsList = (props: { data: ListItem[]; type: any; operation: any; showModal: any }) => {
-  const { data, type, operation, showModal } = props;
+const NewsList = (props: { data: ListItem[]; type: any; operation: any; showModal?: boolean }) => {
+  const { data, type, operation, showModal = false } = props;
   const teacher = history.location.pathname.indexOf('teacher') > -1;
 
   function info() {
@@ -33,16 +33,14 @@ const NewsList = (props: { data: ListItem[]; type: any; operation: any; showModa
         renderItem={(v: any,index) => {
           return (
             <div className={styles.ModalStyle}>
-              <div className={operation ? 'ui-listItemContent' : ''} onClick={info}>
+              <div className={operation ? 'ui-listItemContent' : ''} onClick={showModal ? info : undefined}>
                 <Link to={showModal ? '/mobile/homepage' : {pathname: '/mobile/homepage/home/noticeDetails', state: { allDataSource: data, index }}}>
                   <List.Item.Meta
                     title={
                       <div className={styles.TitleRow}>
                         <div className={styles.Title}>
                           {v.SFTT === 1 ? <div className={styles.Headlines}>头条</div> : <></>}
-                          {
-                            <span style={{fontSize: '14px', fontWeight: 'bold'}}>{v.BT || v.KCMC}</span>
-                          }
+                          <span style={{fontSize: '14px', fontWeight: 'bold'}}>{v.BT || v.KCMC}</span>
 
                         </div>
                         <div className={styles.TitleRight}>
@@ -97,14 +95,14 @@ const NewsList = (props: { data: ListItem[]; type: any; operation: any; showModa
   );
 };
 
-const ListComp = (props: { listData?: ListData; cls?: string; operation?: any; showModal?: any }) => {
+const ListComp = (props: { listData?: ListData; cls?: string; operation?: any; showModal?: boolean }) => {
   if (props.listData) {
     const { header, list, type, noDataImg, noDataText, noDataIcon } = props.listData;
-    const { cls, operation, showModal } = props;
+    const { cls, operation, showModal = false } = props;
 
     return (
       <div className={`${styles.ListComponentBigBox} ${cls}`}>
-        {header && header.title ? (
+        {header?.title ? (
           <div className={styles.ListHeader}>
             <div className={styles.ListHeaderTitle}>{header?.title}</div>
             <div className={styles.ListHeaderMore}>
@@ -114,8 +112,8 @@ const ListComp = (props: { listData?: ListData; cls?: string; operation?: any; s
         ) : (
           ''
         )}
-        {list && list.length ? (
-          <NewsList data={list} type={type} operation={operation} showModal = {showModal}/>
+        {list?.length ? (
+          <NewsList data={list} type={type} operation={operation} showModal={showModal}/>
         ) : (
           <>
             {noDataIcon ? (
