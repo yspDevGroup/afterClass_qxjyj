@@ -102,7 +102,7 @@ const ClassInfo = (props: any) => {
       <Button
         type="primary"
         onClick={() => {
-          history.goBack();
+          history.go(-1);
         }}
         style={{
           marginBottom: '24px'

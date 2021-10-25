@@ -1,18 +1,17 @@
 // tab 表格切换状态
-import type { ActionType, ProColumns } from '@ant-design/pro-table';
-import ProTable from '@ant-design/pro-table';
 import React, { useEffect, useState } from 'react';
+import { useModel } from 'umi';
+import type { ProColumns } from '@ant-design/pro-table';
+import ProTable from '@ant-design/pro-table';
 import { getOrders } from '@/services/after-class-qxjyj/jyjgsj';
 
-import { useModel } from 'umi';
-import styles from './index.less';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
 
 const StateTab = (props: any) => {
   const { DDZT, id } = props.TabState;
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
-  const columns: ProColumns<API.KHXSDD>[] | undefined = [
+  const columns: ProColumns<API.KHXSDD>[] = [
     {
       title: '序号',
       dataIndex: 'index',
@@ -75,6 +74,33 @@ const StateTab = (props: any) => {
       }
     },
     {
+      title: '课程费用(元)',
+      dataIndex: 'KCFY',
+      key: 'KCFY',
+      align: 'center',
+      width: 110,
+      render: (_text: any, record: any) => {
+        return <div>{record?.KHBJSJ?.FY}</div>;
+      },
+    },
+    {
+      title: '教辅费用(元)',
+      dataIndex: 'JCFY',
+      key: 'JCFY',
+      align: 'center',
+      width: 110,
+      render: (_text: any, record: any) => {
+        return <div>{record.DDFY - record?.KHBJSJ?.FY}</div>;
+      },
+    },
+    {
+      title: '订单总费用(元)',
+      dataIndex: 'DDFY',
+      key: 'DDFY',
+      align: 'center',
+      width: 120,
+    },
+    {
       title: '下单时间',
       dataIndex: 'XDSJ',
       key: 'XDSJ',
@@ -92,20 +118,15 @@ const StateTab = (props: any) => {
       search: false
     },
     {
-      title: '订单费用(元)',
-      dataIndex: 'DDFY',
-      key: 'DDFY',
-      width: 120,
+      title: '支付方式',
+      dataIndex: 'ZFFS',
+      key: 'ZFFS',
       align: 'center',
-      search: false
-    },
-    {
-      title: '订单状态',
-      dataIndex: 'DDZT',
-      key: 'DDZT',
-      width: 100,
-      align: 'center',
-      search: false
+      ellipsis: true,
+      width: 150,
+      render: (_text: any, record: any) => {
+        return record.ZFFS;
+      },
     }
   ];
   const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);
@@ -126,7 +147,7 @@ const StateTab = (props: any) => {
             pageSize: 10,
             defaultCurrent: 1,
           }}
-          scroll={{ x: 1000 }}
+          scroll={{ x: 1300 }}
           dataSource={dataSource}
           options={{
             setting: false,

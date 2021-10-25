@@ -60,6 +60,13 @@ const StateTab = (props: any) => {
       }
     },
     {
+      title: '订单费用(元)',
+      dataIndex: 'DDFY',
+      key: 'DDFY',
+      width: 120,
+      align: 'center'
+    },
+    {
       title: '下单时间',
       dataIndex: 'XDSJ',
       key: 'XDSJ',
@@ -74,18 +81,15 @@ const StateTab = (props: any) => {
       align: 'center'
     },
     {
-      title: '订单费用(元)',
-      dataIndex: 'DDFY',
-      key: 'DDFY',
-      width: 120,
-      align: 'center'
-    },
-    {
-      title: '订单状态',
-      dataIndex: 'DDZT',
-      key: 'DDZT',
-      width: 100,
-      align: 'center'
+      title: '支付方式',
+      dataIndex: 'ZFFS',
+      key: 'ZFFS',
+      align: 'center',
+      ellipsis: true,
+      width: 150,
+      render: (_text: any, record: any) => {
+        return record.ZFFS;
+      },
     }
   ];
   const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);

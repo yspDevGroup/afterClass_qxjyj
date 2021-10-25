@@ -2,13 +2,13 @@
  * @description:
  * @author: gxh
  * @Date: 2021-09-23 10:48:13
- * @LastEditTime: 2021-10-15 21:40:37
+ * @LastEditTime: 2021-10-25 11:45:06
  * @LastEditors: Sissle Lynn
  */
-import { Button, Tabs } from 'antd';
-const { TabPane } = Tabs;
+import { Button } from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import StateTab from './component/StateTab';
+
 const Detatil = (props: any) => {
   const { id } = props.location.state;
   return (
@@ -25,17 +25,9 @@ const Detatil = (props: any) => {
         <LeftOutlined />
         返回上一页
       </Button>
-      <Tabs style={{ background: '#fff', padding: 24 }}>
-        <TabPane tab="已付款" key="2">
-          <StateTab TabState={{ DDZT: '已付款', id }} />
-        </TabPane>
-        <TabPane tab="待付款" key="1">
-          <StateTab TabState={{ DDZT: '待付款', id }} />
-        </TabPane>
-        <TabPane tab="已过期" key="3">
-          <StateTab TabState={{ DDZT: '已过期', id }} />
-        </TabPane>
-      </Tabs>
+      <div style={{ background: '#fff', padding: '24px 0' }}>
+        <StateTab TabState={{ DDZT: '已付款', id }} />
+      </div>
     </>
   );
 };
