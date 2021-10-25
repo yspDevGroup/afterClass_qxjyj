@@ -83,7 +83,6 @@ useEffect(()=>{
       ...res,
       XZQHM: currentUser?.XZQHM
     });
-    console.log('result: ', result);
     if (result.status === 'ok') {
       const { data } = result;
       if (data) {
@@ -96,16 +95,16 @@ useEffect(()=>{
           title: '退款金额（元）',
           num: data?.tk_amount || 0
         }];
-        data.xxkc?.length && data.xxkc.forEach((item: any) => {
+        data.xxbm?.length && data.xxbm.forEach((item: any) => {
           defaultData.trendNum.push({
             label: item.XXMC,
             type: '收款金额',
-            value: parseFloat(item.sk_count) || 0,
+            value: ((parseFloat(item.dd_amount) || 0) + (parseFloat(item.zzfw_amount) || 0)).toFixed(2),
           })
           defaultData.trendNum.push({
             label: item.XXMC,
             type: '退款金额',
-            value: parseFloat(item.tk_count) || 0,
+            value: (parseFloat(item.tk_amount) || 0),
           })
         });
         tollBarConfig.data = defaultData.trendNum;
