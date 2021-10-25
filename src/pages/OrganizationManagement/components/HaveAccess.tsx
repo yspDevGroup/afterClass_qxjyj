@@ -80,7 +80,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
-      fixed:'left',
+      fixed: 'left',
       align: 'center'
     },
     {
@@ -90,7 +90,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       align: 'center',
       search: false,
       width: 160,
-      fixed:'left',
+      fixed: 'left',
       ellipsis: true,
       render: (text: any, record: any) => {
         return (
@@ -101,7 +101,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
               state: record
             }}
           >
-            {text}
+            {record?.JGMC}
           </Link>
         );
       }
@@ -224,7 +224,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
         pagination={{
           showQuickJumper: true,
           pageSize: 10,
-          defaultCurrent: 1,
+          defaultCurrent: 1
         }}
         scroll={{ x: 1300 }}
         search={false}
