@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-09-29 11:17:44
- * @LastEditTime: 2021-09-30 19:31:15
+ * @LastEditTime: 2021-10-26 09:41:20
  * @LastEditors: Sissle Lynn
  */
 import React from 'react';
@@ -15,9 +15,9 @@ const List = (props: { data: any, col?: number, }) => {
   return (
     <Row className={styles.serviceList} style={{ height: '20vh' }}>
       {data?.map((item: any, index: number) => {
-        if (index < 10) {
+        if (index < col*5) {
           return <Col span={24 / col} key={item.title} style={{ marginTop: index >= col ? 24 : 0 }}>
-            <p>{item}</p>
+            <p style={{textIndent:'16px'}}>{item}</p>
           </Col>
         }
       })}

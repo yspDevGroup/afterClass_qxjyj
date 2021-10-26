@@ -179,7 +179,7 @@ const ChartsPage = (props: any) => {
                 开设服务学校
               </header>
               <div className={styles.container}>
-                <List data={currentData?.schoolNum} />
+                <List col={3} data={currentData?.schoolNum} />
               </div>
             </div>
             <div>
