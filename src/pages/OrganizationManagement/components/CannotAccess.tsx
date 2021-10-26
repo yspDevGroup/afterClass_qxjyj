@@ -67,7 +67,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
-      fixed:'left',
+      fixed: 'left',
       align: 'center'
     },
     {
@@ -76,7 +76,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
       key: 'JGMC',
       align: 'center',
       width: 160,
-      fixed:'left',
+      fixed: 'left',
       search: false,
       render: (text: any, record: any) => {
         return (
@@ -87,7 +87,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
               state: record
             }}
           >
-            {text}
+            {record?.JGMC}
           </Link>
         );
       }
@@ -196,7 +196,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
         pagination={{
           showQuickJumper: true,
           pageSize: 10,
-          defaultCurrent: 1,
+          defaultCurrent: 1
         }}
         scroll={{ x: 1100 }}
         search={false}
