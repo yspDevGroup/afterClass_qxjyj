@@ -5,7 +5,7 @@ import { history, Link } from 'umi';
 import { Button, message, Popconfirm, Space, Tag } from 'antd';
 import EllipsisHint from '@/components/EllipsisHint';
 import ProTable, { ActionType } from '@ant-design/pro-table';
-import { getAllCourses } from '@/services/after-class-qxjyj/jyjgsj';
+import { getAllCourses, getAllCourses2 } from '@/services/after-class-qxjyj/jyjgsj';
 import { updateKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
 
 /**
@@ -213,7 +213,7 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
               KCMC: param.KCMC,
               KCLY: param.SSJGLX
             };
-            const res = await getAllCourses(params);
+            const res = await getAllCourses2(params);
             if (res.status === 'ok') {
               return {
                 data: res.data.rows,
