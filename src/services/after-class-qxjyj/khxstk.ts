@@ -9,7 +9,7 @@ export async function getKHXSTK(
     /** 退款记录ID */
     id: string;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
   return request<{
@@ -35,15 +35,13 @@ export async function getKHXSTK(
       };
       JZGJBSJ?: { id?: string; XM?: string; WechatUserId?: string };
       KHBJSJ?: { BJMC?: string; KHKCSJ?: { KCMC?: string } };
-      KHXXZZFW?:
-        | { id?: string; FWMC?: string; KHZZFW?: { id?: string; FWMC?: string; FWJGMC?: string } }
-        | any;
+      KHXXZZFW?: { id?: string; FWMC?: string; KHZZFW?: { id?: string; FWMC?: string; FWJGMC?: string } } | any;
     };
     message?: string;
   }>(`/khxstk/${param0}`, {
     method: 'GET',
     params: { ...queryParams },
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -54,13 +52,13 @@ export async function deleteKHXSTK(
     /** 类型ID */
     id: string;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
   return request<{ status?: 'ok' | 'error'; message?: string }>(`/khxstk/${param0}`, {
     method: 'DELETE',
     params: { ...queryParams },
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -69,8 +67,6 @@ export async function getAllKHXSTK(
   body: {
     /** 退款状态 */
     TKZT?: number[];
-    /** 退款类型,0:退款;1:停餐 */
-    LX?: number;
     /** 学生ID */
     XSJBSJId?: string;
     /** 学年学期ID */
@@ -84,19 +80,15 @@ export async function getAllKHXSTK(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
-  return request<{
-    status?: 'ok' | 'error';
-    data?: { count?: number; rows?: API.KHXSTK[] };
-    message?: string;
-  }>('/khxstk/', {
+  return request<any>('/khxstk/', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -125,18 +117,16 @@ export async function createKHXSTK(body: API.CreateKHXSTK, options?: { [key: str
       };
       JZGJBSJ?: { id?: string; XM?: string; WechatUserId?: string };
       KHBJSJ?: { BJMC?: string; KHKCSJ?: { KCMC?: string } };
-      KHXXZZFW?:
-        | { id?: string; FWMC?: string; KHZZFW?: { id?: string; FWMC?: string; FWJGMC?: string } }
-        | any;
+      KHXXZZFW?: { id?: string; FWMC?: string; KHZZFW?: { id?: string; FWMC?: string; FWJGMC?: string } } | any;
     };
     message?: string;
   }>('/khxstk/create', {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -148,16 +138,16 @@ export async function updateKHXSTK(
     id: string;
   },
   body: API.UpdateKHXSTK,
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
   return request<{ status?: 'ok' | 'error'; message?: string }>(`/khxstk/update/${param0}`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     params: { ...queryParams },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }

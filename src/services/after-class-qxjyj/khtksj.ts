@@ -7,10 +7,10 @@ export async function createKHTKSJ(body: API.CreateKHTKSJ[], options?: { [key: s
   return request<{ status?: 'ok' | 'error'; message?: string }>('/khtksj/create', {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -27,8 +27,6 @@ export async function getKHTKSJ(
     XNXQId?: string;
     /** 课后服务班级ID */
     KHBJSJId?: string;
-    /** 退课类型，0:退课;1:停餐 */
-    LX?: number;
     /** 学校ID */
     XXJBSJId?: string;
     /** 页数 */
@@ -36,7 +34,7 @@ export async function getKHTKSJ(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<{
     status?: 'ok' | 'error';
@@ -45,10 +43,10 @@ export async function getKHTKSJ(
   }>('/khtksj/getAll', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -59,13 +57,13 @@ export async function deleteKHTKSJ(
     /** 课后服务退课记录ID */
     id: string;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
   return request<{ status?: 'ok' | 'error'; message?: string }>(`/khtksj/${param0}`, {
     method: 'DELETE',
     params: { ...queryParams },
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -77,17 +75,17 @@ export async function updateKHTKSJ(
     id: string;
   },
   body: API.UpdateKHTKSJ,
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
   return request<{ status?: 'ok' | 'error'; message?: string }>(`/khtksj/update/${param0}`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     params: { ...queryParams },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -106,15 +104,15 @@ export async function getAllTK(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<any>('/khtksj/getAllTK', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -138,14 +136,14 @@ export async function getAllTKByAgency(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<any>('/khtksj/getAllTKByAgency', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }

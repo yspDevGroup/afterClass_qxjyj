@@ -51,28 +51,28 @@ import * as khzzfw from './khzzfw';
 import * as njsj from './njsj';
 import * as pksj from './pksj';
 import * as redis from './redis';
-import * as sso from './sso';
 import * as reports from './reports';
+import * as sso from './sso';
 import * as upload from './upload';
 import * as wechat from './wechat';
 import * as xksj from './xksj';
 import * as xl from './xl';
 import * as xnjgsj from './xnjgsj';
 import * as xnxq from './xnxq';
-import * as xscfsj from './xscfsj';
 import * as xqsj from './xqsj';
-import * as xsjlsj from './xsjlsj';
+import * as xscfsj from './xscfsj';
 import * as xsjbsj from './xsjbsj';
-import * as xsxxjl from './xsxxjl';
+import * as xsjlsj from './xsjlsj';
 import * as xsjtcy from './xsjtcy';
-import * as xxjbpz from './xxjbpz';
+import * as xsxxjl from './xsxxjl';
 import * as xxgg from './xxgg';
-import * as xxpz from './xxpz';
+import * as xxjbpz from './xxjbpz';
 import * as xxjbsj from './xxjbsj';
-import * as xxtzgg from './xxtzgg';
+import * as xxpz from './xxpz';
 import * as xxsjpz from './xxsjpz';
-import * as zxsj from './zxsj';
+import * as xxtzgg from './xxtzgg';
 import * as zxfa from './zxfa';
+import * as zxsj from './zxsj';
 export default {
   other,
   auth,
@@ -123,26 +123,26 @@ export default {
   njsj,
   pksj,
   redis,
-  sso,
   reports,
+  sso,
   upload,
   wechat,
   xksj,
   xl,
   xnjgsj,
   xnxq,
-  xscfsj,
   xqsj,
-  xsjlsj,
+  xscfsj,
   xsjbsj,
-  xsxxjl,
+  xsjlsj,
   xsjtcy,
-  xxjbpz,
+  xsxxjl,
   xxgg,
-  xxpz,
+  xxjbpz,
   xxjbsj,
-  xxtzgg,
+  xxpz,
   xxsjpz,
-  zxsj,
+  xxtzgg,
   zxfa,
+  zxsj
 };
