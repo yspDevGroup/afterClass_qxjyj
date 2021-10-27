@@ -2,12 +2,12 @@
  * @description:
  * @author: wsl
  * @Date: 2021-09-06 17:02:23
- * @LastEditTime: 2021-10-13 10:25:40
- * @LastEditors: Sissle Lynn
+ * @LastEditTime: 2021-10-27 10:54:48
+ * @LastEditors: Please set LastEditors
  */
 /* eslint-disable max-nested-callbacks */
 import React, { useEffect, useState } from 'react';
-import { Button, Table } from 'antd';
+import { Button, message, Table } from 'antd';
 import { history, Link } from 'umi';
 import styles from '../index.less';
 import { LeftOutlined } from '@ant-design/icons';
@@ -15,6 +15,7 @@ import CustomForm from '@/components/CustomForm';
 import { FormItemType } from '@/components/CustomForm/interfice';
 import moment from 'moment';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
+import { getKHBJSJ } from '@/services/after-class-qxjyj/khbjsj';
 /**
  * 课程详情
  * @returns
@@ -31,36 +32,49 @@ const ClassInfo = (props: any) => {
   const [teacherData, setTeacherData] = useState<any>([]);
   useEffect(() => {
     setDisabled(true);
+    console.log('state', state);
     // 老师表格数据
-    const thData: any[] = [];
-    state?.KHBJJs?.forEach((item: any) => {
-      thData.push(item?.KHJSSJ);
-    });
-    setTeacherData(state?.KHBJJs);
-    const jfData: any[] = [];
-    state?.KHKCJCs?.forEach((item: any, index: number) => {
-      jfData.push(`${index + 1}.${item.JCMC}，费用：${item.JCFY} ；\n`);
-    });
-    // eslint-disable-next-line prefer-regex-literals
-    const reg = new RegExp(',', 'g');
-    if (state?.id) {
-      // form详情
-      const params = {
-        BJMC: state?.BJMC,
-        KCMS: state?.KCMS || '',
-        njIds: state?.NJSJs?.map((item: any) => (item.XD === '初中' ? item?.NJMC : `${item.XD}${item?.NJMC}`)) || '',
-        jsIds: state?.KHKCJs?.map((item: any) => item?.JZGJBSJ?.XM) || '',
-        SSXQ: `${state?.XNXQ.XN}${state?.XNXQ.XQ}`,
-        BMRS: `${state?.KHXSBJs.length} / ${state?.BJRS}`,
-        SKSD: `${state?.KKRQ} - ${state?.JKRQ}`,
-        BMSD: `${moment(state?.BMKSSJ).format('YYYY-MM-DD')} - ${moment(state?.BMJSSJ).format('YYYY-MM-DD')}`,
-        BMFY: state?.FY,
-        JF: jfData.toString().replace(reg, '') || ''
-      };
-      setImageUrl(state?.KCTP || '');
-      setFormValues(params);
-    }
+
+    getDetail();
   }, []);
+
+  const getDetail = async () => {
+    const res = await getKHBJSJ({ id: state.id });
+    if (res?.status === 'ok') {
+      console.log('res', res);
+      const { data } = res;
+      const thData: any[] = [];
+      data?.KHBJJs?.forEach((item: any) => {
+        thData.push(item?.KHJSSJ);
+      });
+      setTeacherData(data?.KHBJJs);
+      const jfData: any[] = [];
+      data?.KHKCJCs?.forEach((item: any, index: number) => {
+        jfData.push(`${index + 1}.${item.JCMC}，费用：${item.JCFY} ；\n`);
+      });
+      // eslint-disable-next-line prefer-regex-literals
+      const reg = new RegExp(',', 'g');
+      if (data?.id) {
+        // form详情
+        const params = {
+          BJMC: data?.BJMC,
+          KCMS: data?.KCMS || '',
+          njIds: data?.NJSJs?.map((item: any) => (item.XD === '初中' ? item?.NJMC : `${item.XD}${item?.NJMC}`)) || '',
+          jsIds: data?.KHKCJs?.map((item: any) => item?.JZGJBSJ?.XM) || '',
+          SSXQ: `${data?.XNXQ.XN}${data?.XNXQ.XQ}`,
+          BMRS: `${data?.KHXSBJs.length} / ${data?.BJRS}`,
+          SKSD: `${data?.KKRQ} - ${data?.JKRQ}`,
+          BMSD: `${moment(data?.BMKSSJ).format('YYYY-MM-DD')} - ${moment(data?.BMJSSJ).format('YYYY-MM-DD')}`,
+          BMFY: data?.FY,
+          JF: jfData.toString().replace(reg, '') || ''
+        };
+        setImageUrl(data?.KCTP || '');
+        setFormValues(params);
+      }
+    } else {
+      message.error(res?.message);
+    }
+  };
 
   const basicForm: FormItemType[] = [
     {

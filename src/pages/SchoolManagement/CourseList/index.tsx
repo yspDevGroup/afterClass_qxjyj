@@ -3,8 +3,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-10-18 14:02:07
- * @LastEditors: Sissle Lynn
+ * @LastEditTime: 2021-10-27 09:47:26
+ * @LastEditors: Please set LastEditors
  */
 import React, { useEffect, useRef } from 'react';
 import { message, Popconfirm, Form, Tag, Button } from 'antd';
@@ -14,7 +14,7 @@ import { TableListItem, TableListParams } from '../data';
 import styles from './index.less';
 import { Link, useModel, history } from 'umi';
 import { LeftOutlined } from '@ant-design/icons';
-import { getCoursesBySchool } from '@/services/after-class-qxjyj/jyjgsj';
+import { getCoursesBySchool, getCoursesBySchool2 } from '@/services/after-class-qxjyj/jyjgsj';
 import EllipsisHint from '@/components/EllipsisHint';
 
 const HaveIntroduced = (props: any) => {
@@ -22,6 +22,7 @@ const HaveIntroduced = (props: any) => {
   const { initialState } = useModel('@@initialState');
   const actionRef1 = useRef<ActionType>();
   useEffect(() => {
+    console.log('课程列表页面 学校数据', state);
     actionRef1?.current?.reload();
   }, []);
 
@@ -31,7 +32,7 @@ const HaveIntroduced = (props: any) => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
-      fixed:'left',
+      fixed: 'left',
       align: 'center'
     },
     {
@@ -40,7 +41,7 @@ const HaveIntroduced = (props: any) => {
       key: 'KCMC',
       align: 'center',
       search: false,
-      fixed:'left',
+      fixed: 'left',
       width: 150,
       ellipsis: true
     },
@@ -95,7 +96,7 @@ const HaveIntroduced = (props: any) => {
       valueType: 'option',
       align: 'center',
       width: 160,
-      fixed:'right',
+      fixed: 'right',
       render: (text, record, action) => {
         return (
           <div className={styles.operation}>
@@ -114,7 +115,9 @@ const HaveIntroduced = (props: any) => {
                 pathname: '/schoolManagement/courseList/classList',
                 state: {
                   value: record.value,
-                  xxmc: state.XXMC
+                  // xzqhm: state.XZQHM
+                  xxmc: state.XXMC,
+                  XXJBSJID: state.id
                 }
               }}
             >
@@ -147,7 +150,7 @@ const HaveIntroduced = (props: any) => {
           pagination={{
             showQuickJumper: true,
             pageSize: 10,
-            defaultCurrent: 1,
+            defaultCurrent: 1
           }}
           scroll={{ x: 1300 }}
           search={false}
@@ -174,15 +177,15 @@ const HaveIntroduced = (props: any) => {
               ...params,
               sorter: sort && Object.keys(sort).length ? sort : undefined
             };
-            const res = await getCoursesBySchool({
+            const res = await getCoursesBySchool2({
               XXJBSJId: state.id,
-              XNXQId: '',
+              // XNXQId: '',
               KCMC: opts.keyword || ''
             });
             if (res.status === 'ok') {
               let newArr: any[] = [];
               res.data?.forEach((value: any) => {
-                const { KCMC, NJSJs, KHKCJs, KHKCLX, SSJGLX, KHKCSQs } = value;
+                const { KCMC, NJSJs, KHKCJs, KHKCLX, SSJGLX, KHJYJG } = value;
                 const data = {
                   value,
                   KCMC: KCMC,
@@ -190,7 +193,7 @@ const HaveIntroduced = (props: any) => {
                   DKLS: KHKCJs,
                   KCLY: SSJGLX,
                   KCLX: KHKCLX.KCTAG,
-                  JGMC: KHKCSQs.length !== 0 ? KHKCSQs[0].KHJYJG.QYMC : '-'
+                  JGMC: KHJYJG ? KHJYJG.QYMC : '-'
                 };
                 newArr.push(data);
               });

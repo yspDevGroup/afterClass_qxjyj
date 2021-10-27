@@ -2,8 +2,8 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-24 14:37:02
- * @LastEditTime: 2021-10-18 13:44:56
- * @LastEditors: Sissle Lynn
+ * @LastEditTime: 2021-10-26 15:45:20
+ * @LastEditors: Please set LastEditors
  */
 import React, { useRef } from 'react';
 import ProTable, { RequestData } from '@ant-design/pro-table';
@@ -27,7 +27,7 @@ const SchoolManagement = () => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
-      fixed:'left',
+      fixed: 'left',
       align: 'center'
     },
     {
@@ -36,7 +36,7 @@ const SchoolManagement = () => {
       key: 'XXMC',
       align: 'center',
       width: 160,
-      fixed:'left',
+      fixed: 'left',
       ellipsis: true
     },
     {
@@ -115,7 +115,7 @@ const SchoolManagement = () => {
         pagination={{
           showQuickJumper: true,
           pageSize: 10,
-          defaultCurrent: 1,
+          defaultCurrent: 1
         }}
         scroll={{ x: 1300 }}
         request={async (

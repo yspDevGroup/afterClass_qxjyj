@@ -2,24 +2,31 @@
  * @description:
  * @author: wsl
  * @Date: 2021-09-06 17:00:58
- * @LastEditTime: 2021-10-18 14:09:05
- * @LastEditors: Sissle Lynn
+ * @LastEditTime: 2021-10-27 12:02:16
+ * @LastEditors: Please set LastEditors
  */
-import ProTable, { ActionType } from '@ant-design/pro-table';
-import { Button, Modal, Table, Tag } from 'antd';
+import ProTable, { ActionType, RequestData } from '@ant-design/pro-table';
+import { Button, message, Modal, Table, Tag } from 'antd';
 import React, { useRef, useState } from 'react';
 import styles from '../index.less';
 import { history, Link } from 'umi';
 import { LeftOutlined } from '@ant-design/icons';
 import { paginationConfig } from '@/constant';
+import { TableListItem, TableListParams } from '../../data';
+import { getAllClasses } from '@/services/after-class-qxjyj/khbjsj';
+import SemesterSelect from '@/components/SemesterSelect';
+import EllipsisHint from '@/components/EllipsisHint';
+
 /**
  * 课程班详情
  * @returns
  */
 const ClassList = (props: any) => {
   const { state } = props.location;
+  const { XXJBSJID } = state;
   const actionRef = useRef<ActionType>();
-  const { KHBJSJs } = state.value;
+  const [dataSource, setDataSource] = useState<any>([]);
+  console.log('state', state);
 
   const columns: any[] = [
     {
@@ -49,6 +56,7 @@ const ClassList = (props: any) => {
       width: 110,
       ellipsis: true,
       render: (text: any, record: any) => {
+        // console.log('record',record);
         return record.BJRS;
       }
     },
@@ -61,7 +69,21 @@ const ClassList = (props: any) => {
       width: 100,
       ellipsis: true,
       render: (text: any, record: any) => {
-        return record.KHXSBJs?.length;
+        return record['xs_count'];
+        // return record.KHXSBJs?.length;
+      }
+    },
+    {
+      title: '教材数量',
+      dataIndex: 'JCSL',
+      key: 'JCSL',
+      align: 'center',
+      search: false,
+      width: 100,
+      ellipsis: true,
+      render: (text: any, record: any) => {
+        return record['jc_count'];
+        // return record.KHXSBJs?.length;
       }
     },
     {
@@ -77,27 +99,33 @@ const ClassList = (props: any) => {
       }
     },
     {
-      title: '所属学期',
-      dataIndex: 'XNXQ',
-      key: 'XNXQ',
+      title: '任课教师',
+      dataIndex: 'RKJS',
+      key: 'RKJS',
       align: 'center',
       search: false,
       width: 160,
       ellipsis: true,
-      render: (text: any, record: any) => {
-        return `${record?.XNXQ?.XN} ${record?.XNXQ?.XQ}`;
-      }
+      render: (text: any, record: any) => (
+        <EllipsisHint
+          width="100%"
+          text={record.KHBJJs?.map((item: any) => {
+            // console.log('++++++',item.JZGJBSJ.XM);
+            return <Tag key={item.id}>{item.JZGJBSJ.XM}</Tag>;
+          })}
+        />
+      )
     },
-    {
-      title: '开班日期',
-      dataIndex: 'KKRQ',
-      key: 'KKRQ',
-      align: 'center',
-      valueType: 'date',
-      width: 120,
-      ellipsis: true,
-      search: false
-    },
+    // {
+    //   title: '开班日期',
+    //   dataIndex: 'KKRQ',
+    //   key: 'KKRQ',
+    //   align: 'center',
+    //   valueType: 'date',
+    //   width: 120,
+    //   ellipsis: true,
+    //   search: false
+    // },
     {
       title: '操作',
       dataIndex: 'option',
@@ -125,7 +153,7 @@ const ClassList = (props: any) => {
                 state: {
                   value: record,
                   xxmc: state.xxmc,
-                  kcmc: state.value.KCMC
+                  kcmc: state?.value.KCMC
                 }
               }}
             >
@@ -136,6 +164,27 @@ const ClassList = (props: any) => {
       }
     }
   ];
+  const onSelectChange = (value: string) => {
+    console.log('value', value);
+    getDataSource(value);
+  };
+  const getDataSource = async (XNXQId: string) => {
+    const { id } = state.value;
+    const res = await getAllClasses({
+      KHKCSJId: id,
+      XNXQId,
+      page: 0,
+      pageSize: 0
+    });
+    if (res.status === 'ok') {
+      let newArr: any[] = [];
+      res.data?.rows.forEach((value: any) => {
+        newArr.push(value);
+      });
+      setDataSource(newArr);
+    }
+  };
+
   return (
     <div className={styles.ClassInfo}>
       <Button
@@ -150,10 +199,16 @@ const ClassList = (props: any) => {
         <LeftOutlined />
         返回上一页
       </Button>
+      <div className={styles.searchs}>
+        <span>
+          所属学年学期：
+          <SemesterSelect onChange={onSelectChange} XXJBSJId={XXJBSJID} />
+        </span>
+      </div>
       <div className={styles.contents}>
         <div className={styles.headerInfo}>
           <span>课程名称：{state?.value.KCMC}</span>
-          {state?.value.SSJGLX === '机构课程' ? <span>所属机构：{state?.value.KHKCSQs[0].KHJYJG.QYMC}</span> : ''}
+          {state?.value.SSJGLX === '机构课程' ? <span>所属机构：{state?.value.KHJYJG?.QYMC}</span> : ''}
           <span>课程类型：{state?.value.KHKCLX?.KCTAG}</span>
           <span>
             适用年级：
@@ -169,10 +224,55 @@ const ClassList = (props: any) => {
           pagination={{
             showQuickJumper: true,
             pageSize: 10,
-            defaultCurrent: 1,
+            defaultCurrent: 1
           }}
           scroll={{ x: 1300 }}
-          dataSource={KHBJSJs}
+          dataSource={dataSource}
+          // request={async (
+          //   params: TableListItem & {
+          //     pageSize?: number;
+          //     current?: number;
+          //     // keyword?: string;
+          //   },
+          //   sort,
+          //   filter
+          // ): Promise<Partial<RequestData<TableListItem>>> => {
+          //   // 表单搜索项会从 params 传入，传递给后端接口。
+          //   const opts: TableListParams = {
+          //     ...params,
+          //     sorter: sort && Object.keys(sort).length ? sort : undefined
+          //   };
+
+          //   const {id} = state.value;
+          //   const res = await getAllClasses({
+          //     KHKCSJId: id,
+          //     page: 0,
+          //     pageSize: 0,
+          //   });
+          //   if (res.status === 'ok') {
+          //     let newArr: any[] = [];
+
+          //     res.data?.rows.forEach((value: any) => {
+          //       // const { KCMC,BJRS,BMRS,XQSJ,KKRQ } = value;
+          //       console.log('value',value);
+
+          //       newArr.push(value);
+          //     });
+          //     console.log('newArr',newArr);
+          //     if (newArr.length === res.data.rows?.length) {
+          //       return {
+          //         data: newArr,
+          //         total: res.data?.count,
+          //         success: true
+          //       };
+          //     }
+          //   } else {
+          //     message.error(res.message);
+          //     return {};
+          //   }
+
+          //   return {};
+          // }}
           rowKey="id"
           dateFormatter="string"
           search={false}
