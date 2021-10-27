@@ -2,7 +2,7 @@
  * @description: 9朵云配置
  * @author: zpl
  * @Date: 2021-10-22 12:36:33
- * @LastEditTime: 2021-10-22 12:44:51
+ * @LastEditTime: 2021-10-26 14:53:25
  * @LastEditors: zpl
  */
 import { defineConfig } from 'umi';
@@ -26,9 +26,8 @@ export default defineConfig({
     ENV_backUrl: 'http://api.9cloudstech.com',
     ssoHost: 'http://sso.9cloudstech.com',
     authType: 'wechat',
-    // FIXME: 下面两个参数必须调整为9朵云提供的值
-    clientId: 'ww0a941c570b201be6',
-    clientSecret: 'hK91Yg2RnDw4phTw1F_byWM9KoUM3Y-kufDDZOj0eTE'
+    clientId: 'ww3a7d7b9efc33f6f3',
+    clientSecret: 'pCnf96P_GmAbe03S6jSqXp23moVXCak8CmOXTY2e0Os'
   },
   links: [{ rel: 'icon', href: './title.png' }],
   dynamicImport: {

@@ -29,9 +29,6 @@ export const initWXConfig = async (jsApiList: string[]) => {
       signature, // 必填，签名，见 附录-JS-SDK使用权限签名算法
       jsApiList: jsApiList || ['checkJsApi'], // 必填，需要使用的JS接口列表，凡是要调用的接口都需要传进来
     };
-    console.log('------0------');    
-    console.log(window.location.href);    
-    console.log('------1------');    
     return new Promise((resolve, reject) => {
       wx.config(currentConf);
       wx.ready(resolve);
