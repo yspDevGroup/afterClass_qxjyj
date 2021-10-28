@@ -41,7 +41,7 @@ const ChartsPage = (props: any) => {
       if (data) {
         defaultData.serviceNum = [{
           title: '教师总数',
-          num: Number((data?.jgjs_count || 0) + (data?.xxjs_count || 0)).toFixed(2)
+          num: Number((data?.jgjs_count || 0) + (data?.xxjs_count || 0))
         },
         {
           title: '学生总数',
@@ -49,11 +49,11 @@ const ChartsPage = (props: any) => {
         },
         {
           title: '收款总额',
-          num: data?.sk_count || 0
+          num: data?.sk_count?.toFixed(2) || 0
         },
         {
           title: '退款总额',
-          num: data?.tk_count || 0
+          num: data?.tk_count?.toFixed(2) || 0
         }];
         defaultData.checkOut = [{
           icon: should,
