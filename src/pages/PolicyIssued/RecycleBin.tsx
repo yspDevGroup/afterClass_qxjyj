@@ -13,10 +13,13 @@ import Option from './components/Option';
 import type { TableListItem } from './data';
 import styles from './index.module.less';
 import { getJYJGTZGG } from '@/services/after-class-qxjyj/jyjgtzgg';
+import { useModel } from 'umi';
 
 const RecycleBin = () => {
   const [dataSource, setDataSource] = useState<API.JYJGTZGG[]>();
   const actionRef = useRef<ActionType>();
+  const { initialState } = useModel('@@initialState');
+  const { currentUser } = initialState || {};
   const columns: ProColumns<TableListItem>[] = [
     {
       title: '序号',
@@ -31,8 +34,8 @@ const RecycleBin = () => {
       dataIndex: 'BT',
       ellipsis: true,
       align: 'center',
-      fixed:'left',
-      width: 180,
+      fixed: 'left',
+      width: 180
     },
     {
       title: '作者',
@@ -41,7 +44,7 @@ const RecycleBin = () => {
       ellipsis: true,
       align: 'center',
       search: false,
-      width: 120,
+      width: 120
     },
     {
       title: '发布时间',
@@ -50,7 +53,7 @@ const RecycleBin = () => {
       hideInForm: true,
       search: false,
       align: 'center',
-      width: 160,
+      width: 160
     },
     {
       title: '发布状态',
@@ -128,7 +131,7 @@ const RecycleBin = () => {
       pagination={{
         showQuickJumper: true,
         pageSize: 10,
-        defaultCurrent: 1,
+        defaultCurrent: 1
       }}
       scroll={{ x: 1000 }}
       request={async (params, sorter, filter) => {
@@ -136,6 +139,7 @@ const RecycleBin = () => {
         const resgetXXTZGG = await getJYJGTZGG({
           BT: params.BT,
           LX: 1,
+          XZQHM: currentUser?.XZQHM,
           ZT: ['已删除'],
           page: 0,
           pageSize: 0

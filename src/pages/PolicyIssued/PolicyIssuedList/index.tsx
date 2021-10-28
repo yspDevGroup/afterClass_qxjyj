@@ -10,7 +10,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, Switch, message } from 'antd';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { history } from 'umi';
+import { history, useModel } from 'umi';
 import Option from '../components/Option';
 import type { TableListItem } from '../data';
 import styles from '../index.module.less';
@@ -20,6 +20,8 @@ import { getJYJGTZGG, updateJYJGTZGG } from '@/services/after-class-qxjyj/jyjgtz
 const TableList = () => {
   const [dataSource, setDataSource] = useState<API.JYJGTZGG[]>();
   const actionRef = useRef<ActionType>();
+  const { initialState } = useModel('@@initialState');
+  const { currentUser } = initialState || {};
 
   const columns: ProColumns<TableListItem>[] = [
     {
@@ -37,7 +39,7 @@ const TableList = () => {
       ellipsis: true,
       align: 'center',
       fixed: 'left',
-      width: 180,
+      width: 180
     },
     {
       title: '作者',
@@ -141,7 +143,7 @@ const TableList = () => {
         pagination={{
           showQuickJumper: true,
           pageSize: 10,
-          defaultCurrent: 1,
+          defaultCurrent: 1
         }}
         scroll={{ x: 1000 }}
         toolBarRender={(_action) => [
@@ -160,6 +162,7 @@ const TableList = () => {
             const resgetXXTZGG = await getJYJGTZGG({
               BT: params.BT,
               LX: 1,
+              XZQHM: currentUser?.XZQHM,
               ZT: params.ZT ? [params.ZT] : ['已发布', '草稿'],
               page: 0,
               pageSize: 0
@@ -171,6 +174,7 @@ const TableList = () => {
             const resgetXXTZGG = await getJYJGTZGG({
               BT: '',
               LX: 1,
+              XZQHM: currentUser?.XZQHM,
               ZT: ['已发布', '草稿'],
               page: 0,
               pageSize: 0

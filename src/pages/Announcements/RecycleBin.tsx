@@ -14,10 +14,14 @@ import type { TableListItem } from './data';
 import styles from './index.module.less';
 import { defImg } from './data';
 import { getJYJGTZGG, updateJYJGTZGG } from '@/services/after-class-qxjyj/jyjgtzgg';
+import { useModel } from 'umi';
 
 const TableList = () => {
   const [dataSource, setDataSource] = useState<API.JYJGTZGG[]>();
   const actionRef = useRef<ActionType>();
+  const { initialState } = useModel('@@initialState');
+  const { currentUser } = initialState || {};
+
   const columns: ProColumns<TableListItem>[] = [
     {
       title: '序号',
@@ -32,8 +36,8 @@ const TableList = () => {
       dataIndex: 'BT',
       ellipsis: true,
       align: 'center',
-      fixed:'left',
-      width: 180,
+      fixed: 'left',
+      width: 180
     },
     {
       title: '作者',
@@ -41,7 +45,7 @@ const TableList = () => {
       ellipsis: true,
       align: 'center',
       search: false,
-      width: 120,
+      width: 120
     },
     {
       title: '发布时间',
@@ -50,7 +54,7 @@ const TableList = () => {
       hideInForm: true,
       search: false,
       align: 'center',
-      width: 160,
+      width: 160
     },
     {
       title: '发布状态',
@@ -111,13 +115,14 @@ const TableList = () => {
       pagination={{
         showQuickJumper: true,
         pageSize: 10,
-        defaultCurrent: 1,
+        defaultCurrent: 1
       }}
       scroll={{ x: 1000 }}
       request={async (params, sorter, filter) => {
         // 表单搜索项会从 params 传入，传递给后端接口。
         const resgetXXTZGG = await getJYJGTZGG({
           BT: params.BT,
+          XZQHM: currentUser?.XZQHM,
           LX: 0,
           ZT: ['已删除'],
           page: 0,
