@@ -2,7 +2,7 @@
  * @description: 9朵云配置
  * @author: zpl
  * @Date: 2021-10-22 12:36:33
- * @LastEditTime: 2021-10-26 14:53:25
+ * @LastEditTime: 2021-10-27 18:33:11
  * @LastEditors: zpl
  */
 import { defineConfig } from 'umi';
@@ -19,6 +19,7 @@ export default defineConfig({
   },
   fastRefresh: {},
   define: {
+    ENV_type: '9dy',
     ENV_title: '课后服务平台',
     ENV_subTitle: '课后服务平台',
     ENV_copyRight: '2021 版权所有：广东九朵云科技有限公司',

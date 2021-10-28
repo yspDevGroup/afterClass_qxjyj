@@ -12,6 +12,7 @@ export default defineConfig({
   },
   fastRefresh: {},
   define: {
+    ENV_type: 'prod',
     ENV_title: '课后服务平台',
     ENV_subTitle: '课后服务平台',
     ENV_copyRight: '2021 版权所有：陕西五育汇智信息技术有限公司',
