@@ -28,14 +28,14 @@ const CoursesIntroduced = (props: { JYYData: any; reload: boolean }) => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
-      fixed:'left',
+      fixed: 'left',
       align: 'center'
     },
     {
       title: '课程名称',
       dataIndex: 'KCMC',
       key: 'KCMC',
-      fixed:'left',
+      fixed: 'left',
       width: 160,
       ellipsis: true,
       align: 'center'
@@ -78,7 +78,7 @@ const CoursesIntroduced = (props: { JYYData: any; reload: boolean }) => {
             text={
               text !== '-' &&
               text?.map((item: any) => {
-                return <Tag key={item.id}>{item.XD === '初中' ? `${item.NJMC}` : `${item.XD}${item.NJMC}`}</Tag>;
+                return <Tag key={item.id}>{`${item.XD}${item.NJMC}`}</Tag>;
               })
             }
           />
@@ -147,7 +147,7 @@ const CoursesIntroduced = (props: { JYYData: any; reload: boolean }) => {
         pagination={{
           showQuickJumper: true,
           pageSize: 10,
-          defaultCurrent: 1,
+          defaultCurrent: 1
         }}
         scroll={{ x: 1200 }}
         request={async (param = {}, sort, filter) => {

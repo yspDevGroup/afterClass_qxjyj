@@ -35,7 +35,7 @@ const CourseInfo = (props: any) => {
       const params = {
         KCMC: state?.KCMC || '',
         KCMS: state?.KCMS || '',
-        njIds: state?.NJSJs?.map((item: any) => (item.XD === '初中' ? item?.NJMC : `${item.XD}${item?.NJMC}`)) || '',
+        njIds: state?.NJSJs?.map((item: any) => `${item.XD}${item?.NJMC}`) || '',
         jsIds: state?.KHKCJs?.map((item: any) => item?.KHJSSJ?.XM) || '',
         KCTP: state?.KCTP || '',
         KHKCLX: state?.KHKCLX?.KCTAG || ''

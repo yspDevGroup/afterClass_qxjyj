@@ -213,7 +213,7 @@ const ClassList = (props: any) => {
           <span>
             适用年级：
             {state?.value.NJSJs.map((item: any) => {
-              return <Tag key={item.id}>{item.XD === '初中' ? `${item.NJMC}` : `${item.XD}${item.NJMC}`}</Tag>;
+              return <Tag key={item.id}>{`${item.XD}${item.NJMC}`}</Tag>;
             })}
           </span>
         </div>

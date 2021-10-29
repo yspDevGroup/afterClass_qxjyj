@@ -36,7 +36,7 @@ const ClassInfo = (props: any) => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
-      fixed:'left',
+      fixed: 'left',
       align: 'center'
     },
     {
@@ -44,7 +44,7 @@ const ClassInfo = (props: any) => {
       dataIndex: 'BJMC',
       key: 'BJMC',
       align: 'center',
-      fixed:'left',
+      fixed: 'left',
       width: 130,
       ellipsis: true,
       search: false
@@ -163,7 +163,7 @@ const ClassInfo = (props: any) => {
           <span>
             适用年级：
             {Datas?.NJSJs.map((item: any) => {
-              return <Tag key={item.id}>{item.XD === '初中' ? `${item.NJMC}` : `${item.XD}${item.NJMC}`}</Tag>;
+              return <Tag key={item.id}>{`${item.XD}${item.NJMC}`}</Tag>;
             })}
           </span>
         </div>
@@ -176,7 +176,7 @@ const ClassInfo = (props: any) => {
           pagination={{
             showQuickJumper: true,
             pageSize: 10,
-            defaultCurrent: 1,
+            defaultCurrent: 1
           }}
           scroll={{ x: 1200 }}
           dateFormatter="string"

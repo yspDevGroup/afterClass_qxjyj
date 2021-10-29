@@ -59,7 +59,7 @@ const ClassInfo = (props: any) => {
         const params = {
           BJMC: data?.BJMC,
           KCMS: data?.KCMS || '',
-          njIds: data?.NJSJs?.map((item: any) => (item.XD === '初中' ? item?.NJMC : `${item.XD}${item?.NJMC}`)) || '',
+          njIds: data?.NJSJs?.map((item: any) => `${item.XD}${item?.NJMC}`) || '',
           jsIds: data?.KHKCJs?.map((item: any) => item?.JZGJBSJ?.XM) || '',
           SSXQ: `${data?.XNXQ.XN}${data?.XNXQ.XQ}`,
           BMRS: `${data?.KHXSBJs.length} / ${data?.BJRS}`,
