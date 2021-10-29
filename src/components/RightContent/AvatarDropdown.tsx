@@ -1,7 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { message, Spin } from 'antd';
-import { useAccess, useModel } from 'umi';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { Menu, message, Spin } from 'antd';
+import { LogoutOutlined } from '@ant-design/icons';
+import { useAccess, useModel, history } from 'umi';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
+import HeaderDropdown from '../HeaderDropdown';
 import { JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
 import { initWXAgentConfig, initWXConfig, showUserName } from '@/wx';
 import styles from './index.less';
@@ -12,7 +14,7 @@ export type GlobalHeaderRightProps = {
 
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
   const { isAdmin } = useAccess();
-  const { initialState } = useModel('@@initialState');
+  const { initialState, setInitialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
   const [wechatReded, setWechatReded] = useState(false);
   const [wechatInfo, setWechatInfo] = useState({
@@ -68,27 +70,61 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
   if (!initialState) {
     return loading;
   }
+
+  const onMenuClick = useCallback(
+    (event: {
+      key: React.Key;
+      keyPath: React.Key[];
+      item: React.ReactInstance;
+      domEvent: React.MouseEvent<HTMLElement>;
+    }) => {
+      const { key } = event;
+      if (key === 'logout' && initialState) {
+        setInitialState({ ...initialState, currentUser: undefined });
+        history.replace('/authCallback/overDue');
+        return;
+      }
+    },
+    [initialState, setInitialState],
+  );
+
+  const menuHeaderDropdown = (
+    <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
+
+      <Menu.Item key="logout">
+        <LogoutOutlined />
+        退出登录
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <>
-      <span className={`${styles.action}`}>
-        {jyjData ? (
-          <span style={{ paddingRight: '40px' }}>
-            {jyjData?.JYJTB && jyjData?.JYJTB.startsWith('http') ? (
-              <img style={{ width: '40px', height: '40px', borderRadius: '40px' }} src={jyjData?.JYJTB} />
+      <HeaderDropdown overlay={menuHeaderDropdown}>
+        <span className={`${styles.action} ${styles.account}`}>
+          <span className={`${styles.action}`}>
+            {jyjData ? (
+              <span style={{ paddingRight: '40px' }}>
+                {jyjData?.JYJTB && jyjData?.JYJTB.startsWith('http') ? (
+                  <img style={{ width: '40px', height: '40px', borderRadius: '40px' }} src={jyjData?.JYJTB} />
+                ) : (
+                  ''
+                )}{' '}
+                {jyjData?.BMMC}
+              </span>
             ) : (
               ''
-            )}{' '}
-            {jyjData?.BMMC}
+            )}
+
+            <span className={`${styles.name} anticon`} ref={userRef}>
+              <WWOpenDataCom type="userName" openid={wechatInfo.openId} />
+              {/* {currentUser?.username} */}
+              {isAdmin ? '' : '老师'}
+            </span>
+
           </span>
-        ) : (
-          ''
-        )}
-        <span className={`${styles.name} anticon`} ref={userRef}>
-          <WWOpenDataCom type="userName" openid={wechatInfo.openId} />
-          {/* {currentUser?.username} */}
-          {isAdmin ? '' : '老师'}
         </span>
-      </span>
+      </HeaderDropdown>
     </>
   );
 };
