@@ -7,6 +7,8 @@ import { LeftOutlined } from '@ant-design/icons';
 import CustomForm from '@/components/CustomForm';
 import { FormItemType } from '@/components/CustomForm/interfice';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
+import { getKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
+import { getData } from '@/utils/utils';
 /**
  * 课程详情
  * @returns
@@ -26,29 +28,46 @@ const CourseInfo = (props: any) => {
   const [NJDataOption, setNJDataOption] = useState<any>([]);
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
-  const [formValues, setFormValues] = useState({});
+  const [formValues, setFormValues] = useState<any>({});
   const [teacherData, setTeacherData] = useState<any>([]);
-  useEffect(() => {
-    setDisabled(true);
-    // 老师表格数据
-    const thData: any[] = [];
-    state?.KHKCJs?.forEach((item: any) => {
-      thData.push(item?.KHJSSJ);
-    });
-    setTeacherData(thData);
-    if (state?.id) {
-      // form详情
-      const params = {
-        KCMC: state?.KCMC || '',
-        KCMS: state?.KCMS || '',
-        njIds: state?.NJSJs?.map((item: any) => `${item.XD}${item?.NJMC}`) || '',
-        jsIds: state?.KHKCJs?.map((item: any) => item?.JZGJBSJ?.XM) || '',
-        KCTP: state?.KCTP || '',
-        KHKCLX: state?.KHKCLX?.KCTAG || ''
-      };
-      setImageUrl(state?.KCTP || '');
-      setFormValues(params);
+  const getData = async () => {
+    const res = await getKHKCSJ({ kcId: state.id });
+    if (res?.status === 'ok') {
+      console.log('res', res);
+      const { data } = res;
+      let flag = false;
+      // 老师表格数据
+      if (data?.SSJGLX === '机构课程') {
+        const thData: any[] = [];
+        data?.KHKCJs?.forEach((item: any) => {
+          thData.push(item);
+        });
+        setTeacherData(thData);
+        flag = true;
+      }
+      setDisabled(true);
+
+      if (data?.id) {
+        // form详情
+        const params = {
+          KCMC: data?.KCMC || '',
+          KCMS: data?.KCMS || '',
+          njIds: data?.NJSJs?.map((item: any) => `${item.XD}${item?.NJMC}`) || '',
+          jsIds: data?.KHKCJs?.map((item: any) => item?.JZGJBSJ?.XM) || '',
+          KCTP: data?.KCTP || '',
+          KHKCLX: data?.KHKCLX?.KCTAG || '',
+          flag
+        };
+        setImageUrl(data?.KCTP || '');
+        setFormValues(params);
+      }
     }
+  };
+
+  useEffect(() => {
+    console.log('state', state);
+
+    getData();
   }, []);
 
   const basicForm: FormItemType[] = [
@@ -211,13 +230,17 @@ const CourseInfo = (props: any) => {
       <div className={classes.content}>
         <div style={{ width: '85%', minWidth: '850px', margin: '0 auto' }} className={classes.formType}>
           <CustomForm values={formValues || {}} formItems={basicForm} formLayout={formItemLayout} hideBtn={true} />
-          <Table
-            title={() => '任课教师列表'}
-            columns={columns}
-            dataSource={teacherData}
-            pagination={false}
-            size="small"
-          />
+          {formValues?.flag ? (
+            <Table
+              title={() => '任课教师列表'}
+              columns={columns}
+              dataSource={teacherData}
+              pagination={false}
+              size="small"
+            />
+          ) : (
+            ''
+          )}
         </div>
       </div>
     </>
