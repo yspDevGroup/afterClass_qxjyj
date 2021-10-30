@@ -4,7 +4,7 @@ import { request } from 'umi';
 
 /** 创建课后服务退课记录 PUT /khtksj/create */
 export async function createKHTKSJ(body: API.CreateKHTKSJ[], options?: { [key: string]: any }) {
-  return request<{ status?: 'ok' | 'error'; message?: string }>('/khtksj/create', {
+  return request<{ status?: 'ok' | 'error'; data?: API.KHTKSJ[]; message?: string }>('/khtksj/create', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -27,6 +27,8 @@ export async function getKHTKSJ(
     XNXQId?: string;
     /** 课后服务班级ID */
     KHBJSJId?: string;
+    /** 退课类型，0:退课;1:停餐 */
+    LX?: number;
     /** 学校ID */
     XXJBSJId?: string;
     /** 页数 */
@@ -139,6 +141,44 @@ export async function getAllTKByAgency(
   options?: { [key: string]: any }
 ) {
   return request<any>('/khtksj/getAllTKByAgency', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: body,
+    ...(options || {})
+  });
+}
+
+/** 根据学期查询所有退课，退餐信息 POST /khtksj/getAllRefunds */
+export async function getAllRefunds(
+  body: {
+    /** 退课状态 */
+    ZT?: number[];
+    /** 学生ID */
+    XSJBSJId?: string;
+    /** 学生姓名 */
+    XSXM?: string;
+    /** 学年学期ID */
+    XNXQId?: string;
+    /** 课后服务班级ID */
+    KHBJSJId?: string;
+    /** 课后增值服务ID */
+    KHXXZZFWId?: string;
+    /** 退课类型，0:退课;1:停餐 */
+    LX?: number;
+    /** 页数 */
+    page?: number;
+    /** 每页记录数 */
+    pageSize?: number;
+  },
+  options?: { [key: string]: any }
+) {
+  return request<{
+    status?: 'ok' | 'error';
+    data?: { count?: number; rows?: API.KHTKSJ[] };
+    message?: string;
+  }>('/khtksj/getAllRefunds', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

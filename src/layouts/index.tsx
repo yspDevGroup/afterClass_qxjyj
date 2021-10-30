@@ -13,7 +13,7 @@ import Footer from '@/components/Footer';
 
 import customMenu from './cusMenu';
 import headerTop from '@/assets/headerTop.png';
-import headerTopSmall from '@/assets/headerTopSmall.png'
+import headerTopSmall from '@/assets/headerTopSmall.png';
 import styles from './index.less';
 import { BreadcrumbProps, PageHeaderProps } from 'antd';
 import RightContent from '@/components/RightContent';
@@ -47,8 +47,8 @@ const CommonLayout: FC<IRouteComponentProps> = ({ children, location, route, his
     setHiddenHeader(isLoginPage || idGraphic);
   }, [location.pathname]);
 
-  if(location.pathname.indexOf("mobile") != -1 ){
-    return <div>{children}</div>
+  if (location.pathname.indexOf('mobile') != -1) {
+    return <div>{children}</div>;
   }
   return (
     <div
@@ -76,12 +76,18 @@ const CommonLayout: FC<IRouteComponentProps> = ({ children, location, route, his
           }}
           menuHeaderRender={(logo, title, props) => {
             if (props?.collapsed) {
-              return <div className={styles.headerLogoSmall}>
-                <Link to="/">
-                  <img src={headerTopSmall} />
-                </Link>
-                <span>教育<br />局端</span>
-              </div>
+              return (
+                <div className={styles.headerLogoSmall}>
+                  <Link to="/">
+                    <img src={headerTopSmall} />
+                  </Link>
+                  <span>
+                    教育
+                    <br />
+                    局端
+                  </span>
+                </div>
+              );
             }
             return (
               <div className={styles.headerLogo}>
@@ -104,6 +110,24 @@ const CommonLayout: FC<IRouteComponentProps> = ({ children, location, route, his
               title: '',
               breadcrumbRender: (props, defaultDom) => {
                 const { breadcrumb, currentMenu } = props as PageHeaderProps & { currentMenu: any };
+                if ((breadcrumb as BreadcrumbProps).routes !== undefined && currentMenu.name !== '首页') {
+                  return (
+                    <div className="ant-breadcrumb">
+                      {(breadcrumb as BreadcrumbProps).routes?.map((item, index) => {
+                        return (
+                          <span className="ant-breadcrumb-link">
+                            {item.breadcrumbName}
+                            {index < (breadcrumb as BreadcrumbProps).routes!.length - 1 ? (
+                              <span style={{ padding: '0 10px' }}>/</span>
+                            ) : (
+                              ''
+                            )}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  );
+                }
                 return <>{defaultDom}</>;
               },
               extra: <RightContent />

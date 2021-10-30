@@ -18,10 +18,10 @@ export async function createKHZZFW(body: API.CreateKHZZFW, options?: { [key: str
   }>('/khzzfw/create', {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -39,7 +39,7 @@ export async function getKHZZFW(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<{
     status?: 'ok' | 'error';
@@ -48,10 +48,10 @@ export async function getKHZZFW(
   }>('/khzzfw/getAll', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -62,13 +62,13 @@ export async function deleteKHZZFW(
     /** 课后增值服务ID */
     id: string;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
   return request<{ status?: 'ok' | 'error'; message?: string }>(`/khzzfw/${param0}`, {
     method: 'DELETE',
     params: { ...queryParams },
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -80,16 +80,42 @@ export async function updateKHZZFW(
     id: string;
   },
   body: API.UpdateKHZZFW,
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
   return request<{ status?: 'ok' | 'error'; message?: string }>(`/khzzfw/update/${param0}`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     params: { ...queryParams },
     data: body,
-    ...(options || {}),
+    ...(options || {})
+  });
+}
+
+/** 通过学校id筛选课后增值服务 POST /khzzfw/getAllFWByschooId */
+export async function getAllFWByschooId(
+  body: {
+    /** 学校ID */
+    XXJBSJId?: string;
+    /** 状态 */
+    FWZT?: number;
+    /** 服务名称 */
+    FWMC?: string;
+    /** 页数 */
+    page?: number;
+    /** 每页记录数 */
+    pageSize?: number;
+  },
+  options?: { [key: string]: any }
+) {
+  return request<any>('/khzzfw/getAllFWByschooId', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: body,
+    ...(options || {})
   });
 }

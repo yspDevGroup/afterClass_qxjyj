@@ -204,6 +204,7 @@ const SchoolRefund = (props: any) => {
                 XXJBSJId: state?.id,
                 XNXQId: curXNXQId,
                 TKZT: [3],
+                LX: 0,
                 page: 0,
                 pageSize: 0
               });
