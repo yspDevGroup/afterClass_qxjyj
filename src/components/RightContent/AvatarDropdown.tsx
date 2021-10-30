@@ -7,6 +7,7 @@ import HeaderDropdown from '../HeaderDropdown';
 import { JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
 import { initWXAgentConfig, initWXConfig, showUserName } from '@/wx';
 import styles from './index.less';
+import { removeOAuthToken } from '@/utils';
 
 export type GlobalHeaderRightProps = {
   menu?: boolean;
@@ -80,7 +81,8 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
     }) => {
       const { key } = event;
       if (key === 'logout' && initialState) {
-        setInitialState({ ...initialState, currentUser: undefined });
+        setInitialState({ ...initialState, currentUser: null });
+        removeOAuthToken();
         history.replace('/authCallback/overDue');
         return;
       }
