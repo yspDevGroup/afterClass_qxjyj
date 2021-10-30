@@ -20,7 +20,6 @@ import styles from './index.less';
 import { getAllInstitutions, JYJGSJ, toIntroduceCourses, homePage } from '@/services/after-class-qxjyj/jyjgsj';
 import { getJYJGTZGG } from '@/services/after-class-qxjyj/jyjgtzgg';
 
-
 const Index = () => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
@@ -40,15 +39,14 @@ const Index = () => {
         const { xxbm, xxkc, kclx, ...rest } = res.data;
         // 配置头部统计栏目数据
         setHomeData({ ...rest });
-      };
+      }
       const resJYJGSJ = await JYJGSJ({ id: jyjId! });
       if (resJYJGSJ.status === 'ok') {
-
         //待引入课程
         const dyrkcDataRes = await toIntroduceCourses({
           page: 1,
           pageSize: 3,
-          XZQHM: resJYJGSJ.data.XZQH,
+          XZQHM: resJYJGSJ.data.XZQH
           // KCMC: param.KCMC
         });
         if (dyrkcDataRes.status === 'ok') {
@@ -59,47 +57,47 @@ const Index = () => {
         }
 
         //待准入机构
-        const dzrjgDataRes = await getAllInstitutions(
-          {
-            ZT: [0],
-            LX: 0,
-            XZQHM: resJYJGSJ.data.XZQH,
-            page: 1,
-            pageSize: 3
-          },
-        );
+        const dzrjgDataRes = await getAllInstitutions({
+          ZT: [0],
+          LX: 0,
+          XZQHM: resJYJGSJ.data.XZQH,
+          page: 1,
+          pageSize: 3
+        });
         if (dzrjgDataRes.status === 'ok') {
           setDzrjgData(dzrjgDataRes.data?.rows);
         } else {
           message.error(dzrjgDataRes.message);
           return {};
         }
-        }
+      }
 
-        //通知公告
-        const tzggDataRes = await getJYJGTZGG({
-          BT: '',
-          ZT: ['已发布'],
-          LX: 0,
-          page: 1,
-          pageSize: 3
-        });
-        if (tzggDataRes.status === 'ok') {
-          setTzggData(tzggDataRes.data?.rows);
-        }
+      //通知公告
+      const tzggDataRes = await getJYJGTZGG({
+        BT: '',
+        ZT: ['已发布'],
+        LX: 0,
+        XZQHM: currentUser?.XZQHM,
+        page: 1,
+        pageSize: 3
+      });
+      if (tzggDataRes.status === 'ok') {
+        setTzggData(tzggDataRes.data?.rows);
+      }
 
-        //政策公告
-        const zcggRes = await getJYJGTZGG({
-          BT: '',
-          LX: 1,
-          ZT: ['已发布'],
-          page: 1,
-          pageSize: 3
-        });
-        if (zcggRes.status === 'ok') {
-          setZcggData(zcggRes.data?.rows);
-        }
-    };
+      //政策公告
+      const zcggRes = await getJYJGTZGG({
+        BT: '',
+        LX: 1,
+        ZT: ['已发布'],
+        XZQHM: currentUser?.XZQHM,
+        page: 1,
+        pageSize: 3
+      });
+      if (zcggRes.status === 'ok') {
+        setZcggData(zcggRes.data?.rows);
+      }
+    }
     fetchData();
   }, []);
 
@@ -118,7 +116,13 @@ const Index = () => {
               </a>
             }
           >
-            <List type="policy" data={dzrjgData} noDataImg={noAnnoce} noDataText="暂无信息" detailsPath='/organizationManagement'/>
+            <List
+              type="policy"
+              data={dzrjgData}
+              noDataImg={noAnnoce}
+              noDataText="暂无信息"
+              detailsPath="/organizationManagement"
+            />
           </Card>
         </Col>
         <Col span={12}>
@@ -132,7 +136,13 @@ const Index = () => {
               </a>
             }
           >
-            <List type="policy" data={dyrkcData} noDataImg={noData} noDataText="暂无信息" detailsPath='/courseManagement/courseManagement'/>
+            <List
+              type="policy"
+              data={dyrkcData}
+              noDataImg={noData}
+              noDataText="暂无信息"
+              detailsPath="/courseManagement/courseManagement"
+            />
           </Card>
         </Col>
       </Row>
@@ -148,7 +158,13 @@ const Index = () => {
               </a>
             }
           >
-            <List type="policy" data={tzggData} noDataImg={noAnnoce} noDataText="暂无信息" detailsPath='/announcements/announcementsList/articleDetails'/>
+            <List
+              type="policy"
+              data={tzggData}
+              noDataImg={noAnnoce}
+              noDataText="暂无信息"
+              detailsPath="/announcements/announcementsList/articleDetails"
+            />
           </Card>
         </Col>
         <Col span={12}>
@@ -162,7 +178,13 @@ const Index = () => {
               </a>
             }
           >
-            <List type="policy" data={zcggData} noDataImg={noData} noDataText="暂无信息" detailsPath='/policyIssued/policyIssuedList/articleDetails'/>
+            <List
+              type="policy"
+              data={zcggData}
+              noDataImg={noData}
+              noDataText="暂无信息"
+              detailsPath="/policyIssued/policyIssuedList/articleDetails"
+            />
           </Card>
         </Col>
       </Row>
