@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-26 11:45:40
- * @LastEditTime: 2021-10-18 11:42:59
- * @LastEditors: Sissle Lynn
+ * @LastEditTime: 2021-11-01 09:21:44
+ * @LastEditors: Please set LastEditors
  */
 import React, { useEffect, useRef, useState } from 'react';
 import { Col, message, Popconfirm, Row, Tabs, Image, Modal, Form, Input } from 'antd';
@@ -98,7 +98,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
             key="jgxq"
             to={{
               pathname: '/organizationManagement/agencyDetails',
-              state: record
+              state: { value: { id: record.id } }
             }}
           >
             {record?.JGMC}

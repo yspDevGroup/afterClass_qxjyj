@@ -1,12 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image, Row, Col, Button } from 'antd';
 import styles from './index.less';
 import { history } from 'umi';
 import { LeftOutlined } from '@ant-design/icons';
 import defaultImg from '@/assets/vector.png';
 
+import { KHJYJG } from '@/services/after-class-qxjyj/khjyjg';
+
 const AgencyDetails = (props: any) => {
   const { state } = props.history.location;
+  const [data, setData] = useState<any>({});
+
+  const getData = async () => {
+    console.log('state', state);
+
+    const res = await KHJYJG({ id: state?.value?.id });
+    if (res?.status === 'ok') {
+      console.log('res', res);
+
+      setData(res.data);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <>
       <Button
@@ -25,8 +44,8 @@ const AgencyDetails = (props: any) => {
         <Row className={styles.wrap}>
           <Col span={12}>
             <div className={styles.header}>
-              <Image width={60} src={state.value?.QYTB || defaultImg} />
-              <p style={{ marginLeft: '20px' }}> {state.value?.QYMC}</p>
+              <Image width={60} src={data?.QYTB || defaultImg} />
+              <p style={{ marginLeft: '20px' }}> {data?.QYMC}</p>
             </div>
           </Col>
           <Col span={12} />
@@ -36,58 +55,58 @@ const AgencyDetails = (props: any) => {
           <Col span={12}>
             <p>
               <span>法人姓名：</span>
-              {state.value?.FRDBXM}
+              {data?.FRDBXM}
             </p>
             <p>
               <span>法人身份证号：</span>
-              {state.value?.FRDBSFZH}
+              {data?.FRDBSFZH}
             </p>
             <p>
               <span>组织机构代码：</span>
-              {state.value?.ZZJGDM}
+              {data?.ZZJGDM}
             </p>
 
             <p>
               <span>办公地址：</span>
-              {state.value?.QYJGDZ}
+              {data?.QYJGDZ}
             </p>
             <p>
               <span>联系人：</span>
-              {state.value?.LXRXM}
+              {data?.LXRXM}
             </p>
             <p>
               <span>联系电话：</span>
-              {state.value?.LXDH}
+              {data?.LXDH}
             </p>
             <p>
               <span>行政区编号：</span>
-              {state.value?.XZQHM}
+              {data?.XZQHM}
             </p>
           </Col>
           <Col span={12}>
             <p>
               <span>行政区域：</span>
-              {state.value?.XZQ}
+              {data?.XZQ}
             </p>
             <p>
               <span>所属学段：</span>
-              {state.value?.XD}
+              {data?.XD}
             </p>
             <p>
               <span>服务范围：</span>
-              {state.value?.JGFWFW}
+              {data?.JGFWFW}
             </p>
             <p style={{ display: 'flex' }}>
               <span>机构简介：</span>
-              <div style={{ width: '300px' }}>{state.value?.JGJJ}</div>
+              <div style={{ width: '300px' }}>{data?.JGJJ}</div>
             </p>
             <p>
               <span>营业执照：</span>
-              <Image width={60} src={state.value?.YYZZ} />
+              <Image width={60} src={data?.YYZZ} />
             </p>
             <p>
               <span>办学许可证：</span>
-              <Image width={60} src={state.value?.BXXKZ} />
+              <Image width={60} src={data?.BXXKZ} />
             </p>
           </Col>
         </Row>
