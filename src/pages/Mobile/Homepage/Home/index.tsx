@@ -26,12 +26,12 @@ const Home = () => {
                 )}，您好！</p>
             <div>
             <Avatar size={18} style={{height: 0}} src={<Image src={currentUser?.avatar} fallback={defUserImg} />} />
-              <span className={styles.school}> { currentUser?.QYMC ? currentUser?.QYMC : '' }</span>
+              <span className={styles.school}> { currentUser?.QYMC || '' }</span>
             </div>
           </Col>
           <Col span={2}>
             <a onClick={() => {
-              setInitialState({ ...initialState, currentUser: null });
+              setInitialState({ ...initialState!, currentUser: null });
               removeOAuthToken();
               history.replace('/authCallback/overDue');
             }}>
@@ -41,7 +41,7 @@ const Home = () => {
         </Row>
       </div>
     <div className={styles.pageContent}>
-        <div className={`${styles.noticeArea} ${styles[ENV_type]}`} />
+        <div className={`${styles.noticeArea} ${styles[initialState?.buildOptions.ENV_type || 'dev']}`} />
         <Things/>
         <Overview/>
         <Notice/>
