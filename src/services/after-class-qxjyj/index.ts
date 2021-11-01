@@ -144,5 +144,5 @@ export default {
   xxsjpz,
   xxtzgg,
   zxfa,
-  zxsj
+  zxsj,
 };

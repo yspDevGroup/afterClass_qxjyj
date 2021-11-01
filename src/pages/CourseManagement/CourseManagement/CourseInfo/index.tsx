@@ -8,7 +8,6 @@ import CustomForm from '@/components/CustomForm';
 import { FormItemType } from '@/components/CustomForm/interfice';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
 import { getKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
-import { getData } from '@/utils/utils';
 /**
  * 课程详情
  * @returns

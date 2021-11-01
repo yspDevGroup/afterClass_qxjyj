@@ -1,14 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-// import { queryXNXQList } from '@/services/local-services/xnxq';
-import { getAllTK } from '@/services/after-class-qxjyj/khtksj';
 import { Link, useModel } from 'umi';
-import type { ColumnsType } from 'antd/lib/table';
-import { Select, Table, Popconfirm, Divider, message } from 'antd';
-import Style from './index.less';
+import { Select } from 'antd';
 import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
 import { getAllSchools, getSchoolsTK } from '@/services/after-class-qxjyj/jyjgsj';
-import WWOpenDataCom from '@/components/WWOpenDataCom';
-// import { text } from 'express';
+import Style from './index.less';
+
 const { Option } = Select;
 // 退课
 const ReimbursementClass = () => {

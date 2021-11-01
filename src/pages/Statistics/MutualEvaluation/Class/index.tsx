@@ -6,7 +6,7 @@ import { LeftOutlined } from '@ant-design/icons';
 import { getClassesEvaluation } from '@/services/after-class-qxjyj/khbjsj';
 import styles from '../index.less';
 import { getAllXNXQ } from '@/services/after-class-qxjyj/xnxq';
-import { getCurrentXQ } from '@/utils/utils';
+import { getCurrentXQ } from '@/utils';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
 
 const { Search } = Input;

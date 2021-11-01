@@ -3,11 +3,11 @@
  * @description: 通用布局
  * @author: zpl
  * @Date: 2021-08-16 17:31:56
- * @LastEditTime: 2021-10-12 14:50:18
- * @LastEditors: Sissle Lynn
+ * @LastEditTime: 2021-11-01 14:16:13
+ * @LastEditors: zpl
  */
 import React, { FC, useEffect, useState } from 'react';
-import { IRouteComponentProps, Link, useAccess, history } from 'umi';
+import { IRouteComponentProps, Link, useAccess, history, useModel } from 'umi';
 import ProLayout, { MenuDataItem, PageContainer } from '@ant-design/pro-layout';
 import Footer from '@/components/Footer';
 
@@ -37,6 +37,7 @@ const menuRender = (
   );
 };
 const CommonLayout: FC<IRouteComponentProps> = ({ children, location, route, history, match }) => {
+  const { initialState } = useModel('@@initialState');
   const { isLogin } = useAccess();
   const path = location.pathname.toLowerCase();
   const [hiddenHeader, setHiddenHeader] = useState<boolean>(true);
@@ -61,7 +62,7 @@ const CommonLayout: FC<IRouteComponentProps> = ({ children, location, route, his
         <div>{children}</div>
       ) : (
         <ProLayout
-          {...(customMenu as unknown as Route[])}
+          {...((customMenu as unknown) as Route[])}
           layout="side"
           headerRender={false}
           collapsedButtonRender={false}
@@ -101,7 +102,7 @@ const CommonLayout: FC<IRouteComponentProps> = ({ children, location, route, his
           menuItemRender={(item: MenuDataItem & { isUrl: boolean; onClick: () => void }, dom: React.ReactNode) =>
             menuRender(item, dom)
           }
-          footerRender={() => <Footer />}
+          footerRender={() => <Footer copyRight={initialState?.buildOptions.ENV_copyRight} />}
         >
           <PageContainer
             style={{ minWidth: '990px' }}

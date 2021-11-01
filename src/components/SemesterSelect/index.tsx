@@ -1,8 +1,8 @@
 /*
  * @Author: wuzhan
  * @Date: 2021-10-27 09:00:26
- * @LastEditTime: 2021-10-27 09:47:21
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-11-01 14:24:14
+ * @LastEditors: zpl
  * @Description: In User Settings Edit
  * @FilePath: \afterClass_qxjyj\src\components\SemesterSelect\index.tsx
  */
@@ -10,7 +10,7 @@ import type { FC } from 'react';
 import { message, Select } from 'antd';
 import { getAllXNXQ } from '@/services/after-class-qxjyj/xnxq';
 import { useEffect, useState } from 'react';
-import { getCurrentXQ } from '@/utils/utils';
+import { getCurrentXQ } from '@/utils';
 const { Option } = Select;
 
 type SemesterSelectProps = {

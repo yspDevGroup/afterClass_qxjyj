@@ -12,16 +12,9 @@ export default defineConfig({
   },
   fastRefresh: {},
   define: {
-    ENV_type: 'prod',
     ENV_title: '课后服务平台',
     ENV_subTitle: '课后服务平台',
-    ENV_copyRight: '2021 版权所有：陕西五育汇智信息技术有限公司',
-    ENV_host: 'http://afterclassQxjyj.prod.xianyunshipei.com',
-    ENV_backUrl: 'http://api.prod.xianyunshipei.com',
-    ssoHost: 'http://sso.prod.xianyunshipei.com',
-    authType: 'wechat',
-    clientId: 'wwccc22183061ae39b',
-    clientSecret: 'fyIAGkGZzBdoYun_Oka0NsGZqTmcovFTMMorCFrjRyg'
+    ENV_debug: false,
   },
   links: [{ rel: 'icon', href: './title.png' }],
   dynamicImport: {
@@ -45,7 +38,7 @@ export default defineConfig({
   },
   proxy: {
     '/api': {
-      target: 'http://api.prod.xianyunshipei.com',
+      target: 'http://api.test.xianyunshipei.com',
       changeOrigin: true,
       pathRewrite: { '^/api': '' }
     }

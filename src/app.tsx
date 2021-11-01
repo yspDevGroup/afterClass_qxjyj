@@ -2,16 +2,17 @@
  * @description: 运行时配置
  * @author: zpl
  * @Date: 2021-08-09 10:44:42
- * @LastEditTime: 2021-10-21 12:21:13
+ * @LastEditTime: 2021-11-01 15:02:50
  * @LastEditors: zpl
  */
 import { notification, message } from 'antd';
+import { history } from 'umi'
 import type { RequestConfig } from 'umi';
 import type { ResponseError } from 'umi-request';
 import 'moment/locale/zh-cn';
 import { currentUser as getCurrentUser } from './services/after-class-qxjyj/user';
 import { currentWechatUser } from './services/after-class-qxjyj/wechat';
-import { getAuthorization, getCookie } from './utils';
+import { getAuthorization, getBuildOptions, getCookie } from './utils';
 import LoadingPage from '@/components/Loading';
 
 /** 获取用户信息比较慢的时候会展示一个 loading */
@@ -26,8 +27,10 @@ export const initialStateConfig = {
  * @return {*}
  */
 export async function getInitialState(): Promise<InitialState> {
+  console.log('process.env.REACT_APP_ENV: ', process.env.REACT_APP_ENV);
+  const buildOptions = await getBuildOptions();
   const fetchUserInfo = async (): Promise<UserInfo | null> => {
-    const res = authType === 'wechat' ? await currentWechatUser({plat: 'education'}) : await getCurrentUser({plat: 'education'});
+    const res = buildOptions.authType === 'wechat' ? await currentWechatUser({plat: 'education'}) : await getCurrentUser({plat: 'education'});
     const { status, data } = res;
     if (status === 'ok' && data?.info) {
       return data.info;
@@ -38,7 +41,8 @@ export async function getInitialState(): Promise<InitialState> {
   };
   const user = await fetchUserInfo();
   return {
-    currentUser: user
+    currentUser: user,
+    buildOptions
   };
 }
 
@@ -141,6 +145,19 @@ export const request: RequestConfig = {
         ...ctx.req.options.headers
       };
       await next();
+      const path = window.location.pathname.toLowerCase();
+      if (
+        ctx.res.status !== 'ok' &&
+        path !== '/' &&
+        !path.startsWith('/authcallback') &&
+        !path.startsWith('/40') &&
+        (
+          ctx.res.message?.includes('Authorization token is invalid') ||
+          ctx.res.message?.includes('Invalid Token')
+        )
+      ) {
+        history.replace('/403?title=认证信息已失效，请重新登录');
+      }
     }
   ]
 };

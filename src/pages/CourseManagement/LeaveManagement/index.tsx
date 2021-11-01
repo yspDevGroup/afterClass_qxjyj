@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-// import { queryXNXQList } from '@/services/local-services/xnxq';
 import { getAllAbsences } from '@/services/after-class-qxjyj/khxsqj';
 // import { message } from 'antd';
 import { Link, useModel } from 'umi';
@@ -8,7 +7,6 @@ import Style from './index.less';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { getAllSchools, getSchoolsQJ } from '@/services/after-class-qxjyj/jyjgsj';
-import WWOpenDataCom from '@/components/WWOpenDataCom';
 
 const { Option } = Select;
 const LeaveManagement = () => {

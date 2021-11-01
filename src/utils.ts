@@ -2,10 +2,89 @@
  * @description: 工具类
  * @author: zpl
  * @Date: 2021-08-09 10:36:53
- * @LastEditTime: 2021-10-18 14:33:08
+ * @LastEditTime: 2021-11-01 14:56:18
  * @LastEditors: zpl
  */
 import { history } from 'umi';
+import { parse } from 'querystring';
+import { getEnv } from '@/services/after-class-qxjyj/other';
+import { getKHPKSJByBJID } from './services/after-class-qxjyj/khpksj';
+import { getKHBJSJ } from './services/after-class-qxjyj/khbjsj';
+import { message } from 'antd';
+import moment from 'moment';
+import { getAllKHXSCQ } from './services/after-class-qxjyj/khxscq';
+import { DateRange, Week } from './utils/Timefunction';
+
+/**
+ * 实时获取部署环境信息
+ *
+ * @return {*}  {Promise<BuildOptions>}
+ */
+export const getBuildOptions = async (): Promise<BuildOptions> => {
+  const { data = {} } = ENV_debug ? {} : await getEnv();
+  const { yspAppEnv = 'local', nodeEnv } = data;
+  console.log('nodeEnv: ', nodeEnv);
+
+  switch (yspAppEnv) {
+    case 'production':
+      // 生产环境
+      return {
+        ENV_type: 'prod',
+        ENV_copyRight: '2021 版权所有：陕西五育汇智信息技术有限公司',
+        ENV_host: 'http://afterclassQxjyj.prod.xianyunshipei.com',
+        ssoHost: 'http://sso.prod.xianyunshipei.com',
+        authType: 'wechat',
+        clientId: 'wwccc22183061ae39b',
+        clientSecret: 'fyIAGkGZzBdoYun_Oka0NsGZqTmcovFTMMorCFrjRyg',
+      };
+    case 'chanming':
+      // 禅鸣环境
+      return {
+        ENV_type: 'chanming',
+        ENV_copyRight: '2021 版权所有：蝉鸣科技（西安）有限公司',
+        ENV_host: 'http://afterclassQxjyj.wuyu.imzhiliao.com',
+        ssoHost: 'http://sso.wuyu.imzhiliao.com',
+        authType: 'wechat',
+        clientId: 'ww0a941c570b201be6',
+        clientSecret: 'hK91Yg2RnDw4phTw1F_byWM9KoUM3Y-kufDDZOj0eTE',
+      };
+    case '9dy':
+      // 9朵云环境
+      return {
+        ENV_type: '9dy',
+        ENV_copyRight: '2021 版权所有：广东九朵云科技有限公司',
+        ENV_host: 'http://afterclassQxjyj.9cloudstech.com',
+        ssoHost: 'http://sso.9cloudstech.com',
+        authType: 'wechat',
+        clientId: 'ww3a7d7b9efc33f6f3',
+        clientSecret: 'pCnf96P_GmAbe03S6jSqXp23moVXCak8CmOXTY2e0Os',
+      };
+    case 'development':
+      // 开发测试环境
+      return {
+        ENV_type: 'dev',
+        ENV_copyRight: '2021 版权所有：陕西五育汇智信息技术有限公司',
+        ENV_host: 'http://afterclassQxjyj.test.xianyunshipei.com',
+        ssoHost: 'http://sso.test.xianyunshipei.com',
+        authType: 'wechat',
+        clientId: 'ww2b4b964ba635948b',
+        clientSecret: 'BwDHyfEiuBjdz18aR6Int96FxGZQ2d_UeJcVSBnkGvU',
+      };
+    default:
+      // 默认为local，本地开发模式下请在此处修改配置，但不要提交此处修改
+      return {
+        ENV_type: 'dev',
+        ENV_copyRight: '2021 版权所有：陕西五育汇智信息技术有限公司',
+        ENV_host: 'http://localhost:8080',
+        ssoHost: 'http://platform.test.xianyunshipei.com',
+        authType: 'password',
+        clientId: 'ww2b4b964ba635948b',
+        clientSecret: 'nkTIja0mKy1suw-wo7Lt',
+      };
+  }
+};
+
+export const getPageQuery = () => parse(window.location.href.split('?')[1]);
 
 /**
  * 根据路径search拼接参数获取参数对应的值
@@ -52,9 +131,11 @@ export const envjudge = (): PlatType => {
 /**
  * 根据运行环境获取登录地址
  *
+ * @param {BuildOptions} [buildOptions]
  * @return {*}
  */
-export const getLoginPath = (): string => {
+export const getLoginPath = (buildOptions?: BuildOptions): string => {
+  const { authType = 'none', ssoHost, ENV_host, clientId, clientSecret } = buildOptions || {};
   let loginPath: string;
   switch (authType) {
     case 'wechat':
@@ -232,4 +313,163 @@ export const getCurrentXQ = (list: API.XNXQ[]): API.XNXQ | null => {
     return previousXQ;
   }
   return tempList[tempList.length - 1];
+};
+
+
+
+/**
+ * 根据当前时间获取移动端时段
+ *
+ * @param {string} BMKSRQ 报名开始时间
+ * @param {string} BMJSRQ 报名结束时间
+ * @param {string} KKKSRQ 开课开始时间
+ * @param {string} KKJSRQ 开课结束时间
+ * @return {*}
+ */
+export const getCurrentStatus = (
+  BMKSRQ: string,
+  BMJSRQ: string,
+  KKKSRQ: string,
+  KKJSRQ: string,
+) => {
+  let currentStatus:
+    | 'unstart'
+    | 'enroll'
+    | 'enrolling'
+    | 'enrolled'
+    | 'education'
+    | 'end'
+    | 'noTips'
+    | 'empty' = 'empty';
+  const today = new Date();
+  const BMbegin = new Date(BMKSRQ);
+  const BMend = new Date(BMJSRQ);
+  const KKbegin = new Date(KKKSRQ);
+  const KKend = new Date(KKJSRQ);
+
+  if (today < BMbegin) {
+    currentStatus = 'unstart';
+  } else if (BMbegin <= today && today <= BMend) {
+    currentStatus = 'enroll';
+    if (KKbegin <= today && today <= BMend) {
+      // const nowSta = (today.getTime() - KKbegin.getTime()) / 7 / 24 / 60 / 60 / 1000;
+      // if (nowSta > 2) {
+      //   currentStatus = 'noTips';
+      // } else {
+      currentStatus = 'enrolling';
+      // }
+    }
+  } else if (BMbegin <= today && today <= KKbegin) {
+    currentStatus = 'enrolled';
+  } else if (KKbegin <= today && today <= KKend) {
+    const nowSta = (today.getTime() - KKbegin.getTime()) / 7 / 24 / 60 / 60 / 1000;
+    if (nowSta > 2) {
+      currentStatus = 'noTips';
+    } else {
+      currentStatus = 'education';
+    }
+  } else if (today > KKend) {
+    currentStatus = 'end';
+  }
+  return currentStatus;
+};
+
+/**
+ * 根据返回错误信息优化页面错误提示
+ *
+ * @param msg: string
+ */
+export const enHenceMsg = (msg?: string) => {
+  if (msg && msg.indexOf('Cannot') > -1) {
+    message.error(`操作失败，该项存在关联数据,请清除关联数据后再试`);
+  } else if ((msg && msg.indexOf('token') > -1) || (msg && msg.indexOf('Token') > -1)) {
+    history.replace('/403?title=认证信息已失效，请重新登录');
+  } else if (msg && msg.indexOf('Validation') > -1) {
+    message.error('操作失败，该项未通过校验，请检查数据是否重复后再试');
+  } else {
+    message.error(`${msg},请联系管理员或稍后再试`);
+  }
+};
+
+
+/**
+ * 获取班级出勤信息
+ * @param wkd 课程周几上课
+ * @param start 开课时间
+ * @param end 结课时间
+ * @param bjid 班级ID
+ * @param xsId 学生ID
+ * @returns {}
+ */
+export const getCqDay = async (
+  wkd?: any[],
+  start?: string,
+  end?: string,
+  bjid?: string,
+  xsId?: string,
+) => {
+  const myDate = new Date();
+  const nowDate = new Date(moment(myDate).format('YYYY/MM/DD'));
+  const res = await getAllKHXSCQ({
+    xsId: xsId || '',
+    bjId: bjid || '',
+    CQZT: '',
+    CQRQ: '',
+  });
+  if (res.status === 'ok') {
+    if (start && end && wkd) {
+      const arr = DateRange(start, end);
+      const classbegins: any[] = [];
+      arr.forEach((record: any) => {
+        for (let i = 0; i < wkd.length; i += 1) {
+          if (Week(record) === wkd[i] && !classbegins.includes(record)) {
+            const current = new Date(moment(record).format('YYYY/MM/DD'));
+            let status = current < nowDate ? '出勤' : '待上';
+            if (res.data && res.data.length) {
+              res.data.forEach((date: any) => {
+                if (date.CQRQ === record) {
+                  status = date.CQZT;
+                }
+              });
+            }
+            classbegins.push({
+              status,
+              date: moment(record).format('MM/DD'),
+            });
+          }
+        }
+      });
+      return classbegins;
+    }
+  }
+  return [];
+};
+/**
+ * 组装班级出勤信息
+ * @param bjid 班级ID
+ * @param xsId 学生ID
+ * @returns {}
+ */
+export const getData = async (bjid: string, xsId?: string) => {
+  const res1 = await getKHPKSJByBJID({ id: bjid });
+  if (res1.status === 'ok' && res1.data) {
+    const attend = [...new Set(res1.data.map((n: { WEEKDAY?: any }) => n.WEEKDAY))];
+    const res = await getKHBJSJ({ id: bjid });
+    if (res.status === 'ok' && res.data && attend) {
+      const start = res.data.KKRQ ? res.data.KKRQ : res.data.KHKCSJ!.KKRQ;
+      const end = res.data.JKRQ ? res.data.JKRQ : res.data.KHKCSJ!.JKRQ;
+      return {
+        title: res.data.BJMC,
+        start,
+        end,
+        kss: res.data.KSS,
+        XQName: res.data.XQName,
+        kcmc: res.data.KHKCSJ!.KCMC,
+        data: await getCqDay(attend, start, end, bjid, xsId),
+      };
+    }
+  }
+  return {
+    status: 'nothing',
+  };
 };
