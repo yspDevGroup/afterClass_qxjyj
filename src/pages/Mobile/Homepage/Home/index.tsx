@@ -33,7 +33,7 @@ const Home = () => {
             <a onClick={() => {
               setInitialState({ ...initialState!, currentUser: null });
               removeOAuthToken();
-              history.replace('/authCallback/overDue');
+              history.replace(initialState?.buildOptions.authType === 'wechat' ? '/authCallback/overDue' : '/');
             }}>
               <IconFont type="icon-tuichu" className={styles.signOut} />
             </a>
