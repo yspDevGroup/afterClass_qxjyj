@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-26 11:45:40
- * @LastEditTime: 2021-11-01 09:21:44
+ * @LastEditTime: 2021-11-01 16:42:40
  * @LastEditors: Please set LastEditors
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -98,7 +98,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
             key="jgxq"
             to={{
               pathname: '/organizationManagement/agencyDetails',
-              state: { value: { id: record.id } }
+              state: { value: { id: record?.value?.id } }
             }}
           >
             {record?.JGMC}
@@ -215,6 +215,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       }
     }
   ];
+
   return (
     <div className={styles.OrganizationManagement}>
       <ProTable<any>
