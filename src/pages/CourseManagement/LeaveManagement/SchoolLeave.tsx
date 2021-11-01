@@ -1,16 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-// import { queryXNXQList } from '@/services/local-services/xnxq';
 import { getAllAbsences } from '@/services/after-class-qxjyj/khxsqj';
 // import { message } from 'antd';
-import { useModel } from 'umi';
 import { Button, message, Select, Tag, Tooltip } from 'antd';
 import Style from './index.less';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { getAllSchools } from '@/services/after-class-qxjyj/jyjgsj';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
 import { getAllXNXQ } from '@/services/after-class-qxjyj/xnxq';
-import { getCurrentXQ } from '@/utils/utils';
+import { getCurrentXQ } from '@/utils';
 import { LeftOutlined } from '@ant-design/icons';
 import EllipsisHint from '@/components/EllipsisHint';
 

@@ -62,6 +62,7 @@ type UserInfo = {
     remark?: string;
     children?: { njId?: string; department?: string[]; student_userid?: string; name?: string }[];
   };
+  QYMC?: string;
 };
 
 type AuthType = 'wechat' | 'password' | 'authorization_code';

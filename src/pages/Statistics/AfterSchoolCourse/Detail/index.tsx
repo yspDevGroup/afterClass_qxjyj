@@ -10,7 +10,7 @@ import { getClasses } from '@/services/after-class-qxjyj/reports';
 import ProTable from '@ant-design/pro-table';
 
 import EllipsisHint from '@/components/EllipsisHint';
-import { getCurrentXQ } from '@/utils/utils';
+import { getCurrentXQ } from '@/utils';
 import { getAllXNXQ } from '@/services/after-class-qxjyj/xnxq';
 import styles from './index.less';
 import WWOpenDataCom from '@/components/WWOpenDataCom';

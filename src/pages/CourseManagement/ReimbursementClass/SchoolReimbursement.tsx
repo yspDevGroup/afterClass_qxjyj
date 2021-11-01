@@ -1,17 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 // import { queryXNXQList } from '@/services/local-services/xnxq';
 import { getAllTK } from '@/services/after-class-qxjyj/khtksj';
-import { useModel } from 'umi';
-import type { ColumnsType } from 'antd/lib/table';
-import { Select, Table, Popconfirm, Divider, message, Button } from 'antd';
-import Style from './index.less';
+import { Select, message, Button } from 'antd';
 import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
-import { getAllSchools } from '@/services/after-class-qxjyj/jyjgsj';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
 import { getAllXNXQ } from '@/services/after-class-qxjyj/xnxq';
-import { getCurrentXQ } from '@/utils/utils';
+import { getCurrentXQ } from '@/utils';
 import { LeftOutlined } from '@ant-design/icons';
-// import { text } from 'express';
+
+import Style from './index.less';
 
 const { Option } = Select;
 // 退课

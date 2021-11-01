@@ -1,5 +1,5 @@
 import { convertData } from '@/components/Search/util';
-import { getCurrentXQ } from '@/utils/utils';
+import { getCurrentXQ } from '@/utils';
 import { getAllXNXQ } from '../after-class-qxjyj/xnxq';
 
 /**
