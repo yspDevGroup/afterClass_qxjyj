@@ -3,9 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { useModel } from 'umi';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { getOrders } from '@/services/after-class-qxjyj/jyjgsj';
+import { getAllCourses, getOrders } from '@/services/after-class-qxjyj/jyjgsj';
 
 import WWOpenDataCom from '@/components/WWOpenDataCom';
+import { Select } from 'antd';
+const { Option } = Select;
+import styles from './index.less';
 
 const StateTab = (props: any) => {
   const { DDZT, id } = props.TabState;
@@ -130,16 +133,66 @@ const StateTab = (props: any) => {
     }
   ];
   const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);
+  const [kcmcValue, setKcmcValue] = useState<any>();
+  const [kcmcData, setKcmcData] = useState<any[] | undefined>([]);
+  useEffect(() => {
+    (async () => {
+      // 通过课程数据接口拿到所有的课程
+      const khkcResl = await getAllCourses({
+        page: 0,
+        pageSize: 0,
+        XZQHM: currentUser?.XZQHM,
+        KCMC: kcmcValue
+      });
+      console.log('khkcResl: ', khkcResl);
+      if (khkcResl.status === 'ok') {
+        const KCMC = khkcResl.data.rows?.map((item: any) => ({
+          label: item.KCMC,
+          value: item.id,
+        }));
+        setKcmcData(KCMC);
+      }
+    })()
+  }, [])
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     (async () => {
-      const res = await getOrders({ XZQHM: currentUser?.XZQHM, DDZT, DDLX: 0, XXJBSJId: id });
+      const res = await getOrders({
+        XZQHM: currentUser?.XZQHM, DDZT,
+        DDLX: 0, XXJBSJId: id,
+        kcmc: kcmcValue,
+      });
       setDataSource(res.data.rows);
     })();
-  }, []);
+  }, [kcmcValue]);
   return (
     <>
       <div>
+        <div className={styles.searchs}>
+          <div>
+            课程名称：
+            <Select
+              style={{ width: 200 }}
+              value={kcmcValue}
+              allowClear
+              placeholder="请选择"
+              onChange={(value) => {
+                setKcmcValue(value);
+              }}
+            >
+              {kcmcData?.map((item: any) => {
+                if (item.value) {
+                  return (
+                    <Option value={item.label} key={item.label}>
+                      {item.label}
+                    </Option>
+                  );
+                }
+                return '';
+              })}
+            </Select>
+          </div>
+        </div>
         <ProTable
           columns={columns}
           pagination={{
