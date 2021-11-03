@@ -86,16 +86,16 @@ const course = () => {
 
   return (
   <div className={styles.course}>
-    <div className={styles.container} style={{height: '290px'}}>
+    <div className={styles.container} style={{height: '355px'}}>
       <ModuleTitle data='课程类型分布'/>
       <div className={styles.chartsContainer}>
       {
           (pieConfig.data && pieConfig.data?.length!==0) ? <Pie {...pieConfig} /> : <Empty
           image={noData}
           imageStyle={{
-            minHeight: 150
+            minHeight: 200
           }}
-          style={{minHeight: '282px'}}
+          style={{minHeight: 355}}
           description={'暂无课程类型信息'} />
         }
       </div>
