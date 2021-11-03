@@ -96,19 +96,25 @@ const AgencyDetails = (props: any) => {
               <span>服务范围：</span>
               {data?.JGFWFW}
             </p>
-            <p style={{ display: 'flex' }}>
-              <span>机构简介：</span>
-              <div style={{ width: '300px' }}>{data?.JGJJ}</div>
-            </p>
+
             <p>
               <span>营业执照：</span>
-              <Image width={60} src={data?.YYZZ} />
+              <Image width={100} src={data?.YYZZ} />
             </p>
             <p>
               <span>办学许可证：</span>
-              <Image width={60} src={data?.BXXKZ} />
+              <Image width={100} src={data?.BXXKZ} />
             </p>
           </Col>
+        </Row>
+        <Row className={styles.wraps}>
+          <Col span={12}>
+            <p style={{ display: 'flex' }}>
+              <span>机构简介：</span>
+              <div style={{ width: '723px' }}>{data?.JGJJ}</div>
+            </p>
+          </Col>
+          <Col span={12} style={{ maxWidth: 0 }}></Col>
         </Row>
       </div>
     </>

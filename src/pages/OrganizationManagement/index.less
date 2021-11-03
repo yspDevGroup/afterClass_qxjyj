@@ -31,7 +31,8 @@
       line-height: 60px;
     }
   }
-  .wrap {
+  .wrap,
+  .wraps {
     width: 85%;
     min-width: 850px;
     margin: 0 auto;
@@ -45,6 +46,13 @@
           text-align: right;
           vertical-align: top;
         }
+      }
+    }
+  }
+  .wraps {
+    :global {
+      .ant-col-12 {
+        max-width: 100%;
       }
     }
   }
