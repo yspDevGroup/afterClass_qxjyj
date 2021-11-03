@@ -52,7 +52,7 @@ const LeaveManagement = () => {
       align: 'center',
       width: 150,
       fixed: 'left',
-      ellipsis: true,
+      ellipsis: true
     },
     {
       title: '联系人',
@@ -60,7 +60,7 @@ const LeaveManagement = () => {
       key: 'LXR',
       align: 'center',
       width: 100,
-      ellipsis: true,
+      ellipsis: true
     },
     {
       title: '联系电话',
@@ -68,14 +68,14 @@ const LeaveManagement = () => {
       key: 'LXDH',
       align: 'center',
       width: 150,
-      ellipsis: true,
+      ellipsis: true
     },
     {
       title: '请假人次',
       dataIndex: 'xs_count',
       key: 'xs_count',
       align: 'center',
-      width: 100,
+      width: 100
     },
     {
       title: '操作',
@@ -88,18 +88,18 @@ const LeaveManagement = () => {
       render: (text: any, record: any) => {
         return (
           <Link
-              key="kcxq"
-              to={{
-                pathname: '/courseManagement/leaveManagement/schoolLeave',
-                state: {
-                  id: record.id,
-                  xzqhm: currentUser?.XZQHM,
-                  xxmc: record.XXMC
-                }
-              }}
-            >
-              详情
-            </Link>
+            key="kcxq"
+            to={{
+              pathname: '/courseManagement/leaveManagement/tabs',
+              state: {
+                id: record.id,
+                xzqhm: currentUser?.XZQHM,
+                xxmc: record.XXMC
+              }
+            }}
+          >
+            详情
+          </Link>
         );
       }
     }
@@ -139,14 +139,14 @@ const LeaveManagement = () => {
           pagination={{
             showQuickJumper: true,
             pageSize: 10,
-            defaultCurrent: 1,
+            defaultCurrent: 1
           }}
           scroll={{ x: 900 }}
           request={async () => {
             const resAll = await getSchoolsQJ({
               XZQHM: currentUser?.XZQHM,
               page: 0,
-              pageSize: 0,
+              pageSize: 0
             });
             if (resAll.status === 'ok') {
               return {

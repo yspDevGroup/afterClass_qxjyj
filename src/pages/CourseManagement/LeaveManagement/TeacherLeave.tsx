@@ -9,6 +9,7 @@ import WWOpenDataCom from '@/components/WWOpenDataCom';
 import { getAllXNXQ } from '@/services/after-class-qxjyj/xnxq';
 import { getCurrentXQ } from '@/utils';
 import EllipsisHint from '@/components/EllipsisHint';
+import { getAllKHJSQJ } from '@/services/after-class-qxjyj/khjsqj';
 
 const { Option } = Select;
 const SchoolLeave = (props: { state: any }) => {
@@ -21,18 +22,21 @@ const SchoolLeave = (props: { state: any }) => {
   const [termList, setTermList] = useState<any>();
   // 表格数据源
   const [dataSource, setDataSource] = useState<any>([]);
+  // 学年学期Id
+  const [curXNXQId, setCurXNXQId] = useState<any>();
   const getList = async (xnxq?: string) => {
-    const resAll = await getAllAbsences({
+    const resAll = await getAllKHJSQJ({
       XNXQId: xnxq,
-      XZQHM: xzqhm,
-      XXJBSJId: id
+      // XZQHM: xzqhm,
+      XXJBSJId: id,
+      QJZT: [1, 2]
     });
+    console.log(resAll?.data?.rows, '=-=-=-=-=--');
     if (resAll.status === 'ok') {
       console.log(resAll?.data?.rows, '=-=-=-=-=--');
       setDataSource(resAll?.data?.rows);
     }
   };
-
   const getXNXQ = async (xxdm: string) => {
     const res = await getAllXNXQ({
       XXJBSJId: xxdm
@@ -48,6 +52,7 @@ const SchoolLeave = (props: { state: any }) => {
       });
       setTermList(term);
       setTerm(currentXQ?.id || data[0].id);
+      setCurXNXQId(currentXQ?.id);
       getList(currentXQ?.id);
     } else {
       message.error(res.message);
@@ -68,29 +73,18 @@ const SchoolLeave = (props: { state: any }) => {
       width: 50
     },
     {
-      title: '学生姓名',
-      dataIndex: 'XSXM',
-      key: 'XSXM',
+      title: '教师姓名',
+      dataIndex: 'JSXM',
+      key: 'JSXM',
       align: 'center',
       fixed: 'left',
       width: 120,
       render: (text: any, record: any) => {
-        const showWXName = record?.XSJBSJ?.XM === '未知' && record?.XSJBSJ?.WechatUserId;
+        const showWXName = record?.JZGJBSJ?.XM === '未知' && record?.JZGJBSJ?.WechatUserId;
         if (showWXName) {
-          return <WWOpenDataCom type="userName" openid={record?.XSJBSJ?.WechatUserId} />;
+          return <WWOpenDataCom type="userName" openid={record?.JZGJBSJ?.WechatUserId} />;
         }
-        return record?.XSJBSJ?.XM;
-      }
-    },
-    {
-      title: '行政班名称',
-      dataIndex: 'XZBJSJ',
-      key: 'XZBJSJ',
-      align: 'center',
-      width: 120,
-      ellipsis: true,
-      render: (_text: any, record: any) => {
-        return `${record?.XSJBSJ?.BJSJ?.NJSJ?.NJMC}${record?.XSJBSJ?.BJSJ?.BJ}`;
+        return record?.JZGJBSJ?.XM;
       }
     },
     {
@@ -104,7 +98,7 @@ const SchoolLeave = (props: { state: any }) => {
         return (
           <EllipsisHint
             width="100%"
-            text={record.KHQJKCs?.map((item: any) => {
+            text={record.KHJSQJKCs?.map((item: any) => {
               return <Tag key={item.KCMC}>{item.KCMC}</Tag>;
             })}
           />
@@ -122,7 +116,7 @@ const SchoolLeave = (props: { state: any }) => {
         return (
           <EllipsisHint
             width="100%"
-            text={record.KHQJKCs?.map((item: any) => {
+            text={record.KHJSQJKCs?.map((item: any) => {
               return <Tag key={item.KHBJSJ?.id}>{item.KHBJSJ?.BJMC}</Tag>;
             })}
           />
@@ -155,7 +149,9 @@ const SchoolLeave = (props: { state: any }) => {
       key: 'QJZT',
       align: 'center',
       width: 100,
-      render: (text: any) => (text ? '已取消' : '已通过')
+      render: (text: any, record: any) => {
+        return record?.QJZT === 1 ? '已通过' : '已驳回';
+      }
     },
     {
       title: '请假开始时间',
@@ -167,7 +163,7 @@ const SchoolLeave = (props: { state: any }) => {
       render: (text: any, record: any) => {
         return (
           <>
-            {record.KHQJKCs?.[0].QJRQ} {record.KSSJ}
+            {record.KHJSQJKCs?.[0].QJRQ} {record.KSSJ}
           </>
         );
       }
@@ -182,7 +178,7 @@ const SchoolLeave = (props: { state: any }) => {
       render: (text: any, record: any) => {
         return (
           <>
-            {record.KHQJKCs?.[0].QJRQ} {record.JSSJ}
+            {record.KHJSQJKCs?.[0].QJRQ} {record.JSSJ}
           </>
         );
       }
