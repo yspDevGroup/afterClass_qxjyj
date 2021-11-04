@@ -49,7 +49,7 @@ const ReimbursementClass = () => {
       align: 'center',
       width: 150,
       fixed: 'left',
-      ellipsis: true,
+      ellipsis: true
     },
     {
       title: '联系人',
@@ -57,7 +57,7 @@ const ReimbursementClass = () => {
       key: 'LXR',
       align: 'center',
       width: 100,
-      ellipsis: true,
+      ellipsis: true
     },
     {
       title: '联系电话',
@@ -65,14 +65,14 @@ const ReimbursementClass = () => {
       key: 'LXDH',
       align: 'center',
       width: 150,
-      ellipsis: true,
+      ellipsis: true
     },
     {
       title: '退课数量',
       dataIndex: 'xs_count',
       key: 'xs_count',
       align: 'center',
-      width: 100,
+      width: 100
     },
     {
       title: '操作',
@@ -85,18 +85,18 @@ const ReimbursementClass = () => {
       render: (text: any, record: any) => {
         return (
           <Link
-              key="kcxq"
-              to={{
-                pathname: '/courseManagement/reimbursementClass/schoolReimbursement',
-                state: {
-                  id: record.id,
-                  xzqhm: currentUser?.XZQHM,
-                  xxmc: record.XXMC
-                }
-              }}
-            >
-              详情
-            </Link>
+            key="kcxq"
+            to={{
+              pathname: '/courseManagement/reimbursementClass/tabs',
+              state: {
+                id: record.id,
+                xzqhm: currentUser?.XZQHM,
+                xxmc: record.XXMC
+              }
+            }}
+          >
+            详情
+          </Link>
         );
       }
     }
@@ -139,14 +139,14 @@ const ReimbursementClass = () => {
           pagination={{
             showQuickJumper: true,
             pageSize: 10,
-            defaultCurrent: 1,
+            defaultCurrent: 1
           }}
           scroll={{ x: 800 }}
           request={async () => {
             const resAll = await getSchoolsTK({
               XZQHM: currentUser?.XZQHM,
-              pageSize:0,
-              page:0
+              pageSize: 0,
+              page: 0
             });
             if (resAll.status === 'ok') {
               return {

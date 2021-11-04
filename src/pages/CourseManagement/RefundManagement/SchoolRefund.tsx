@@ -11,8 +11,8 @@ import WWOpenDataCom from '@/components/WWOpenDataCom';
 
 const { Option } = Select;
 // 退款
-const SchoolRefund = (props: any) => {
-  const { state } = props.location;
+const SchoolRefund = (props: { state: any }) => {
+  const { state } = props;
   // 获取到当前学校的一些信息
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
@@ -46,7 +46,23 @@ const SchoolRefund = (props: any) => {
       dataIndex: 'index',
       valueType: 'index',
       align: 'center',
+      fixed: 'left',
       width: 60
+    },
+    {
+      title: '学生姓名',
+      dataIndex: 'XSXM',
+      key: 'XSXM',
+      fixed: 'left',
+      align: 'center',
+      width: 100,
+      render: (_text: any, record: any) => {
+        const showWXName = record?.XSJBSJ?.XM === '未知' && record?.XSJBSJ?.WechatUserId;
+        if (showWXName) {
+          return <WWOpenDataCom type="userName" openid={record?.XSJBSJ?.WechatUserId} />;
+        }
+        return record?.XSJBSJ?.XM;
+      }
     },
     {
       title: '订单编号',
@@ -55,16 +71,6 @@ const SchoolRefund = (props: any) => {
       align: 'center',
       ellipsis: true,
       width: 150
-    },
-    {
-      title: '学生姓名',
-      dataIndex: 'XSXM',
-      key: 'XSXM',
-      align: 'center',
-      width: 100,
-      render: (_text: any, record: any) => {
-        return record?.XSJBSJ?.XM;
-      }
     },
     {
       title: '行政班名称',
@@ -126,9 +132,9 @@ const SchoolRefund = (props: any) => {
       ellipsis: true,
       width: 100,
       render: (_, record) => {
-        const showWXName = record?.JZGJBSJ?.XM === '未知' && record?.WechatUserId;
+        const showWXName = record?.JZGJBSJ?.XM === '未知' && record?.JZGJBSJ?.WechatUserId;
         if (showWXName) {
-          return <WWOpenDataCom type="userName" openid={record?.WechatUserId} />;
+          return <WWOpenDataCom type="userName" openid={record?.JZGJBSJ?.WechatUserId} />;
         }
         return record?.JZGJBSJ?.XM;
       }
@@ -159,18 +165,6 @@ const SchoolRefund = (props: any) => {
 
   return (
     <>
-      <Button
-        type="primary"
-        onClick={() => {
-          history.go(-1);
-        }}
-        style={{
-          marginBottom: '24px'
-        }}
-      >
-        <LeftOutlined />
-        返回上一页
-      </Button>
       <div className={styles.SchoolRefund}>
         <div className={styles.TopSearchs}>
           <span>
@@ -197,16 +191,29 @@ const SchoolRefund = (props: any) => {
           <ProTable<any>
             actionRef={actionRef}
             columns={columns}
-            headerTitle={state?.xxmc}
             rowKey="id"
-            request={async () => {
+            pagination={{
+              showQuickJumper: true,
+              pageSize: 10,
+              defaultCurrent: 1
+            }}
+            scroll={{ x: 1300 }}
+            // dataSource={dataSource}
+            options={{
+              setting: false,
+              fullScreen: false,
+              density: false,
+              reload: false
+            }}
+            search={false}
+            request={async (param) => {
               const resAll = await getAllKHXSTK({
                 XXJBSJId: state?.id,
                 XNXQId: curXNXQId,
                 TKZT: [3],
                 LX: 0,
-                page: 0,
-                pageSize: 0
+                page: param.current,
+                pageSize: param.pageSize
               });
               if (resAll.status === 'ok') {
                 return {
@@ -215,19 +222,8 @@ const SchoolRefund = (props: any) => {
                   total: resAll?.data?.count
                 };
               }
-              return {
-                data: [],
-                success: false,
-                total: 0
-              };
+              return [];
             }}
-            options={{
-              setting: false,
-              fullScreen: false,
-              density: false,
-              reload: false
-            }}
-            search={false}
           />
         </div>
       </div>

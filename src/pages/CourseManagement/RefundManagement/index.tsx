@@ -97,7 +97,7 @@ const RefundManagement = () => {
           <Link
             key="kcxq"
             to={{
-              pathname: '/courseManagement/refundManagement/schoolRefund',
+              pathname: '/courseManagement/refundManagement/tabs',
               state: {
                 id: record.id,
                 xzqhm: currentUser?.XZQHM,

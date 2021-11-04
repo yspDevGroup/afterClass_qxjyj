@@ -28,7 +28,6 @@ const SchoolLeave = (props: { state: any }) => {
       XXJBSJId: id
     });
     if (resAll.status === 'ok') {
-      console.log(resAll?.data?.rows, '=-=-=-=-=--');
       setDataSource(resAll?.data?.rows);
     }
   };

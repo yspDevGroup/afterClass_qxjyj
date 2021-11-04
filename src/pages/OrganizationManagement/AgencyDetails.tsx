@@ -17,11 +17,9 @@ const AgencyDetails = (props: any) => {
     const res = await KHJYJG({ id: state?.value?.id });
     if (res?.status === 'ok') {
       console.log('res', res);
-
       setData(res.data);
     }
   };
-
   useEffect(() => {
     getData();
   }, []);

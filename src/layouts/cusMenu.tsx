@@ -165,7 +165,7 @@ export default {
             path: '/courseManagement/leaveManagement'
           },
           {
-            name: '退课管理',
+            name: '退订管理',
             path: '/courseManagement/reimbursementClass'
           },
           {

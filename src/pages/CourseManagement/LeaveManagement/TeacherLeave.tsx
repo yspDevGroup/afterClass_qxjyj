@@ -12,7 +12,7 @@ import EllipsisHint from '@/components/EllipsisHint';
 import { getAllKHJSQJ } from '@/services/after-class-qxjyj/khjsqj';
 
 const { Option } = Select;
-const SchoolLeave = (props: { state: any }) => {
+const TeacherLeave = (props: { state: any }) => {
   const actionRef = useRef<ActionType>();
   const { state } = props;
   const { id, xzqhm, xxmc } = state;
@@ -31,9 +31,7 @@ const SchoolLeave = (props: { state: any }) => {
       XXJBSJId: id,
       QJZT: [1, 2]
     });
-    console.log(resAll?.data?.rows, '=-=-=-=-=--');
     if (resAll.status === 'ok') {
-      console.log(resAll?.data?.rows, '=-=-=-=-=--');
       setDataSource(resAll?.data?.rows);
     }
   };
@@ -231,5 +229,5 @@ const SchoolLeave = (props: { state: any }) => {
     </>
   );
 };
-SchoolLeave.wrappers = ['@/wrappers/auth'];
-export default SchoolLeave;
+TeacherLeave.wrappers = ['@/wrappers/auth'];
+export default TeacherLeave;

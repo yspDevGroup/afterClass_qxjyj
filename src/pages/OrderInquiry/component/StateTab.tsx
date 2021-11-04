@@ -84,7 +84,7 @@ const StateTab = (props: any) => {
       width: 110,
       render: (_text: any, record: any) => {
         return <div>{record?.KHBJSJ?.FY}</div>;
-      },
+      }
     },
     {
       title: '教辅费用(元)',
@@ -94,14 +94,14 @@ const StateTab = (props: any) => {
       width: 110,
       render: (_text: any, record: any) => {
         return <div>{record.DDFY - record?.KHBJSJ?.FY}</div>;
-      },
+      }
     },
     {
       title: '订单总费用(元)',
       dataIndex: 'DDFY',
       key: 'DDFY',
       align: 'center',
-      width: 120,
+      width: 120
     },
     {
       title: '下单时间',
@@ -129,7 +129,7 @@ const StateTab = (props: any) => {
       width: 150,
       render: (_text: any, record: any) => {
         return record.ZFFS;
-      },
+      }
     }
   ];
   const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);
@@ -148,19 +148,21 @@ const StateTab = (props: any) => {
       if (khkcResl.status === 'ok') {
         const KCMC = khkcResl.data.rows?.map((item: any) => ({
           label: item.KCMC,
-          value: item.id,
+          value: item.id
         }));
         setKcmcData(KCMC);
       }
-    })()
-  }, [])
+    })();
+  }, []);
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     (async () => {
       const res = await getOrders({
-        XZQHM: currentUser?.XZQHM, DDZT,
-        DDLX: 0, XXJBSJId: id,
-        kcmc: kcmcValue,
+        XZQHM: currentUser?.XZQHM,
+        DDZT: [DDZT],
+        DDLX: 0,
+        XXJBSJId: id,
+        kcmc: kcmcValue
       });
       setDataSource(res.data.rows);
     })();
@@ -198,7 +200,7 @@ const StateTab = (props: any) => {
           pagination={{
             showQuickJumper: true,
             pageSize: 10,
-            defaultCurrent: 1,
+            defaultCurrent: 1
           }}
           scroll={{ x: 1300 }}
           dataSource={dataSource}

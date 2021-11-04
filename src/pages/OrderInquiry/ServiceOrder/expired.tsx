@@ -89,13 +89,13 @@ const StateTab = (props: any) => {
       width: 150,
       render: (_text: any, record: any) => {
         return record.ZFFS;
-      },
+      }
     }
   ];
   const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);
   useEffect(() => {
     (async () => {
-      const res = await getOrders({ XZQHM: currentUser?.XZQHM, DDZT, DDLX: 1, XXJBSJId: id });
+      const res = await getOrders({ XZQHM: currentUser?.XZQHM, DDZT: [DDZT], DDLX: 1, XXJBSJId: id });
       setDataSource(res.data.rows);
     })();
   }, []);
