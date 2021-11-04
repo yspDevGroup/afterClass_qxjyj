@@ -9,6 +9,7 @@ import WWOpenDataCom from '@/components/WWOpenDataCom';
 import { Select } from 'antd';
 const { Option } = Select;
 import styles from './index.less';
+import { getAllKHKCLX } from '@/services/after-class-qxjyj/khkclx';
 
 const StateTab = (props: any) => {
   const { DDZT, id } = props.TabState;
@@ -77,6 +78,18 @@ const StateTab = (props: any) => {
       }
     },
     {
+      title: '课程类型',
+      dataIndex: 'KCTAG',
+      key: 'KCTAG',
+      align: 'center',
+      search: false,
+      width: 150,
+      ellipsis: true,
+      render: (_text: any, record: any) => {
+        return <div>{record?.KHBJSJ?.KHKCSJ?.KHKCLX?.KCTAG}</div>;
+      }
+    },
+    {
       title: '课程费用(元)',
       dataIndex: 'KCFY',
       key: 'KCFY',
@@ -84,7 +97,7 @@ const StateTab = (props: any) => {
       width: 110,
       render: (_text: any, record: any) => {
         return <div>{record?.KHBJSJ?.FY}</div>;
-      }
+      },
     },
     {
       title: '教辅费用(元)',
@@ -94,14 +107,14 @@ const StateTab = (props: any) => {
       width: 110,
       render: (_text: any, record: any) => {
         return <div>{record.DDFY - record?.KHBJSJ?.FY}</div>;
-      }
+      },
     },
     {
       title: '订单总费用(元)',
       dataIndex: 'DDFY',
       key: 'DDFY',
       align: 'center',
-      width: 120
+      width: 120,
     },
     {
       title: '下单时间',
@@ -129,12 +142,14 @@ const StateTab = (props: any) => {
       width: 150,
       render: (_text: any, record: any) => {
         return record.ZFFS;
-      }
+      },
     }
   ];
   const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);
   const [kcmcValue, setKcmcValue] = useState<any>();
   const [kcmcData, setKcmcData] = useState<any[] | undefined>([]);
+  const [kclxOptions, setKCLXOptions] = useState<any>();
+  const [kclxValue, setKCLXValue] = useState<any>();
   useEffect(() => {
     (async () => {
       // 通过课程数据接口拿到所有的课程
@@ -142,35 +157,73 @@ const StateTab = (props: any) => {
         page: 0,
         pageSize: 0,
         XZQHM: currentUser?.XZQHM,
-        KCMC: kcmcValue
+        KCMC: kcmcValue,
+        KHKCLXId: kclxValue
       });
-      console.log('khkcResl: ', khkcResl);
       if (khkcResl.status === 'ok') {
         const KCMC = khkcResl.data.rows?.map((item: any) => ({
           label: item.KCMC,
-          value: item.id
+          value: item.id,
         }));
         setKcmcData(KCMC);
       }
-    })();
-  }, []);
+    })()
+  }, [kclxValue])
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     (async () => {
       const res = await getOrders({
         XZQHM: currentUser?.XZQHM,
-        DDZT: [DDZT],
-        DDLX: 0,
-        XXJBSJId: id,
-        kcmc: kcmcValue
+        DDZT,
+        DDLX: 0, XXJBSJId: id,
+        kcmc: kcmcValue,
+        KHKCLXId: kclxValue
       });
-      setDataSource(res.data.rows);
+      setDataSource(res.data?.rows);
+      console.log('res: ', res);
+      if (!kclxValue) {
+        const kclxRes = await getAllKHKCLX({ name: '' });
+        if (kclxRes.status === 'ok') {
+          const data = kclxRes.data?.map((item: any) => {
+            return {
+              value: item.id,
+              text: item.KCTAG
+            };
+          });
+          setKCLXOptions(data);
+        }
+      }
     })();
-  }, [kcmcValue]);
+  }, [kcmcValue, kclxValue]);
   return (
     <>
       <div>
         <div className={styles.searchs}>
+          <div style={{ marginRight: 20 }}>
+            课程类型：
+            <Select
+              style={{ width: 200 }}
+              value={kclxValue}
+              allowClear
+              placeholder="请选择"
+              onChange={(value) => {
+                setKcmcValue('');
+                setKcmcData([]);
+                setKCLXValue(value);
+              }}
+            >
+              {kclxOptions?.map((item: any) => {
+                if (item.value) {
+                  return (
+                    <Option value={item.value} key={item.value}>
+                      {item.text}
+                    </Option>
+                  );
+                }
+                return '';
+              })}
+            </Select>
+          </div>
           <div>
             课程名称：
             <Select
@@ -183,7 +236,7 @@ const StateTab = (props: any) => {
               }}
             >
               {kcmcData?.map((item: any) => {
-                if (item.value) {
+                if (item.label) {
                   return (
                     <Option value={item.label} key={item.label}>
                       {item.label}
@@ -200,7 +253,7 @@ const StateTab = (props: any) => {
           pagination={{
             showQuickJumper: true,
             pageSize: 10,
-            defaultCurrent: 1
+            defaultCurrent: 1,
           }}
           scroll={{ x: 1300 }}
           dataSource={dataSource}

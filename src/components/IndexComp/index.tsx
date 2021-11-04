@@ -5,17 +5,14 @@
  * @LastEditTime: 2021-09-09 11:51:34
  * @LastEditors: Sissle Lynn
  */
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Card, Col, message, Row } from 'antd';
 import { useModel } from 'umi';
-import { TableListItem, TableListParams } from '../data';
 import { RightOutlined } from '@ant-design/icons';
 import Topbar from './Topbar';
 import List from './List';
 import noAnnoce from '@/assets/noAnnoce.png';
 import noData from '@/assets/noData.png';
-import noCourse from '@/assets/noCourse.png';
-
 import styles from './index.less';
 import { getAllInstitutions, JYJGSJ, toIntroduceCourses, homePage } from '@/services/after-class-qxjyj/jyjgsj';
 import { getJYJGTZGG } from '@/services/after-class-qxjyj/jyjgtzgg';

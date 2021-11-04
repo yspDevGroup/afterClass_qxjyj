@@ -33,15 +33,15 @@ export const bgColor = [
 ];
 export const topNum = [
   {
-    title: '开设课后服务学校',
+    title: '参与学校',
     type: 'xxNum'
   },
   {
-    title: '已准入机构',
+    title: '开设机构',
     type: 'jgNum',
   },
   {
-    title: '开设课程',
+    title: '课程总数',
     type: 'kcNum'
   },
   {
@@ -49,11 +49,11 @@ export const topNum = [
     type: 'bjNum'
   },
   {
-    title: '参加学生',
+    title: '参与学生数',
     type: 'xsNum'
   },
   {
-    title: '收费金额',
+    title: '收费总额(元)',
     type: 'amount'
   }
 ];

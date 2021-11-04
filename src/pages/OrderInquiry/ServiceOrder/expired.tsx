@@ -2,11 +2,15 @@
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import React, { useEffect, useState } from 'react';
+import { Select } from 'antd';
+const { Option } = Select;
 import { getOrders } from '@/services/after-class-qxjyj/jyjgsj';
 
 import { useModel } from 'umi';
 import styles from './index.less';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
+import { getKHZZFW } from '@/services/after-class-qxjyj/khzzfw';
+import { getKHXXZZFW } from '@/services/after-class-qxjyj/khxxzzfw';
 
 const StateTab = (props: any) => {
   const { DDZT, id } = props.TabState;
@@ -60,6 +64,17 @@ const StateTab = (props: any) => {
       }
     },
     {
+      title: '服务类型',
+      dataIndex: 'KHKCFWLX',
+      key: 'KHKCFWLX',
+      align: 'center',
+      width: 180,
+      ellipsis: true,
+      render: (text: any, record: any) => {
+        return <div>{record?.KHXXZZFW?.KHZZFW?.FWMC}</div>;
+      }
+    },
+    {
       title: '订单费用(元)',
       dataIndex: 'DDFY',
       key: 'DDFY',
@@ -89,19 +104,100 @@ const StateTab = (props: any) => {
       width: 150,
       render: (_text: any, record: any) => {
         return record.ZFFS;
-      }
+      },
     }
   ];
   const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);
+  const [fwlxData, setFwlxData] = useState<any[] | undefined>([]);
+  const [zzfwData, setZzfwData] = useState<any[] | undefined>([]);
+  const [zzfwValue, setZzfwValue] = useState<string | undefined>();
+  const [fwlxValue, setFwlxValue] = useState<string | undefined>();
+
   useEffect(() => {
-    (async () => {
-      const res = await getOrders({ XZQHM: currentUser?.XZQHM, DDZT: [DDZT], DDLX: 1, XXJBSJId: id });
-      setDataSource(res.data.rows);
-    })();
-  }, []);
+    getData();
+  }, [fwlxValue, zzfwValue])
+
+  const getData = async () => {
+    const res = await getOrders({
+      XZQHM: currentUser?.XZQHM,
+      DDZT,
+      DDLX: 1,
+      XXJBSJId: id,
+      KHZZFWId: fwlxValue,
+      KHXXZZFWId: zzfwValue
+    });
+    setDataSource(res.data?.rows);
+
+    const fwlxRes = await getKHZZFW({ XXJBSJId: id })
+    if (fwlxRes.status === 'ok') {
+      const FWLX = fwlxRes?.data?.rows?.map((item: any) => ({
+        label: item.FWMC,
+        value: item.id,
+      }));
+      setFwlxData(FWLX);
+    }
+    const zzfwRes = await getKHXXZZFW({ XXJBSJId: id, KHZZFWId: fwlxValue })
+    if (zzfwRes.status === 'ok') {
+      const ZZFW = zzfwRes?.data?.rows?.map((item: any) => ({
+        label: item.FWMC,
+        value: item.id,
+      }));
+      setZzfwData(ZZFW);
+    }
+  }
   return (
     <>
       <div>
+        <div className={styles.searchs}>
+          <div>
+            服务类型：
+            <Select
+              style={{ width: 200 }}
+              value={fwlxValue}
+              allowClear
+              placeholder="请选择"
+              onChange={(value) => {
+                setZzfwValue('');
+                setZzfwData([]);
+                setFwlxValue(value);
+              }}
+            >
+              {fwlxData?.map((item: any) => {
+                if (item.value) {
+                  return (
+                    <Option value={item.value} key={item.value}>
+                      {item.label}
+                    </Option>
+                  );
+                }
+                return '';
+              })}
+            </Select>
+          </div>
+          <div>
+            服务名称：
+            <Select
+              style={{ width: 200 }}
+              value={zzfwValue}
+              allowClear
+              placeholder="请选择"
+              onChange={(value) => {
+                setZzfwValue(value);
+              }}
+            >
+              {zzfwData?.map((item: any) => {
+                if (item.value) {
+                  return (
+                    <Option value={item.value} key={item.value}>
+                      {item.label}
+                    </Option>
+                  );
+                }
+                return '';
+              })}
+            </Select>
+          </div>
+        </div>
         <ProTable
           columns={columns}
           pagination={{

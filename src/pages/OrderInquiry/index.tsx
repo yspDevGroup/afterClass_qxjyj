@@ -98,16 +98,24 @@ const OrderInquiry = () => {
           <Space>
             <Link
               to={{
-                pathname: '/orderinquiry/detatil',
-                state: record
+                pathname: '/OrderInquiry/tabs',
+                state: {
+                  id: record.id,
+                  xzqhm: currentUser?.XZQHM,
+                  xxmc: record.XXMC
+                }
               }}
             >
               课程订单
             </Link>
             <Link
               to={{
-                pathname: '/orderinquiry/serviceOrder',
-                state: record
+                pathname: '/OrderInquiry/tabs',
+                state: {
+                  id: record.id,
+                  xzqhm: currentUser?.XZQHM,
+                  xxmc: record.XXMC
+                }
               }}
             >
               服务订单
