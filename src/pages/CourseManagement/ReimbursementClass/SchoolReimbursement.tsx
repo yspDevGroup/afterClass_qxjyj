@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 // import { queryXNXQList } from '@/services/local-services/xnxq';
-import { getAllTK } from '@/services/after-class-qxjyj/khtksj';
+import { getAllTK, getKHTKSJ } from '@/services/after-class-qxjyj/khtksj';
 import { Select, message, Button } from 'antd';
 import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
@@ -20,20 +20,7 @@ const SchoolReimbursement = (props: { state: any }) => {
   const [term, setTerm] = useState<string>();
   // 学年学期列表数据
   const [termList, setTermList] = useState<any>();
-  // 表格数据源
-  const [dataSource, setDataSource] = useState<any>([]);
-  const getList = async (xnxq?: string) => {
-    const resAll = await getAllTK({
-      XNXQId: xnxq,
-      XZQHM: xzqhm,
-      XXJBSJId: id,
-      page: 0,
-      pageSize: 0
-    });
-    if (resAll.status === 'ok') {
-      setDataSource(resAll?.data?.rows);
-    }
-  };
+  const [curXNXQId, setcurXNXQId] = useState<string>();
   const getXNXQ = async (xxdm: string) => {
     const res = await getAllXNXQ({
       XXJBSJId: xxdm
@@ -49,7 +36,7 @@ const SchoolReimbursement = (props: { state: any }) => {
       });
       setTermList(term);
       setTerm(currentXQ?.id || data[0].id);
-      getList(currentXQ?.id);
+      setcurXNXQId(currentXQ?.id);
     } else {
       message.error(res.message);
     }
@@ -124,6 +111,42 @@ const SchoolReimbursement = (props: { state: any }) => {
       align: 'center'
     },
     {
+      title: '申请时间',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      align: 'center',
+      render: (_, record) => {
+        return record?.createdAt?.substring(0, 16);
+      },
+      width: 150
+    },
+    {
+      title: '审批人',
+      dataIndex: 'SPR',
+      key: 'SPR',
+      align: 'center',
+      ellipsis: true,
+      width: 100,
+      render: (_, record) => {
+        const showWXName = record?.JZGJBSJ?.XM === '未知' && record?.JZGJBSJ?.WechatUserId;
+        if (showWXName) {
+          return <WWOpenDataCom type="userName" openid={record?.JZGJBSJ?.WechatUserId} />;
+        }
+        return record?.JZGJBSJ?.XM;
+      }
+    },
+    {
+      title: '审批时间',
+      dataIndex: 'updatedAt',
+      key: 'updatedAt',
+      align: 'center',
+      ellipsis: true,
+      render: (_, record) => {
+        return record?.updatedAt?.replace(/T/, ' ').substring(0, 16);
+      },
+      width: 150
+    },
+    {
       title: '状态',
       dataIndex: 'ZT',
       key: 'ZT',
@@ -133,14 +156,6 @@ const SchoolReimbursement = (props: { state: any }) => {
       render: (_, record) => {
         return record.ZT === 0 ? '申请中' : record.ZT === 1 ? '已退课' : '已驳回';
       }
-    },
-    {
-      title: '申请时间',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-      width: 160,
-      ellipsis: true,
-      align: 'center'
     }
   ];
   return (
@@ -154,7 +169,6 @@ const SchoolReimbursement = (props: { state: any }) => {
               style={{ width: 200 }}
               onChange={(value: string) => {
                 setTerm(value);
-                getList(value);
               }}
             >
               {termList?.map((item: any) => {
@@ -177,7 +191,6 @@ const SchoolReimbursement = (props: { state: any }) => {
             defaultCurrent: 1
           }}
           scroll={{ x: 1300 }}
-          dataSource={dataSource}
           options={{
             setting: false,
             fullScreen: false,
@@ -185,6 +198,24 @@ const SchoolReimbursement = (props: { state: any }) => {
             reload: false
           }}
           search={false}
+          request={async (param) => {
+            const resAll = await getKHTKSJ({
+              XXJBSJId: id,
+              XNXQId: curXNXQId,
+              LX: 0,
+              ZT: [1, 2],
+              page: param.current,
+              pageSize: param.pageSize
+            });
+            if (resAll.status === 'ok') {
+              return {
+                data: resAll?.data?.rows,
+                success: true,
+                total: resAll?.data?.count
+              };
+            }
+            return [];
+          }}
         />
       </div>
     </>
