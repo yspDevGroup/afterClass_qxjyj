@@ -8,6 +8,8 @@ import Overview from './components/Overview';
 import Notice from './components/Notice';
 import { defUserImg } from '@/constant';
 import { removeOAuthToken } from '@/utils';
+import TopBgImg from '@/assets/topInfoBG.png';
+
 
 
 const Home = () => {
@@ -16,7 +18,7 @@ const Home = () => {
 
   return (
   <div className={styles.indexPage}>
-    <div className={styles.topInfo}>
+    <div className={styles.topInfo} style={{backgroundImage : "url(" + TopBgImg + ")"}}>
         <Row style={{ height: '74px' }} className={styles.teacherInfo} >
           <Col span={22}>
             <p>{currentUser?.UserId === '未知' && currentUser.wechatUserId ? (
