@@ -100,6 +100,7 @@ const OrderInquiry = () => {
               to={{
                 pathname: '/OrderInquiry/tabs',
                 state: {
+                  index: '1',
                   id: record.id,
                   xzqhm: currentUser?.XZQHM,
                   xxmc: record.XXMC
@@ -112,6 +113,7 @@ const OrderInquiry = () => {
               to={{
                 pathname: '/OrderInquiry/tabs',
                 state: {
+                  index: '2',
                   id: record.id,
                   xzqhm: currentUser?.XZQHM,
                   xxmc: record.XXMC

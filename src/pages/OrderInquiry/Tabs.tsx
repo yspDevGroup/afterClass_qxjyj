@@ -9,9 +9,9 @@ const { TabPane } = Tabs;
  * 请假管理
  * @returns
  */
-const LeaveManagement = (props: any) => {
+const OrderinquiryTabs= (props: any) => {
   const { state } = props.location;
-  console.log('state: ', state);
+
   return (
     <>
       <Button
@@ -27,7 +27,7 @@ const LeaveManagement = (props: any) => {
         返回上一页
       </Button>
       <p style={{ fontWeight: 'bold', fontSize: '18px', marginBottom: '10px' }}>{state?.xxmc}</p>
-      <Tabs>
+      <Tabs defaultActiveKey={state?.index ? state?.index : '1'}>
         <TabPane tab="课程订单" key="1">
           <CourseOrder state={state} />
         </TabPane>
@@ -39,4 +39,4 @@ const LeaveManagement = (props: any) => {
   );
 };
 
-export default LeaveManagement;
+export default OrderinquiryTabs;
