@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useModel } from 'umi';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { getAllCourses, getOrders } from '@/services/after-class-qxjyj/jyjgsj';
+import { getAllCourses2, getOrders } from '@/services/after-class-qxjyj/jyjgsj';
 
 import WWOpenDataCom from '@/components/WWOpenDataCom';
 import { Select } from 'antd';
@@ -153,7 +153,7 @@ const StateTab = (props: any) => {
   useEffect(() => {
     (async () => {
       // 通过课程数据接口拿到所有的课程
-      const khkcResl = await getAllCourses({
+      const khkcResl = await getAllCourses2({
         page: 0,
         pageSize: 0,
         XZQHM: currentUser?.XZQHM,
