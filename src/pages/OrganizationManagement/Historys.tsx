@@ -22,6 +22,7 @@ import { getKHJGRZSQ } from '@/services/after-class-qxjyj/khjgrzsq';
 import { JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
 import { useModel, history } from 'umi';
 import { LeftOutlined } from '@ant-design/icons';
+import { getAllSPJL } from '@/services/after-class-qxjyj/khjyjspjl';
 
 const Historys = (props: { Keys: string | undefined }) => {
   const { Keys } = props;
@@ -49,63 +50,86 @@ const Historys = (props: { Keys: string | undefined }) => {
       dataIndex: 'JGMC',
       key: 'JGMC',
       align: 'center',
-      width: 160,
+      width: 180,
       fixed: 'left',
       ellipsis: true,
-      search: false
+      search: false,
+      render: (_, record: any) => {
+        return record?.KHJYJG?.QYMC;
+      }
     },
     {
-      title: '服务状态',
-      dataIndex: 'KSZT',
-      key: 'KSZT',
+      title: '联系人',
+      dataIndex: 'LXR',
+      key: 'LXR',
+      align: 'center',
+      width: 120,
+      fixed: 'left',
+      ellipsis: true,
+      search: false,
+      render: (_, record: any) => {
+        return record?.KHJYJG?.LXRXM;
+      }
+    },
+    {
+      title: '联系电话',
+      dataIndex: 'LXDH',
+      key: 'LXDH',
+      align: 'center',
+      width: 160,
+      ellipsis: true,
+      search: false,
+      render: (_, record: any) => {
+        return record?.KHJYJG?.LXDH;
+      }
+    },
+    {
+      title: '操作类型',
+      dataIndex: 'state',
+      key: 'state',
+      align: 'center',
       width: 120,
       ellipsis: true,
-      valueEnum: {
-        申请中: { text: '申请中', status: 'Default' },
-        黑名单: {
-          text: '黑名单',
-          status: 'Error'
-        },
-        服务中: {
-          text: '服务中',
-          status: 'Success',
-          disabled: true
-        },
-        停顿整改: {
-          text: '停顿整改',
-          status: 'Processing'
-        }
-      },
+      search: false,
+      render: (_, record: any) => {
+        return (
+          <>
+            {record?.ZT === 0 ? (
+              '准入'
+            ) : (
+              <>
+                {record?.ZT === 1 ? (
+                  '结束服务'
+                ) : (
+                  <>
+                    {record?.ZT === 2 ? (
+                      '驳回'
+                    ) : (
+                      <>{record?.ZT === 3 ? '加入黑名单' : <>{record?.ZT === 4 ? '移出黑名单' : ''}</>}</>
+                    )}
+                  </>
+                )}
+              </>
+            )}
+          </>
+        );
+      }
+    },
+    {
+      title: '操作人',
+      dataIndex: 'SPR',
+      key: 'SPR',
       align: 'center',
+      width: 120,
+      ellipsis: true,
       search: false
     },
-
     {
       title: '操作时间',
-      dataIndex: 'KSSJ',
-      key: 'KSSJ',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
       align: 'center',
-      valueType: 'dateTime',
       width: 160,
-      ellipsis: true,
-      search: false
-    },
-    {
-      title: '结束时间',
-      dataIndex: 'JSSJ',
-      key: 'JSSJ',
-      align: 'center',
-      valueType: 'dateTime',
-      ellipsis: true,
-      width: 160,
-      search: false
-    },
-    {
-      title: '最终状态',
-      dataIndex: 'ZT',
-      key: 'ZT',
-      align: 'center',
-      width: 120,
       ellipsis: true,
       search: false
     },
@@ -115,15 +139,6 @@ const Historys = (props: { Keys: string | undefined }) => {
       key: 'BZ',
       align: 'center',
       width: 180,
-      ellipsis: true,
-      search: false
-    },
-    {
-      title: '审批人',
-      dataIndex: 'SPR',
-      key: 'SPR',
-      align: 'center',
-      width: 120,
       ellipsis: true,
       search: false
     }
@@ -150,7 +165,7 @@ const Historys = (props: { Keys: string | undefined }) => {
           pagination={{
             showQuickJumper: true,
             pageSize: 10,
-            defaultCurrent: 1,
+            defaultCurrent: 1
           }}
           scroll={{ x: 1000 }}
           search={false}
@@ -177,67 +192,21 @@ const Historys = (props: { Keys: string | undefined }) => {
               ...params,
               sorter: sort && Object.keys(sort).length ? sort : undefined
             };
-            const zt = {
-              申请中: 0,
-              已通过: 1,
-              已驳回: 2,
-              正常结束: 3,
-              异常结束: 4
-            };
-            const resJYJGSJ = await JYJGSJ({ id: jyjId! });
-            const res = await getKHJGRZSQ(
+            const res = await getAllSPJL(
               {
-                ZT: [zt.已驳回, zt.正常结束, zt.异常结束],
-                name: typeof opts.keyword === 'undefined' ? '' : opts.keyword,
-                XZQHM: resJYJGSJ.data.XZQH,
+                KHJYJGMC: typeof opts.keyword === 'undefined' ? '' : opts.keyword,
+                KHJYJId: jyjId,
                 page: 0,
                 pageSize: 0
               },
               opts
             );
             if (res.status === 'ok') {
-              let newArr: any[] = [];
-              res.data?.rows.forEach((value: any) => {
-                const { QYMC } = value.KHJYJG;
-                let state;
-                let KSZT;
-                if (value.ZT === 2) {
-                  state = '已驳回';
-                  KSZT = '申请中';
-                } else if (value.ZT === 4) {
-                  state = '终止';
-                  KSZT = '服务中';
-                } else if (value.ZT === 3 && value.LX === 0) {
-                  state = '正常结束';
-                  KSZT = '服务中';
-                } else if (value.ZT === 3 && value.LX === 1) {
-                  state = '已移出';
-                  KSZT = '黑名单';
-                } else if (value.ZT === 1 && value.LX === 1) {
-                  state = '加入黑名单';
-                }
-                const data = {
-                  value,
-                  JGMC: QYMC,
-                  KSSJ: value.RZSJ ? value.RZSJ : value.createdAt,
-                  JSSJ: value.updatedAt,
-                  SPR: value.SPR,
-                  BZ: value.BZ,
-                  ZT: state,
-                  KSZT: KSZT
-                };
-                newArr.push(data);
-              });
-              if (newArr.length === res.data?.rows.length) {
-                return {
-                  data: newArr,
-                  total: res.data?.count,
-                  success: true
-                };
-              }
-            } else {
-              message.error(res.message);
-              return {};
+              return {
+                data: res.data?.rows,
+                total: res.data?.count,
+                success: true
+              };
             }
 
             return {};

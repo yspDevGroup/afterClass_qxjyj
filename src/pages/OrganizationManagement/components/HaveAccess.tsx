@@ -14,6 +14,7 @@ import styles from '../index.less';
 import { blockKHJGRZSQ, getKHJGRZSQ, updateKHJGRZSQ } from '@/services/after-class-qxjyj/khjgrzsq';
 import { Link, useModel } from 'umi';
 import { getAllInstitutions, JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
+import { CreateKHJYJSPJL } from '@/services/after-class-qxjyj/khjyjspjl';
 
 const HaveAccess = (props: { Keys: string | undefined }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -44,9 +45,9 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
     setIsModalVisible(false);
   };
   const submit = async (params: any) => {
-    if (Titles === '异常取消') {
+    if (Titles === '取消') {
       const data = {
-        ZT: 4,
+        ZT: 3,
         SPR: username,
         SPRId: id,
         BZ: params.BZ,
@@ -55,6 +56,14 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       const res = await updateKHJGRZSQ({ id: Datas!.value.KHJGRZSQs[0].id }, data);
       if (res.status === 'ok') {
         message.success('取消成功');
+        await CreateKHJYJSPJL({
+          ZT: 1,
+          BZ: params.BZ,
+          SPR: username,
+          SPRId: id,
+          KHJYJGId: Datas?.value?.id,
+          JYJGSJId: jyjId
+        });
         actionRef1?.current?.reload();
       }
     } else {
@@ -69,6 +78,14 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       const res = await blockKHJGRZSQ(data);
       if (res.status === 'ok') {
         message.success('成功加入黑名单');
+        await CreateKHJYJSPJL({
+          ZT: 3,
+          BZ: params.BZ,
+          SPR: username,
+          SPRId: id,
+          KHJYJGId: Datas?.value?.id,
+          JYJGSJId: jyjId
+        });
         actionRef1?.current?.reload();
       }
     }
@@ -166,7 +183,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
             </Link>
             {XZQUMid === record.value.XZQHM ? (
               <>
-                <Popconfirm
+                {/* <Popconfirm
                   title="请选择取消状态为正常取消或异常取消"
                   onConfirm={async (e) => {
                     const { SQR, SQRId, XZQHM, KHJYJGId } = record.value;
@@ -194,8 +211,17 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
                   cancelText="异常取消"
                 >
                   <a href="#">取消准入</a>
-                </Popconfirm>
-
+                </Popconfirm> */}
+                <a
+                  href="#"
+                  onClick={() => {
+                    setDatas(record);
+                    setTitles('取消');
+                    setIsModalVisible(true);
+                  }}
+                >
+                  取消准入
+                </a>
                 <a
                   key="qxzr"
                   onClick={() => {

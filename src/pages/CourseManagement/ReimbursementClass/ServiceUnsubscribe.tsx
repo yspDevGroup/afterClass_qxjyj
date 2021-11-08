@@ -159,6 +159,14 @@ const ServiceUnsubscribe = (props: { state: any }) => {
       width: 150
     },
     {
+      title: '审批说明',
+      dataIndex: 'BZ',
+      key: 'BZ',
+      align: 'center',
+      ellipsis: true,
+      width: 180
+    },
+    {
       title: '状态',
       dataIndex: 'ZT',
       key: 'ZT',

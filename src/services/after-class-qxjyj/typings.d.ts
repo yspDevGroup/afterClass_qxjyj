@@ -1854,6 +1854,7 @@ declare namespace API {
     /** 备注信息 */
     BZ?: string;
     JZGJBSJ?: { id?: string; XM?: string; WechatUserId?: string };
+    SPJS?: { id?: string; XM?: string; WechatUserId?: string };
     KHJSQJKCs?: {
       QJRQ?: string;
       KCMC?: string;
@@ -1888,6 +1889,8 @@ declare namespace API {
     QJZT?: number;
     /** 备注信息 */
     BZ?: string;
+    /** 审批教师ID */
+    SPJSId?: string;
   };
 
   type KHJSSJ = {
@@ -2234,6 +2237,57 @@ declare namespace API {
     CorpID?: string;
     /** 包含学段 */
     XD?: string;
+  };
+
+  type KHJYJSPJL = {
+    id: string;
+    /** 申请状态 */
+    ZT: number;
+    /** 备注信息 */
+    BZ?: string;
+    /** 审批人 */
+    SPR?: string;
+    /** 审批人ID */
+    SPRId?: string;
+    KHJYJG?: {
+      id?: string;
+      QYMC?: string;
+      QYTB?: string;
+      ZZJGDM?: string;
+      FRDBXM?: string;
+      FRDBSFZH?: string;
+      QYJGDZ?: string;
+      XZQHM?: string;
+      XZQ?: string;
+      LXRXM?: string;
+      LXDH?: string;
+      JGFWFW?: string;
+      YYZZ?: string;
+      BXXKZ?: string;
+      JGJJ?: string;
+      ZT?: number;
+      CorpID?: string;
+      XD?: string;
+    };
+    /** 创建日期 */
+    createdAt?: string;
+    /** 修改日期 */
+    updatedAt?: string;
+  };
+
+  type CreateKHJYJSPJL = {
+    /** 申请状态 */
+    ZT?: number;
+    /** 备注信息 */
+    BZ?: string;
+    /** 审批人 */
+    SPR?: string;
+    /** 审批人ID */
+    SPRId?: string;
+    /** 课后服务机构ID */
+    KHJYJGId?: string;
+    /** 教育局ID */
+    JYJGSJId?: string;
   };
 
   type KHJYTZGG = {

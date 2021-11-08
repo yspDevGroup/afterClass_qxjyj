@@ -16,6 +16,7 @@ import { history, Link, useModel } from 'umi';
 import moment from 'moment';
 import { getAllInstitutions, JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
 import { updateKHJYJG } from '@/services/after-class-qxjyj/khjyjg';
+import { CreateKHJYJSPJL } from '@/services/after-class-qxjyj/khjyjspjl';
 
 const CannotAccess = (props: { Keys: string | undefined }) => {
   const { Keys } = props;
@@ -26,6 +27,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
   const { currentUser } = initialState || {};
   const { username, id, jyjId } = currentUser!;
   const [Datas, setDatas] = useState<TableListItem>();
+  console.log(Datas);
 
   useEffect(() => {
     setTimeout(() => {
@@ -52,6 +54,14 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
       message.success('驳回成功');
       setIsModalVisible(false);
       actionRef2?.current?.reload();
+      await CreateKHJYJSPJL({
+        ZT: 2,
+        BZ: params.BZ,
+        SPR: username,
+        SPRId: id,
+        KHJYJGId: Datas?.value?.id,
+        JYJGSJId: jyjId
+      });
     } else {
       message.error(res.message);
     }
@@ -125,6 +135,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
       key: 'JGFWFW',
       width: 160,
       align: 'center',
+      ellipsis: true,
       search: false
     },
     {
@@ -135,6 +146,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
       fixed: 'right',
       width: 180,
       render: (text, record, action) => {
+        console.log(record, 'record');
         return (
           <div className={styles.operation}>
             <Link
@@ -155,15 +167,23 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
               onConfirm={async () => {
                 const data = {
                   ZT: 1,
+                  BZ: '',
                   SPR: username,
                   SPRId: id,
                   RZSJ: moment(myDate).format(),
                   JYJGSJId: jyjId
                 };
-
                 const res = await updateKHJGRZSQ({ id: record.value?.KHJGRZSQs[0].id }, data);
                 if (res.status === 'ok') {
                   message.success('准入成功');
+                  await CreateKHJYJSPJL({
+                    ZT: 0,
+                    BZ: '',
+                    SPR: username,
+                    SPRId: id,
+                    KHJYJGId: record.value?.id,
+                    JYJGSJId: jyjId
+                  });
                   actionRef2?.current?.reload();
                 }
               }}

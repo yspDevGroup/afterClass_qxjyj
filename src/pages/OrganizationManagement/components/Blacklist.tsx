@@ -15,6 +15,7 @@ import { getKHJGRZSQ, updateKHJGRZSQ } from '@/services/after-class-qxjyj/khjgrz
 import { useModel } from 'umi';
 import { getAllInstitutions, JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
 import { updateKHJYJG } from '@/services/after-class-qxjyj/khjyjg';
+import { CreateKHJYJSPJL } from '@/services/after-class-qxjyj/khjyjspjl';
 
 const Blacklist = (props: { Keys: string | undefined }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -60,6 +61,14 @@ const Blacklist = (props: { Keys: string | undefined }) => {
     if (res.status === 'ok') {
       message.success('成功移出黑名单');
       setIsModalVisible(false);
+      await CreateKHJYJSPJL({
+        ZT: 4,
+        BZ: params.BZ,
+        SPR: username,
+        SPRId: id,
+        KHJYJGId: Datas?.value?.id,
+        JYJGSJId: jyjId
+      });
       actionRef3?.current?.reload();
     } else {
       message.error(res.message);
@@ -72,7 +81,7 @@ const Blacklist = (props: { Keys: string | undefined }) => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
-      fixed:'left',
+      fixed: 'left',
       align: 'center'
     },
     {
@@ -81,7 +90,7 @@ const Blacklist = (props: { Keys: string | undefined }) => {
       key: 'JGMC',
       align: 'center',
       width: 160,
-      fixed:'left',
+      fixed: 'left',
       search: false
     },
     {
@@ -158,7 +167,7 @@ const Blacklist = (props: { Keys: string | undefined }) => {
         pagination={{
           showQuickJumper: true,
           pageSize: 10,
-          defaultCurrent: 1,
+          defaultCurrent: 1
         }}
         scroll={{ x: 1300 }}
         search={false}
