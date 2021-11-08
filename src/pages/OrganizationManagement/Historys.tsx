@@ -105,7 +105,7 @@ const Historys = (props: { Keys: string | undefined }) => {
                     {record?.ZT === 2 ? (
                       '驳回'
                     ) : (
-                      <>{record?.ZT === 3 ? '加入黑名单' : <>{record?.ZT === 4 ? '移出黑名单' : ''}</>}</>
+                      <>{record?.ZT === 3 ? '移入黑名单' : <>{record?.ZT === 4 ? '移出黑名单' : ''}</>}</>
                     )}
                   </>
                 )}
