@@ -180,7 +180,6 @@ const StateTab = (props: any) => {
         KHKCLXId: kclxValue
       });
       setDataSource(res.data?.rows);
-      console.log('res: ', res);
       if (!kclxValue) {
         const kclxRes = await getAllKHKCLX({ name: '' });
         if (kclxRes.status === 'ok') {
