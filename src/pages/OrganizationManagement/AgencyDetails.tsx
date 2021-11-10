@@ -60,7 +60,7 @@ const AgencyDetails = (props: any) => {
               {data?.FRDBSFZH}
             </p>
             <p>
-              <span>组织机构代码：</span>
+              <span>统一社会信用代码：</span>
               {data?.ZZJGDM}
             </p>
 
