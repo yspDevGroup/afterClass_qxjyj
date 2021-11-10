@@ -2,8 +2,8 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-08-26 16:24:39
- * @LastEditTime: 2021-10-13 10:27:27
- * @LastEditors: Sissle Lynn
+ * @LastEditTime: 2021-11-10 09:07:33
+ * @LastEditors: zpl
  */
 import React, { useEffect, useState } from 'react';
 import { useModel, history } from 'umi';
@@ -91,7 +91,7 @@ const TeacherInfo = (props: any) => {
           name: 'ZP',
           key: 'ZP',
           imageurl: zpUrl,
-          upurl: '/api/upload/uploadFile?type=badge&plat=agency',
+          upurl: '/api/upload/uploadFile?type=badge&plat=education',
           accept: '.jpg, .jpeg, .png',
           imagename: 'image',
           handleImageChange: (value: any) => {
@@ -104,7 +104,7 @@ const TeacherInfo = (props: any) => {
           name: 'ZGZS',
           key: 'ZGZS',
           imageurl: zgzsUrl,
-          upurl: '/api/upload/uploadFile?type=badge&plat=agency',
+          upurl: '/api/upload/uploadFile?type=badge&plat=education',
           accept: '.jpg, .jpeg, .png',
           imagename: 'image',
           handleImageChange: (value: any) => {
