@@ -85,11 +85,8 @@ const TableList = () => {
             key="SFTT"
             defaultChecked={!!text}
             size="small"
-            disabled={record.ZT === '已发布' ? true : false}
             onChange={async (checked: boolean) => {
               const data = {
-                ...record,
-                RQ: moment(record.RQ).format(),
                 SFTT: checked === true ? 1 : 0
               };
               try {
