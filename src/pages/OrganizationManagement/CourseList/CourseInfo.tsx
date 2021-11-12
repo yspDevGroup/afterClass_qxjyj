@@ -7,6 +7,7 @@ import { LeftOutlined } from '@ant-design/icons';
 import CustomForm from '@/components/CustomForm';
 import { FormItemType } from '@/components/CustomForm/interfice';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
+import { getKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
 /**
  * 课程详情
  * @returns
@@ -24,14 +25,23 @@ const CourseInfo = (props: any) => {
   const [NJDataOption, setNJDataOption] = useState<any>([]);
   const [formValues, setFormValues] = useState({});
   const [teacherData, setTeacherData] = useState<any>([]);
+
+  const getData = async () => {
+    const res = await getKHKCSJ({ kcId: state.id });
+    if (res?.status === 'ok') {
+      const { data } = res;
+      // 老师表格数据
+      const thData: any[] = [];
+      data?.KHKCJs?.forEach((item: any) => {
+        thData.push(item.JZGJBSJ);
+      });
+      setTeacherData(thData);
+    }
+  };
   useEffect(() => {
     setDisabled(true);
     // 老师表格数据
-    const thData: any[] = [];
-    state?.KHKCJs?.forEach((item: any) => {
-      thData.push(item?.JZGJBSJ);
-    });
-    setTeacherData(thData);
+    getData();
     if (state?.id) {
       // form详情
       const params = {

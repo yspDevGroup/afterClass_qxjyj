@@ -39,7 +39,7 @@ const TeacherInfo = (props: any) => {
   useEffect(() => {
     (async () => {
       const res = await getJZGJBSJ({
-        id: state.id
+        id: state?.data?.id
       });
       if (res.status === 'ok') {
         setInfo(res.data);
