@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ProTable, { ActionType, ProColumns, RequestData } from '@ant-design/pro-table';
-import { Button, Input, Rate,Space, Tag } from 'antd';
+import { Button, Input, Rate, Space, Tag } from 'antd';
 import { Link, useModel } from 'umi';
-import { LeftOutlined, } from '@ant-design/icons';
+import { LeftOutlined } from '@ant-design/icons';
 import { getSchoolCoursesEvaluation } from '@/services/after-class-qxjyj/jyjgsj';
 import styles from '../index.less';
 import { TableListParams } from '@/constant';
@@ -14,7 +14,7 @@ const OrderInquiry = (props: any) => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
   const { state } = props.location;
-  const { KCId, KCMC,SSJGLX } = state.data;
+  const { KCId, KCMC, SSJGLX } = state.data;
   // 列表对象引用，可主动执行刷新等操作
   const actionRef = useRef<ActionType>();
   // 表格数据源
@@ -45,7 +45,7 @@ const OrderInquiry = (props: any) => {
       align: 'center',
       width: 140,
       search: false,
-      render: (_: any,record: any) => {
+      render: (_: any, record: any) => {
         const data = record?.XD?.split(/,/g);
         return (
           <EllipsisHint
@@ -82,16 +82,17 @@ const OrderInquiry = (props: any) => {
       key: 'PJFS',
       align: 'center',
       width: 180,
-      render: (_: any,record: any) => {
-        return <Rate count={5} value={record.PJFS} disabled={true} />
-      },
+      render: (_: any, record: any) => {
+        const fs = Number(Number(record.PJFS).toFixed(1)) || 0;
+        return <Rate allowHalf defaultValue={fs} disabled={true} />;
+      }
     },
     {
       title: '操作',
       align: 'center',
       search: false,
       width: 100,
-      fixed:'right',
+      fixed: 'right',
       render: (_, record) => {
         return (
           <Space>
@@ -116,7 +117,7 @@ const OrderInquiry = (props: any) => {
   const ChoseSelect = async () => {
     const res = await getSchoolCoursesEvaluation({
       XZQHM: currentUser?.XZQHM,
-      XXMC: curSchool || "",
+      XXMC: curSchool || '',
       KHKCSJId: KCId,
       SSJGLX,
       page: 0,
@@ -128,7 +129,7 @@ const OrderInquiry = (props: any) => {
   };
   useEffect(() => {
     ChoseSelect();
-  }, [curSchool])
+  }, [curSchool]);
   return (
     <>
       <Button
@@ -137,7 +138,7 @@ const OrderInquiry = (props: any) => {
           history.go(-1);
         }}
         style={{
-          marginBottom: '24px',
+          marginBottom: '24px'
         }}
       >
         <LeftOutlined />
@@ -147,12 +148,12 @@ const OrderInquiry = (props: any) => {
         <span>
           学校名称：
           <Search
-              allowClear
-              style={{ width: 200 }}
-              onSearch={(val) => {
-                setCurSchool(val);
-              }}
-            />
+            allowClear
+            style={{ width: 200 }}
+            onSearch={(val) => {
+              setCurSchool(val);
+            }}
+          />
         </span>
       </div>
       <ProTable
@@ -169,7 +170,7 @@ const OrderInquiry = (props: any) => {
         pagination={{
           showQuickJumper: true,
           pageSize: 10,
-          defaultCurrent: 1,
+          defaultCurrent: 1
         }}
         scroll={{ x: 1000 }}
         dataSource={dataSource}

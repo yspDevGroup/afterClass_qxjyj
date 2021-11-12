@@ -25,7 +25,7 @@ const Class = (props: any) => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
-      fixed:'left',
+      fixed: 'left',
       align: 'center'
     },
     {
@@ -33,7 +33,7 @@ const Class = (props: any) => {
       dataIndex: 'BJMC',
       key: 'BJMC',
       width: 160,
-      fixed:'left',
+      fixed: 'left',
       ellipsis: true,
       align: 'center'
     },
@@ -73,14 +73,17 @@ const Class = (props: any) => {
       key: 'pj_avg',
       align: 'center',
       width: 180,
-      render: (text: any) => <Rate count={5} defaultValue={text} disabled={true} />
+      render: (text: any, record: any) => {
+        const fs = Number(Number(record.pj_avg).toFixed(1)) || 0;
+        return <Rate allowHalf defaultValue={fs} disabled={true} />;
+      }
     },
     {
       title: '操作',
       dataIndex: 'XSXM',
       key: 'XSXM',
       align: 'center',
-      fixed:'right',
+      fixed: 'right',
       width: 100,
       render: (_, record) => (
         <>
@@ -183,7 +186,7 @@ const Class = (props: any) => {
         pagination={{
           showQuickJumper: true,
           pageSize: 10,
-          defaultCurrent: 1,
+          defaultCurrent: 1
         }}
         scroll={{ x: 950 }}
         dataSource={dataSource}

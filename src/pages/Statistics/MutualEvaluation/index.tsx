@@ -1,10 +1,8 @@
-
-
 import { useEffect, useState } from 'react';
 import { Link, useModel } from 'umi';
 import { Rate, message, Input, Select } from 'antd';
 import ProTable, { ProColumns } from '@ant-design/pro-table';
-import { getCoursesEvaluation } from '@/services/after-class-qxjyj/jyjgsj'
+import { getCoursesEvaluation } from '@/services/after-class-qxjyj/jyjgsj';
 
 import styles from './index.less';
 import { getAllKHKCLX } from '@/services/after-class-qxjyj/khkclx';
@@ -26,7 +24,7 @@ const MutualEvaluation = (data: any) => {
         setKCLXData(res.data);
       }
     })();
-  }, [])
+  }, []);
   useEffect(() => {
     (async () => {
       const res = await getCoursesEvaluation({ XZQHM: currentUser?.XZQHM, KCMC, KCLX, KCLY });
@@ -35,8 +33,8 @@ const MutualEvaluation = (data: any) => {
       } else {
         message.error(res.message || '数据获取失败，请联系系统管理员或稍后再试');
       }
-    })()
-  }, [KCMC, KCLX, KCLY])
+    })();
+  }, [KCMC, KCLX, KCLY]);
   const columns: ProColumns<any>[] = [
     {
       title: '序号',
@@ -63,7 +61,7 @@ const MutualEvaluation = (data: any) => {
       ellipsis: true,
       align: 'center',
       render: (test: any, record: any) => {
-        return record.SSJGLX ? record?.SSJGLX : '-'
+        return record.SSJGLX ? record?.SSJGLX : '-';
       }
     },
     {
@@ -75,7 +73,7 @@ const MutualEvaluation = (data: any) => {
       ellipsis: true,
       render: (_, record) => {
         return record?.KHKCLX?.KCTAG;
-      },
+      }
     },
     {
       title: '所属机构/学校',
@@ -85,7 +83,7 @@ const MutualEvaluation = (data: any) => {
       width: 160,
       ellipsis: true,
       render: (_, record) => {
-        return record.SSJGLX === '校内课程' ? record?.XXJBSJ?.XXMC : record?.KHJYJG?.QYMC
+        return record.SSJGLX === '校内课程' ? record?.XXJBSJ?.XXMC : record?.KHJYJG?.QYMC;
       }
     },
     {
@@ -96,7 +94,7 @@ const MutualEvaluation = (data: any) => {
       width: 160,
       ellipsis: true,
       render: (_, record) => {
-        return record.SSJGLX === '校内课程' ? 1 : record.xx_count
+        return record.SSJGLX === '校内课程' ? 1 : record.xx_count;
       }
     },
     {
@@ -107,9 +105,9 @@ const MutualEvaluation = (data: any) => {
       width: 180,
       ellipsis: true,
       render: (_: any, record: any) => {
-        const fs = Number(record.PJFS).toFixed(0) || 0;
-        return <Rate count={5} value={fs as unknown as number} disabled={true} />
-      },
+        const fs = Number(Number(record.PJFS).toFixed(1)) || 0;
+        return <Rate allowHalf defaultValue={fs} disabled={true} />;
+      }
     },
     {
       title: '操作',
@@ -130,26 +128,26 @@ const MutualEvaluation = (data: any) => {
                   KCId: record?.id,
                   KCMC: record?.KCMC,
                   SSJGLX: record?.SSJGLX
-                },
-              },
+                }
+              }
             }}
           >
             详情
           </Link>
         </>
-      ),
-    },
+      )
+    }
   ];
   return (
     <div>
       <div className={styles.searchs}>
-        <span >
+        <span>
           课程名称:
           <Search
             allowClear
             style={{ width: 200, marginLeft: 16 }}
             onSearch={(val) => {
-              setKCMC(val)
+              setKCMC(val);
             }}
           />
         </span>
@@ -162,10 +160,10 @@ const MutualEvaluation = (data: any) => {
               setKCLY(value);
             }}
           >
-            <Option key='机构课程' value='机构课程'>
+            <Option key="机构课程" value="机构课程">
               机构课程
             </Option>
-            <Option key='校内课程' value='校内课程'>
+            <Option key="校内课程" value="校内课程">
               校内课程
             </Option>
           </Select>
@@ -180,9 +178,11 @@ const MutualEvaluation = (data: any) => {
             }}
           >
             {KCLXData?.map((item: any) => {
-              return <Option key={item.id} value={item.KCTAG}>
-                {item.KCTAG}
-              </Option>
+              return (
+                <Option key={item.id} value={item.KCTAG}>
+                  {item.KCTAG}
+                </Option>
+              );
             })}
           </Select>
         </span>
@@ -193,7 +193,7 @@ const MutualEvaluation = (data: any) => {
         pagination={{
           showQuickJumper: true,
           pageSize: 10,
-          defaultCurrent: 1,
+          defaultCurrent: 1
         }}
         scroll={{ x: 1100 }}
         rowKey="id"
@@ -202,11 +202,11 @@ const MutualEvaluation = (data: any) => {
           setting: false,
           fullScreen: false,
           density: false,
-          reload: false,
+          reload: false
         }}
       />
     </div>
-  )
-}
+  );
+};
 MutualEvaluation.wrappers = ['@/wrappers/auth'];
 export default MutualEvaluation;
