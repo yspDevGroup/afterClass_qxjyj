@@ -68,9 +68,16 @@ const ReimbursementClass = () => {
       ellipsis: true
     },
     {
-      title: '退课数量',
-      dataIndex: 'xs_count',
-      key: 'xs_count',
+      title: '课程退订数',
+      dataIndex: 'kctk_count',
+      key: 'kctk_count',
+      align: 'center',
+      width: 100
+    },
+    {
+      title: '服务退订数',
+      dataIndex: 'fwtk_count',
+      key: 'fwtk_count',
       align: 'center',
       width: 100
     },
