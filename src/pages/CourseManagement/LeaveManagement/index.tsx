@@ -71,7 +71,14 @@ const LeaveManagement = () => {
       ellipsis: true
     },
     {
-      title: '请假人次',
+      title: '教师请假人次',
+      dataIndex: 'js_count',
+      key: 'js_count',
+      align: 'center',
+      width: 100
+    },
+    {
+      title: '学生请假人次',
       dataIndex: 'xs_count',
       key: 'xs_count',
       align: 'center',
