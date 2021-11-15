@@ -147,8 +147,8 @@ const TeacherInfo = (props: any) => {
         {
           type: 'input',
           label: '学历',
-          name: 'XL',
-          key: 'XL',
+          name: 'XLM',
+          key: 'XLM',
           placeholder: readonly ? '——' : ''
         }
       ]
@@ -160,8 +160,8 @@ const TeacherInfo = (props: any) => {
         {
           type: 'input',
           label: '民族',
-          name: 'MZ',
-          key: 'MZ',
+          name: 'MZM',
+          key: 'MZM',
           placeholder: readonly ? '——' : ''
         },
         {
@@ -178,12 +178,12 @@ const TeacherInfo = (props: any) => {
       key: 'group6',
       groupItems: [
         {
-          type: 'input',
+          type: 'time',
           subtype: 'date',
           label: '出生日期',
           name: 'CSRQ',
           key: 'CSRQ',
-          placeholder: '——'
+          placeholder: readonly ? '——' : ''
         },
         {
           type: 'input',
@@ -222,8 +222,8 @@ const TeacherInfo = (props: any) => {
       groupItems: [
         {
           type: 'input',
-          key: 'SFZJLX',
-          name: 'SFZJLX',
+          key: 'SFZJLXM',
+          name: 'SFZJLXM',
           label: '证件类型',
           placeholder: readonly ? '——' : ''
         },
@@ -258,14 +258,14 @@ const TeacherInfo = (props: any) => {
     },
     {
       type: 'group',
-      key: 'group10',
+      key: 'group11',
       groupItems: [
-        {},
         {
           type: 'textArea',
           label: '个人简介',
           name: 'BZ',
           key: 'BZ',
+          rules: [{ type: 'string', max: 255 }],
           placeholder: readonly ? '——' : ''
         }
       ]
