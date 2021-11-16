@@ -26,6 +26,7 @@ export type FormInputProps = {
   addonAfter?: string;
   disabled?: boolean;
   placeholder?: string;
+  bordered: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 } & FormItemProps;
 

@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { Menu, message, Spin } from 'antd';
+import { Form, Menu, message, Spin } from 'antd';
 import { LogoutOutlined } from '@ant-design/icons';
 import { useAccess, useModel, history } from 'umi';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
 import HeaderDropdown from '../HeaderDropdown';
 import { JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
 import { initWXAgentConfig, initWXConfig, showUserName } from '@/wx';
+import BasicInfoModal from '@/components/BasicInfoModal'
 import styles from './index.less';
 import { removeOAuthToken } from '@/utils';
 
@@ -22,7 +23,9 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
     openId: ''
   });
   const [jyjData, setJyjData] = useState<any>();
+  const [showModal, setShowModal] = useState<boolean>(false);
   const userRef = useRef(null);
+  const [form] = Form.useForm();
   useEffect(() => {
     async function fetchData(jyjId: string) {
       const res = await JYJGSJ({
@@ -72,6 +75,26 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
     return loading;
   }
 
+  const handleOk = () => {
+    // setModalText('The modal will be closed after two seconds');
+    // setConfirmLoading(true);
+    // setTimeout(() => {
+    //   setVisible(false);
+    //   setConfirmLoading(false);
+    // }, 2000);
+    setShowModal(false);
+    form
+    .validateFields()
+    .then(values => {      //检验成功时；
+        form.resetFields();
+        form.setFieldsValue(values)//例：{tagName:'888'}
+        console.log(values);
+    })
+    .catch(info => {      //检验失败时；
+        console.log('校验失败:', info);
+    });
+  };
+
   const onMenuClick = useCallback(
     (event: {
       key: React.Key;
@@ -79,13 +102,14 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
       item: React.ReactInstance;
       domEvent: React.MouseEvent<HTMLElement>;
     }) => {
+      setShowModal(true);
       const { key } = event;
-      if (key === 'logout' && initialState) {
-        setInitialState({ ...initialState, currentUser: null });
-        removeOAuthToken();
-        history.replace(initialState.buildOptions.authType === 'wechat' ? '/authCallback/overDue' : '/');
-        return;
-      }
+      // if (key === 'logout' && initialState) {
+      //   setInitialState({ ...initialState, currentUser: null });
+      //   removeOAuthToken();
+      //   history.replace(initialState.buildOptions.authType === 'wechat' ? '/authCallback/overDue' : '/');
+      //   return;
+      // }
     },
     [initialState, setInitialState],
   );
@@ -94,8 +118,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
     <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
 
       <Menu.Item key="logout">
-        <LogoutOutlined />
-        退出登录
+        基本信息维护
       </Menu.Item>
     </Menu>
   );
@@ -123,10 +146,10 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
               {/* {currentUser?.username} */}
               {isAdmin ? '' : '老师'}
             </span>
-
           </span>
         </span>
       </HeaderDropdown>
+      <BasicInfoModal showModal={showModal} handleOk={handleOk} form={form}/>
     </>
   );
 };

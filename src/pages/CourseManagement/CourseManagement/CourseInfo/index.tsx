@@ -77,10 +77,10 @@ const CourseInfo = (props: any) => {
         {
           type: 'input',
           label: '课程名称',
-          placeholder: '',
+          placeholder: '—',
           name: 'KCMC',
           key: 'KCMC',
-          disabled
+          disabled,
         },
         {}
       ]
@@ -92,7 +92,7 @@ const CourseInfo = (props: any) => {
         {
           type: 'input',
           label: '课程类型',
-          placeholder: '',
+          placeholder: '—',
           name: 'KHKCLX',
           key: 'KHKCLX',
           disabled
@@ -107,7 +107,7 @@ const CourseInfo = (props: any) => {
         {
           type: 'select',
           label: '适用年级',
-          placeholder: '',
+          placeholder: '—',
           name: 'njIds',
           disabled,
           mode: 'multiple',
@@ -124,7 +124,7 @@ const CourseInfo = (props: any) => {
         {
           type: 'select',
           label: '任课教师',
-          placeholder: '',
+          placeholder: '—',
           key: 'jsIds',
           name: 'jsIds',
           disabled,
