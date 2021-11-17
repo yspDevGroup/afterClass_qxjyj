@@ -38,7 +38,6 @@ const Blacklist = (props: { Keys: string | undefined }) => {
   }, [isModalVisible]);
   const handleOk = () => {
     form.submit();
-    setIsModalVisible(false);
   };
 
   const handleCancel = () => {

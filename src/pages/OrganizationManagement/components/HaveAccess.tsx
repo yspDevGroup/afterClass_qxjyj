@@ -38,7 +38,6 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
   }, [isModalVisible]);
   const handleOk = () => {
     form.submit();
-    setIsModalVisible(false);
   };
 
   const handleCancel = () => {
@@ -56,6 +55,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       const res = await updateKHJGRZSQ({ id: Datas!.value.KHJGRZSQs[0].id }, data);
       if (res.status === 'ok') {
         message.success('取消成功');
+        setIsModalVisible(false);
         await CreateKHJYJSPJL({
           ZT: 1,
           BZ: params.BZ,
@@ -78,6 +78,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       const res = await blockKHJGRZSQ(data);
       if (res.status === 'ok') {
         message.success('成功加入黑名单');
+        setIsModalVisible(false);
         await CreateKHJYJSPJL({
           ZT: 3,
           BZ: params.BZ,
