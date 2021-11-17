@@ -4,7 +4,7 @@ import { LogoutOutlined } from '@ant-design/icons';
 import { useAccess, useModel, history } from 'umi';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
 import HeaderDropdown from '../HeaderDropdown';
-import { JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
+import { JYJGSJ, updateJYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
 import { initWXAgentConfig, initWXConfig, showUserName } from '@/wx';
 import BasicInfoModal from '@/components/BasicInfoModal'
 import styles from './index.less';
@@ -23,6 +23,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
     openId: ''
   });
   const [jyjData, setJyjData] = useState<any>();
+  const [key, setKey] = useState<any>();
   const [showModal, setShowModal] = useState<boolean>(false);
   const userRef = useRef(null);
   const [form] = Form.useForm();
@@ -75,24 +76,42 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
     return loading;
   }
 
-  const handleOk = () => {
-    // setModalText('The modal will be closed after two seconds');
-    // setConfirmLoading(true);
-    // setTimeout(() => {
-    //   setVisible(false);
-    //   setConfirmLoading(false);
-    // }, 2000);
+  const handleOk = (cityAdcode: any) => {
     setShowModal(false);
     form
-    .validateFields()
-    .then(values => {      //检验成功时；
+      .validateFields()
+      .then(values => {
         form.resetFields();
-        form.setFieldsValue(values)//例：{tagName:'888'}
-        console.log(values);
-    })
-    .catch(info => {      //检验失败时；
+        form.setFieldsValue(values)
+        console.log(values.unitName);
+        (async () => {
+          if (currentUser?.jyjId) {
+            const resUpdateJYJGSJ = await updateJYJGSJ({
+              id: currentUser?.jyjId
+            }, {
+              BMMC: values.unitName,
+              BZ: values.introduction,
+              XZQH: cityAdcode
+            });
+            if (resUpdateJYJGSJ.status === 'ok') {
+              message.success('操作成功');
+            } else {
+              message.error('操作失败');
+            }
+            if (key === 'logout' && initialState) {
+              setTimeout(() => {
+                setInitialState({ ...initialState, currentUser: null });
+                removeOAuthToken();
+                history.replace(initialState.buildOptions.authType === 'wechat' ? '/authCallback/overDue' : '/');
+                return;
+              }, 1000)
+            }
+          }
+        })()
+      })
+      .catch(info => {
         console.log('校验失败:', info);
-    });
+      });
   };
 
   const onMenuClick = useCallback(
@@ -103,13 +122,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
       domEvent: React.MouseEvent<HTMLElement>;
     }) => {
       setShowModal(true);
-      const { key } = event;
-      // if (key === 'logout' && initialState) {
-      //   setInitialState({ ...initialState, currentUser: null });
-      //   removeOAuthToken();
-      //   history.replace(initialState.buildOptions.authType === 'wechat' ? '/authCallback/overDue' : '/');
-      //   return;
-      // }
+      setKey(event.key);
     },
     [initialState, setInitialState],
   );
@@ -149,7 +162,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
           </span>
         </span>
       </HeaderDropdown>
-      <BasicInfoModal showModal={showModal} handleOk={handleOk} form={form}/>
+      <BasicInfoModal showModal={showModal} handleOk={handleOk} form={form} />
     </>
   );
 };
