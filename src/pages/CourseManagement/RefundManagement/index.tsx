@@ -71,14 +71,14 @@ const RefundManagement = () => {
       ellipsis: true
     },
     {
-      title: '退款班级数',
+      title: '课程退款次数',
       dataIndex: 'bj_count',
       key: 'bj_count',
       align: 'center',
       width: 100
     },
     {
-      title: '退款学生数',
+      title: '服务退款次数',
       dataIndex: 'xs_count',
       key: 'xs_count',
       align: 'center',
