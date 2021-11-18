@@ -44,7 +44,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
     setIsModalVisible(false);
   };
   const submit = async (params: any) => {
-    if (Titles === '取消') {
+    if (Titles === '取消准入') {
       const data = {
         ZT: 3,
         SPR: username,
@@ -217,7 +217,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
                   href="#"
                   onClick={() => {
                     setDatas(record);
-                    setTitles('取消');
+                    setTitles('取消准入');
                     setIsModalVisible(true);
                   }}
                 >
