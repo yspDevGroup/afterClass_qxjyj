@@ -72,15 +72,15 @@ const RefundManagement = () => {
     },
     {
       title: '课程退款次数',
-      dataIndex: 'bj_count',
-      key: 'bj_count',
+      dataIndex: 'kctk_count',
+      key: 'kctk_count',
       align: 'center',
       width: 100
     },
     {
       title: '服务退款次数',
-      dataIndex: 'xs_count',
-      key: 'xs_count',
+      dataIndex: 'fwtk_count',
+      key: 'fwtk_count',
       align: 'center',
       width: 100
     },
@@ -152,6 +152,7 @@ const RefundManagement = () => {
           request={async () => {
             const resAll = await getSchoolsTK({
               XZQHM: currentUser?.XZQHM,
+              isTK: true,
               page: 0,
               pageSize: 0
             });

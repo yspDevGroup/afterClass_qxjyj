@@ -69,14 +69,14 @@ const ReimbursementClass = () => {
     },
     {
       title: '课程退订数',
-      dataIndex: 'kctk_count',
+      dataIndex: 'kctd_count',
       key: 'kctk_count',
       align: 'center',
       width: 100
     },
     {
       title: '服务退订数',
-      dataIndex: 'fwtk_count',
+      dataIndex: 'fwtd_count',
       key: 'fwtk_count',
       align: 'center',
       width: 100
@@ -152,6 +152,7 @@ const ReimbursementClass = () => {
           request={async () => {
             const resAll = await getSchoolsTK({
               XZQHM: currentUser?.XZQHM,
+              isTK: false,
               pageSize: 0,
               page: 0
             });

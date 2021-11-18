@@ -6,23 +6,23 @@ import { request } from 'umi';
 export async function createSSOToken(
   body: {
     /** 认证token */
-    access_token?: string;
+    access_token: string;
     /** token有效时间 */
-    expires_in?: number;
+    expires_in: number;
     /** 刷新token */
-    refresh_token?: string;
+    refresh_token: string;
     /** token类型 */
     token_type?: string;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<any>('/sso/createToken', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -30,49 +30,49 @@ export async function createSSOToken(
 export async function ssoExpiredCallback(options?: { [key: string]: any }) {
   return request<any>('/sso/expired/callback', {
     method: 'GET',
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
 /** 同步用户信息 POST /sso/synchroUsers */
 export async function synchroUsers(
   body: {
-    type?: '老师' | '学生';
+    type: '老师' | '学生';
     /** 学校代码 */
-    XXDM?: string;
-    sign?: string;
+    XXDM: string;
+    sign: string;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<any>('/sso/synchroUsers', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
 /** 获取用户信息 POST /sso/getUserInfos */
 export async function getUserInfos(
   body: {
-    type?: '老师' | '学生';
+    type: '老师' | '学生';
     /** 学号/工号 */
-    username?: string;
+    username: string;
     /** 学校代码 */
-    XXDM?: string;
-    sign?: string;
+    XXDM: string;
+    sign: string;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<any>('/sso/getUserInfos', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -80,7 +80,7 @@ export async function getUserInfos(
 export async function getSchoolNotice(options?: { [key: string]: any }) {
   return request<any>('/sso/getSchoolNotice', {
     method: 'POST',
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -88,6 +88,98 @@ export async function getSchoolNotice(options?: { [key: string]: any }) {
 export async function getSchools(options?: { [key: string]: any }) {
   return request<any>('/sso/getSchools', {
     method: 'POST',
-    ...(options || {}),
+    ...(options || {})
+  });
+}
+
+/** 批量创建/更新区县教育局统计数据 POST /sso/bulkCreateEducation */
+export async function bulkCreateEducation(
+  body: {
+    JYJMC?: string;
+    XZQHM?: string;
+    XXS?: number;
+    JGS?: number;
+    JSS?: number;
+    XSS?: number;
+    KCS?: number;
+    BJS?: number;
+    TKXSS?: number;
+    SFZE?: number;
+    TFZE?: number;
+    XN?: string;
+    XQ?: string;
+    JYJId?: string;
+  }[],
+  options?: { [key: string]: any }
+) {
+  return request<any>('/sso/bulkCreateEducation', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: body,
+    ...(options || {})
+  });
+}
+
+/** 批量创建/更新学校统计数据 POST /sso/bulkCreateSchool */
+export async function bulkCreateSchool(
+  body: {
+    XXMC?: string;
+    XQMC?: string;
+    XZQHM?: string;
+    JSS?: number;
+    JGS?: number;
+    XSS?: number;
+    TKXSS?: number;
+    KCS?: number;
+    JGKCS?: number;
+    BJS?: number;
+    SFZE?: number;
+    TFZE?: number;
+    XN?: string;
+    XQ?: string;
+    XXId?: string;
+    XQId?: string;
+  }[],
+  options?: { [key: string]: any }
+) {
+  return request<any>('/sso/bulkCreateSchool', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: body,
+    ...(options || {})
+  });
+}
+
+/** 批量创建/更新机构统计数据 POST /sso/bulkCreateAgency */
+export async function bulkCreateAgency(
+  body: {
+    JGMC?: string;
+    XZQHM?: string;
+    JSS?: number;
+    XXS?: number;
+    XXKCS?: number;
+    KCS?: number;
+    BJS?: number;
+    XSS?: number;
+    TKXSS?: number;
+    SFZE?: number;
+    TFZE?: number;
+    XN?: string;
+    XQ?: string;
+    JGId?: string;
+  }[],
+  options?: { [key: string]: any }
+) {
+  return request<any>('/sso/bulkCreateAgency', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: body,
+    ...(options || {})
   });
 }
