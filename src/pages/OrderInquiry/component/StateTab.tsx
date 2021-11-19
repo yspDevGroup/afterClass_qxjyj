@@ -3,13 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { useModel } from 'umi';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { getOrders, getAllCourses2 } from '@/services/after-class-qxjyj/jyjgsj';
+import { getOrders } from '@/services/after-class-qxjyj/jyjgsj';
 
 import WWOpenDataCom from '@/components/WWOpenDataCom';
 import { Select } from 'antd';
 const { Option } = Select;
 import styles from './index.less';
 import { getAllKHKCLX } from '@/services/after-class-qxjyj/khkclx';
+import { getAllCourses2 } from '@/services/after-class-qxjyj/khkcsj';
 
 const StateTab = (props: any) => {
   const { DDZT, id } = props.TabState;

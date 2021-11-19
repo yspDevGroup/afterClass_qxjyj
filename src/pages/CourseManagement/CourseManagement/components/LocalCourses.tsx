@@ -6,8 +6,7 @@ import { Button, message, Popconfirm, Space, Tag } from 'antd';
 import EllipsisHint from '@/components/EllipsisHint';
 import ProTable, { ActionType } from '@ant-design/pro-table';
 
-import { updateKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
-import { getAllCourses2 } from '@/services/after-class-qxjyj/jyjgsj';
+import { getAllCourses2, updateKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
 
 /**
  * 本区课程
@@ -215,6 +214,7 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
               KCLY: param.SSJGLX
             };
             const res = await getAllCourses2(params);
+            console.log('res', res);
             if (res.status === 'ok') {
               return {
                 data: res.data.rows,
