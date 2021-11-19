@@ -4,9 +4,11 @@ import { request } from 'umi';
 
 /** 获取课后班级数据 GET /khbjsj/${param0} */
 export async function getKHBJSJ(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getKHBJSJParams,
-
+  params: {
+    // path
+    /** 课后班级ID */
+    id: string;
+  },
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
@@ -19,13 +21,15 @@ export async function getKHBJSJ(
 
 /** 删除课后班级数据 DELETE /khbjsj/${param0} */
 export async function deleteKHBJSJ(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.deleteKHBJSJParams,
-
+  params: {
+    // path
+    /** 课后班级ID */
+    id: string;
+  },
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<{ status: 'ok' | 'error'; message?: string }>(`/khbjsj/${param0}`, {
+  return request<{ status?: 'ok' | 'error'; message?: string }>(`/khbjsj/${param0}`, {
     method: 'DELETE',
     params: { ...queryParams },
     ...(options || {})
@@ -40,15 +44,15 @@ export async function getAllKHBJSJ(
     /** 年级ID */
     njId?: string;
     /** 学年学期ID */
-    XNXQId: string;
+    XNXQId?: string;
     /** 班级状态 */
     bjzt?: string[];
     /** 校区ID */
     xqId?: string;
     /** 页数 */
-    page: number;
+    page?: number;
     /** 每页记录数 */
-    pageSize: number;
+    pageSize?: number;
     /** 班级名称 */
     name?: string;
   },
@@ -67,8 +71,8 @@ export async function getAllKHBJSJ(
 /** 创建课后班级数据 PUT /khbjsj/create */
 export async function createKHBJSJ(body: API.CreateKHBJSJ, options?: { [key: string]: any }) {
   return request<{
-    status: 'ok' | 'error';
-    data?: {
+    status?: 'ok' | 'error';
+    data: {
       id?: string;
       BJMC?: string;
       BJMS?: string;
@@ -120,14 +124,16 @@ export async function createKHBJSJ(body: API.CreateKHBJSJ, options?: { [key: str
 
 /** 更新课后班级数据 PUT /khbjsj/update/${param0} */
 export async function updateKHBJSJ(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.updateKHBJSJParams,
-
+  params: {
+    // path
+    /** 课后班级ID */
+    id: string;
+  },
   body: API.UpdateKHBJSJ,
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<{ status: 'ok' | 'error'; message?: string }>(`/khbjsj/update/${param0}`, {
+  return request<{ status?: 'ok' | 'error'; message?: string }>(`/khbjsj/update/${param0}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -140,9 +146,11 @@ export async function updateKHBJSJ(
 
 /** 获取班级已报名学生信息 GET /khbjsj/enrolled/${param0} */
 export async function getEnrolled(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getEnrolledParams,
-
+  params: {
+    // path
+    /** 课后班级ID */
+    id: string;
+  },
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
@@ -157,7 +165,7 @@ export async function getEnrolled(
 export async function getStudentClasses(
   body: {
     /** 学生ID */
-    XSJBSJId: string;
+    XSJBSJId?: string;
     /** 状态 */
     ZT?: number[];
     /** 学年学期ID */
@@ -243,9 +251,11 @@ export async function getClassesEvaluation(
 
 /** 移动端报名时获取班级详细信息 GET /khbjsjdetail/${param0} */
 export async function getClassDetail(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getClassDetailParams,
-
+  params: {
+    // path
+    /** 课后班级ID */
+    id: string;
+  },
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
@@ -260,7 +270,7 @@ export async function getClassDetail(
 export async function getClasses(
   body: {
     /** 学年学期ID */
-    XNXQId: string;
+    XNXQId?: string;
     /** 课程ID */
     KHKCSJId?: string;
     /** 年级ID */
@@ -288,7 +298,7 @@ export async function getClasses(
 export async function getClassStudents(
   body: {
     /** 班级ID */
-    KHBJSJId: string;
+    KHBJSJId?: string;
     ZT?: number[];
     /** 页数 */
     page?: number;
@@ -311,15 +321,15 @@ export async function getClassStudents(
 export async function cancleClass(
   body: {
     /** 班级ID */
-    KHBJSJId: string;
+    KHBJSJId?: string;
     /** 班级ID */
-    JZGJBSJId: string;
+    JZGJBSJId?: string;
     /** 备注信息 */
-    BZ: string;
+    BZ?: string;
     /** 设备IP */
-    deviceIp: string;
+    deviceIp?: string;
     /** 通知内容 */
-    MSG: string;
+    MSG?: string;
   },
   options?: { [key: string]: any }
 ) {
@@ -337,7 +347,7 @@ export async function cancleClass(
 export async function getTeachersByBJId(
   body: {
     /** 班级ID */
-    KHBJSJId: string;
+    KHBJSJId?: string;
   },
   options?: { [key: string]: any }
 ) {
@@ -355,7 +365,7 @@ export async function getTeachersByBJId(
 export async function upsertKHBJKSSJ(
   body: {
     /** 班级ID */
-    KHBJSJId: string;
+    KHBJSJId?: string;
     /** 课程安排信息 */
     DATA?: string;
   },
@@ -375,7 +385,7 @@ export async function upsertKHBJKSSJ(
 export async function getAllKHBJKSSJ(
   body: {
     /** 班级列表 */
-    KHBJSJIds: string[];
+    KHBJSJIds?: string[];
     /** 页数 */
     page?: number;
     /** 每页记录数 */
@@ -397,11 +407,11 @@ export async function getAllKHBJKSSJ(
 export async function getMainTeacher(
   body: {
     /** 班级列表 */
-    KHBJSJIds: string[];
+    KHBJSJIds?: string[];
     /** 教师ID */
-    JZGJBSJId: string;
+    JZGJBSJId?: string;
     /** 教师类型 */
-    JSLX: string;
+    JSLX?: string;
   },
   options?: { [key: string]: any }
 ) {

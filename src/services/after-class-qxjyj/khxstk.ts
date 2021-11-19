@@ -4,15 +4,17 @@ import { request } from 'umi';
 
 /** 获取退款记录详情 GET /khxstk/${param0} */
 export async function getKHXSTK(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getKHXSTKParams,
-
+  params: {
+    // path
+    /** 退款记录ID */
+    id: string;
+  },
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
   return request<{
-    status: 'ok' | 'error';
-    data?: {
+    status?: 'ok' | 'error';
+    data: {
       id?: string;
       TKBH?: string;
       TKJE?: number;
@@ -45,13 +47,15 @@ export async function getKHXSTK(
 
 /** 删除退款记录 DELETE /khxstk/${param0} */
 export async function deleteKHXSTK(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.deleteKHXSTKParams,
-
+  params: {
+    // path
+    /** 类型ID */
+    id: string;
+  },
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<{ status: 'ok' | 'error'; message?: string }>(`/khxstk/${param0}`, {
+  return request<{ status?: 'ok' | 'error'; message?: string }>(`/khxstk/${param0}`, {
     method: 'DELETE',
     params: { ...queryParams },
     ...(options || {})
@@ -64,7 +68,7 @@ export async function getAllKHXSTK(
     /** 退款状态 */
     TKZT?: number[];
     /** 退款类型,0:退款;1:停餐 */
-    LX: number;
+    LX?: number;
     /** 学生ID */
     XSJBSJId?: string;
     /** 学年学期ID */
@@ -87,7 +91,7 @@ export async function getAllKHXSTK(
   options?: { [key: string]: any }
 ) {
   return request<{
-    status: 'ok' | 'error';
+    status?: 'ok' | 'error';
     data?: { count?: number; rows?: API.KHXSTK[] };
     message?: string;
   }>('/khxstk/', {
@@ -103,8 +107,8 @@ export async function getAllKHXSTK(
 /** 创建退款记录 PUT /khxstk/create */
 export async function createKHXSTK(body: API.CreateKHXSTK, options?: { [key: string]: any }) {
   return request<{
-    status: 'ok' | 'error';
-    data?: {
+    status?: 'ok' | 'error';
+    data: {
       id?: string;
       TKBH?: string;
       TKJE?: number;
@@ -140,14 +144,16 @@ export async function createKHXSTK(body: API.CreateKHXSTK, options?: { [key: str
 
 /** 更新退款记录 PUT /khxstk/update/${param0} */
 export async function updateKHXSTK(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.updateKHXSTKParams,
-
+  params: {
+    // path
+    /** 退款记录ID */
+    id: string;
+  },
   body: API.UpdateKHXSTK,
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<{ status: 'ok' | 'error'; message?: string }>(`/khxstk/update/${param0}`, {
+  return request<{ status?: 'ok' | 'error'; message?: string }>(`/khxstk/update/${param0}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -164,7 +170,7 @@ export async function exportTKJL(
     /** 退款状态 */
     TKZT?: number[];
     /** 退款类型,0:退款;1:停餐 */
-    LX: number;
+    LX?: number;
     /** 学生ID */
     XSJBSJId?: string;
     /** 学年学期ID */

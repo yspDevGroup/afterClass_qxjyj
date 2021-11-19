@@ -6,11 +6,11 @@ import { request } from 'umi';
 export async function createSSOToken(
   body: {
     /** 认证token */
-    access_token: string;
+    access_token?: string;
     /** token有效时间 */
-    expires_in: number;
+    expires_in?: number;
     /** 刷新token */
-    refresh_token: string;
+    refresh_token?: string;
     /** token类型 */
     token_type?: string;
   },
@@ -37,10 +37,10 @@ export async function ssoExpiredCallback(options?: { [key: string]: any }) {
 /** 同步用户信息 POST /sso/synchroUsers */
 export async function synchroUsers(
   body: {
-    type: '老师' | '学生';
+    type?: '老师' | '学生';
     /** 学校代码 */
-    XXDM: string;
-    sign: string;
+    XXDM?: string;
+    sign?: string;
   },
   options?: { [key: string]: any }
 ) {
@@ -57,12 +57,12 @@ export async function synchroUsers(
 /** 获取用户信息 POST /sso/getUserInfos */
 export async function getUserInfos(
   body: {
-    type: '老师' | '学生';
+    type?: '老师' | '学生';
     /** 学号/工号 */
-    username: string;
+    username?: string;
     /** 学校代码 */
-    XXDM: string;
-    sign: string;
+    XXDM?: string;
+    sign?: string;
   },
   options?: { [key: string]: any }
 ) {
