@@ -211,7 +211,7 @@ const SchoolReimbursement = (props: { state: any }) => {
               XXJBSJId: id,
               XNXQId: curXNXQId,
               LX: 0,
-              ZT: [1, 2],
+              ZT: [1],
               page: param.current,
               pageSize: param.pageSize
             });

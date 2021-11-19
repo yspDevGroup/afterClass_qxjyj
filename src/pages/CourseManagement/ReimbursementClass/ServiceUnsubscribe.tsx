@@ -233,7 +233,7 @@ const ServiceUnsubscribe = (props: { state: any }) => {
               XXJBSJId: id,
               XNXQId: curXNXQId,
               LX: 1,
-              ZT: [1, 2],
+              ZT: [1],
               page: param.current,
               pageSize: param.pageSize
             });
