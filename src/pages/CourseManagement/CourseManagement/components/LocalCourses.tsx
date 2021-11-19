@@ -5,8 +5,9 @@ import { history, Link } from 'umi';
 import { Button, message, Popconfirm, Space, Tag } from 'antd';
 import EllipsisHint from '@/components/EllipsisHint';
 import ProTable, { ActionType } from '@ant-design/pro-table';
-import { getAllCourses, getAllCourses2 } from '@/services/after-class-qxjyj/jyjgsj';
+
 import { updateKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
+import { getAllCourses2 } from '@/services/after-class-qxjyj/jyjgsj';
 
 /**
  * 本区课程

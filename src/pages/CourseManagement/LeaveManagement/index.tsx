@@ -124,6 +124,7 @@ const LeaveManagement = () => {
               onChange={(value: string, key: any) => {
                 setXXMC(value);
                 setXXId(key?.key);
+                actionRef?.current?.reload();
               }}
             >
               <Option key="" value="">
@@ -152,6 +153,7 @@ const LeaveManagement = () => {
           request={async () => {
             const resAll = await getSchoolsQJ({
               XZQHM: currentUser?.XZQHM,
+              XXJBSJId: XXId,
               page: 0,
               pageSize: 0
             });

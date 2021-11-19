@@ -124,6 +124,7 @@ const ReimbursementClass = () => {
                 if (value === '') {
                   setXXId(null);
                 }
+                actionRef?.current?.reload();
               }}
             >
               <Option key="" value="">
@@ -152,6 +153,7 @@ const ReimbursementClass = () => {
           request={async () => {
             const resAll = await getSchoolsTK({
               XZQHM: currentUser?.XZQHM,
+              XXJBSJId: XXId,
               isTK: false,
               pageSize: 0,
               page: 0

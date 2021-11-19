@@ -124,6 +124,7 @@ const RefundManagement = () => {
               onChange={(value: string, key: any) => {
                 setXXMC(value);
                 setXXId(key?.key);
+                actionRef?.current?.reload();
               }}
             >
               <Option key="" value="">
@@ -152,6 +153,7 @@ const RefundManagement = () => {
           request={async () => {
             const resAll = await getSchoolsTK({
               XZQHM: currentUser?.XZQHM,
+              XXJBSJId: XXId,
               isTK: true,
               page: 0,
               pageSize: 0

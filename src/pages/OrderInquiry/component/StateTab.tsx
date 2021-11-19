@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useModel } from 'umi';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { getAllCourses2, getOrders } from '@/services/after-class-qxjyj/jyjgsj';
+import { getOrders, getAllCourses2 } from '@/services/after-class-qxjyj/jyjgsj';
 
 import WWOpenDataCom from '@/components/WWOpenDataCom';
 import { Select } from 'antd';
@@ -97,7 +97,7 @@ const StateTab = (props: any) => {
       width: 110,
       render: (_text: any, record: any) => {
         return <div>{record?.KHBJSJ?.FY}</div>;
-      },
+      }
     },
     {
       title: '教辅费用(元)',
@@ -107,14 +107,14 @@ const StateTab = (props: any) => {
       width: 110,
       render: (_text: any, record: any) => {
         return <div>{record.DDFY - record?.KHBJSJ?.FY}</div>;
-      },
+      }
     },
     {
       title: '订单总费用(元)',
       dataIndex: 'DDFY',
       key: 'DDFY',
       align: 'center',
-      width: 120,
+      width: 120
     },
     {
       title: '下单时间',
@@ -142,7 +142,7 @@ const StateTab = (props: any) => {
       width: 150,
       render: (_text: any, record: any) => {
         return record.ZFFS;
-      },
+      }
     }
   ];
   const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);
@@ -163,19 +163,20 @@ const StateTab = (props: any) => {
       if (khkcResl.status === 'ok') {
         const KCMC = khkcResl.data.rows?.map((item: any) => ({
           label: item.KCMC,
-          value: item.id,
+          value: item.id
         }));
         setKcmcData(KCMC);
       }
-    })()
-  }, [kclxValue])
+    })();
+  }, [kclxValue]);
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     (async () => {
       const res = await getOrders({
         XZQHM: currentUser?.XZQHM,
         DDZT,
-        DDLX: 0, XXJBSJId: id,
+        DDLX: 0,
+        XXJBSJId: id,
         kcmc: kcmcValue,
         KHKCLXId: kclxValue
       });
@@ -252,7 +253,7 @@ const StateTab = (props: any) => {
           pagination={{
             showQuickJumper: true,
             pageSize: 10,
-            defaultCurrent: 1,
+            defaultCurrent: 1
           }}
           scroll={{ x: 1300 }}
           dataSource={dataSource}
