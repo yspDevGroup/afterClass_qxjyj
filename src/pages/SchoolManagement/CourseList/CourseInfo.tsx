@@ -7,6 +7,7 @@ import { LeftOutlined } from '@ant-design/icons';
 import CustomForm from '@/components/CustomForm';
 import { FormItemType } from '@/components/CustomForm/interfice';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
+import { getKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
 /**
  * 课程详情
  * @returns
@@ -22,27 +23,67 @@ const CourseInfo = (props: any) => {
   const [NJDataOption, setNJDataOption] = useState<any>([]);
   const [formValues, setFormValues] = useState({});
   const [teacherData, setTeacherData] = useState<any>([]);
-  useEffect(() => {
-    setDisabled(true);
-    // 老师表格数据
-    const thData: any[] = [];
-    state?.KHKCJs?.forEach((item: any) => {
-      thData.push(item?.JZGJBSJ);
-    });
-    setTeacherData(thData);
-    if (state?.id) {
-      // form详情
-      const params = {
-        KCMC: state?.KCMC || '',
-        KCMS: state?.KCMS || '',
-        njIds: state?.NJSJs?.map((item: any) => `${item.XD}${item?.NJMC}`) || '',
-        jsIds: state?.KHKCJs?.map((item: any) => item?.KHJSSJ?.XM) || '',
-        KCTP: state?.KCTP || '',
-        KHKCLX: state?.KHKCLX?.KCTAG || ''
-      };
-      setImageUrl(state?.KCTP || '');
-      setFormValues(params);
+  // useEffect(() => {
+  //   setDisabled(true);
+  //   // 老师表格数据
+  //   const thData: any[] = [];
+  //   state?.KHKCJs?.forEach((item: any) => {
+  //     thData.push(item?.JZGJBSJ);
+  //   });
+  //   setTeacherData(thData);
+  //   if (state?.id) {
+  //     // form详情
+  //     const params = {
+  //       KCMC: state?.KCMC || '',
+  //       KCMS: state?.KCMS || '',
+  //       njIds: state?.NJSJs?.map((item: any) => `${item.XD}${item?.NJMC}`) || '',
+  //       jsIds: state?.KHKCJs?.map((item: any) => item?.KHJSSJ?.XM) || '',
+  //       KCTP: state?.KCTP || '',
+  //       KHKCLX: state?.KHKCLX?.KCTAG || ''
+  //     };
+  //     setImageUrl(state?.KCTP || '');
+  //     setFormValues(params);
+  //   }
+  // }, []);
+
+  const getData = async () => {
+    const res = await getKHKCSJ({ kcId: state.id });
+    if (res?.status === 'ok') {
+      console.log('res', res);
+      const { data } = res;
+      let flag = false;
+      // 老师表格数据
+      if (data?.SSJGLX === '机构课程') {
+        const thData: any[] = [];
+        data?.KHKCJs?.forEach((item: any) => {
+          thData.push(item);
+        });
+        setTeacherData(thData);
+        flag = true;
+      }
+      setDisabled(true);
+
+      if (data?.id) {
+        // form详情
+        const params = {
+          KCMC: data?.KCMC || '',
+          KCMS: data?.KCMS || '',
+          njIds: data?.NJSJs?.map((item: any) => `${item.XD}${item?.NJMC}`) || '',
+          jsIds: data?.KHKCJs?.map((item: any) => item?.JZGJBSJ?.XM) || '',
+          KCTP: data?.KCTP || '',
+          KHKCLX: data?.KHKCLX?.KCTAG || '',
+          flag
+        };
+        setImageUrl(data?.KCTP || '');
+        setFormValues(params);
+      }
     }
+  };
+
+  useEffect(() => {
+    console.log('state', state);
+
+    getData();
   }, []);
 
   const basicForm: FormItemType[] = [
@@ -122,48 +163,56 @@ const CourseInfo = (props: any) => {
       key: 'XM',
       align: 'center',
       render: (text: any, record: any) => {
-        const showWXName = record?.XM === '未知' && record.WechatUserId;
+        const showWXName = record?.JZGJBSJ?.XM === '未知' && record?.JZGJBSJ?.WechatUserId;
         if (showWXName) {
-          return <WWOpenDataCom type="userName" openid={record.WechatUserId} />;
+          return <WWOpenDataCom type="userName" openid={record?.JZGJBSJ?.WechatUserId} />;
         }
-        return record?.XM;
+        return record?.JZGJBSJ?.XM;
       }
     },
     {
       title: '联系电话',
       dataIndex: 'LXDH',
       key: 'LXDH',
-      align: 'center'
+      align: 'center',
+      render: (text: any, record: any) => {
+        return record?.JZGJBSJ?.LXDH;
+      }
     },
     {
       title: '邮箱',
       dataIndex: 'DZXX',
       key: 'DZXX',
-      align: 'center'
+      align: 'center',
+      render: (text: any, record: any) => {
+        return record?.JZGJBSJ?.DZXX;
+      }
     },
     {
       title: '操作',
-      key: 'option',
-      valueType: 'option',
+      dataIndex: 'opthion',
+      key: 'opthion',
       align: 'center',
-      width: 200,
-      render: (text: any, record: { value: any }) => {
+      render: (text: any, record: any) => {
         return (
-          <div className={styles.operation}>
-            <Link
-              key="xq"
-              to={{
-                pathname: '/schoolManagement/courseList/teacherInfo',
-                state: record
-              }}
-            >
-              详情
-            </Link>
-          </div>
+          <a
+            onClick={() => {
+              history.push({
+                pathname: `/courseManagement/courseManagement/courseInfo/teacherInfo`,
+                state: {
+                  type: 'detail',
+                  data: record?.JZGJBSJ
+                }
+              });
+            }}
+          >
+            详情
+          </a>
         );
       }
     }
   ];
+
   return (
     <>
       <Button
