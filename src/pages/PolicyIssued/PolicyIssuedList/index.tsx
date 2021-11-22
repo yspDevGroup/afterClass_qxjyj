@@ -7,21 +7,54 @@
  */
 import React, { useState, useRef, useEffect } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Switch, message } from 'antd';
+import { Button, Switch, message, Input, Select } from 'antd';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { history, useModel } from 'umi';
-import Option from '../components/Option';
 import type { TableListItem } from '../data';
 import styles from '../index.module.less';
 import moment from 'moment';
 import { getJYJGTZGG, updateJYJGTZGG } from '@/services/after-class-qxjyj/jyjgtzgg';
+import { getTableWidth } from '@/utils';
+import SearchLayout from '@/components/Search/Layout';
+import COption from '../components/Option';
 
+const { Search } = Input;
+const { Option } = Select;
 const TableList = () => {
   const [dataSource, setDataSource] = useState<API.JYJGTZGG[]>();
   const actionRef = useRef<ActionType>();
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
+  const [title, setTitle] = useState<string>();
+  const [FBZT, setFBZT] = useState<any>();
+  const getData = async () => {
+    if (title || FBZT) {
+      const resgetXXTZGG = await getJYJGTZGG({
+        BT: title,
+        ZT: FBZT ? [FBZT] : ['已发布', '草稿'],
+        XZQHM: currentUser?.XZQHM,
+        LX: 1,
+        page: 0,
+        pageSize: 0
+      });
+      if (resgetXXTZGG.status === 'ok') {
+        setDataSource(resgetXXTZGG.data?.rows);
+      }
+    } else {
+      const resgetXXTZGG = await getJYJGTZGG({
+        BT: '',
+        XZQHM: currentUser?.XZQHM,
+        ZT: ['已发布', '草稿'],
+        LX: 1,
+        page: 0,
+        pageSize: 0
+      });
+      if (resgetXXTZGG.status === 'ok') {
+        setDataSource(resgetXXTZGG.data?.rows);
+      }
+    }
+  };
 
   const columns: ProColumns<TableListItem>[] = [
     {
@@ -114,7 +147,7 @@ const TableList = () => {
       fixed: 'right',
       render: (_, record) => (
         <div className={styles.optionCol}>
-          <Option
+          <COption
             id={record.id}
             ZT={record.ZT}
             record={record}
@@ -130,11 +163,16 @@ const TableList = () => {
     }
   ];
 
+  useEffect(()=>{
+    getData();
+  },[title,FBZT])
+
   return (
     <>
       <ProTable<any>
-        headerTitle="政策列表"
         actionRef={actionRef}
+        columns={columns}
+        dataSource={dataSource}
         className={styles.proTableStyles}
         rowKey="id"
         pagination={{
@@ -142,7 +180,38 @@ const TableList = () => {
           pageSize: 10,
           defaultCurrent: 1
         }}
-        scroll={{ x: 1000 }}
+        scroll={{ x: getTableWidth(columns) }}
+        search={false}
+        headerTitle={
+          <>
+            <SearchLayout>
+              <div>
+                <label htmlFor='kcname'>标题：</label>
+                <Search placeholder="请输入" allowClear onSearch={(value: string) => {
+                  setTitle(value);
+                }} />
+              </div>
+              <div>
+                <label htmlFor='FBZT'>发布状态：</label>
+                <Select
+                  allowClear
+                  placeholder="请选择"
+                  onChange={(value) => {
+                    setFBZT(value);
+                  }}
+                  value={FBZT}
+                >
+                  <Option value='草稿' key='草稿' >
+                    草稿
+                  </Option>
+                  <Option value='已发布' key='已发布'>
+                    已发布
+                  </Option>
+                </Select>
+              </div>
+            </SearchLayout>
+          </>
+        }
         toolBarRender={(_action) => [
           <Button
             key="xinjian"
@@ -154,37 +223,6 @@ const TableList = () => {
             <PlusOutlined /> 新建
           </Button>
         ]}
-        request={async (params, sorter, filter) => {
-          if (params.ZT || params.BT) {
-            const resgetXXTZGG = await getJYJGTZGG({
-              BT: params.BT,
-              LX: 1,
-              XZQHM: currentUser?.XZQHM,
-              ZT: params.ZT ? [params.ZT] : ['已发布', '草稿'],
-              page: 0,
-              pageSize: 0
-            });
-            if (resgetXXTZGG.status === 'ok') {
-              setDataSource(resgetXXTZGG.data?.rows);
-            }
-          } else {
-            const resgetXXTZGG = await getJYJGTZGG({
-              BT: '',
-              LX: 1,
-              XZQHM: currentUser?.XZQHM,
-              ZT: ['已发布', '草稿'],
-              page: 0,
-              pageSize: 0
-            });
-            if (resgetXXTZGG.status === 'ok') {
-              setDataSource(resgetXXTZGG.data?.rows);
-            }
-          }
-
-          return '';
-        }}
-        dataSource={dataSource}
-        columns={columns}
       />
     </>
   );

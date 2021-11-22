@@ -6,7 +6,7 @@
  * @LastEditors: wsl
  */
 import React, { useState, useRef, useEffect } from 'react';
-import { Switch } from 'antd';
+import { Input, Switch } from 'antd';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import Option from './components/Option';
@@ -14,12 +14,29 @@ import type { TableListItem } from './data';
 import styles from './index.module.less';
 import { getJYJGTZGG } from '@/services/after-class-qxjyj/jyjgtzgg';
 import { useModel } from 'umi';
+import { getTableWidth } from '@/utils';
+import SearchLayout from '@/components/Search/Layout';
 
+const { Search } = Input;
 const RecycleBin = () => {
   const [dataSource, setDataSource] = useState<API.JYJGTZGG[]>();
   const actionRef = useRef<ActionType>();
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
+  const [title, setTitle] = useState<string>();
+  const getData = async () => {
+    const resgetXXTZGG = await getJYJGTZGG({
+      BT: title,
+      LX: 1,
+      XZQHM: currentUser?.XZQHM,
+      ZT: ['已删除'],
+      page: 0,
+      pageSize: 0
+    });
+    if (resgetXXTZGG.status === 'ok') {
+      setDataSource(resgetXXTZGG.data?.rows);
+    }
+  };
   const columns: ProColumns<TableListItem>[] = [
     {
       title: '序号',
@@ -120,36 +137,37 @@ const RecycleBin = () => {
     ongetXXTZGG();
   }, []);
 
+  useEffect(() => {
+    getData();
+  }, [title])
+
   return (
     <ProTable<any>
-      headerTitle="回收站"
       actionRef={actionRef}
       className={styles.proTableStyles}
       rowKey="id"
       tableAlertRender={false}
+      columns={columns}
       dataSource={dataSource}
       pagination={{
         showQuickJumper: true,
         pageSize: 10,
         defaultCurrent: 1
       }}
-      scroll={{ x: 1000 }}
-      request={async (params, sorter, filter) => {
-        // 表单搜索项会从 params 传入，传递给后端接口。
-        const resgetXXTZGG = await getJYJGTZGG({
-          BT: params.BT,
-          LX: 1,
-          XZQHM: currentUser?.XZQHM,
-          ZT: ['已删除'],
-          page: 0,
-          pageSize: 0
-        });
-        if (resgetXXTZGG.status === 'ok') {
-          setDataSource(resgetXXTZGG.data?.rows);
-        }
-        return '';
-      }}
-      columns={columns}
+      scroll={{ x: getTableWidth(columns) }}
+      search={false}
+      headerTitle={
+        <>
+          <SearchLayout>
+            <div>
+              <label htmlFor='kcname'>标题：</label>
+              <Search placeholder="请输入" allowClear onSearch={(value: string) => {
+                setTitle(value);
+              }} />
+            </div>
+          </SearchLayout>
+        </>
+      }
     />
   );
 };
