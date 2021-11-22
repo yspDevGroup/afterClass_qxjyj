@@ -473,3 +473,20 @@ export const getData = async (bjid: string, xsId?: string) => {
     status: 'nothing',
   };
 };
+
+export const getTableWidth = (columns: any[]) => {
+  if (columns.length > 0) {
+    let sum: number = 0;
+    columns.forEach(({ width }) => {
+      if (Number.isFinite(width)) {
+        sum += width;
+      } else {
+        // 如果width 不是number类型默认家100
+        sum += 100;
+      }
+    });
+    // console.log('列表宽度',sum);
+    return sum;
+  }
+  return 1300;
+};

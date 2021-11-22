@@ -62,3 +62,24 @@
     }
   }
 }
+
+.searchLayout {
+  :global(.ant-space-item) {
+    >div {
+      label {
+        display: inline-block;
+        font-size: 14px;
+        line-height: 32px;
+        vertical-align: middle;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        &+* {
+          width: 160px;
+        }
+      }
+    }
+  }
+}
+

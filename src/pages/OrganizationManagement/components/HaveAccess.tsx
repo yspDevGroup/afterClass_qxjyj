@@ -6,16 +6,19 @@
  * @LastEditors: Please set LastEditors
  */
 import React, { useEffect, useRef, useState } from 'react';
-import { Col, message, Popconfirm, Row, Tabs, Image, Modal, Form, Input } from 'antd';
+import { message, Modal, Form, Input } from 'antd';
 import type { ActionType, ProColumns, RequestData } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { TableListItem, TableListParams } from '../data';
 import styles from '../index.less';
-import { blockKHJGRZSQ, getKHJGRZSQ, updateKHJGRZSQ } from '@/services/after-class-qxjyj/khjgrzsq';
+import { blockKHJGRZSQ, updateKHJGRZSQ } from '@/services/after-class-qxjyj/khjgrzsq';
 import { Link, useModel } from 'umi';
 import { getAllInstitutions, JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
 import { CreateKHJYJSPJL } from '@/services/after-class-qxjyj/khjyjspjl';
+import SearchLayout from '@/components/Search/Layout';
+import { getTableWidth } from '@/utils';
 
+const { Search } = Input;
 const HaveAccess = (props: { Keys: string | undefined }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { Keys } = props;
@@ -24,9 +27,53 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
   const { currentUser } = initialState || {};
   const { username, jyjId, id } = currentUser!;
   const actionRef1 = useRef<ActionType>();
+  const [dataSource, setDataSourse] = useState<any>();
   const [Datas, setDatas] = useState<TableListItem>();
   const [Titles, setTitles] = useState<string>();
   const [XZQUMid, setXZQUMid] = useState<string>();
+  const [JGMC, setJGMC] = useState<string>();
+  const getData = async () => {
+    const resJYJGSJ = await JYJGSJ({ id: jyjId! });
+    setXZQUMid(resJYJGSJ.data.XZQH);
+    if (resJYJGSJ.status === 'ok') {
+      const res = await getAllInstitutions(
+        {
+          ZT: [1],
+          XZQHM: resJYJGSJ.data.XZQH,
+          JGMC: JGMC,
+          LX: 0,
+          page: 0,
+          pageSize: 0
+        },
+      );
+      if (res.status === 'ok') {
+        let newArr: any[] = [];
+        res.data?.rows.forEach((value: any) => {
+          const { QYMC, JGFWFW, LXRXM, LXDH, KHKCSJs } = value;
+          const data = {
+            value,
+            JGMC: QYMC,
+            JGFWFW: JGFWFW,
+            LXRXM: LXRXM,
+            LXRDH: LXDH,
+            KCSL: KHKCSJs.length
+          };
+          newArr.push(data);
+        });
+        setDataSourse(newArr);
+        // if (newArr.length === res.data?.rows.length) {
+        //   return {
+        //     data: newArr,
+        //     total: res.data?.count,
+        //     success: true
+        //   };
+        // }
+      } else {
+        message.error(res.message);
+        return {};
+      }
+    }
+  };
   useEffect(() => {
     actionRef1?.current?.reload();
   }, [Keys]);
@@ -36,6 +83,10 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       form.resetFields();
     }, 50);
   }, [isModalVisible]);
+
+  useEffect(()=>{
+    getData();
+  },[JGMC]);
   const handleOk = () => {
     form.submit();
   };
@@ -247,6 +298,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
     <div className={styles.OrganizationManagement}>
       <ProTable<any>
         columns={columns}
+        dataSource={dataSource}
         rowKey="key"
         actionRef={actionRef1}
         pagination={{
@@ -254,74 +306,24 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
           pageSize: 10,
           defaultCurrent: 1
         }}
-        scroll={{ x: 1300 }}
+        scroll={{ x: getTableWidth(columns) }}
         search={false}
         options={{
           setting: false,
           fullScreen: false,
           density: false,
           reload: false,
-          search: {
-            placeholder: '搜索机构名称'
-          }
         }}
-        request={async (
-          params: TableListItem & {
-            pageSize?: number;
-            current?: number;
-            keyword?: string;
-          },
-          sort,
-          filter
-        ): Promise<Partial<RequestData<TableListItem>>> => {
-          // 表单搜索项会从 params 传入，传递给后端接口。
-          const opts: TableListParams = {
-            ...params,
-            sorter: sort && Object.keys(sort).length ? sort : undefined
-          };
-          const resJYJGSJ = await JYJGSJ({ id: jyjId! });
-          setXZQUMid(resJYJGSJ.data.XZQH);
-          if (resJYJGSJ.status === 'ok') {
-            const res = await getAllInstitutions(
-              {
-                ZT: [1],
-                XZQHM: resJYJGSJ.data.XZQH,
-                JGMC: typeof opts.keyword === 'undefined' ? '' : opts.keyword,
-                LX: 0,
-                page: 0,
-                pageSize: 0
-              },
-              opts
-            );
-            if (res.status === 'ok') {
-              let newArr: any[] = [];
-              res.data?.rows.forEach((value: any) => {
-                const { QYMC, JGFWFW, LXRXM, LXDH, KHKCSJs } = value;
-                const data = {
-                  value,
-                  JGMC: QYMC,
-                  JGFWFW: JGFWFW,
-                  LXRXM: LXRXM,
-                  LXRDH: LXDH,
-                  KCSL: KHKCSJs.length
-                };
-                newArr.push(data);
-              });
-              if (newArr.length === res.data?.rows.length) {
-                return {
-                  data: newArr,
-                  total: res.data?.count,
-                  success: true
-                };
-              }
-            } else {
-              message.error(res.message);
-              return {};
-            }
-          }
-
-          return {};
-        }}
+        headerTitle={
+          <SearchLayout>
+            <div>
+              <label htmlFor='type'>机构名称：</label>
+              <Search placeholder="搜索机构名称" allowClear onSearch={(value: string) => {
+                setJGMC(value);
+              }} />
+            </div>
+          </SearchLayout>
+        }
         dateFormatter="string"
         toolBarRender={() => []}
       />

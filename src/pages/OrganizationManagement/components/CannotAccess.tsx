@@ -17,7 +17,10 @@ import moment from 'moment';
 import { getAllInstitutions, JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
 import { updateKHJYJG } from '@/services/after-class-qxjyj/khjyjg';
 import { CreateKHJYJSPJL } from '@/services/after-class-qxjyj/khjyjspjl';
+import SearchLayout from '@/components/Search/Layout';
+import { getTableWidth } from '@/utils';
 
+const { Search } = Input;
 const CannotAccess = (props: { Keys: string | undefined }) => {
   const { Keys } = props;
   const actionRef2 = useRef<ActionType>();
@@ -26,14 +29,64 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
   const { username, id, jyjId } = currentUser!;
+  const [XZQUMid, setXZQUMid] = useState<string>();
+  const [dataSource, setDataSourse] = useState<any>();
   const [Datas, setDatas] = useState<TableListItem>();
-  console.log(Datas);
+  const [JGMC, setJGMC] = useState<string>();
+
+  const getData = async () => {
+    const resJYJGSJ = await JYJGSJ({ id: jyjId! });
+    setXZQUMid(resJYJGSJ.data.XZQH);
+    if (resJYJGSJ.status === 'ok') {
+      const res = await getAllInstitutions(
+        {
+          ZT: [0],
+          LX: 0,
+          XZQHM: resJYJGSJ.data.XZQH,
+          JGMC: JGMC,
+          page: 0,
+          pageSize: 0
+        }
+      );
+      if (res.status === 'ok') {
+        let newArr: any[] = [];
+        res.data?.rows.forEach((value: any) => {
+          const { QYMC, JGFWFW, LXRXM, LXDH, KHKCSJs } = value;
+          const data = {
+            value,
+            JGMC: QYMC,
+            JGFWFW: JGFWFW,
+            LXRXM: LXRXM,
+            LXRDH: LXDH,
+            KCSL: KHKCSJs.length
+          };
+          newArr.push(data);
+        });
+        setDataSourse(newArr);
+        // if (newArr.length === res.data?.rows.length) {
+        //   return {
+        //     data: newArr,
+        //     total: res.data?.count,
+        //     success: true
+        //   };
+        // }
+      } else {
+        message.error(res.message);
+        return {};
+      }
+    }
+  };
 
   useEffect(() => {
     setTimeout(() => {
       form.resetFields();
     }, 50);
   }, [isModalVisible]);
+
+  useEffect(() => {
+    getData();
+  }, [JGMC]);
+
   const handleOk = () => {
     form.submit();
   };
@@ -211,6 +264,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
     <div className={styles.OrganizationManagement}>
       <ProTable<any>
         columns={columns}
+        dataSource={dataSource}
         actionRef={actionRef2}
         rowKey="key"
         pagination={{
@@ -218,73 +272,24 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
           pageSize: 10,
           defaultCurrent: 1
         }}
-        scroll={{ x: 1100 }}
+        scroll={{ x: getTableWidth(columns) }}
         search={false}
         options={{
           setting: false,
           fullScreen: false,
           density: false,
           reload: false,
-          search: {
-            placeholder: '搜索机构名称'
-          }
         }}
-        request={async (
-          params: TableListItem & {
-            pageSize?: number;
-            current?: number;
-            keyword?: string;
-          },
-          sort,
-          filter
-        ): Promise<Partial<RequestData<TableListItem>>> => {
-          // 表单搜索项会从 params 传入，传递给后端接口。
-          const opts: TableListParams = {
-            ...params,
-            sorter: sort && Object.keys(sort).length ? sort : undefined
-          };
-          const resJYJGSJ = await JYJGSJ({ id: jyjId! });
-          if (resJYJGSJ.status === 'ok') {
-            const res = await getAllInstitutions(
-              {
-                ZT: [0],
-                LX: 0,
-                XZQHM: resJYJGSJ.data.XZQH,
-                JGMC: typeof opts.keyword === 'undefined' ? '' : opts.keyword,
-                page: 0,
-                pageSize: 0
-              },
-              opts
-            );
-            if (res.status === 'ok') {
-              let newArr: any[] = [];
-              res.data?.rows.forEach((value: any) => {
-                const { QYMC, JGFWFW, LXRXM, LXDH, KHKCSJs } = value;
-                const data = {
-                  value,
-                  JGMC: QYMC,
-                  JGFWFW: JGFWFW,
-                  LXRXM: LXRXM,
-                  LXRDH: LXDH,
-                  KCSL: KHKCSJs.length
-                };
-                newArr.push(data);
-              });
-              if (newArr.length === res.data?.rows.length) {
-                return {
-                  data: newArr,
-                  total: res.data?.count,
-                  success: true
-                };
-              }
-            } else {
-              message.error(res.message);
-              return {};
-            }
-          }
-
-          return {};
-        }}
+        headerTitle={
+          <SearchLayout>
+            <div>
+              <label htmlFor='type'>机构名称：</label>
+              <Search placeholder="搜索机构名称" allowClear onSearch={(value: string) => {
+                setJGMC(value);
+              }} />
+            </div>
+          </SearchLayout>
+        }
         dateFormatter="string"
         toolBarRender={() => []}
       />
