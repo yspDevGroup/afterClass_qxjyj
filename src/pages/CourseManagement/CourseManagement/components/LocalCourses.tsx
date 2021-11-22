@@ -1,23 +1,41 @@
 /* eslint-disable max-params */
 
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { history, Link } from 'umi';
-import { Button, message, Popconfirm, Space, Tag } from 'antd';
+import { Button, Input, message, Popconfirm, Select, Space, Tag } from 'antd';
 import EllipsisHint from '@/components/EllipsisHint';
 import ProTable, { ActionType } from '@ant-design/pro-table';
-
 import { getAllCourses2, updateKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
+import { getTableWidth } from '@/utils';
+import SearchLayout from '@/components/Search/Layout';
 
 /**
  * 本区课程
  * @returns
  */
+const { Option } = Select;
+const { Search } = Input;
 const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
   const { JYYData, reload } = props;
   const actionRef = useRef<ActionType>();
+  const [dataSource, setDataSourse] = useState<any[]>([]);
+  const [KCName, setKCName] = useState<string>();
+  const [KCLY, setKCLY] = useState<string>();
   if (reload) {
     actionRef.current?.reload();
   }
+  const getData = async () => {
+    const res = await getAllCourses2({
+      KCMC: KCName,
+      KCLY: KCLY,
+      XZQHM: JYYData?.XZQH,
+      page: 0,
+      pageSize: 0
+    });
+    if (res.status === 'ok') {
+      setDataSourse(res.data?.rows);
+    }
+  };
   const columns: any[] = [
     {
       title: '序号',
@@ -120,8 +138,8 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
             text={
               text?.length
                 ? text.map((item: any) => {
-                    return <Tag key={item.id}>{`${item.XD}${item.NJMC}`}</Tag>;
-                  })
+                  return <Tag key={item.id}>{`${item.XD}${item.NJMC}`}</Tag>;
+                })
                 : ''
             }
           />
@@ -189,10 +207,16 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
       )
     }
   ];
+
+  useEffect(() => {
+    getData();
+  }, [KCName, KCLY])
+
   return (
     <div>
       <ProTable
         actionRef={actionRef}
+        dataSource={dataSource}
         columns={columns}
         rowKey="id"
         dateFormatter="string"
@@ -201,36 +225,38 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
           pageSize: 10,
           defaultCurrent: 1
         }}
-        scroll={{ x: 1100 }}
-        request={async (param = {}, sort, filter) => {
-          if (JYYData?.XZQH) {
-            const params = {
-              ...sort,
-              ...filter,
-              page: param.current,
-              pageSize: param.pageSize,
-              XZQHM: JYYData?.XZQH,
-              KCMC: param.KCMC,
-              KCLY: param.SSJGLX
-            };
-            const res = await getAllCourses2(params);
-            console.log('res', res);
-            if (res.status === 'ok') {
-              return {
-                data: res.data.rows,
-                success: true,
-                total: res.data.count
-              };
-            } else {
-              return {
-                data: [],
-                success: false,
-                total: 0
-              };
-            }
-          }
-          return [];
-        }}
+        search={false}
+        scroll={{ x: getTableWidth(columns) }}
+        headerTitle={
+          <>
+            <SearchLayout>
+              <div>
+                <label htmlFor='kcname'>课程名称：</label>
+                <Search placeholder="课程名称" allowClear onSearch={(value: string) => {
+                  setKCName(value);
+                }} />
+              </div>
+              <div>
+                <label htmlFor='kcly'>课程来源：</label>
+                <Select
+                  allowClear
+                  placeholder="课程来源"
+                  onChange={(value) => {
+                    setKCLY(value);
+                  }}
+                  value={KCLY}
+                >
+                  <Option value='校内课程' key='校内课程'>
+                    校内课程
+                  </Option>
+                  <Option value='机构课程' key='机构课程'>
+                    机构课程
+                  </Option>
+                </Select>
+              </div>
+            </SearchLayout>
+          </>
+        }
         options={{
           setting: false,
           fullScreen: false,
@@ -244,3 +270,7 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
 
 LocalCourses.wrappers = ['@/wrappers/auth'];
 export default LocalCourses;
+function useModel(arg0: string): { initialState: any; } {
+  throw new Error('Function not implemented.');
+}
+

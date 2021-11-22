@@ -1,27 +1,42 @@
 /* eslint-disable @typescript-eslint/no-duplicate-imports */
 /* eslint-disable max-params */
 
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { history } from 'umi';
-import { Button, message, Popconfirm, Space, Tag } from 'antd';
+import { Button, Input, message, Popconfirm, Space, Tag } from 'antd';
 import { useModel } from 'umi';
 import EllipsisHint from '@/components/EllipsisHint';
 import ProTable, { ActionType } from '@ant-design/pro-table';
 import { toIntroduceCourses } from '@/services/after-class-qxjyj/jyjgsj';
 import { updateKHKCSJ } from '@/services/after-class-qxjyj/khkcsj';
+import { getTableWidth } from '@/utils';
+import SearchLayout from '@/components/Search/Layout';
 
 /**
  * 待引入课程
  * @returns
  */
+const { Search } = Input;
 const CoursesIntroduced = (props: { JYYData: any; reload: boolean }) => {
   const { JYYData, reload } = props;
   const { initialState } = useModel('@@initialState');
-  const { currentUser } = initialState || {};
   const actionRef = useRef<ActionType>();
+  const [dataSource, setDataSourse] = useState<any[]>([]);
+  const [KCName, setKCName] = useState<string>();
   if (!reload) {
     actionRef.current?.reload();
   }
+  const getData = async () => {
+    const res = await toIntroduceCourses({
+      KCMC: KCName,
+      XZQHM: JYYData?.XZQH,
+      page: 0,
+      pageSize: 0
+    });
+    if (res.status === 'ok') {
+      setDataSourse(res.data?.rows);
+    }
+  };
   const columns: any[] = [
     {
       title: '序号',
@@ -137,11 +152,17 @@ const CoursesIntroduced = (props: { JYYData: any; reload: boolean }) => {
       )
     }
   ];
+
+  useEffect(() => {
+    getData();
+  }, [KCName])
+
   return (
     <div>
       <ProTable
         actionRef={actionRef}
         columns={columns}
+        dataSource={dataSource}
         rowKey="id"
         dateFormatter="string"
         pagination={{
@@ -149,31 +170,20 @@ const CoursesIntroduced = (props: { JYYData: any; reload: boolean }) => {
           pageSize: 10,
           defaultCurrent: 1
         }}
-        scroll={{ x: 1200 }}
-        request={async (param = {}, sort, filter) => {
-          const params = {
-            ...sort,
-            ...filter,
-            page: param.current,
-            pageSize: param.pageSize,
-            XZQHM: JYYData.XZQH,
-            KCMC: param.KCMC
-          };
-          const res = await toIntroduceCourses(params);
-          if (res.status === 'ok') {
-            return {
-              data: res.data.rows,
-              success: true,
-              total: res.data.count
-            };
-          } else {
-            return {
-              data: [],
-              success: false,
-              total: 0
-            };
-          }
-        }}
+        search={false}
+        scroll={{ x: getTableWidth(columns) }}
+        headerTitle={
+          <>
+            <SearchLayout>
+              <div>
+                <label htmlFor='kcname'>课程名称：</label>
+                <Search placeholder="课程名称" allowClear onSearch={(value: string) => {
+                  setKCName(value);
+                }} />
+              </div>
+            </SearchLayout>
+          </>
+        }
         options={{
           setting: false,
           fullScreen: false,
