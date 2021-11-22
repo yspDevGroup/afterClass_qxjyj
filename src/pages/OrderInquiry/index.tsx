@@ -6,15 +6,16 @@
  * @LastEditors: Sissle Lynn
  */
 
-import ProTable, { ActionType, ProColumns, RequestData } from '@ant-design/pro-table';
+import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Select, Space, Tag } from 'antd';
+import { Select, Space, Tag } from 'antd';
 import { Link, useModel } from 'umi';
 import { getAllSchools } from '@/services/after-class-qxjyj/jyjgsj';
-const { Option } = Select;
-import styles from './index.less';
-import { TableListParams } from '@/constant';
+import { getTableWidth } from '@/utils';
 import EllipsisHint from '@/components/EllipsisHint';
+import SchoolSelect from '@/components/Search/SchoolSelect';
+import SearchLayout from '@/components/Search/Layout';
+
 // 点击查询按钮
 const OrderInquiry = () => {
   const SubmitTable = () => { };
@@ -42,7 +43,7 @@ const OrderInquiry = () => {
       align: 'center',
       width: 130,
       search: false,
-      render: (_: any,record: any) => {
+      render: (_: any, record: any) => {
         const data = record?.XD?.split(/,/g);
         return (
           <EllipsisHint
@@ -131,50 +132,37 @@ const OrderInquiry = () => {
   const { currentUser } = initialState || {};
   // 列表对象引用，可主动执行刷新等操作
   const actionRef = useRef<ActionType>();
-  const [SchoolList, setSchoolList] = useState<any>([]);
   const [curSchool, setCurSchool] = useState<string>();
+  const [dataSource, setDataSourse] = useState<any>();
 
-  useEffect(() => {
-    (async () => {
-      const res2 = await getAllSchools({
-        XZQHM: currentUser?.XZQHM,
-        page: 0,
-        pageSize: 0
-      });
-      if (res2.data?.rows?.length) {
-        setSchoolList(res2.data.rows);
-      }
-    })();
-  }, []);
+  const getData = async () => {
+    const res = await getAllSchools({
+      XZQHM: currentUser?.XZQHM,
+      XXMC: curSchool || "",
+      page: 0,
+      pageSize: 0
+    });
+    if (res.status === 'ok') {
+      setDataSourse(res.data?.rows);
+    }
+  };
+
+  const schoolChange = (val: string) => {
+    setCurSchool(val);
+    actionRef.current?.reload();
+  }
+
+  useEffect(()=>{
+    getData();
+  },[curSchool])
 
   return (
     <>
-      <div className={styles.searchs}>
-        <span>
-          学校名称：
-          <Select
-            style={{ width: 200 }}
-            onChange={(value: string) => {
-              setCurSchool(value);
-              actionRef.current?.reload();
-            }}
-            allowClear
-          >
-            {SchoolList.map((item: any) => {
-              return (
-                <Option value={item.XXMC} key={item.XXMC}>
-                  {item.XXMC}
-                </Option>
-              );
-            })}
-          </Select>
-        </span>
-      </div>
-
       <ProTable
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         onSubmit={SubmitTable}
         columns={columns}
+        dataSource={dataSource}
         actionRef={actionRef}
         search={false}
         pagination={{
@@ -182,43 +170,18 @@ const OrderInquiry = () => {
           pageSize: 10,
           defaultCurrent: 1,
         }}
-        scroll={{ x: 1000 }}
+        scroll={{ x: getTableWidth(columns) }}
         options={{
           setting: false,
           fullScreen: false,
           density: false,
           reload: false
         }}
-        request={async (
-          params: any & {
-            pageSize?: number;
-            current?: number;
-            keyword?: string;
-          },
-          sort,
-          filter,
-        ): Promise<Partial<RequestData<any>>> => {
-          // 表单搜索项会从 params 传入，传递给后端接口。
-          const opts: TableListParams = {
-            ...params,
-            sorter: sort && Object.keys(sort).length ? sort : undefined,
-            filter,
-          };
-          const res = await getAllSchools({
-            XZQHM: currentUser?.XZQHM,
-            XXMC: curSchool || "",
-            page: 0,
-            pageSize: 0
-          });
-          if (res.status === 'ok') {
-            return {
-              data: res.data?.rows,
-              total: res.data?.count,
-              success: true,
-            };
-          }
-          return {};
-        }}
+        headerTitle={
+          <SearchLayout>
+            <SchoolSelect onChange={schoolChange} />
+          </SearchLayout>
+        }
       />
     </>
   );

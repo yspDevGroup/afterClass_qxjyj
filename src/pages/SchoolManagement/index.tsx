@@ -5,7 +5,7 @@
  * @LastEditTime: 2021-10-26 15:45:20
  * @LastEditors: Please set LastEditors
  */
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ProTable, { RequestData } from '@ant-design/pro-table';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import { Link, useModel } from 'umi';
@@ -13,7 +13,10 @@ import { Link, useModel } from 'umi';
 import styles from './index.less';
 import { TableListParams } from '@/constant';
 import { KHHZXYSJ } from './data';
+import { getTableWidth } from '@/utils';
 import { getAllSchools, JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
+import SchoolSelect from '@/components/Search/SchoolSelect';
+import SearchLayout from '@/components/Search/Layout';
 
 const SchoolManagement = () => {
   const { initialState } = useModel('@@initialState');
@@ -105,10 +108,36 @@ const SchoolManagement = () => {
     }
   ];
 
+  const [curSchool, setCurSchool] = useState<string>();
+  const [dataSource, setDataSourse] = useState<any>();
+
+  const getData = async () => {
+    const resJYJGSJ = await JYJGSJ({ id: currentUser!.jyjId! });
+    const resgetAllSchools = await getAllSchools({
+      XZQHM: resJYJGSJ.data.XZQH,
+      XXMC: curSchool || "",
+      page: 0,
+      pageSize: 0
+    });
+    if (resgetAllSchools.status === 'ok') {
+      setDataSourse(resgetAllSchools.data?.rows);
+    }
+  };
+
+  const schoolChange = (val: string) => {
+    setCurSchool(val);
+    actionRef.current?.reload();
+  }
+
+  useEffect(() => {
+    getData();
+  }, [curSchool])
+
   return (
     <div className={styles.SchoolManagement}>
       <ProTable<KHHZXYSJ>
         columns={columns}
+        dataSource={dataSource}
         className={styles.schoolTable}
         actionRef={actionRef}
         search={false}
@@ -117,46 +146,17 @@ const SchoolManagement = () => {
           pageSize: 10,
           defaultCurrent: 1
         }}
-        scroll={{ x: 1300 }}
-        request={async (
-          params: KHHZXYSJ & {
-            pageSize?: number;
-            current?: number;
-            keyword?: string;
-          },
-          sort,
-          filter
-        ): Promise<Partial<RequestData<KHHZXYSJ>>> => {
-          // 表单搜索项会从 params 传入，传递给后端接口。
-          const opts: TableListParams = {
-            ...params,
-            sorter: sort && Object.keys(sort).length ? sort : undefined,
-            filter
-          };
-          const resJYJGSJ = await JYJGSJ({ id: currentUser!.jyjId! });
-          const resgetAllSchools = await getAllSchools({
-            XZQHM: resJYJGSJ.data.XZQH,
-            XXMC: opts.keyword,
-            page: 0,
-            pageSize: 0
-          });
-          if (resgetAllSchools.status === 'ok') {
-            return {
-              data: resgetAllSchools.data?.rows,
-              total: resgetAllSchools.data.count,
-              success: true
-            };
-          }
-          return {};
-        }}
+        scroll={{ x: getTableWidth(columns) }}
+        headerTitle={
+          <SearchLayout>
+            <SchoolSelect onChange={schoolChange} />
+          </SearchLayout>
+        }
         options={{
           setting: false,
           fullScreen: false,
           density: false,
           reload: false,
-          search: {
-            placeholder: '学校名称'
-          }
         }}
         rowKey="id"
         dateFormatter="string"
