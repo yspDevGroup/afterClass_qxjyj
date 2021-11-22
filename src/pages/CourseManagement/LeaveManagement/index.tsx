@@ -1,39 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
-import { getAllAbsences } from '@/services/after-class-qxjyj/khxsqj';
 // import { message } from 'antd';
 import { Link, useModel } from 'umi';
-import { Select } from 'antd';
 import Style from './index.less';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { getAllSchools, getSchoolsQJ } from '@/services/after-class-qxjyj/jyjgsj';
+import { getTableWidth } from '@/utils';
+import { getSchoolsQJ } from '@/services/after-class-qxjyj/jyjgsj';
+import SchoolSelect from '@/components/Search/SchoolSelect';
+import SearchLayout from '@/components/Search/Layout';
 
-const { Option } = Select;
 const LeaveManagement = () => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
   const actionRef = useRef<ActionType>();
-
-  const [XXMC, setXXMC] = useState<string>();
-  const [XXId, setXXId] = useState<any>();
-  const [SchoolData, setSchoolData] = useState<any>();
-
-  useEffect(() => {
-    actionRef.current?.reload();
-  }, [XXId]);
-
-  useEffect(() => {
-    (async () => {
-      const res = await getAllSchools({
-        XZQHM: currentUser?.XZQHM,
-        page: 0,
-        pageSize: 0
-      });
-      if (res.status === 'ok') {
-        setSchoolData(res.data.rows);
-      }
-    })();
-  }, []);
 
   // table表格数据
   const columns: ProColumns<any>[] = [
@@ -111,71 +90,50 @@ const LeaveManagement = () => {
       }
     }
   ];
+
+  const [curSchool, setCurSchool] = useState<string>();
+  const [dataSource, setDataSourse] = useState<any>();
+
+  const getData = async () => {
+    const resAll = await getSchoolsQJ({
+      XZQHM: currentUser?.XZQHM,
+      XXJBSJId: curSchool,
+      page: 0,
+      pageSize: 0
+    });
+    if (resAll.status === 'ok') {
+      setDataSourse(resAll.data?.rows);
+    }
+  };
+
+  const schoolChange = (val: string, auth: any) => {
+    setCurSchool(auth.key);
+    actionRef.current?.reload();
+  }
+
+  useEffect(()=>{
+    getData();
+  },[curSchool])
+
   return (
     <>
       <div className={Style.bodyContainer}>
-        <div className={Style.TopSearchs}>
-          <span>
-            学校名称：
-            <Select
-              value={XXMC || ''}
-              showSearch
-              style={{ width: 200 }}
-              onChange={(value: string, key: any) => {
-                setXXMC(value);
-                setXXId(key?.key);
-                actionRef?.current?.reload();
-              }}
-            >
-              <Option key="" value="">
-                全部
-              </Option>
-              {SchoolData?.map((item: any) => {
-                return (
-                  <Option key={item.id} value={item.XXMC}>
-                    {item.XXMC}
-                  </Option>
-                );
-              })}
-            </Select>
-          </span>
-        </div>
         <ProTable<any>
           actionRef={actionRef}
           columns={columns}
+          dataSource={dataSource}
           rowKey="id"
           pagination={{
             showQuickJumper: true,
             pageSize: 10,
             defaultCurrent: 1
           }}
-          scroll={{ x: 900 }}
-          request={async () => {
-            const resAll = await getSchoolsQJ({
-              XZQHM: currentUser?.XZQHM,
-              XXJBSJId: XXId,
-              page: 0,
-              pageSize: 0
-            });
-            if (resAll.status === 'ok') {
-              return {
-                data: resAll?.data?.rows,
-                success: true,
-                total: resAll?.data?.count
-              };
-            }
-            return {
-              data: [],
-              success: false,
-              total: 0
-            };
-          }}
-          options={{
-            setting: false,
-            fullScreen: false,
-            density: false,
-            reload: false
-          }}
+          scroll={{ x: getTableWidth(columns) }}
+          headerTitle={
+            <SearchLayout>
+              <SchoolSelect onChange={schoolChange} />
+            </SearchLayout>
+          }
           search={false}
         />
       </div>

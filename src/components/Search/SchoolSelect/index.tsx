@@ -8,7 +8,7 @@ const { Option } = Select;
 
 type SemesterSelectProps = {
   XXJBSJId?: string;
-  onChange?: (val: string) => void;
+  onChange?: (val: string, auth: any) => void;
 };
 const SchoolSelect: FC<SemesterSelectProps> = ({ onChange, XXJBSJId }) => {
   const { initialState } = useModel('@@initialState');
@@ -35,9 +35,9 @@ const SchoolSelect: FC<SemesterSelectProps> = ({ onChange, XXJBSJId }) => {
       <Select
         value={XXMC || ''}
         allowClear
-        onChange={(value: string) => {
+        onChange={(value: string, auth: any) => {
           setXXMC(value);
-          onChange?.(value);
+          onChange?.(value, auth);
         }}
       >
         <Option key="" value="">
@@ -45,7 +45,7 @@ const SchoolSelect: FC<SemesterSelectProps> = ({ onChange, XXJBSJId }) => {
         </Option>
         {SchoolList?.map((item: any) => {
           return (
-            <Option key={item.XXMC} value={item.XXMC}>
+            <Option key={item.id} value={item.XXMC}>
               {item.XXMC}
             </Option>
           );

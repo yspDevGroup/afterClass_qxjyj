@@ -1,37 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useModel } from 'umi';
-import { Select } from 'antd';
 import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
-import { getAllSchools, getSchoolsTK } from '@/services/after-class-qxjyj/jyjgsj';
+import { getSchoolsTK } from '@/services/after-class-qxjyj/jyjgsj';
 import Style from './index.less';
+import { getTableWidth } from '@/utils';
+import SchoolSelect from '@/components/Search/SchoolSelect';
+import SearchLayout from '@/components/Search/Layout';
 
-const { Option } = Select;
 // 退课
 const ReimbursementClass = () => {
   // 获取到当前学校的一些信息
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
   const actionRef = useRef<ActionType>();
-  const [XXId, setXXId] = useState<any>();
-  const [XXMC, setXXMC] = useState<string>();
-  const [SchoolData, setSchoolData] = useState<any>();
 
-  useEffect(() => {
-    actionRef.current?.reload();
-  }, [XXId]);
-
-  useEffect(() => {
-    (async () => {
-      const res = await getAllSchools({
-        XZQHM: currentUser?.XZQHM,
-        page: 0,
-        pageSize: 0
-      });
-      if (res.status === 'ok') {
-        setSchoolData(res.data.rows);
-      }
-    })();
-  }, []);
   // table表格数据
   const columns: ProColumns<any>[] = [
     {
@@ -108,69 +90,51 @@ const ReimbursementClass = () => {
       }
     }
   ];
+
+  const [curSchool, setCurSchool] = useState<string>();
+  const [dataSource, setDataSourse] = useState<any>();
+
+  const getData = async () => {
+    const resAll = await getSchoolsTK({
+      XZQHM: currentUser?.XZQHM,
+      XXJBSJId: curSchool,
+      isTK: false,
+      pageSize: 0,
+      page: 0
+    });
+    if (resAll.status === 'ok') {
+      setDataSourse(resAll.data?.rows);
+    }
+  };
+
+  const schoolChange = (val: string, auth: any) => {
+    setCurSchool(auth.key);
+    actionRef.current?.reload();
+  }
+
+  useEffect(()=>{
+    getData();
+  },[curSchool])
+
   return (
     <>
       <div className={Style.bodyContainer}>
-        <div className={Style.TopSearchs}>
-          <span>
-            学校名称：
-            <Select
-              value={XXMC || ''}
-              showSearch
-              style={{ width: 200 }}
-              onChange={(value: string, key: any) => {
-                setXXMC(value);
-                setXXId(key?.key);
-                if (value === '') {
-                  setXXId(null);
-                }
-                actionRef?.current?.reload();
-              }}
-            >
-              <Option key="" value="">
-                全部
-              </Option>
-              {SchoolData?.map((item: any) => {
-                return (
-                  <Option key={item.id} value={item.XXMC}>
-                    {item.XXMC}
-                  </Option>
-                );
-              })}
-            </Select>
-          </span>
-        </div>
         <ProTable<any>
           actionRef={actionRef}
           columns={columns}
+          dataSource={dataSource}
           rowKey="id"
           pagination={{
             showQuickJumper: true,
             pageSize: 10,
             defaultCurrent: 1
           }}
-          scroll={{ x: 800 }}
-          request={async () => {
-            const resAll = await getSchoolsTK({
-              XZQHM: currentUser?.XZQHM,
-              XXJBSJId: XXId,
-              isTK: false,
-              pageSize: 0,
-              page: 0
-            });
-            if (resAll.status === 'ok') {
-              return {
-                data: resAll?.data?.rows,
-                success: true,
-                total: resAll?.data?.count
-              };
-            }
-            return {
-              data: [],
-              success: false,
-              total: 0
-            };
-          }}
+          scroll={{ x: getTableWidth(columns) }}
+          headerTitle={
+            <SearchLayout>
+              <SchoolSelect onChange={schoolChange} />
+            </SearchLayout>
+          }
           options={{
             setting: false,
             fullScreen: false,
