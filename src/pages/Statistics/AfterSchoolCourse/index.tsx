@@ -222,7 +222,6 @@ const AfterSchoolCourse = () => {
                   <label htmlFor='kctype'>课程类型：</label>
                   <Select
                     allowClear
-                    style={{ width: 200 }}
                     onChange={(value: string) => {
                       setKCLX(value);
                     }}

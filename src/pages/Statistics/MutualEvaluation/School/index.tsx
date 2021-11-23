@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import ProTable, { ActionType, ProColumns, RequestData } from '@ant-design/pro-table';
+import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
 import { Button, Input, Rate, Space, Tag } from 'antd';
 import { Link, useModel } from 'umi';
 import { LeftOutlined } from '@ant-design/icons';
 import { getSchoolCoursesEvaluation } from '@/services/after-class-qxjyj/jyjgsj';
 import styles from '../index.less';
-import { TableListParams } from '@/constant';
 import EllipsisHint from '@/components/EllipsisHint';
+import { getTableWidth } from '@/utils';
+import SearchLayout from '@/components/Search/Layout';
 
 const { Search } = Input;
 // 点击查询按钮
@@ -130,6 +131,7 @@ const OrderInquiry = (props: any) => {
   useEffect(() => {
     ChoseSelect();
   }, [curSchool]);
+
   return (
     <>
       <Button
@@ -144,20 +146,7 @@ const OrderInquiry = (props: any) => {
         <LeftOutlined />
         返回上一页
       </Button>
-      <div className={styles.searchs}>
-        <span>
-          学校名称：
-          <Search
-            allowClear
-            style={{ width: 200 }}
-            onSearch={(val) => {
-              setCurSchool(val);
-            }}
-          />
-        </span>
-      </div>
       <ProTable
-        headerTitle={KCMC}
         columns={columns}
         actionRef={actionRef}
         search={false}
@@ -172,8 +161,21 @@ const OrderInquiry = (props: any) => {
           pageSize: 10,
           defaultCurrent: 1
         }}
-        scroll={{ x: 1000 }}
+        scroll={{ x: getTableWidth(columns) }}
         dataSource={dataSource}
+        headerTitle={
+          <SearchLayout>
+            <div>
+              <label htmlFor='xxmc'>学校名称：</label>
+              <Search
+                allowClear
+                onSearch={(val) => {
+                  setCurSchool(val);
+                }}
+              />
+            </div>
+          </SearchLayout>
+        }
       />
     </>
   );

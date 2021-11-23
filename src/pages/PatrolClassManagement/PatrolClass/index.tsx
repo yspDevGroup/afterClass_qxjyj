@@ -1,13 +1,14 @@
 
 
-import ProTable, { ActionType, ProColumns, RequestData } from '@ant-design/pro-table';
+import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Select, Space } from 'antd';
+import { Select, Space } from 'antd';
 import { Link, useModel } from 'umi';
 import { getAllSchools } from '@/services/after-class-qxjyj/jyjgsj';
-const { Option } = Select;
+import { getTableWidth } from '@/utils';
+import SearchLayout from '@/components/Search/Layout';
 
-import { TableListParams } from '@/constant';
+const { Option } = Select;
 // 点击查询按钮
 const PatrolClass = () => {
   const SubmitTable = () => { };
@@ -76,7 +77,7 @@ const PatrolClass = () => {
             >
               详情
             </Link>
-        
+
           </Space>
         );
       }
@@ -88,6 +89,19 @@ const PatrolClass = () => {
   const actionRef = useRef<ActionType>();
   const [SchoolList, setSchoolList] = useState<any>([]);
   const [curSchool, setCurSchool] = useState<string>();
+  const [dataSource, setDataSourse] = useState<any[]>([]);
+
+  const getData = async () => {
+    const res = await getAllSchools({
+      XZQHM: currentUser?.XZQHM,
+      XXMC: curSchool || "",
+      page: 0,
+      pageSize: 0
+    });
+    if (res.status === 'ok') {
+      setDataSourse(res.data?.rows);
+    }
+  };
 
   useEffect(() => {
     (async () => {
@@ -102,35 +116,19 @@ const PatrolClass = () => {
     })();
   }, []);
 
+  useEffect(()=>{
+    getData();
+  },[curSchool])
+
   return (
     <>
-      <div >
-        <span>
-          学校名称：
-          <Select
-            style={{ width: 200 }}
-            onChange={(value: string) => {
-              setCurSchool(value);
-              actionRef.current?.reload();
-            }}
-            allowClear
-          >
-            {SchoolList.map((item: any) => {
-              return (
-                <Option value={item.XXMC} key={item.XXMC}>
-                  {item.XXMC}
-                </Option>
-              );
-            })}
-          </Select>
-        </span>
-      </div>
-
       <ProTable
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         onSubmit={SubmitTable}
         columns={columns}
+        dataSource={dataSource}
         actionRef={actionRef}
+        scroll={{ x: getTableWidth(columns) }}
         search={false}
         options={{
           setting: false,
@@ -138,36 +136,25 @@ const PatrolClass = () => {
           density: false,
           reload: false
         }}
-        request={async (
-          params: any & {
-            pageSize?: number;
-            current?: number;
-            keyword?: string;
-          },
-          sort,
-          filter,
-        ): Promise<Partial<RequestData<any>>> => {
-          // 表单搜索项会从 params 传入，传递给后端接口。
-          const opts: TableListParams = {
-            ...params,
-            sorter: sort && Object.keys(sort).length ? sort : undefined,
-            filter,
-          };
-          const res = await getAllSchools({
-            XZQHM: currentUser?.XZQHM,
-            XXMC: curSchool || "",
-            page: 0,
-            pageSize: 0
-          });
-          if (res.status === 'ok') {
-            return {
-              data: res.data?.rows,
-              total: res.data?.count,
-              success: true,
-            };
-          }
-          return {};
-        }}
+        headerTitle={
+          <SearchLayout>
+            <label htmlFor='xxmc'>学校名称：</label>
+            <Select
+              onChange={(value: string) => {
+                setCurSchool(value);
+              }}
+              allowClear
+            >
+              {SchoolList.map((item: any) => {
+                return (
+                  <Option value={item.XXMC} key={item.XXMC}>
+                    {item.XXMC}
+                  </Option>
+                );
+              })}
+            </Select>
+          </SearchLayout>
+        }
       />
     </>
   );

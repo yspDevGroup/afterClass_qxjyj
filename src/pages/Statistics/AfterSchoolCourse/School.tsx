@@ -10,11 +10,12 @@ import type { ProColumns } from '@ant-design/pro-table';
 import { useModel, Link } from 'umi';
 import { LeftOutlined } from '@ant-design/icons';
 import ProTable from '@ant-design/pro-table';
-import { Button, Input, Select, Tag } from 'antd';
-import { getAllSchools, getClassesByCourse, getCoursesInfo } from '@/services/after-class-qxjyj/jyjgsj';
-
+import { Button, Input, Tag } from 'antd';
+import { getClassesByCourse } from '@/services/after-class-qxjyj/jyjgsj';
 import styles from './index.less';
 import EllipsisHint from '@/components/EllipsisHint';
+import { getTableWidth } from '@/utils';
+import SearchLayout from '@/components/Search/Layout';
 
 const { Search } = Input;
 const School = (props: any) => {
@@ -164,6 +165,7 @@ const School = (props: any) => {
   useEffect(() => {
     ChoseSelect();
   }, [XXMC])
+
   return (
     <>
       <div>
@@ -179,27 +181,14 @@ const School = (props: any) => {
           <LeftOutlined />
           返回上一页
         </Button>
-        <div className={styles.searchs}>
-          <span>
-            学校名称：
-            <Search
-              allowClear
-              style={{ width: 200 }}
-              onSearch={(val) => {
-                setXXMC(val)
-              }}
-            />
-          </span>
-        </div>
         <ProTable
-          headerTitle={KCMC}
           columns={columns}
           pagination={{
             showQuickJumper: true,
             pageSize: 10,
             defaultCurrent: 1,
           }}
-          scroll={{ x: 1200 }}
+          scroll={{ x: getTableWidth(columns) }}
           dataSource={dataSource}
           rowKey="id"
           search={false}
@@ -209,6 +198,19 @@ const School = (props: any) => {
             density: false,
             reload: false,
           }}
+          headerTitle={
+            <SearchLayout>
+              <div>
+                <label htmlFor='xxmc'>学校名称：</label>
+                <Search
+                  allowClear
+                  onSearch={(val) => {
+                    setXXMC(val)
+                  }}
+                />
+              </div>
+            </SearchLayout>
+          }
         />
       </div>
     </>

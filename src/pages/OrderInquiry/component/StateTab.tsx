@@ -219,9 +219,8 @@ const StateTab = (props: any) => {
           headerTitle={
             <SearchLayout>
               <div style={{ marginRight: 20 }}>
-                课程类型：
+                <label htmlFor='kclx'>课程类型：</label>
                 <Select
-                  style={{ width: 200 }}
                   value={kclxValue}
                   allowClear
                   placeholder="请选择"
@@ -244,9 +243,8 @@ const StateTab = (props: any) => {
                 </Select>
               </div>
               <div>
-                课程名称：
+                <label htmlFor='kcmc'>课程名称：</label>
                 <Select
-                  style={{ width: 200 }}
                   value={kcmcValue}
                   allowClear
                   placeholder="请选择"
