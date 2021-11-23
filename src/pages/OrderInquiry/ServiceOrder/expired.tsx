@@ -3,7 +3,6 @@ import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import React, { useEffect, useState } from 'react';
 import { Select } from 'antd';
-const { Option } = Select;
 import { getOrders } from '@/services/after-class-qxjyj/jyjgsj';
 
 import { useModel } from 'umi';
@@ -11,7 +10,10 @@ import styles from './index.less';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
 import { getKHZZFW } from '@/services/after-class-qxjyj/khzzfw';
 import { getKHXXZZFW } from '@/services/after-class-qxjyj/khxxzzfw';
+import { getTableWidth } from '@/utils';
+import SearchLayout from '@/components/Search/Layout';
 
+const { Option } = Select;
 const StateTab = (props: any) => {
   const { DDZT, id } = props.TabState;
   const { initialState } = useModel('@@initialState');
@@ -148,56 +150,6 @@ const StateTab = (props: any) => {
   return (
     <>
       <div>
-        <div className={styles.searchs}>
-          <div>
-            服务类型：
-            <Select
-              style={{ width: 200 }}
-              value={fwlxValue}
-              allowClear
-              placeholder="请选择"
-              onChange={(value) => {
-                setZzfwValue('');
-                setZzfwData([]);
-                setFwlxValue(value);
-              }}
-            >
-              {fwlxData?.map((item: any) => {
-                if (item.value) {
-                  return (
-                    <Option value={item.value} key={item.value}>
-                      {item.label}
-                    </Option>
-                  );
-                }
-                return '';
-              })}
-            </Select>
-          </div>
-          <div>
-            服务名称：
-            <Select
-              style={{ width: 200 }}
-              value={zzfwValue}
-              allowClear
-              placeholder="请选择"
-              onChange={(value) => {
-                setZzfwValue(value);
-              }}
-            >
-              {zzfwData?.map((item: any) => {
-                if (item.value) {
-                  return (
-                    <Option value={item.value} key={item.value}>
-                      {item.label}
-                    </Option>
-                  );
-                }
-                return '';
-              })}
-            </Select>
-          </div>
-        </div>
         <ProTable
           columns={columns}
           pagination={{
@@ -205,7 +157,7 @@ const StateTab = (props: any) => {
             pageSize: 10,
             defaultCurrent: 1
           }}
-          scroll={{ x: 1000 }}
+          scroll={{ x: getTableWidth(columns) }}
           dataSource={dataSource}
           options={{
             setting: false,
@@ -214,6 +166,58 @@ const StateTab = (props: any) => {
             reload: false
           }}
           search={false}
+          headerTitle={
+            <SearchLayout>
+              <div>
+                服务类型：
+                <Select
+                  style={{ width: 200 }}
+                  value={fwlxValue}
+                  allowClear
+                  placeholder="请选择"
+                  onChange={(value) => {
+                    setZzfwValue('');
+                    setZzfwData([]);
+                    setFwlxValue(value);
+                  }}
+                >
+                  {fwlxData?.map((item: any) => {
+                    if (item.value) {
+                      return (
+                        <Option value={item.value} key={item.value}>
+                          {item.label}
+                        </Option>
+                      );
+                    }
+                    return '';
+                  })}
+                </Select>
+              </div>
+              <div>
+                服务名称：
+                <Select
+                  style={{ width: 200 }}
+                  value={zzfwValue}
+                  allowClear
+                  placeholder="请选择"
+                  onChange={(value) => {
+                    setZzfwValue(value);
+                  }}
+                >
+                  {zzfwData?.map((item: any) => {
+                    if (item.value) {
+                      return (
+                        <Option value={item.value} key={item.value}>
+                          {item.label}
+                        </Option>
+                      );
+                    }
+                    return '';
+                  })}
+                </Select>
+              </div>
+            </SearchLayout>
+          }
         />
       </div>
     </>

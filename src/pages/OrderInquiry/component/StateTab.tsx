@@ -4,14 +4,15 @@ import { useModel } from 'umi';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { getOrders } from '@/services/after-class-qxjyj/jyjgsj';
-
 import WWOpenDataCom from '@/components/WWOpenDataCom';
 import { Select } from 'antd';
-const { Option } = Select;
 import styles from './index.less';
 import { getAllKHKCLX } from '@/services/after-class-qxjyj/khkclx';
 import { getAllCourses2 } from '@/services/after-class-qxjyj/khkcsj';
+import { getTableWidth } from '@/utils';
+import SearchLayout from '@/components/Search/Layout';
 
+const { Option } = Select;
 const StateTab = (props: any) => {
   const { DDZT, id } = props.TabState;
   const { initialState } = useModel('@@initialState');
@@ -199,65 +200,15 @@ const StateTab = (props: any) => {
   return (
     <>
       <div>
-        <div className={styles.searchs}>
-          <div style={{ marginRight: 20 }}>
-            课程类型：
-            <Select
-              style={{ width: 200 }}
-              value={kclxValue}
-              allowClear
-              placeholder="请选择"
-              onChange={(value) => {
-                setKcmcValue('');
-                setKcmcData([]);
-                setKCLXValue(value);
-              }}
-            >
-              {kclxOptions?.map((item: any) => {
-                if (item.value) {
-                  return (
-                    <Option value={item.value} key={item.value}>
-                      {item.text}
-                    </Option>
-                  );
-                }
-                return '';
-              })}
-            </Select>
-          </div>
-          <div>
-            课程名称：
-            <Select
-              style={{ width: 200 }}
-              value={kcmcValue}
-              allowClear
-              placeholder="请选择"
-              onChange={(value) => {
-                setKcmcValue(value);
-              }}
-            >
-              {kcmcData?.map((item: any) => {
-                if (item.label) {
-                  return (
-                    <Option value={item.label} key={item.label}>
-                      {item.label}
-                    </Option>
-                  );
-                }
-                return '';
-              })}
-            </Select>
-          </div>
-        </div>
         <ProTable
           columns={columns}
+          dataSource={dataSource}
           pagination={{
             showQuickJumper: true,
             pageSize: 10,
             defaultCurrent: 1
           }}
-          scroll={{ x: 1300 }}
-          dataSource={dataSource}
+          scroll={{ x: getTableWidth(columns) }}
           options={{
             setting: false,
             fullScreen: false,
@@ -265,6 +216,58 @@ const StateTab = (props: any) => {
             reload: false
           }}
           search={false}
+          headerTitle={
+            <SearchLayout>
+              <div style={{ marginRight: 20 }}>
+                课程类型：
+                <Select
+                  style={{ width: 200 }}
+                  value={kclxValue}
+                  allowClear
+                  placeholder="请选择"
+                  onChange={(value) => {
+                    setKcmcValue('');
+                    setKcmcData([]);
+                    setKCLXValue(value);
+                  }}
+                >
+                  {kclxOptions?.map((item: any) => {
+                    if (item.value) {
+                      return (
+                        <Option value={item.value} key={item.value}>
+                          {item.text}
+                        </Option>
+                      );
+                    }
+                    return '';
+                  })}
+                </Select>
+              </div>
+              <div>
+                课程名称：
+                <Select
+                  style={{ width: 200 }}
+                  value={kcmcValue}
+                  allowClear
+                  placeholder="请选择"
+                  onChange={(value) => {
+                    setKcmcValue(value);
+                  }}
+                >
+                  {kcmcData?.map((item: any) => {
+                    if (item.label) {
+                      return (
+                        <Option value={item.label} key={item.label}>
+                          {item.label}
+                        </Option>
+                      );
+                    }
+                    return '';
+                  })}
+                </Select>
+              </div>
+            </SearchLayout>
+          }
         />
       </div>
     </>
