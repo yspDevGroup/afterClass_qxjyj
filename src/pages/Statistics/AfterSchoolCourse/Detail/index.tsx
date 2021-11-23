@@ -1,33 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 // import { message } from 'antd';
 import type { ProColumns } from '@ant-design/pro-table';
 
 import { useModel, history } from 'umi';
-import { Button, message, Select, Tag } from 'antd';
+import { Button, Tag } from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { getClasses } from '@/services/after-class-qxjyj/reports';
 import ProTable from '@ant-design/pro-table';
-
 import EllipsisHint from '@/components/EllipsisHint';
-import { getCurrentXQ } from '@/utils';
-import { getAllXNXQ } from '@/services/after-class-qxjyj/xnxq';
-import styles from './index.less';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
-
-const { Option } = Select;
+import { getTableWidth } from '@/utils';
+import SemesterSelect from '@/components/Search/SemesterSelect';
+import SearchLayout from '@/components/Search/Layout';
 
 const AfterSchoolClass = (props: any) => {
-  const { initialState } = useModel('@@initialState');
-  const { currentUser } = initialState || {};
-  // 选择学年学期
-  const [term, setTerm] = useState<string>();
-  // 学年学期列表数据
-  const [termList, setTermList] = useState<any>();
   // 表格数据源
   const [dataSource, setDataSource] = useState<any>([]);
   const { state } = props.location;
-  const { KCMC, XXMC, KHKCSJId, XXJBSJId } = state.data;
+  const { KHKCSJId, XXJBSJId } = state.data;
   const getCourseList = async (kcdm: string, xnxq?: string) => {
     const res = await getClasses({
       XNXQId: xnxq,
@@ -35,26 +26,6 @@ const AfterSchoolClass = (props: any) => {
     });
     if (res?.status === 'ok') {
       setDataSource(res?.data?.rows);
-    }
-  };
-  const getXNXQ = async (xxdm: string) => {
-    const res = await getAllXNXQ({
-      XXJBSJId: xxdm
-    });
-    if (res?.status === 'ok') {
-      const { data = [] } = res;
-      const currentXQ = getCurrentXQ(data);
-      const term = [].map.call(data, (item: any) => {
-        return {
-          value: item.id,
-          text: `${item.XN} ${item.XQ}`
-        };
-      });
-      setTermList(term);
-      setTerm(currentXQ?.id || data[0].id);
-      getCourseList(KHKCSJId, currentXQ?.id || data[0].id);
-    } else {
-      message.error(res.message);
     }
   };
   // / table表格数据
@@ -138,7 +109,7 @@ const AfterSchoolClass = (props: any) => {
       ellipsis: true
     },
     {
-      title: '报名人次',
+      title: '报名人数',
       dataIndex: 'BMRS',
       key: 'BMRS',
       align: 'center',
@@ -146,7 +117,7 @@ const AfterSchoolClass = (props: any) => {
       ellipsis: true
     },
     {
-      title: '退课人次',
+      title: '退课人数',
       dataIndex: 'TKRS',
       key: 'TKRS',
       align: 'center',
@@ -170,9 +141,11 @@ const AfterSchoolClass = (props: any) => {
       ellipsis: true
     }
   ];
-  useEffect(() => {
-    getXNXQ(XXJBSJId);
-  }, []);
+
+  const termChange = (val: string) => {
+    getCourseList( KHKCSJId, val);
+  }
+
   return (
     <>
       <div>
@@ -188,35 +161,13 @@ const AfterSchoolClass = (props: any) => {
           <LeftOutlined />
           返回上一页
         </Button>
-        <div className={styles.searchWrapper}>
-          <span>
-            所属学年学期：
-            <Select
-              value={term}
-              style={{ width: 200 }}
-              onChange={(value: string) => {
-                setTerm(value);
-                getCourseList(KHKCSJId, value);
-              }}
-            >
-              {termList?.map((item: any) => {
-                return (
-                  <Option key={item.value} value={item.value}>
-                    {item.text}
-                  </Option>
-                );
-              })}
-            </Select>
-          </span>
-        </div>
         <ProTable
-          headerTitle={KCMC + ' / ' + XXMC}
           pagination={{
             showQuickJumper: true,
             pageSize: 10,
             defaultCurrent: 1,
           }}
-          scroll={{ x: 1300 }}
+          scroll={{ x: getTableWidth(columns) }}
           columns={columns}
           dataSource={dataSource}
           rowKey="id"
@@ -227,6 +178,11 @@ const AfterSchoolClass = (props: any) => {
             density: false,
             reload: false
           }}
+          headerTitle={
+            <SearchLayout>
+              <SemesterSelect XXJBSJId={XXJBSJId} onChange={termChange} />
+            </SearchLayout>
+          }
         />
       </div>
     </>
