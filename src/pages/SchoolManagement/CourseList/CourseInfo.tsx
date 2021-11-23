@@ -23,29 +23,6 @@ const CourseInfo = (props: any) => {
   const [NJDataOption, setNJDataOption] = useState<any>([]);
   const [formValues, setFormValues] = useState({});
   const [teacherData, setTeacherData] = useState<any>([]);
-  // useEffect(() => {
-  //   setDisabled(true);
-  //   // 老师表格数据
-  //   const thData: any[] = [];
-  //   state?.KHKCJs?.forEach((item: any) => {
-  //     thData.push(item?.JZGJBSJ);
-  //   });
-  //   setTeacherData(thData);
-  //   if (state?.id) {
-  //     // form详情
-  //     const params = {
-  //       KCMC: state?.KCMC || '',
-  //       KCMS: state?.KCMS || '',
-  //       njIds: state?.NJSJs?.map((item: any) => `${item.XD}${item?.NJMC}`) || '',
-  //       jsIds: state?.KHKCJs?.map((item: any) => item?.KHJSSJ?.XM) || '',
-  //       KCTP: state?.KCTP || '',
-  //       KHKCLX: state?.KHKCLX?.KCTAG || ''
-  //     };
-  //     setImageUrl(state?.KCTP || '');
-  //     setFormValues(params);
-  //   }
-  // }, []);
-
   const getData = async () => {
     const res = await getKHKCSJ({ kcId: state.id });
     if (res?.status === 'ok') {
@@ -81,8 +58,6 @@ const CourseInfo = (props: any) => {
   };
 
   useEffect(() => {
-    console.log('state', state);
-
     getData();
   }, []);
 

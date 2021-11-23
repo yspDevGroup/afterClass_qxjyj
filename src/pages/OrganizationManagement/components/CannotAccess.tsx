@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 10:16:11
- * @LastEditTime: 2021-10-18 12:05:20
+ * @LastEditTime: 2021-11-23 10:25:13
  * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -106,7 +106,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
     if (res.status === 'ok') {
       message.success('驳回成功');
       setIsModalVisible(false);
-      actionRef2?.current?.reload();
+      getData();
       await CreateKHJYJSPJL({
         ZT: 2,
         BZ: params.BZ,
@@ -121,7 +121,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
   };
 
   useEffect(() => {
-    actionRef2?.current?.reload();
+    getData();
   }, [Keys]);
   let myDate = new Date();
   const columns: ProColumns<TableListItem>[] = [
@@ -237,7 +237,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
                     KHJYJGId: record.value?.id,
                     JYJGSJId: jyjId
                   });
-                  actionRef2?.current?.reload();
+                  getData();
                 }
               }}
               okText="确定"

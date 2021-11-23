@@ -23,9 +23,6 @@ const CoursesIntroduced = (props: { JYYData: any; reload: boolean }) => {
   const actionRef = useRef<ActionType>();
   const [dataSource, setDataSourse] = useState<any[]>([]);
   const [KCName, setKCName] = useState<string>();
-  if (!reload) {
-    actionRef.current?.reload();
-  }
   const getData = async () => {
     const res = await toIntroduceCourses({
       KCMC: KCName,
@@ -137,7 +134,7 @@ const CoursesIntroduced = (props: { JYYData: any; reload: boolean }) => {
               const res = await updateKHKCSJ({ id: record?.id }, { KCZT: 2 });
               if (res.status === 'ok') {
                 message.success('操作成功');
-                action?.reload();
+                getData?.();
               } else {
                 message.error(res.message || '操作失败');
               }
@@ -152,7 +149,11 @@ const CoursesIntroduced = (props: { JYYData: any; reload: boolean }) => {
       )
     }
   ];
-
+  useEffect(() => {
+    if (!reload) {
+      getData();
+    }
+  }, [reload])
   useEffect(() => {
     getData();
   }, [KCName])

@@ -3,8 +3,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-10-27 09:47:26
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-11-23 10:27:39
+ * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useRef } from 'react';
 import { message, Popconfirm, Form, Tag, Button } from 'antd';
@@ -22,7 +22,6 @@ const HaveIntroduced = (props: any) => {
   const { initialState } = useModel('@@initialState');
   const actionRef1 = useRef<ActionType>();
   useEffect(() => {
-    console.log('课程列表页面 学校数据', state);
     actionRef1?.current?.reload();
   }, []);
 

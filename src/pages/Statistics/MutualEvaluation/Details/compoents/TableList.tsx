@@ -179,7 +179,7 @@ const TabList = (props: any) => {
         const res = await getKHBJPJ({
           // 班级ID
           KHBJSJId: ListState.id,
-          //学年学期
+          // 学年学期
           XNXQId: ListState?.XNXQId,
           XXJBSJId,
           page: 0,

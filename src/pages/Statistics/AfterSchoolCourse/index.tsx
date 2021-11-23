@@ -4,8 +4,8 @@ import { useModel, Link } from 'umi';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { getAllCoursesInfo, } from '@/services/after-class-qxjyj/jyjgsj';
-import styles from './index.less';
 import { getAllKHKCLX } from '@/services/after-class-qxjyj/khkclx';
+import styles from './index.less';
 
 const { Option } = Select;
 const { Search } = Input;
@@ -76,7 +76,7 @@ const AfterSchoolCourse = () => {
       }
     },
     {
-      title: '报名人数',
+      title: '报名人次',
       dataIndex: 'BMRS',
       key: 'BMRS',
       align: 'center',
@@ -84,7 +84,7 @@ const AfterSchoolCourse = () => {
       ellipsis: true,
     },
     {
-      title: '退课人数',
+      title: '退课人次',
       dataIndex: 'TKRS',
       key: 'TKRS',
       align: 'center',

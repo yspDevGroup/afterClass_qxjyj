@@ -1596,6 +1596,10 @@ declare namespace API {
     BMJSSJ?: string;
     /** 课程图片 */
     KCTP?: string;
+    /** 报名类型 */
+    BMLX?: number;
+    /** 班级类型 */
+    BJLX?: number;
     /** 年级ID */
     NJS?: string;
     /** 校区ID */
@@ -1651,8 +1655,14 @@ declare namespace API {
     BMJSSJ?: string;
     /** 课程图片 */
     KCTP?: string;
+    /** 报名类型 */
+    BMLX?: number;
+    /** 班级类型 */
+    BJLX?: number;
     /** 试用年级 */
     NJIds?: string[];
+    /** 适用行政班 */
+    BJIds?: string[];
     /** 课后课程ID */
     KHKCSJId: string;
     /** 校区ID */
@@ -1687,6 +1697,10 @@ declare namespace API {
     BMJSSJ?: string;
     /** 课程图片 */
     KCTP?: string;
+    /** 报名类型 */
+    BMLX?: number;
+    /** 班级类型 */
+    BJLX?: number;
     /** 试用年级 */
     NJIds?: string[];
     /** 课后课程ID */
@@ -2454,6 +2468,8 @@ declare namespace API {
     SSJGLX?: string;
     /** 课表颜色 */
     KBYS?: string;
+    /** 课程范围 */
+    KCFW?: boolean;
     KHKCLX?: { id?: string; KCLX?: string };
     KHBJSJs?: {
       id?: string;
@@ -2497,6 +2513,8 @@ declare namespace API {
     SSJGLX?: string;
     /** 课表颜色 */
     KBYS?: string;
+    /** 课程范围 */
+    KCFW?: boolean;
     /** 学校ID */
     XXJBSJId?: string;
     /** 课后教育机构ID */
@@ -2516,6 +2534,8 @@ declare namespace API {
     KCMS?: string;
     /** 课表颜色 */
     KBYS?: string;
+    /** 课程范围 */
+    KCFW?: boolean;
     /** 课程适用年级 */
     njIds?: string[];
     /** 课程授课教师 */
@@ -3217,7 +3237,9 @@ declare namespace API {
     };
     JZGJBSJ?: { id?: string; XM?: string; WechatUserId?: string } | any;
     KHBJSJ?: { BJMC?: string; KHKCSJ?: { KCMC?: string } } | any;
-    KHXXZZFW?: { id?: string; FWMC?: string; KHZZFW?: { id?: string; FWMC?: string; FWJGMC?: string } } | any;
+    KHXXZZFW?:
+      | { id?: string; FWMC?: string; KHZZFW?: { id?: string; FWMC?: string; FWJGMC?: string } }
+      | any;
   };
 
   type CreateKHXSTK = {

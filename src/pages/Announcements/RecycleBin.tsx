@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-09 17:41:43
- * @LastEditTime: 2021-10-18 16:40:02
+ * @LastEditTime: 2021-11-23 09:23:13
  * @LastEditors: Sissle Lynn
  */
 import React, { useState, useRef, useEffect } from 'react';
@@ -110,9 +110,7 @@ const TableList = () => {
             ZT={record.ZT}
             record={record}
             refreshHandler={() => {
-              if (actionRef?.current) {
-                actionRef?.current?.reload();
-              }
+              getData?.()
             }}
           />
         </div>

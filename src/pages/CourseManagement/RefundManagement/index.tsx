@@ -110,7 +110,6 @@ const RefundManagement = () => {
 
   const schoolChange = (val: string, auth: any) => {
     setCurSchool(auth.key);
-    actionRef.current?.reload();
   }
 
   useEffect(()=>{

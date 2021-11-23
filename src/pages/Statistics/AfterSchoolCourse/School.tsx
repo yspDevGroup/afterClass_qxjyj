@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-10-12 14:46:08
- * @LastEditTime: 2021-10-18 16:56:55
+ * @LastEditTime: 2021-11-23 10:28:17
  * @LastEditors: Sissle Lynn
  */
 import { useEffect, useState } from 'react';
@@ -32,7 +32,7 @@ const School = (props: any) => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
-      fixed:'left',
+      fixed: 'left',
       align: 'center'
     },
     {
@@ -40,10 +40,10 @@ const School = (props: any) => {
       dataIndex: 'XXMC',
       key: 'XXMC',
       width: 120,
-      fixed:'left',
+      fixed: 'left',
       ellipsis: true,
       align: 'center',
-      render:(_,record)=>{
+      render: (_, record) => {
         return record?.XXJBSJ?.XXMC
       }
     },
@@ -54,7 +54,7 @@ const School = (props: any) => {
       width: 150,
       ellipsis: true,
       align: 'center',
-      render: (_: any,record: any) => {
+      render: (_: any, record: any) => {
         const data = record?.XXJBSJ?.XD?.split(/,/g);
         return (
           <EllipsisHint
@@ -78,7 +78,7 @@ const School = (props: any) => {
       ellipsis: true,
     },
     {
-      title: '报名人数',
+      title: '报名人次',
       dataIndex: 'BMRS',
       key: 'BMRS',
       align: 'center',
@@ -86,7 +86,7 @@ const School = (props: any) => {
       ellipsis: true,
     },
     {
-      title: '退课人数',
+      title: '退课人次',
       dataIndex: 'TKRS',
       key: 'TKRS',
       align: 'center',
@@ -100,8 +100,8 @@ const School = (props: any) => {
       align: 'center',
       width: 100,
       ellipsis: true,
-      render: (test: any,record: any) => {
-        const num =  record.TKRS!=0 ? (record.TKRS/ record.BMRS)*100 + '%':0;
+      render: (test: any, record: any) => {
+        const num = record.TKRS !== 0 ? (Number((record.TKRS / record.BMRS)) * 100).toFixed(1) + '%' : 0;
         return num;
       },
     },
@@ -127,7 +127,7 @@ const School = (props: any) => {
       key: 'XSXM',
       align: 'center',
       width: 120,
-      fixed:'right',
+      fixed: 'right',
       ellipsis: true,
       render: (_, record) => (
         <>

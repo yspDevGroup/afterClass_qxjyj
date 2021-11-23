@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-09 17:41:43
- * @LastEditTime: 2021-09-07 18:47:34
- * @LastEditors: wsl
+ * @LastEditTime: 2021-11-23 10:26:59
+ * @LastEditors: Sissle Lynn
  */
 import React, { useState, useRef, useEffect } from 'react';
 import { Input, Switch } from 'antd';
@@ -109,9 +109,7 @@ const RecycleBin = () => {
             ZT={record.ZT}
             record={record}
             refreshHandler={() => {
-              if (actionRef.current) {
-                actionRef.current.reload();
-              }
+              getData?.();
             }}
           />
         </div>

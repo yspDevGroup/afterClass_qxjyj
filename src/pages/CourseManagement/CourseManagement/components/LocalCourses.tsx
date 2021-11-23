@@ -21,9 +21,6 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
   const [dataSource, setDataSourse] = useState<any[]>([]);
   const [KCName, setKCName] = useState<string>();
   const [KCLY, setKCLY] = useState<string>();
-  if (reload) {
-    actionRef.current?.reload();
-  }
   const getData = async () => {
     const res = await getAllCourses2({
       KCMC: KCName,
@@ -190,7 +187,7 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
                   const res = await updateKHKCSJ({ id: record?.id }, { KCZT: 1 });
                   if (res.status === 'ok') {
                     message.success('操作成功');
-                    action?.reload();
+                    getData?.();
                   } else {
                     message.error(res.message || '操作失败');
                   }
@@ -207,7 +204,11 @@ const LocalCourses = (props: { JYYData: any; reload: boolean }) => {
       )
     }
   ];
-
+  useEffect(() => {
+    if (reload) {
+      getData();
+    }
+  }, [reload])
   useEffect(() => {
     getData();
   }, [KCName, KCLY])

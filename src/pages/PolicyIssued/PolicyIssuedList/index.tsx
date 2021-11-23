@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-09 17:41:43
- * @LastEditTime: 2021-09-07 18:47:48
- * @LastEditors: wsl
+ * @LastEditTime: 2021-11-23 10:27:22
+ * @LastEditors: Sissle Lynn
  */
 import React, { useState, useRef, useEffect } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
@@ -126,7 +126,7 @@ const TableList = () => {
                 const resUpdateJYJGTZGG = await updateJYJGTZGG({ id: record.id }, data);
                 if (resUpdateJYJGTZGG.status === 'ok') {
                   message.success('设置成功');
-                  actionRef?.current?.reload();
+                  getData?.();
                 } else {
                   message.error('设置失败，请联系管理员或稍后再试。');
                 }
@@ -152,9 +152,7 @@ const TableList = () => {
             ZT={record.ZT}
             record={record}
             refreshHandler={() => {
-              if (actionRef.current) {
-                actionRef?.current?.reload();
-              }
+              getData?.();
             }}
           />
         </div>

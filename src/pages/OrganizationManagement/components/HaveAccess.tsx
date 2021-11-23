@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-26 11:45:40
- * @LastEditTime: 2021-11-01 16:42:40
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-11-23 10:26:15
+ * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useRef, useState } from 'react';
 import { message, Modal, Form, Input } from 'antd';
@@ -75,7 +75,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
     }
   };
   useEffect(() => {
-    actionRef1?.current?.reload();
+    getData();
   }, [Keys]);
 
   useEffect(() => {
@@ -115,7 +115,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
           KHJYJGId: Datas?.value?.id,
           JYJGSJId: jyjId
         });
-        actionRef1?.current?.reload();
+        getData();
       }
     } else {
       const data = {
@@ -138,7 +138,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
           KHJYJGId: Datas?.value?.id,
           JYJGSJId: jyjId
         });
-        actionRef1?.current?.reload();
+        getData();
       }
     }
   };
@@ -251,7 +251,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
                     const res = await updateKHJGRZSQ({ id: record.value.KHJGRZSQs[0].id }, data);
                     if (res.status === 'ok') {
                       message.success('取消成功');
-                      actionRef1?.current?.reload();
+                      getData();
                     }
                   }}
                   onCancel={(e) => {

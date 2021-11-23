@@ -2,7 +2,7 @@
  * @description:
  * @author: gxh
  * @Date: 2021-09-22 11:54:38
- * @LastEditTime: 2021-10-18 16:47:59
+ * @LastEditTime: 2021-11-23 09:26:31
  * @LastEditors: Sissle Lynn
  */
 
@@ -149,7 +149,6 @@ const OrderInquiry = () => {
 
   const schoolChange = (val: string) => {
     setCurSchool(val);
-    actionRef.current?.reload();
   }
 
   useEffect(()=>{

@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 09:50:10
- * @LastEditTime: 2021-10-18 11:56:49
+ * @LastEditTime: 2021-11-23 09:28:51
  * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -69,7 +69,7 @@ const Blacklist = (props: { Keys: string | undefined }) => {
   };
 
   useEffect(() => {
-    actionRef3?.current?.reload();
+    getData();
   }, [Keys]);
   useEffect(() => {
     setTimeout(() => {
@@ -111,7 +111,7 @@ const Blacklist = (props: { Keys: string | undefined }) => {
         KHJYJGId: Datas?.value?.id,
         JYJGSJId: jyjId
       });
-      actionRef3?.current?.reload();
+      getData();
     } else {
       message.error(res.message);
     }

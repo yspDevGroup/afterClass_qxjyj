@@ -14,15 +14,15 @@ export async function createSSOToken(
     /** token类型 */
     token_type?: string;
   },
-  options?: { [key: string]: any }
+  options?: { [key: string]: any },
 ) {
   return request<any>('/sso/createToken', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   });
 }
 
@@ -30,7 +30,7 @@ export async function createSSOToken(
 export async function ssoExpiredCallback(options?: { [key: string]: any }) {
   return request<any>('/sso/expired/callback', {
     method: 'GET',
-    ...(options || {})
+    ...(options || {}),
   });
 }
 
@@ -42,15 +42,15 @@ export async function synchroUsers(
     XXDM?: string;
     sign?: string;
   },
-  options?: { [key: string]: any }
+  options?: { [key: string]: any },
 ) {
   return request<any>('/sso/synchroUsers', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   });
 }
 
@@ -64,15 +64,15 @@ export async function getUserInfos(
     XXDM?: string;
     sign?: string;
   },
-  options?: { [key: string]: any }
+  options?: { [key: string]: any },
 ) {
   return request<any>('/sso/getUserInfos', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   });
 }
 
@@ -80,7 +80,7 @@ export async function getUserInfos(
 export async function getSchoolNotice(options?: { [key: string]: any }) {
   return request<any>('/sso/getSchoolNotice', {
     method: 'POST',
-    ...(options || {})
+    ...(options || {}),
   });
 }
 
@@ -88,7 +88,7 @@ export async function getSchoolNotice(options?: { [key: string]: any }) {
 export async function getSchools(options?: { [key: string]: any }) {
   return request<any>('/sso/getSchools', {
     method: 'POST',
-    ...(options || {})
+    ...(options || {}),
   });
 }
 
@@ -110,15 +110,15 @@ export async function bulkCreateEducation(
     XQ?: string;
     JYJId?: string;
   }[],
-  options?: { [key: string]: any }
+  options?: { [key: string]: any },
 ) {
   return request<any>('/sso/bulkCreateEducation', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   });
 }
 
@@ -142,15 +142,15 @@ export async function bulkCreateSchool(
     XXId?: string;
     XQId?: string;
   }[],
-  options?: { [key: string]: any }
+  options?: { [key: string]: any },
 ) {
   return request<any>('/sso/bulkCreateSchool', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   });
 }
 
@@ -172,14 +172,14 @@ export async function bulkCreateAgency(
     XQ?: string;
     JGId?: string;
   }[],
-  options?: { [key: string]: any }
+  options?: { [key: string]: any },
 ) {
   return request<any>('/sso/bulkCreateAgency', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   });
 }

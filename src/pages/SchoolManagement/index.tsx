@@ -126,7 +126,6 @@ const SchoolManagement = () => {
 
   const schoolChange = (val: string) => {
     setCurSchool(val);
-    actionRef.current?.reload();
   }
 
   useEffect(() => {
