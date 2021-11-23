@@ -1,24 +1,20 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { getAllAbsences } from '@/services/after-class-qxjyj/khxsqj';
 // import { message } from 'antd';
-import { message, Select, Tag, Tooltip } from 'antd';
+import { Tag, Tooltip } from 'antd';
 import Style from './index.less';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
-import { getAllXNXQ } from '@/services/after-class-qxjyj/xnxq';
-import { getCurrentXQ } from '@/utils';
+import { getTableWidth } from '@/utils';
 import EllipsisHint from '@/components/EllipsisHint';
+import SemesterSelect from '@/components/Search/SemesterSelect';
+import SearchLayout from '@/components/Search/Layout';
 
-const { Option } = Select;
 const SchoolLeave = (props: { state: any }) => {
   const actionRef = useRef<ActionType>();
   const { state } = props;
   const { id, xzqhm, xxmc } = state;
-  // 选择学年学期
-  const [term, setTerm] = useState<string>();
-  // 学年学期列表数据
-  const [termList, setTermList] = useState<any>();
   // 表格数据源
   const [dataSource, setDataSource] = useState<any>([]);
   const getList = async (xnxq?: string) => {
@@ -31,30 +27,6 @@ const SchoolLeave = (props: { state: any }) => {
       setDataSource(resAll?.data?.rows);
     }
   };
-
-  const getXNXQ = async (xxdm: string) => {
-    const res = await getAllXNXQ({
-      XXJBSJId: xxdm
-    });
-    if (res?.status === 'ok') {
-      const { data = [] } = res;
-      const currentXQ = getCurrentXQ(data);
-      const term = [].map.call(data, (item: any) => {
-        return {
-          value: item.id,
-          text: `${item.XN} ${item.XQ}`
-        };
-      });
-      setTermList(term);
-      setTerm(currentXQ?.id || data[0].id);
-      getList(currentXQ?.id);
-    } else {
-      message.error(res.message);
-    }
-  };
-  useEffect(() => {
-    getXNXQ(id);
-  }, []);
 
   // table表格数据
   const columns: ProColumns<any>[] = [
@@ -187,30 +159,13 @@ const SchoolLeave = (props: { state: any }) => {
       }
     }
   ];
+
+  const termChange = (val: string) => {
+    getList(val);
+  }
   return (
     <>
       <div className={Style.bodyContainer}>
-        <div className={Style.TopSearchs}>
-          <span>
-            所属学年学期：
-            <Select
-              value={term}
-              style={{ width: 200 }}
-              onChange={(value: string) => {
-                setTerm(value);
-                getList(value);
-              }}
-            >
-              {termList?.map((item: any) => {
-                return (
-                  <Option key={item.value} value={item.value}>
-                    {item.text}
-                  </Option>
-                );
-              })}
-            </Select>
-          </span>
-        </div>
         <ProTable<any>
           actionRef={actionRef}
           columns={columns}
@@ -220,7 +175,7 @@ const SchoolLeave = (props: { state: any }) => {
             pageSize: 10,
             defaultCurrent: 1
           }}
-          scroll={{ x: 1300 }}
+          scroll={{ x: getTableWidth(columns) }}
           dataSource={dataSource}
           options={{
             setting: false,
@@ -229,6 +184,11 @@ const SchoolLeave = (props: { state: any }) => {
             reload: false
           }}
           search={false}
+          headerTitle={
+            <SearchLayout>
+              <SemesterSelect XXJBSJId={id} onChange={termChange} />
+            </SearchLayout>
+          }
         />
       </div>
     </>

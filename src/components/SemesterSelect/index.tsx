@@ -48,7 +48,6 @@ const SemesterSelect: FC<SemesterSelectProps> = ({ onChange, XXJBSJId }) => {
   return (
     <Select
       value={term}
-      style={{ width: 200 }}
       onChange={(value: string) => {
         setTerm(value);
         onChange(value);
