@@ -6,6 +6,8 @@ import { getCoursesEvaluation } from '@/services/after-class-qxjyj/jyjgsj';
 
 import styles from './index.less';
 import { getAllKHKCLX } from '@/services/after-class-qxjyj/khkclx';
+import { getTableWidth } from '@/utils';
+import SearchLayout from '@/components/Search/Layout';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -140,53 +142,6 @@ const MutualEvaluation = (data: any) => {
   ];
   return (
     <div>
-      <div className={styles.searchs}>
-        <span>
-          课程名称:
-          <Search
-            allowClear
-            style={{ width: 200, marginLeft: 16 }}
-            onSearch={(val) => {
-              setKCMC(val);
-            }}
-          />
-        </span>
-        <span style={{ marginLeft: 24 }}>
-          课程来源：
-          <Select
-            allowClear
-            style={{ width: 200 }}
-            onChange={(value: string) => {
-              setKCLY(value);
-            }}
-          >
-            <Option key="机构课程" value="机构课程">
-              机构课程
-            </Option>
-            <Option key="校内课程" value="校内课程">
-              校内课程
-            </Option>
-          </Select>
-        </span>
-        <span style={{ marginLeft: 24 }}>
-          课程类型：
-          <Select
-            allowClear
-            style={{ width: 200 }}
-            onChange={(value: string) => {
-              setKCLX(value);
-            }}
-          >
-            {KCLXData?.map((item: any) => {
-              return (
-                <Option key={item.id} value={item.KCTAG}>
-                  {item.KCTAG}
-                </Option>
-              );
-            })}
-          </Select>
-        </span>
-      </div>
       <ProTable
         columns={columns}
         dataSource={dataSource}
@@ -195,7 +150,7 @@ const MutualEvaluation = (data: any) => {
           pageSize: 10,
           defaultCurrent: 1
         }}
-        scroll={{ x: 1100 }}
+        scroll={{ x: getTableWidth(columns) }}
         rowKey="id"
         search={false}
         options={{
@@ -204,6 +159,52 @@ const MutualEvaluation = (data: any) => {
           density: false,
           reload: false
         }}
+        headerTitle={
+          <>
+            <SearchLayout>
+              <div>
+                <label htmlFor='kcname'>课程名称：</label>
+                <Search placeholder="课程名称" allowClear onSearch={(value: string) => {
+                  setKCMC(value);
+                }} />
+              </div>
+              <div>
+                <label htmlFor='kcly'>课程来源：</label>
+                <Select
+                  allowClear
+                  placeholder="课程来源"
+                  onChange={(value) => {
+                    setKCLY(value);
+                  }}
+                  value={KCLY}
+                >
+                  <Option value='校内课程' key='校内课程'>
+                    校内课程
+                  </Option>
+                  <Option value='机构课程' key='机构课程'>
+                    机构课程
+                  </Option>
+                </Select>
+              </div>
+              <div>
+                <label htmlFor='kctype'>课程类型：</label>
+                <Select
+                  allowClear
+                  style={{ width: 200 }}
+                  onChange={(value: string) => {
+                    setKCLX(value);
+                  }}
+                >
+                  {KCLXData?.map((item: any) => {
+                    return <Option key={item.id} value={item.KCTAG}>
+                      {item.KCTAG}
+                    </Option>
+                  })}
+                </Select>
+              </div>
+            </SearchLayout>
+          </>
+        }
       />
     </div>
   );
