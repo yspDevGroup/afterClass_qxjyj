@@ -1,49 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 // import { queryXNXQList } from '@/services/local-services/xnxq';
-import { getAllTK, getKHTKSJ } from '@/services/after-class-qxjyj/khtksj';
-import { Select, message, Button } from 'antd';
+import { getKHTKSJ } from '@/services/after-class-qxjyj/khtksj';
 import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
-import { getAllXNXQ } from '@/services/after-class-qxjyj/xnxq';
-import { getCurrentXQ } from '@/utils';
-import { LeftOutlined } from '@ant-design/icons';
+import SemesterSelect from '@/components/Search/SemesterSelect';
+import SearchLayout from '@/components/Search/Layout';
+import { getTableWidth } from '@/utils';
 
 import Style from './index.less';
 
-const { Option } = Select;
 // 退课
 const SchoolReimbursement = (props: { state: any }) => {
   const actionRef = useRef<ActionType>();
   const { state } = props;
   const { id, xzqhm, xxmc } = state;
-  // 选择学年学期
-  const [term, setTerm] = useState<string>();
-  // 学年学期列表数据
-  const [termList, setTermList] = useState<any>();
-  const [curXNXQId, setcurXNXQId] = useState<string>();
-  const getXNXQ = async (xxdm: string) => {
-    const res = await getAllXNXQ({
-      XXJBSJId: xxdm
-    });
-    if (res?.status === 'ok') {
-      const { data = [] } = res;
-      const currentXQ = getCurrentXQ(data);
-      const term = [].map.call(data, (item: any) => {
-        return {
-          value: item.id,
-          text: `${item.XN} ${item.XQ}`
-        };
-      });
-      setTermList(term);
-      setTerm(currentXQ?.id || data[0].id);
-      setcurXNXQId(currentXQ?.id);
-    } else {
-      message.error(res.message);
-    }
-  };
-  useEffect(() => {
-    getXNXQ(id);
-  }, []);
+  const [dataSource, setDataSource] = useState<any>([]);
+
   const columns: ProColumns<any>[] = [
     {
       title: '序号',
@@ -166,39 +138,43 @@ const SchoolReimbursement = (props: { state: any }) => {
       }
     }
   ];
+
+  const getData = async (xnxq?: string) => {
+    const resAll = await getKHTKSJ({
+      XXJBSJId: id,
+      XNXQId: xnxq,
+      LX: 0,
+      ZT: [1],
+      page: 0,
+      pageSize: 0
+    });
+    if (resAll.status === 'ok') {
+      return {
+        data: resAll?.data?.rows,
+        success: true,
+        total: resAll?.data?.count
+      };
+    }
+  };
+
+  const termChange = (val: string) => {
+    getData(val);
+  }
+
   return (
     <>
       <div className={Style.bodyContainer}>
-        <div className={Style.TopSearchs}>
-          <span>
-            所属学年学期：
-            <Select
-              value={term}
-              style={{ width: 200 }}
-              onChange={(value: string) => {
-                setTerm(value);
-              }}
-            >
-              {termList?.map((item: any) => {
-                return (
-                  <Option key={item.value} value={item.value}>
-                    {item.text}
-                  </Option>
-                );
-              })}
-            </Select>
-          </span>
-        </div>
         <ProTable<any>
           actionRef={actionRef}
           columns={columns}
+          dataSource={dataSource}
           rowKey="id"
           pagination={{
             showQuickJumper: true,
             pageSize: 10,
             defaultCurrent: 1
           }}
-          scroll={{ x: 1300 }}
+          scroll={{ x: getTableWidth(columns) }}
           options={{
             setting: false,
             fullScreen: false,
@@ -206,24 +182,11 @@ const SchoolReimbursement = (props: { state: any }) => {
             reload: false
           }}
           search={false}
-          request={async (param) => {
-            const resAll = await getKHTKSJ({
-              XXJBSJId: id,
-              XNXQId: curXNXQId,
-              LX: 0,
-              ZT: [1],
-              page: param.current,
-              pageSize: param.pageSize
-            });
-            if (resAll.status === 'ok') {
-              return {
-                data: resAll?.data?.rows,
-                success: true,
-                total: resAll?.data?.count
-              };
-            }
-            return [];
-          }}
+          headerTitle={
+            <SearchLayout>
+              <SemesterSelect XXJBSJId={state?.id} onChange={termChange} />
+            </SearchLayout>
+          }
         />
       </div>
     </>
