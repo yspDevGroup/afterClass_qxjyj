@@ -1,23 +1,19 @@
-import { useEffect, useState } from 'react';
-import { Rate, Button, Input, Select, message } from 'antd';
+import { useState } from 'react';
+import { Rate, Button } from 'antd';
 import { Link } from 'umi';
 import ProTable, { ProColumns } from '@ant-design/pro-table';
 import { LeftOutlined } from '@ant-design/icons';
 import { getClassesEvaluation } from '@/services/after-class-qxjyj/khbjsj';
-import styles from '../index.less';
-import { getAllXNXQ } from '@/services/after-class-qxjyj/xnxq';
-import { getCurrentXQ } from '@/utils';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
+import { getTableWidth } from '@/utils';
+import SemesterSelect from '@/components/Search/SemesterSelect';
+import SearchLayout from '@/components/Search/Layout';
 
-const { Search } = Input;
-const { Option } = Select;
 const Class = (props: any) => {
   const { state } = props.location;
-  const { XXJBSJId, KHKCSJId, XXMC, KCMC } = state;
+  const { XXJBSJId, KHKCSJId } = state;
   // 选择学年学期
   const [term, setTerm] = useState<string>();
-  // 学年学期列表数据
-  const [termList, setTermList] = useState<any>();
   const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);
   const columns: ProColumns<any>[] = [
     {
@@ -115,29 +111,11 @@ const Class = (props: any) => {
       setDataSource(res?.data?.rows);
     }
   };
-  const getXNXQ = async (xxdm: string) => {
-    const res = await getAllXNXQ({
-      XXJBSJId: xxdm
-    });
-    if (res?.status === 'ok') {
-      const { data = [] } = res;
-      const currentXQ = getCurrentXQ(data);
-      const term = [].map.call(data, (item: any) => {
-        return {
-          value: item.id,
-          text: `${item.XN} ${item.XQ}`
-        };
-      });
-      setTermList(term);
-      setTerm(currentXQ?.id || data[0].id);
-      getCourseList(KHKCSJId, currentXQ?.id || data[0].id);
-    } else {
-      message.error(res.message);
-    }
-  };
-  useEffect(() => {
-    getXNXQ(XXJBSJId);
-  }, []);
+
+  const termChange = (val: string) => {
+    getCourseList( KHKCSJId, val);
+  }
+
   return (
     <>
       <Button
@@ -152,43 +130,14 @@ const Class = (props: any) => {
         <LeftOutlined />
         返回上一页
       </Button>
-      <div className={styles.searchs}>
-        {/* <span>
-          课程班名称:
-          <Search
-            allowClear
-            style={{ width: 200, marginLeft: 16 }}
-          />
-        </span> */}
-        <span>
-          所属学年学期：
-          <Select
-            value={term}
-            style={{ width: 200 }}
-            onChange={(value: string) => {
-              setTerm(value);
-              getCourseList(KHKCSJId, value);
-            }}
-          >
-            {termList?.map((item: any) => {
-              return (
-                <Option key={item.value} value={item.value}>
-                  {item.text}
-                </Option>
-              );
-            })}
-          </Select>
-        </span>
-      </div>
       <ProTable
-        headerTitle={KCMC + ' / ' + XXMC}
         columns={columns}
         pagination={{
           showQuickJumper: true,
           pageSize: 10,
           defaultCurrent: 1
         }}
-        scroll={{ x: 950 }}
+        scroll={{ x:  getTableWidth(columns) }}
         dataSource={dataSource}
         rowKey="id"
         search={false}
@@ -198,6 +147,11 @@ const Class = (props: any) => {
           density: false,
           reload: false
         }}
+        headerTitle={
+          <SearchLayout>
+            <SemesterSelect XXJBSJId={XXJBSJId} onChange={termChange} />
+          </SearchLayout>
+        }
       />
     </>
   );
