@@ -19,7 +19,6 @@ const ClassInfo = (props: any) => {
   const [dataSource, setDataSource] = useState<any>([]);
 
   const onSelectChange = (value: string) => {
-    console.log('value', value);
     getDataSource(value);
   };
   const getDataSource = async (XNXQId: string) => {
