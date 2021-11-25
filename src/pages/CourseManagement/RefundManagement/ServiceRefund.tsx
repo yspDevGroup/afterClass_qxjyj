@@ -5,7 +5,7 @@ import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
 import { getAllXNXQ } from '@/services/after-class-qxjyj/xnxq';
 import { getCurrentXQ } from '@/utils';
-import Style from './index.less';
+import styles from './index.less';
 import { getAllKHXSTK } from '@/services/after-class-qxjyj/khxstk';
 import SemesterSelect from '@/components/Search/SemesterSelect';
 import SearchLayout from '@/components/Search/Layout';
@@ -196,31 +196,33 @@ const ServiceRefund = (props: { state: any }) => {
 
   return (
     <>
-      <div className={Style.bodyContainer}>
-        <ProTable<any>
-          actionRef={actionRef}
-          columns={columns}
-          dataSource={dataSource}
-          rowKey="id"
-          pagination={{
-            showQuickJumper: true,
-            pageSize: 10,
-            defaultCurrent: 1
-          }}
-          scroll={{ x: getTableWidth(columns) }}
-          options={{
-            setting: false,
-            fullScreen: false,
-            density: false,
-            reload: false
-          }}
-          search={false}
-          headerTitle={
-            <SearchLayout>
-              <SemesterSelect XXJBSJId={state?.id} onChange={termChange} />
-            </SearchLayout>
-          }
-        />
+      <div className={styles.SchoolRefund}>
+        <div>
+          <ProTable<any>
+            actionRef={actionRef}
+            columns={columns}
+            dataSource={dataSource}
+            rowKey="id"
+            pagination={{
+              showQuickJumper: true,
+              pageSize: 10,
+              defaultCurrent: 1
+            }}
+            scroll={{ x: getTableWidth(columns) }}
+            options={{
+              setting: false,
+              fullScreen: false,
+              density: false,
+              reload: false
+            }}
+            search={false}
+            headerTitle={
+              <SearchLayout>
+                <SemesterSelect XXJBSJId={state?.id} onChange={termChange} />
+              </SearchLayout>
+            }
+          />
+        </div>
       </div>
     </>
   );
