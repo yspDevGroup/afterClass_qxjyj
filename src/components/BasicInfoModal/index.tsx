@@ -5,7 +5,7 @@
  * @LastEditTime: 2021-09-01 18:53:09
  * @LastEditors: Sissle Lynn
  */
-import { Form, Input, Modal, Select } from 'antd';
+import { Button, Form, Input, Modal, Select } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useModel } from 'umi';
 const { TextArea } = Input;
@@ -108,8 +108,14 @@ const BasicInfoModal = (props: { showModal: boolean, handleOk: Function, form: a
     <Modal
       title="基本信息维护"
       visible={showModal}
-      onOk={onOkClick}
-      onCancel={onOkClick}
+      footer={[
+        <Button key="submit" type="primary" onClick={onOkClick}>
+          确定
+        </Button>,
+        <Button key="back" onClick={onOkClick}>
+          取消
+        </Button>,
+      ]}
     >
       <Form
         form={form}

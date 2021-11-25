@@ -6,7 +6,7 @@
  * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useRef, useState } from 'react';
-import { Col, message, Popconfirm, Row, Image, Modal, Input, Form, Tooltip } from 'antd';
+import { Col, message, Popconfirm, Row, Image, Modal, Input, Form, Tooltip, Button } from 'antd';
 import type { ActionType, ProColumns, RequestData } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { TableListItem, TableListParams } from '../data';
@@ -76,9 +76,9 @@ const Blacklist = (props: { Keys: string | undefined }) => {
       form.resetFields();
     }, 50);
   }, [isModalVisible]);
-  useEffect(()=>{
+  useEffect(() => {
     getData();
-  },[JGMC]);
+  }, [JGMC]);
   const handleOk = () => {
     form.submit();
   };
@@ -233,7 +233,14 @@ const Blacklist = (props: { Keys: string | undefined }) => {
         dateFormatter="string"
         toolBarRender={() => []}
       />
-      <Modal title="移出黑名单" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+      <Modal title="移出黑名单" visible={isModalVisible} footer={[
+        <Button key="submit" type="primary" onClick={handleOk}>
+          确定
+        </Button>,
+        <Button key="back" onClick={handleCancel}>
+          取消
+        </Button>,
+      ]}>
         <Form form={form} onFinish={submit} className={styles.Forms}>
           <Form.Item
             name="BZ"

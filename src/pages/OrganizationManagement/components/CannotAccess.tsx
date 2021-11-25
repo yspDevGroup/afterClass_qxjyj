@@ -6,7 +6,7 @@
  * @LastEditors: Sissle Lynn
  */
 import React, { useEffect, useRef, useState } from 'react';
-import { Col, message, Modal, Popconfirm, Row, Tabs, Image, Form, Input } from 'antd';
+import { Col, message, Modal, Popconfirm, Row, Tabs, Image, Form, Input, Button } from 'antd';
 import type { ActionType, ProColumns, RequestData } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { TableListItem, TableListParams } from '../data';
@@ -293,7 +293,14 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
         dateFormatter="string"
         toolBarRender={() => []}
       />
-      <Modal title="驳回申请" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+      <Modal title="驳回申请" visible={isModalVisible} footer={[
+          <Button key="submit" type="primary" onClick={handleOk}>
+            确定
+          </Button>,
+          <Button key="back" onClick={handleCancel}>
+            取消
+          </Button>,
+        ]}>
         <Form form={form} onFinish={submit} className={styles.Forms}>
           <Form.Item
             name="BZ"
