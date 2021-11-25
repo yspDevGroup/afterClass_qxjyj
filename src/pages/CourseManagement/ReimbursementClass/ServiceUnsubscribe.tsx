@@ -169,7 +169,7 @@ const ServiceUnsubscribe = (props: { state: any }) => {
       XXJBSJId: id,
       XNXQId: xnxq,
       LX: 1,
-      ZT: [1],
+      ZT: [0, 1, 2],
       page: 0,
       pageSize: 0
     });

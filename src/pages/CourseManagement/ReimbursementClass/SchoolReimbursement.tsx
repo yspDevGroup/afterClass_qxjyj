@@ -144,16 +144,12 @@ const SchoolReimbursement = (props: { state: any }) => {
       XXJBSJId: id,
       XNXQId: xnxq,
       LX: 0,
-      ZT: [1],
+      ZT: [0, 1, 2],
       page: 0,
       pageSize: 0
     });
     if (resAll.status === 'ok') {
-      return {
-        data: resAll?.data?.rows,
-        success: true,
-        total: resAll?.data?.count
-      };
+      setDataSource(resAll?.data?.rows);
     }
   };
 
