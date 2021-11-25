@@ -6,12 +6,11 @@
  * @LastEditors: Sissle Lynn
  */
 import StateTab from '../component/StateTab';
-import styles from './../index.less'
 const Detatil = (props: any) => {
   const { id } = props.state;
   return (
     <>
-      <div style={{ background: '#fff'}} className={styles.pd0}>
+      <div style={{ background: '#fff'}}>
         <StateTab TabState={{ DDZT: ['已付款'], id }} />
       </div>
     </>
