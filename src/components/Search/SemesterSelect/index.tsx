@@ -21,6 +21,10 @@ const SemesterSelect: FC<SemesterSelectProps> = ({ onChange, XXJBSJId }) => {
   const [term, setTerm] = useState<string>();
   const getXNXQ = async (xxdm?: string) => {
     const res = await queryXNXQList(xxdm);
+    ((w) => {
+      // eslint-disable-next-line no-param-reassign
+      w.xnxqInfo = {};
+    })(window as Window & typeof globalThis & { xnxqInfo: any });
     const newData = res.xnxqList;
     const curTerm = res.current;
     if (newData) {
@@ -32,9 +36,7 @@ const SemesterSelect: FC<SemesterSelectProps> = ({ onChange, XXJBSJId }) => {
     }
   };
   useEffect(() => {
-    if (XXJBSJId) {
-      getXNXQ(XXJBSJId);
-    }
+    getXNXQ(XXJBSJId);
   }, [XXJBSJId]);
 
   return (
