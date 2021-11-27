@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import TopNav from './../components/TopNav';
 import styles from './index.less';
 import Footer from '@/components/Footer';
-import { useModel } from '@/.umi/plugin-model/useModel';
+import { useModel } from 'umi';
 
 const NoticeDetails = (props: any) => {
   const { allDataSource, index } = props.location.state;
