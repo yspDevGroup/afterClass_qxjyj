@@ -90,6 +90,8 @@ const TeacherInfo = (props: any) => {
           label: '个人照片',
           name: 'ZP',
           key: 'ZP',
+          imgWidth: 100,
+          imgHeight: 100,
           imageurl: zpUrl,
           upurl: '/api/upload/uploadFile?type=badge&plat=education',
           accept: '.jpg, .jpeg, .png',
@@ -103,6 +105,8 @@ const TeacherInfo = (props: any) => {
           label: '资格证书',
           name: 'ZGZS',
           key: 'ZGZS',
+          imgWidth: 150,
+          imgHeight: 100,
           imageurl: zgzsUrl,
           upurl: '/api/upload/uploadFile?type=badge&plat=education',
           accept: '.jpg, .jpeg, .png',
@@ -122,14 +126,14 @@ const TeacherInfo = (props: any) => {
           label: '姓名',
           name: 'XM',
           key: 'XM',
-          placeholder: readonly ? '——' : ''
+          placeholder: readonly ? '—' : ''
         },
         {
           type: 'input',
           label: '资格证书编号',
           name: 'ZGZSBH',
           key: 'ZGZSBH',
-          placeholder: readonly ? '——' : ''
+          placeholder: readonly ? '—' : ''
         }
       ]
     },
@@ -142,14 +146,14 @@ const TeacherInfo = (props: any) => {
           label: '性别',
           name: 'XBM',
           key: 'XBM',
-          placeholder: readonly ? '——' : ''
+          placeholder: readonly ? '—' : ''
         },
         {
           type: 'input',
           label: '学历',
           name: 'XLM',
           key: 'XLM',
-          placeholder: readonly ? '——' : ''
+          placeholder: readonly ? '—' : ''
         }
       ]
     },
@@ -162,14 +166,14 @@ const TeacherInfo = (props: any) => {
           label: '民族',
           name: 'MZM',
           key: 'MZM',
-          placeholder: readonly ? '——' : ''
+          placeholder: readonly ? '—' : ''
         },
         {
           type: 'input',
           label: '毕业院校',
           name: 'BYYX',
           key: 'BYYX',
-          placeholder: readonly ? '——' : ''
+          placeholder: readonly ? '—' : ''
         }
       ]
     },
@@ -178,19 +182,18 @@ const TeacherInfo = (props: any) => {
       key: 'group6',
       groupItems: [
         {
-          type: 'time',
-          subtype: 'date',
+          type: 'input',
           label: '出生日期',
           name: 'CSRQ',
           key: 'CSRQ',
-          placeholder: readonly ? '——' : ''
+          placeholder: readonly ? '—' : ''
         },
         {
           type: 'input',
           label: '专业',
           name: 'SXZY',
           key: 'ZY',
-          placeholder: readonly ? '——' : ''
+          placeholder: readonly ? '—' : ''
         }
       ]
     },
@@ -203,14 +206,14 @@ const TeacherInfo = (props: any) => {
           label: '联系电话',
           name: 'LXDH',
           key: 'LXDH',
-          placeholder: readonly ? '——' : ''
+          placeholder: readonly ? '—' : ''
         },
         {
           type: 'inputNumber',
           label: '教龄（年）',
           name: 'JL',
           key: 'JL',
-          placeholder: readonly ? '-' : '',
+          placeholder: readonly ? '—' : '',
           formatter: (value) => `${Math.round(value)}`,
           tooltip: '注意：教龄四舍五入，只能填写整数'
         }
@@ -225,14 +228,14 @@ const TeacherInfo = (props: any) => {
           key: 'SFZJLXM',
           name: 'SFZJLXM',
           label: '证件类型',
-          placeholder: readonly ? '——' : ''
+          placeholder: readonly ? '—' : ''
         },
         {
           type: 'input',
           label: '教授科目',
           name: 'JSKM',
           key: 'JSKM',
-          placeholder: readonly ? '——' : ''
+          placeholder: readonly ? '—' : ''
         }
       ]
     },
@@ -245,14 +248,14 @@ const TeacherInfo = (props: any) => {
           key: 'SFZJH',
           name: 'SFZJH',
           label: '证件号码',
-          placeholder: readonly ? '——' : ''
+          placeholder: readonly ? '—' : ''
         },
         {
           type: 'input',
           label: '电子邮箱',
           name: 'DZXX',
           key: 'DZXX',
-          placeholder: readonly ? '——' : ''
+          placeholder: readonly ? '—' : ''
         }
       ]
     },
@@ -266,7 +269,7 @@ const TeacherInfo = (props: any) => {
           name: 'BZ',
           key: 'BZ',
           rules: [{ type: 'string', max: 255 }],
-          placeholder: readonly ? '——' : ''
+          placeholder: readonly ? '—' : ''
         }
       ]
     }
@@ -316,7 +319,7 @@ const TeacherInfo = (props: any) => {
               if (info) {
                 const { CSRQ, XBM, ...rest } = info;
                 return {
-                  CSRQ: CSRQ ? moment(CSRQ) : '',
+                  CSRQ: CSRQ ? moment(CSRQ).format('YYYY-MM-DD') : '',
                   XBM: XBM === '女性' ? '女' : XBM === '男性' ? '男' : '',
                   ...rest
                 };

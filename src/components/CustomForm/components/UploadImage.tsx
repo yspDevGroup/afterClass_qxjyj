@@ -1,22 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { Button, message, Upload, Image } from 'antd';
 import ImgCrop from 'antd-img-crop';
-
+import 'antd/es/modal/style';
 import styles from './UploadImage.less';
+import { defImg } from '@/constant';
+import IconFont from '@/components/CustomIcon';
 
 type UploadImageProps = {
   imageurl?: string; // 回显地址
+  imgWidth?: number;
+  imgHeight?: number;
   upurl?: string; // 上传地址
   readonly?: boolean; // 值为true时，不展示上传按钮
   disabled?: boolean; // 值为true时，上传按钮不可点击
   accept?: string; // 类型
   imagename?: string; // 发到后台的文件参数名
-  handleImageChange?: () => void;
+  handleImageChange?: (value?: any) => void;
   data?: object | ((file: any) => object) | Promise<object>; // 上传所需额外参数或返回上传额外参数的方法
 };
 
 const UploadImage = (props: UploadImageProps) => {
-  const { upurl, readonly, disabled, accept, imagename, data, handleImageChange } = props;
+  const {
+    upurl,
+    imgWidth = 110,
+    imgHeight = 72,
+    readonly,
+    disabled,
+    accept,
+    imagename,
+    data,
+    handleImageChange
+  } = props;
   const [imageUrl, setImageUrl] = useState(props.imageurl);
   useEffect(() => {
     setImageUrl(props.imageurl);
@@ -42,18 +56,18 @@ const UploadImage = (props: UploadImageProps) => {
     <div className={styles.uploadStyles}>
       {imageUrl ? (
         <div style={{ marginRight: 16 }}>
-          <Image width={110} height={72} src={imageUrl} />
+          <Image width={imgWidth} height={imgHeight} src={imageUrl} fallback={defImg} />
         </div>
       ) : (
-        <div className={styles.defImgStyles}>
-          <div className={styles.icon} />
+        <div className={styles.defImgStyles} style={{ width: `${imgWidth}px`, height: `${imgHeight}px` }}>
+          <IconFont className={styles.icon} type="icon-wutupian" />
         </div>
       )}
       {readonly ? (
         ''
       ) : (
         <div className={styles.uploadButStyles}>
-          <ImgCrop rotate aspect={110 / 72}>
+          <ImgCrop rotate aspect={imgWidth / imgHeight}>
             <Upload
               showUploadList={false}
               name={imagename}
@@ -63,24 +77,26 @@ const UploadImage = (props: UploadImageProps) => {
               onChange={handleImageChange}
               accept={accept}
               data={data}
-              headers={{
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
-              }}
+              // headers={{
+              //   Authorization: getAuthorization(),
+              // }}
             >
-              {
-                disabled ? '':
+              {disabled ? (
+                ''
+              ) : (
                 <Button type="primary" disabled={disabled}>
                   上传
                 </Button>
-              }
+              )}
             </Upload>
           </ImgCrop>
-          {
-            disabled ? '':
+          {disabled ? (
+            ''
+          ) : (
             <Button disabled={disabled} style={{ marginTop: 8 }} onClick={onResetClick}>
               重置
             </Button>
-          }
+          )}
         </div>
       )}
     </div>

@@ -119,6 +119,8 @@ export type UploadImageProp = {
    * 上传图片组件-回显地址
    */
   imageurl?: string;
+  imgWidth?: number;
+  imgHeight?: number;
   /**
    * 上传图片组件-上传地址
    */
