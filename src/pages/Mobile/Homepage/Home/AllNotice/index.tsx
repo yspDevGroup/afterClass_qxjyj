@@ -1,9 +1,5 @@
-import { Button } from 'antd';
 import ListComp from '../components/ListComponent';
 import styles from '../index.less';
-import { history } from 'umi';
-import { LeftOutlined } from '@ant-design/icons';
-import { JYJGTZGG } from '@/services/after-class-qxjyj/jyjgtzgg';
 import TopNav from './../components/TopNav'
 
 const AllNotice = (props: any) => {

@@ -43,13 +43,14 @@ const Notice = () => {
         // 通知公告
         const resgetXXTZGG = await getJYJGTZGG({
           BT: '',
+          XZQHM: currentUser?.XZQHM,
           ZT: ['已发布'],
           LX: 0,
           page: 0,
           pageSize: 0
         });
         if (resgetXXTZGG.status === 'ok') {
-          let newData = {
+          const newData = {
             type: 'azeList',
             cls: 'azeList',
             list: resgetXXTZGG.data?.rows?.slice(0, 3) || [],
@@ -57,20 +58,27 @@ const Notice = () => {
             noDataImg: noData,
           };
           setZCGGData(newData);
-          newData.list = resgetXXTZGG.data?.rows || [];
-          setAllZCDataSource(newData)
+          const newAllData = {
+            type: 'azeList',
+            cls: 'azeList',
+            list: resgetXXTZGG.data?.rows || [],
+            noDataText: '暂无待办',
+            noDataImg: noData,
+          }
+          setAllZCDataSource(newAllData)
         }
 
         // 政策公告
         const resgetXXZCGG = await getJYJGTZGG({
           BT: '',
+          XZQHM: currentUser?.XZQHM,
           LX: 1,
           ZT: ['已发布'],
           page: 0,
           pageSize: 0
         });
         if (resgetXXZCGG.status === 'ok') {
-          let newData = {
+          const newData = {
             type: 'azeList',
             cls: 'azeList',
             list: resgetXXZCGG.data?.rows?.slice(0, 3) || [],
@@ -78,8 +86,15 @@ const Notice = () => {
             noDataImg: noData,
           };
           setTZGGData(newData);
-          newData.list = resgetXXZCGG.data?.rows || [];
-          setAllTZDataSource(newData);
+
+          const newAllData = {
+            type: 'azeList',
+            cls: 'azeList',
+            list: resgetXXZCGG.data?.rows || [],
+            noDataText: '暂无待办',
+            noDataImg: noData,
+          }
+          setAllTZDataSource(newAllData);
         }
       }
     }
