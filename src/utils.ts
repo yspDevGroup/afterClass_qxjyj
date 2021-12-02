@@ -2,8 +2,8 @@
  * @description: 工具类
  * @author: zpl
  * @Date: 2021-08-09 10:36:53
- * @LastEditTime: 2021-11-01 14:56:18
- * @LastEditors: zpl
+ * @LastEditTime: 2021-12-02 15:46:53
+ * @LastEditors: Sissle Lynn
  */
 import { history } from 'umi';
 import { parse } from 'querystring';
@@ -35,7 +35,7 @@ export const getBuildOptions = async (): Promise<BuildOptions> => {
         ssoHost: 'http://sso.prod.xianyunshipei.com',
         authType: 'wechat',
         clientId: 'wwccc22183061ae39b',
-        clientSecret: 'fyIAGkGZzBdoYun_Oka0NsGZqTmcovFTMMorCFrjRyg',
+        clientSecret: 'fyIAGkGZzBdoYun_Oka0NsGZqTmcovFTMMorCFrjRyg'
       };
     case 'chanming':
       // 禅鸣环境
@@ -46,7 +46,7 @@ export const getBuildOptions = async (): Promise<BuildOptions> => {
         ssoHost: 'http://sso.wuyu.imzhiliao.com',
         authType: 'wechat',
         clientId: 'ww0a941c570b201be6',
-        clientSecret: 'hK91Yg2RnDw4phTw1F_byWM9KoUM3Y-kufDDZOj0eTE',
+        clientSecret: 'hK91Yg2RnDw4phTw1F_byWM9KoUM3Y-kufDDZOj0eTE'
       };
     case '9dy':
       // 9朵云环境
@@ -57,7 +57,7 @@ export const getBuildOptions = async (): Promise<BuildOptions> => {
         ssoHost: 'http://sso.9cloudstech.com',
         authType: 'wechat',
         clientId: 'ww3a7d7b9efc33f6f3',
-        clientSecret: 'pCnf96P_GmAbe03S6jSqXp23moVXCak8CmOXTY2e0Os',
+        clientSecret: 'pCnf96P_GmAbe03S6jSqXp23moVXCak8CmOXTY2e0Os'
       };
     case 'development':
       // 开发测试环境
@@ -68,7 +68,7 @@ export const getBuildOptions = async (): Promise<BuildOptions> => {
         ssoHost: 'http://sso.test.xianyunshipei.com',
         authType: 'wechat',
         clientId: 'ww2b4b964ba635948b',
-        clientSecret: 'BwDHyfEiuBjdz18aR6Int96FxGZQ2d_UeJcVSBnkGvU',
+        clientSecret: 'BwDHyfEiuBjdz18aR6Int96FxGZQ2d_UeJcVSBnkGvU'
       };
     default:
       // 默认为local，本地开发模式下请在此处修改配置，但不要提交此处修改
@@ -79,7 +79,7 @@ export const getBuildOptions = async (): Promise<BuildOptions> => {
         ssoHost: 'http://platform.test.xianyunshipei.com',
         authType: 'password',
         clientId: 'ww2b4b964ba635948b',
-        clientSecret: 'nkTIja0mKy1suw-wo7Lt',
+        clientSecret: 'nkTIja0mKy1suw-wo7Lt'
       };
   }
 };
@@ -131,10 +131,11 @@ export const envjudge = (): PlatType => {
 /**
  * 根据运行环境获取登录地址
  *
- * @param {BuildOptions} [buildOptions]
- * @return {*}
+ * @param {BuildOptions} [buildOptions] 环境配置信息
+ * @param {boolean} [reLogin] 是否强制重登录
+ * @return {*}  {string}
  */
-export const getLoginPath = (buildOptions?: BuildOptions): string => {
+export const getLoginPath = (buildOptions?: BuildOptions, reLogin?: boolean): string => {
   const { authType = 'none', ssoHost, ENV_host, clientId, clientSecret } = buildOptions || {};
   let loginPath: string;
   switch (authType) {
@@ -151,7 +152,9 @@ export const getLoginPath = (buildOptions?: BuildOptions): string => {
       {
         // 为方便本地调试登录，认证回调地址通过参数传递给后台
         const callback = encodeURIComponent(`${ENV_host}/AuthCallback/password`);
-        loginPath = `${ssoHost}/oauth2/password?response_type=${authType}&client_id=${clientId}&client_secret=${clientSecret}&redirect_uri=${callback}`;
+        loginPath = `${ssoHost}/oauth2/password?response_type=${authType}&client_id=${clientId}&client_secret=${clientSecret}&redirect_uri=${callback}&reLogin=${
+          reLogin || 'false'
+        }`;
       }
       break;
   }
@@ -161,12 +164,14 @@ export const getLoginPath = (buildOptions?: BuildOptions): string => {
 /**
  * 跳转到指定URL连接
  *
- * @param {string} url
+ * @param {string} url 跳转链接
+ * @param {boolean} onTop 是否在top上跳转
  */
-export const gotoLink = (url: string) => {
+export const gotoLink = (url: string, onTop?: boolean) => {
   if (url.startsWith('http')) {
     // 外部连接
-    window.location.href = url;
+    const win = onTop ? window.top || window : window;
+    win.location.href = url;
   } else {
     // 本系统内跳转
     history.push(url);
@@ -207,7 +212,7 @@ export const getOauthToken = () => {
     ysp_access_token: localStorage.getItem('ysp_access_token'),
     ysp_expires_in: localStorage.getItem('ysp_expires_in'),
     ysp_refresh_token: localStorage.getItem('ysp_refresh_token'),
-    ysp_token_type: localStorage.getItem('ysp_token_type'),
+    ysp_token_type: localStorage.getItem('ysp_token_type')
   };
 };
 
@@ -279,7 +284,7 @@ export const getWidHei = () => {
   }
   return {
     width,
-    height,
+    height
   };
 };
 
@@ -308,14 +313,12 @@ export const getCurrentXQ = (list: API.XNXQ[]): API.XNXQ | null => {
   // 未找到匹配学期时返回前一个
   // 先按降序排序
   const tempList = list.sort((a, b) => new Date(b.KSRQ).getTime() - new Date(a.KSRQ).getTime());
-  const previousXQ = tempList.find(xq => new Date() >= new Date(xq.JSRQ));
+  const previousXQ = tempList.find((xq) => new Date() >= new Date(xq.JSRQ));
   if (previousXQ) {
     return previousXQ;
   }
   return tempList[tempList.length - 1];
 };
-
-
 
 /**
  * 根据当前时间获取移动端时段
@@ -326,21 +329,9 @@ export const getCurrentXQ = (list: API.XNXQ[]): API.XNXQ | null => {
  * @param {string} KKJSRQ 开课结束时间
  * @return {*}
  */
-export const getCurrentStatus = (
-  BMKSRQ: string,
-  BMJSRQ: string,
-  KKKSRQ: string,
-  KKJSRQ: string,
-) => {
-  let currentStatus:
-    | 'unstart'
-    | 'enroll'
-    | 'enrolling'
-    | 'enrolled'
-    | 'education'
-    | 'end'
-    | 'noTips'
-    | 'empty' = 'empty';
+export const getCurrentStatus = (BMKSRQ: string, BMJSRQ: string, KKKSRQ: string, KKJSRQ: string) => {
+  let currentStatus: 'unstart' | 'enroll' | 'enrolling' | 'enrolled' | 'education' | 'end' | 'noTips' | 'empty' =
+    'empty';
   const today = new Date();
   const BMbegin = new Date(BMKSRQ);
   const BMend = new Date(BMJSRQ);
@@ -391,7 +382,6 @@ export const enHenceMsg = (msg?: string) => {
   }
 };
 
-
 /**
  * 获取班级出勤信息
  * @param wkd 课程周几上课
@@ -401,20 +391,14 @@ export const enHenceMsg = (msg?: string) => {
  * @param xsId 学生ID
  * @returns {}
  */
-export const getCqDay = async (
-  wkd?: any[],
-  start?: string,
-  end?: string,
-  bjid?: string,
-  xsId?: string,
-) => {
+export const getCqDay = async (wkd?: any[], start?: string, end?: string, bjid?: string, xsId?: string) => {
   const myDate = new Date();
   const nowDate = new Date(moment(myDate).format('YYYY/MM/DD'));
   const res = await getAllKHXSCQ({
     xsId: xsId || '',
     bjId: bjid || '',
     CQZT: '',
-    CQRQ: '',
+    CQRQ: ''
   });
   if (res.status === 'ok') {
     if (start && end && wkd) {
@@ -434,7 +418,7 @@ export const getCqDay = async (
             }
             classbegins.push({
               status,
-              date: moment(record).format('MM/DD'),
+              date: moment(record).format('MM/DD')
             });
           }
         }
@@ -465,12 +449,12 @@ export const getData = async (bjid: string, xsId?: string) => {
         kss: res.data.KSS,
         XQName: res.data.XQName,
         kcmc: res.data.KHKCSJ!.KCMC,
-        data: await getCqDay(attend, start, end, bjid, xsId),
+        data: await getCqDay(attend, start, end, bjid, xsId)
       };
     }
   }
   return {
-    status: 'nothing',
+    status: 'nothing'
   };
 };
 

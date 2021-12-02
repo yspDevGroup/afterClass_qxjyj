@@ -2,14 +2,17 @@
  * @description: 鉴权失败界面
  * @author: zpl
  * @Date: 2021-07-14 17:11:16
- * @LastEditTime: 2021-07-15 10:47:25
- * @LastEditors: wsl
+ * @LastEditTime: 2021-12-02 15:41:10
+ * @LastEditors: Sissle Lynn
  */
 import React from 'react';
-import { history } from 'umi';
+import { useModel } from 'umi';
 import { Result, Button } from 'antd';
+import { getLoginPath, gotoLink } from '@/utils';
 
 const NotFind = () => {
+  const { initialState } = useModel('@@initialState');
+
   return (
     <Result
       status="403"
@@ -19,7 +22,8 @@ const NotFind = () => {
         <Button
           type="primary"
           onClick={() => {
-            window.top.location.href = '/';
+            const loginPath = getLoginPath(initialState?.buildOptions, true);
+            gotoLink(loginPath, true);
           }}
         >
           返回首页
