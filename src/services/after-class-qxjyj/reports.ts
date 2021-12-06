@@ -12,7 +12,7 @@ export async function getCourses(
     /** 课程来源 */
     KCLY?: string;
     /** 学校ID */
-    XXJBSJId?: string;
+    XXJBSJId: string;
     /** 机构ID */
     KHJYJGId?: string;
     /** 学年学期ID */
@@ -24,19 +24,19 @@ export async function getCourses(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<{
-    status?: 'ok' | 'error';
+    status: 'ok' | 'error';
     data?: { count?: number; rows?: API.KHKCTJSJ[] };
     message?: string;
   }>('/reports/getCourses', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -54,21 +54,21 @@ export async function getClasses(
     /** 学年学期ID */
     XNXQId?: string;
     /** 课后课程ID */
-    KHKCSJId?: string;
+    KHKCSJId: string;
     /** 页数 */
     page?: number;
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<any>('/reports/getClasses', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -78,7 +78,7 @@ export async function getTeachers(
     /** 姓名 */
     XM?: string;
     /** 学年学期ID */
-    XNXQId?: string;
+    XNXQId: string;
     /** 教师ID */
     JZGJBSJId?: string;
     /** 页数 */
@@ -86,19 +86,19 @@ export async function getTeachers(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<{
-    status?: 'ok' | 'error';
+    status: 'ok' | 'error';
     data?: { count?: number; rows?: API.KHJSKQSJ[] };
     message?: string;
   }>('/reports/getTeachers', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -108,7 +108,7 @@ export async function getStudents(
     /** 姓名 */
     XM?: string;
     /** 学年学期ID */
-    XNXQId?: string;
+    XNXQId: string;
     /** 学生ID */
     XSJBSJId?: string;
     /** 页数 */
@@ -116,19 +116,19 @@ export async function getStudents(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<{
-    status?: 'ok' | 'error';
+    status: 'ok' | 'error';
     data?: { count?: number; rows?: API.KHXSKQSJ[] };
     message?: string;
   }>('/reports/getStudents', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -136,21 +136,21 @@ export async function getStudents(
 export async function getClassDetail(
   body: {
     /** 班级ID */
-    KHBJSJId?: string;
+    KHBJSJId: string;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<{
-    status?: 'ok' | 'error';
+    status: 'ok' | 'error';
     data?: { XSId?: string; XSXM?: string; ZFZT?: string; TKZT?: string; BJMC?: string }[];
     message?: string;
   }>('/reports/getClassDetail', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -158,14 +158,14 @@ export async function getClassDetail(
 export async function getTeacherDetail(
   body: {
     /** 学年学期ID */
-    XNXQId?: string;
+    XNXQId: string;
     /** 教师ID */
-    JZGJBSJId?: string;
+    JZGJBSJId: string;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<{
-    status?: 'ok' | 'error';
+    status: 'ok' | 'error';
     data?: {
       id?: string;
       BJMC?: string;
@@ -179,10 +179,10 @@ export async function getTeacherDetail(
   }>('/reports/getTeacherDetail', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -190,14 +190,14 @@ export async function getTeacherDetail(
 export async function getStudentDetail(
   body: {
     /** 学年学期ID */
-    XNXQId?: string;
+    XNXQId: string;
     /** 学生ID */
-    XSJBSJId?: string;
+    XSJBSJId: string;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<{
-    status?: 'ok' | 'error';
+    status: 'ok' | 'error';
     data?: {
       id?: string;
       BJMC?: string;
@@ -211,10 +211,10 @@ export async function getStudentDetail(
   }>('/reports/getStudentDetail', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -222,19 +222,19 @@ export async function getStudentDetail(
 export async function getCourseEvaluation(
   body: {
     /** 学校ID */
-    XXJBSJId?: string;
+    XXJBSJId: string;
     /** 课程名称 */
-    KCMC?: string;
+    KCMC: string;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<any>('/reports/getCourseEvaluation', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -242,17 +242,19 @@ export async function getCourseEvaluation(
 export async function statisCourses(
   body: {
     /** 学年学期ID */
-    XNXQId?: string;
+    XNXQId: string;
+    /** 学年学期ID */
+    XXJBSJId: string;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<any>('/reports/statisCourses', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -260,19 +262,19 @@ export async function statisCourses(
 export async function statisClasses(
   body: {
     /** 学年学期ID */
-    XNXQId?: string;
+    XNXQId: string;
     /** 学校ID */
-    XXJBSJId?: string;
+    XXJBSJId: string;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<any>('/reports/statisClasses', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -282,7 +284,7 @@ export async function exportTeachers(
     /** 姓名 */
     XM?: string;
     /** 学年学期ID */
-    XNXQId?: string;
+    XNXQId: string;
     /** 教师ID */
     JZGJBSJId?: string;
     /** 页数 */
@@ -290,15 +292,15 @@ export async function exportTeachers(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<any>('/reports/exportTeachers', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -306,7 +308,7 @@ export async function exportTeachers(
 export async function getTeachersAttendanceByDate(
   body: {
     /** 学年学期ID */
-    XNXQId?: string;
+    XNXQId: string;
     /** 教师姓名 */
     JSXM?: string;
     /** 开始日期 */
@@ -318,15 +320,15 @@ export async function getTeachersAttendanceByDate(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<any>('/reports/getTeachersAttendanceByDate', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -334,7 +336,7 @@ export async function getTeachersAttendanceByDate(
 export async function exportTeachersAttendanceByDate(
   body: {
     /** 学年学期ID */
-    XNXQId?: string;
+    XNXQId: string;
     /** 教师姓名 */
     JSXM?: string;
     /** 开始日期 */
@@ -346,15 +348,15 @@ export async function exportTeachersAttendanceByDate(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<any>('/reports/exportTeachersAttendanceByDate', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -362,9 +364,9 @@ export async function exportTeachersAttendanceByDate(
 export async function getTeacherAttendanceDetailByDate(
   body: {
     /** 学年学期ID */
-    XNXQId?: string;
+    XNXQId: string;
     /** 教师ID */
-    JZGJBSJId?: string;
+    JZGJBSJId: string;
     /** 开始日期 */
     startDate?: string;
     /** 结束日期 */
@@ -374,15 +376,15 @@ export async function getTeacherAttendanceDetailByDate(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<any>('/reports/getTeacherAttendanceDetailByDate', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -390,9 +392,9 @@ export async function getTeacherAttendanceDetailByDate(
 export async function exportTeacherAttendanceDetailByDate(
   body: {
     /** 学年学期ID */
-    XNXQId?: string;
+    XNXQId: string;
     /** 教师ID */
-    JZGJBSJId?: string;
+    JZGJBSJId: string;
     /** 开始日期 */
     startDate?: string;
     /** 结束日期 */
@@ -402,15 +404,15 @@ export async function exportTeacherAttendanceDetailByDate(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<any>('/reports/exportTeacherAttendanceDetailByDate', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -418,7 +420,7 @@ export async function exportTeacherAttendanceDetailByDate(
 export async function getStudentsAttendanceByDate(
   body: {
     /** 学年学期ID */
-    XNXQId?: string;
+    XNXQId: string;
     /** 开始日期 */
     startDate?: string;
     /** 学生姓名 */
@@ -430,15 +432,15 @@ export async function getStudentsAttendanceByDate(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<any>('/reports/getStudentsAttendanceByDate', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -446,7 +448,7 @@ export async function getStudentsAttendanceByDate(
 export async function exportStudentsAttendanceByDate(
   body: {
     /** 学年学期ID */
-    XNXQId?: string;
+    XNXQId: string;
     /** 开始日期 */
     startDate?: string;
     /** 学生姓名 */
@@ -458,15 +460,15 @@ export async function exportStudentsAttendanceByDate(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<any>('/reports/exportStudentsAttendanceByDate', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -474,9 +476,9 @@ export async function exportStudentsAttendanceByDate(
 export async function getStudentAttendanceDetailByDate(
   body: {
     /** 学年学期ID */
-    XNXQId?: string;
+    XNXQId: string;
     /** 学生ID */
-    XSJBSJId?: string;
+    XSJBSJId: string;
     /** 开始日期 */
     startDate?: string;
     /** 结束日期 */
@@ -486,15 +488,15 @@ export async function getStudentAttendanceDetailByDate(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<any>('/reports/getStudentAttendanceDetailByDate', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -502,9 +504,9 @@ export async function getStudentAttendanceDetailByDate(
 export async function exportStudentAttendanceDetailByDate(
   body: {
     /** 学年学期ID */
-    XNXQId?: string;
+    XNXQId: string;
     /** 学生ID */
-    XSJBSJId?: string;
+    XSJBSJId: string;
     /** 开始日期 */
     startDate?: string;
     /** 结束日期 */
@@ -514,14 +516,22 @@ export async function exportStudentAttendanceDetailByDate(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<any>('/reports/exportStudentAttendanceDetailByDate', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
+  });
+}
+
+/** 重新统计课程报表基本信息 POST /reports/recalculateKCTJInfo */
+export async function recalculateKCTJInfo(options?: { [key: string]: any }) {
+  return request<any>('/reports/recalculateKCTJInfo', {
+    method: 'POST',
+    ...(options || {})
   });
 }

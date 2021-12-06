@@ -22,6 +22,7 @@ import * as jzglwsj from './jzglwsj';
 import * as jzgrysj from './jzgrysj';
 import * as jzgxxjl from './jzgxxjl';
 import * as kcsj from './kcsj';
+import * as khbjjsrl from './khbjjsrl';
 import * as khbjpj from './khbjpj';
 import * as khbjsj from './khbjsj';
 import * as khjgrzsq from './khjgrzsq';
@@ -73,6 +74,7 @@ import * as xxjbpz from './xxjbpz';
 import * as xxjbsj from './xxjbsj';
 import * as xxpz from './xxpz';
 import * as xxsjpz from './xxsjpz';
+import * as xxsppz from './xxsppz';
 import * as xxtzgg from './xxtzgg';
 import * as zxfa from './zxfa';
 import * as zxsj from './zxsj';
@@ -97,6 +99,7 @@ export default {
   jzgrysj,
   jzgxxjl,
   kcsj,
+  khbjjsrl,
   khbjpj,
   khbjsj,
   khjgrzsq,
@@ -148,7 +151,8 @@ export default {
   xxjbsj,
   xxpz,
   xxsjpz,
+  xxsppz,
   xxtzgg,
   zxfa,
-  zxsj,
+  zxsj
 };

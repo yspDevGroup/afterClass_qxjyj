@@ -5,14 +5,21 @@
  * @LastEditTime: 2021-09-01 18:53:09
  * @LastEditors: Sissle Lynn
  */
-import { Button, Form, Input, Modal, Select, Image } from 'antd';
+import { JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
+import { Button, Form, Input, Modal, Select, Image, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useModel } from 'umi';
+import styles from './index.less';
 const { TextArea } = Input;
 const { Option } = Select;
 
-const BasicInfoModal = (props: { showModal: boolean, handleOk: Function, form: any }) => {
-  const { showModal, handleOk, form } = props;
+const BasicInfoModal = (props: {
+  showModal: boolean;
+  handleOk: Function;
+  form: any;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const { showModal, handleOk, form, setShowModal } = props;
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
   const [cities, setCities] = useState<any>();
@@ -22,74 +29,127 @@ const BasicInfoModal = (props: { showModal: boolean, handleOk: Function, form: a
   const [provinceVal, setProvinceVal] = useState<any>();
   const [cityVal, setCityVal] = useState<any>();
   const [countyVal, setCountyVal] = useState<any>();
-  const [disabled, setDisabled] = useState(false);
+  const [XZQHM, setXZQHM] = useState<string>();
+  const [state, setstate] = useState(false);
 
   const layout = {
-    labelCol: { span: 6 },
+    labelCol: { span: 6 }
+  };
+  useEffect(() => {
+    async function fetchData(jyjId: string) {
+      const res = await JYJGSJ({
+        id: jyjId
+      });
+      if (res.status === 'ok') {
+        form.setFieldsValue({
+          unitName: res.data?.BMMC,
+          introduction: res.data?.BZ
+        });
+        if (res.data?.XZQH === '810000' || res.data?.XZQH === '820000' || res.data?.XZQH === '710000') {
+          setstate(true);
+        } else {
+          setstate(false);
+        }
+        if (currentUser?.XZQHM) {
+          setXZQHM(res.data?.XZQH);
+          setProvinceVal({
+            value: `${res.data?.XZQH?.substring(0, 2)}0000`,
+            label: res.data?.XZQ?.split('/')?.[0],
+            key: `${res.data?.XZQH?.substring(0, 2)}0000`
+          });
+          setCityVal({
+            value: `${res.data?.XZQH?.substring(0, 4)}00`,
+            label: res.data?.XZQ?.split('/')?.[1],
+            key: `${res.data?.XZQH?.substring(0, 4)}00`
+          });
+          setCountyVal({
+            value: res.data?.XZQH,
+            label: res.data?.XZQ?.split('/')?.[2],
+            key: res.data?.XZQH
+          });
+        }
+      }
+    }
+    if (currentUser?.jyjId) {
+      fetchData(currentUser?.jyjId);
+    }
+  }, [currentUser]);
+
+  const requestData = async () => {
+    const response = await fetch('https://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/100000_province.json');
+    const provinceData = await response.json();
+    setCities(provinceData.rows);
   };
 
   useEffect(() => {
     requestData();
-  }, [])
-  const requestData = () => {
-    const ajax = new XMLHttpRequest();
-    ajax.open('get', '//datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/100000_province.json');
-    ajax.send();
-    ajax.onreadystatechange = function () {
-      if (ajax.readyState === 4 && ajax.status === 200) {
-        const data = JSON.parse(ajax.responseText);
-        setCities(data.rows);
-      }
-    };
-  };
-
-  const handleChange = (type: string, value: any) => {
-    if (type === 'cities') {
-      const ajax = new XMLHttpRequest();
-      ajax.open('get', `//datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${value.value}_city.json`);
-      ajax.send();
-      ajax.onreadystatechange = function () {
-        if (ajax.readyState === 4 && ajax.status === 200) {
-          const data = JSON.parse(ajax.responseText);
-          if (value.value === '810000' || value.value === '820000' || value.value === '710000') {
-            setCityAdcode(value.value);
-          } else {
-            setCityAdcode(undefined);
+    if (XZQHM) {
+      setCityAdcode(XZQHM);
+    }
+    if (typeof XZQHM !== 'undefined') {
+      (async () => {
+        const response = await fetch(
+          `https://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${XZQHM?.substring(0, 2)}0000_city.json`
+        );
+        const provinceData = await response.json();
+        setSecondCity(provinceData.rows);
+        const res = await fetch(
+          `https://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${XZQHM?.substring(0, 4)}00_district.json`
+        );
+        const resData = await res.json();
+        let newArr: any[] = [];
+        resData.rows.forEach((item: any) => {
+          if (item.adcode.substring(0, 4) === XZQHM?.substring(0, 4)) {
+            newArr.push(item);
           }
-          setSecondCity(data.rows);
-          setProvinceVal({
-            value: value.value,
-            label: value.label,
-            key: value.value
-          });
-          setCityVal({});
-          setCountyVal({});
-          setCounty([]);
-        }
-      };
+        });
+        setCounty(newArr);
+      })();
+    }
+  }, [XZQHM]);
+
+  const handleChange = async (type: string, value: any) => {
+    if (type === 'cities') {
+      const response = await fetch(
+        `https://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${value.value}_city.json`
+      );
+      const provinceData = await response.json();
+      if (value.value === '810000' || value.value === '820000' || value.value === '710000') {
+        setCityAdcode(value.value);
+        setstate(true);
+      } else {
+        setstate(false);
+        setCityAdcode(undefined);
+      }
+      setSecondCity(provinceData.rows);
+      setProvinceVal({
+        value: value.value,
+        label: value.label,
+        key: value.value
+      });
+      setCityVal({});
+      setCountyVal({});
+      setCounty([]);
+      setSecondCity(provinceData.rows);
     } else if (type === 'secondCity') {
-      const ajax = new XMLHttpRequest();
-      ajax.open('get', `//datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${value.value}_district.json`);
-      ajax.send();
-      ajax.onreadystatechange = function () {
-        if (ajax.readyState === 4 && ajax.status === 200) {
-          const data = JSON.parse(ajax.responseText);
-          let newArr: any[] = [];
-          data.rows.forEach((item: any) => {
-            if (item.adcode.substring(0, 4) === value.value.substring(0, 4)) {
-              newArr.push(item);
-            }
-          });
-          setCounty(newArr);
-          setCityVal({
-            value: value.value,
-            label: value.label,
-            key: value.value
-          });
-          setCountyVal({});
-          setCityAdcode(undefined);
+      const res = await fetch(
+        `https://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${value.value}_district.json`
+      );
+      const resData = await res.json();
+      let newArr: any[] = [];
+      resData.rows.forEach((item: any) => {
+        if (item.adcode.substring(0, 4) === value.value.substring(0, 4)) {
+          newArr.push(item);
         }
-      };
+      });
+      setCounty(newArr);
+      setCityVal({
+        value: value.value,
+        label: value.label,
+        key: value.value
+      });
+      setCountyVal({});
+      setCityAdcode(undefined);
     } else if (type === 'county') {
       setCityAdcode(value.value);
       setCountyVal({
@@ -100,9 +160,26 @@ const BasicInfoModal = (props: { showModal: boolean, handleOk: Function, form: a
     }
   };
 
+  const handleSubmit = (value: any) => {
+    if (cityAdcode) {
+      handleOk({
+        BMMC: value.unitName,
+        BZ: value.introduction,
+        XZQH: cityAdcode,
+        XZQ: `${provinceVal?.label}${cityVal?.label ? `/${cityVal?.label}` : ''}${
+          countyVal?.label ? `/${countyVal?.label}` : ''
+        }`
+      });
+    } else {
+      message.error('请先选择行政区域');
+    }
+  };
   const onOkClick = () => {
-    handleOk(cityAdcode);
-  }
+    form.submit();
+  };
+  const onCancelClick = () => {
+    setShowModal(false);
+  };
 
   return (
     <Modal
@@ -113,21 +190,15 @@ const BasicInfoModal = (props: { showModal: boolean, handleOk: Function, form: a
         <Button key="submit" type="primary" onClick={onOkClick}>
           保存
         </Button>,
-        <Button key="back" onClick={onOkClick}>
+        <Button key="back" onClick={onCancelClick}>
           取消
-        </Button>,
+        </Button>
       ]}
-      onCancel={onOkClick}
+      onCancel={onCancelClick}
+      className={styles.Modals}
     >
-      <Form
-        form={form}
-        name="userForm"
-        {...layout}
-      >
-        <Form.Item
-          label="logo"
-          name="logo"
-        >
+      <Form form={form} name="userForm" {...layout} onFinish={handleSubmit}>
+        <Form.Item label="logo" name="logo">
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Image
               width={89}
@@ -140,22 +211,17 @@ const BasicInfoModal = (props: { showModal: boolean, handleOk: Function, form: a
             </p>
           </div>
         </Form.Item>
-        <Form.Item
-          label="单位名称"
-          name="unitName"
-          wrapperCol={{ span: 20 }}
-        >
-          <Input />
+        <Form.Item label="单位名称" name="unitName" wrapperCol={{ span: 20 }}>
+          <Input disabled />
         </Form.Item>
-        <Form.Item name="XZQHM" key="XZQHM" label="所属行政区域：" rules={[{ required: true, message: '请确保选择框不为空' }]}>
+        <Form.Item name="XZQHM" key="XZQHM" label="所属行政区域：">
           <Select
-            style={{ width: 111, marginRight: 10 }}
+            style={{ width: state ? 140 : 120, marginRight: 10 }}
             onChange={(value: any) => {
               handleChange('cities', value);
             }}
             labelInValue
             value={provinceVal}
-            disabled={disabled}
           >
             {cities?.map((item: any) => {
               return (
@@ -166,13 +232,16 @@ const BasicInfoModal = (props: { showModal: boolean, handleOk: Function, form: a
             })}
           </Select>
           <Select
-            style={{ width: 111, marginRight: 10 }}
+            style={{
+              width: 120,
+              marginRight: 10,
+              display: state ? 'none' : 'inline-block'
+            }}
             onChange={(value: any) => {
               handleChange('secondCity', value);
             }}
             labelInValue
             value={cityVal}
-            disabled={disabled}
           >
             {secondCity?.map((item: any) => {
               return (
@@ -183,13 +252,12 @@ const BasicInfoModal = (props: { showModal: boolean, handleOk: Function, form: a
             })}
           </Select>
           <Select
-            style={{ width: 111 }}
+            style={{ width: 120, display: state ? 'none' : 'inline-block' }}
             onChange={(value: any) => {
               handleChange('county', value);
             }}
             labelInValue
             value={countyVal}
-            disabled={disabled}
           >
             {county?.map((item: any) => {
               return (
@@ -200,11 +268,7 @@ const BasicInfoModal = (props: { showModal: boolean, handleOk: Function, form: a
             })}
           </Select>
         </Form.Item>
-        <Form.Item
-          label="单位简介"
-          name="introduction"
-          wrapperCol={{ span: 20 }}
-        >
+        <Form.Item label="单位简介" name="introduction" wrapperCol={{ span: 20 }}>
           <TextArea rows={4} />
         </Form.Item>
       </Form>

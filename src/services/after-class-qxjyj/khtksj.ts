@@ -4,17 +4,14 @@ import { request } from 'umi';
 
 /** 创建课后服务退课记录 PUT /khtksj/create */
 export async function createKHTKSJ(body: API.CreateKHTKSJ[], options?: { [key: string]: any }) {
-  return request<{ status?: 'ok' | 'error'; data?: API.KHTKSJ[]; message?: string }>(
-    '/khtksj/create',
-    {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      data: body,
-      ...(options || {}),
+  return request<{ status: 'ok' | 'error'; data?: API.KHTKSJ[]; message?: string }>('/khtksj/create', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
     },
-  );
+    data: body,
+    ...(options || {})
+  });
 }
 
 /** 获取课后服务退课记录 POST /khtksj/getAll */
@@ -37,66 +34,62 @@ export async function getKHTKSJ(
     /** 课后课程ID */
     KHKCSJId?: string;
     /** 退课类型，0:退课;1:停餐 */
-    LX?: number;
+    LX: number;
     /** 学校ID */
-    XXJBSJId?: string;
+    XXJBSJId: string;
     /** 页数 */
     page?: number;
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<{
-    status?: 'ok' | 'error';
+    status: 'ok' | 'error';
     data?: { count?: number; rows?: API.KHTKSJ[] };
     message?: string;
   }>('/khtksj/getAll', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
 /** 删除课后服务退课记录 DELETE /khtksj/${param0} */
 export async function deleteKHTKSJ(
-  params: {
-    // path
-    /** 课后服务退课记录ID */
-    id: string;
-  },
-  options?: { [key: string]: any },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.deleteKHTKSJParams,
+
+  options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<{ status?: 'ok' | 'error'; message?: string }>(`/khtksj/${param0}`, {
+  return request<{ status: 'ok' | 'error'; message?: string }>(`/khtksj/${param0}`, {
     method: 'DELETE',
     params: { ...queryParams },
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
 /** 更新课后服务退课记录 PUT /khtksj/update/${param0} */
 export async function updateKHTKSJ(
-  params: {
-    // path
-    /** 课后服务退课记录ID */
-    id: string;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.updateKHTKSJParams,
+
   body: API.UpdateKHTKSJ,
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<{ status?: 'ok' | 'error'; message?: string }>(`/khtksj/update/${param0}`, {
+  return request<{ status: 'ok' | 'error'; message?: string }>(`/khtksj/update/${param0}`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     params: { ...queryParams },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -106,7 +99,7 @@ export async function getAllTK(
     /** 退课状态 */
     ZT?: number[];
     /** 行政区划码 */
-    XZQHM?: string;
+    XZQHM: string;
     /** 学年学期ID */
     XNXQId?: string;
     XXJBSJId?: string | any;
@@ -115,20 +108,52 @@ export async function getAllTK(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<any>('/khtksj/getAllTK', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
 /** 机构端获取学生退课信息 POST /khtksj/getAllTKByAgency */
 export async function getAllTKByAgency(
+  body: {
+    /** 学生姓名 */
+    XSXM?: string;
+    /** 课程名称 */
+    KCMC?: string;
+    /** 班级ID */
+    KHBJSJId?: string;
+    /** 学年学期ID */
+    XNXQId?: string;
+    /** 学校ID */
+    XXJBSJId: string;
+    /** 机构ID */
+    KHJYJGId: string;
+    /** 页数 */
+    page?: number;
+    /** 每页记录数 */
+    pageSize?: number;
+  },
+  options?: { [key: string]: any }
+) {
+  return request<any>('/khtksj/getAllTKByAgency', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: body,
+    ...(options || {})
+  });
+}
+
+/** 机构端获取学生退款信息 POST /khtksj/getAllTK_ByJGid */
+export async function getAllTKByJGid(
   body: {
     /** 退课状态 */
     ZT?: number[];
@@ -141,23 +166,23 @@ export async function getAllTKByAgency(
     /** 学年学期ID */
     XNXQId?: string;
     /** 学校ID */
-    XXJBSJId?: string;
+    XXJBSJId: string;
     /** 机构ID */
-    KHJYJGId?: string;
+    KHJYJGId: string;
     /** 页数 */
     page?: number;
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
-  return request<any>('/khtksj/getAllTKByAgency', {
+  return request<any>('/khtksj/getAllTK_ByJGid', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
 
@@ -171,7 +196,7 @@ export async function getAllRefunds(
     /** 学生姓名 */
     XSXM?: string;
     /** 学年学期ID */
-    XNXQId?: string;
+    XNXQId: string;
     /** 课后服务班级ID */
     KHBJSJId?: string;
     /** 课后增值服务ID */
@@ -183,18 +208,18 @@ export async function getAllRefunds(
     /** 每页记录数 */
     pageSize?: number;
   },
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return request<{
-    status?: 'ok' | 'error';
+    status: 'ok' | 'error';
     data?: { count?: number; rows?: API.KHTKSJ[] };
     message?: string;
   }>('/khtksj/getAllRefunds', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
+    ...(options || {})
   });
 }
