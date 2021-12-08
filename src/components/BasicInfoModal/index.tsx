@@ -73,7 +73,7 @@ const BasicInfoModal = (props: {
     if (currentUser?.jyjId) {
       fetchData(currentUser?.jyjId);
     }
-  }, [currentUser]);
+  }, [currentUser, showModal]);
 
   const requestData = async () => {
     const response = await fetch('https://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/100000_province.json');
@@ -179,6 +179,7 @@ const BasicInfoModal = (props: {
   };
   const onCancelClick = () => {
     setShowModal(false);
+    form.resetFields();
   };
 
   return (
