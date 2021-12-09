@@ -358,6 +358,64 @@ declare namespace API {
     SM?: string;
   };
 
+  type JSCQBQ = {
+    id: string;
+    /** 审批状态 */
+    SPZT?: number;
+    /** 被补签日期 */
+    BQRQ?: string;
+    /** 缺卡原因 */
+    QKYY?: string;
+    /** 申请内容 */
+    SQNR?: '出勤' | '请假' | '代课';
+    /** 审批说明 */
+    SPSM?: string;
+    /** 审批教师ID */
+    SPRId?: string;
+    /** 补卡教师ID */
+    BQRId?: string;
+    /** 课程班id */
+    KHBJSJId?: string;
+    /** 学校时间配置Id */
+    XXSJPZId?: string;
+    SPR?: { id?: string; XM?: string; WechatUserId?: string } | any;
+    BQR?: { id?: string; XM?: string; WechatUserId?: string } | any;
+    KHBJSJ?: {
+      id?: string;
+      BJMC?: string;
+      KCTP?: string;
+      KHKCSJ?: { id?: string; KCMC?: string; KCTP?: string };
+    };
+    createdAt?: string;
+    updatedAt?: string;
+  };
+
+  type CreateJSCQBQ = {
+    /** 学校基本数据id */
+    XXJBSJId: string;
+    /** 被补签日期 */
+    BQRQ?: string;
+    /** 缺卡原因 */
+    QKYY?: string;
+    /** 申请内容 */
+    SQNR?: '出勤' | '请假' | '代课';
+    /** 补签教师ID */
+    BQRId?: string;
+    /** 课程班id */
+    KHBJSJId?: string;
+    /** 学校时间配置Id */
+    XXSJPZId?: string;
+  };
+
+  type UpdateJSCQBQ = {
+    /** 审批状态 */
+    SPZT?: number;
+    /** 审批说明 */
+    SPSM?: string;
+    /** 审批教师ID */
+    SPRId?: string;
+  };
+
   type JXJHSJ = {
     id: string;
     /** 课程号 */
@@ -413,6 +471,8 @@ declare namespace API {
     BMJB?: number;
     /** 行政区划 */
     XZQH?: string;
+    /** 行政区 */
+    XZQ?: string;
     /** 机构类型,0教育管理机构/1学前教育机构/2中小学/3中职教育机构/4高等教育机构/5高职教育机构剖 */
     JGLX?: number;
     /** 部门IP范围 */
@@ -436,6 +496,8 @@ declare namespace API {
     BMJB?: number;
     /** 行政区划 */
     XZQH?: string;
+    /** 行政区 */
+    XZQ?: string;
     /** 机构类型,0教育管理机构/1学前教育机构/2中小学/3中职教育机构/4高等教育机构/5高职教育机构剖 */
     JGLX?: number;
     /** 部门IP范围 */
@@ -459,6 +521,8 @@ declare namespace API {
     BMJB?: number;
     /** 行政区划 */
     XZQH?: string;
+    /** 行政区 */
+    XZQ?: string;
     /** 机构类型,0教育管理机构/1学前教育机构/2中小学/3中职教育机构/4高等教育机构/5高职教育机构剖 */
     JGLX?: number;
     /** 部门IP范围 */
@@ -1445,6 +1509,30 @@ declare namespace API {
     JZGJBSJId?: string;
   };
 
+  type KCBSKSJ = {
+    id: string;
+    /** 上课日期 */
+    SKRQ?: string;
+    /** 班级ID */
+    KHBJSJId?: string;
+    KHBJSJ?: { id?: string; BJMC?: string; KCTP?: string; KHKCSJ?: { id?: string; KCMC?: string } };
+    /** 节次ID */
+    XXSJPZId?: string;
+    XXSJPZ?: {
+      id?: string;
+      KSSJ?: string;
+      JSSJ?: string;
+      KJS?: string;
+      TITLE?: string;
+      BZXX?: string;
+    };
+    KCBSKJSSJs?: {
+      id?: string;
+      JSLX?: number;
+      JZGJBSJ?: { id?: string; GH?: string; XM?: string; LXDH?: string; WechatUserId?: string };
+    }[];
+  };
+
   type KCSJ = {
     id: string;
     /** 课程名称 */
@@ -1533,6 +1621,37 @@ declare namespace API {
     JCBM?: string;
     /** 参考书目 */
     CKSM?: string;
+  };
+
+  type KHBJJSRL = {
+    id: string;
+    /** 日期 */
+    RQ?: string;
+    /** 教师类型 */
+    JSLX?: number;
+    KHBJSJ?: { id?: string; BJMC?: string };
+    JZGJBSJ?: { id?: string; XM?: string; GH?: string; LXDH?: string; WechatUserId?: string };
+    XXSJPZ?: {
+      id?: string;
+      KSSJ?: string;
+      JSSJ?: string;
+      KJS?: string;
+      TITLE?: string;
+      BZXX?: string;
+    };
+  };
+
+  type CreateKHBJJSRL = {
+    /** 日期 */
+    RQ: string;
+    /** 班级ID */
+    KHBJSJId: string;
+    /** 主班教师ID */
+    BZRId?: string;
+    /** 副班教师ID数组 */
+    FBZRIds: string[];
+    /** 节次ID */
+    XXSJPZId: string;
   };
 
   type KHBJPJ = {
@@ -1798,6 +1917,18 @@ declare namespace API {
     JZGJBSJId?: string;
     /** 班级ID */
     KHBJSJId?: string;
+    JZGJBSJ?: { id?: string; XM?: string; GH?: string; LXDH?: string | any; WechatUserId?: string } | any;
+    XXSJPZ?:
+      | {
+          id?: string;
+          KSSJ?: string;
+          JSSJ?: string;
+          KJS?: string | any;
+          TITLE?: string;
+          BZXX?: string;
+        }
+      | any;
+    KHBJSJ?: { id?: string; BJMC?: string } | any;
   };
 
   type CreateKHJSCQ = {
@@ -1896,6 +2027,8 @@ declare namespace API {
     BZ?: string;
     /** 教师ID */
     JZGJBSJId: string;
+    /** 学校ID */
+    XXJBSJId: string;
     /** 班级ID */
     bjIds?: { KHBJSJId?: string; XXSJPZId?: string; KCMC?: string; QJRQ?: string }[];
   };
@@ -2041,10 +2174,6 @@ declare namespace API {
     BZ?: string;
     /** 代课备注信息 */
     DKBZ?: string;
-    /** 调课后的上课开始时间 */
-    KSSJ?: string;
-    /** 调课后的上课结束时间 */
-    JSSJ?: string;
     /** 原定上课日期 */
     SKRQ?: string | any;
     /** 调课后的上课日期 */
@@ -2055,7 +2184,10 @@ declare namespace API {
     DKJS?: { id?: string; XM?: string; WechatUserId?: string } | any;
     SKFJ?: { id?: string; BH?: string; FJMC?: string } | any;
     TKFJ?: { id?: string; BH?: string; FJMC?: string } | any;
-    XXSJPZ?: { id?: string; KSSJ?: string; JSSJ?: string; TITLE?: string };
+    /** 原定节次 */
+    SKJC?: { id?: string; KSSJ?: string; JSSJ?: string; TITLE?: string } | any;
+    /** 调课后节次 */
+    TKJC?: { id?: string; KSSJ?: string; JSSJ?: string; TITLE?: string } | any;
     KHBJSJ?: {
       id?: string;
       BJMC?: string;
@@ -2076,10 +2208,6 @@ declare namespace API {
     BZ?: string;
     /** 代课备注信息 */
     DKBZ?: string;
-    /** 调课后的上课开始时间 */
-    KSSJ?: string;
-    /** 调课后的上课结束时间 */
-    JSSJ?: string;
     /** 原定上课日期 */
     SKRQ?: string | any;
     /** 调课后的上课日期 */
@@ -2094,8 +2222,12 @@ declare namespace API {
     TKFJId?: string | any;
     /** 班级ID */
     KHBJSJId: string;
-    /** 节次ID */
-    XXSJPZId: string;
+    /** 原定节次ID */
+    SKJCId?: string | any;
+    /** 调课后节次ID */
+    TKJCId?: string | any;
+    /** 学校ID */
+    XXJBSJId: string;
     /** 审批教师ID */
     SPJSId?: string | any;
   };
@@ -2109,10 +2241,6 @@ declare namespace API {
     BZ?: string;
     /** 代课备注信息 */
     DKBZ?: string;
-    /** 调课后的上课开始时间 */
-    KSSJ?: string;
-    /** 调课后的上课结束时间 */
-    JSSJ?: string;
     /** 原定上课日期 */
     SKRQ?: string | any;
     /** 调课后的上课日期 */
@@ -2129,6 +2257,12 @@ declare namespace API {
     TKFJId?: string | any;
     /** 审批教师ID */
     SPJSId?: string | any;
+    /** 原定节次ID */
+    SKJCId?: string | any;
+    /** 调课后节次ID */
+    TKJCId?: string | any;
+    /** 学校ID */
+    XXJBSJId: string;
   };
 
   type KHJYJG = {
@@ -2937,8 +3071,8 @@ declare namespace API {
     CQZT?: '出勤' | '请假' | '缺席';
     /** 出勤日期 */
     CQRQ?: string | any;
-    /** 排课ID */
-    KHPKSJId?: string;
+    /** 节次ID */
+    XXSJPZId?: string;
     XSJBSJ?: { id?: string; XH?: string; XM?: string; WechatUserId?: string };
     KHBJSJ?: {
       id?: string;
@@ -2965,8 +3099,8 @@ declare namespace API {
     XSJBSJId?: string;
     /** 班级ID */
     KHBJSJId?: string;
-    /** 排课ID */
-    KHPKSJId?: string;
+    /** 节次ID */
+    XXSJPZId?: string;
   };
 
   type UpdateKHXSCQ = {
@@ -3237,9 +3371,7 @@ declare namespace API {
     };
     JZGJBSJ?: { id?: string; XM?: string; WechatUserId?: string } | any;
     KHBJSJ?: { BJMC?: string; KHKCSJ?: { KCMC?: string } } | any;
-    KHXXZZFW?:
-      | { id?: string; FWMC?: string; KHZZFW?: { id?: string; FWMC?: string; FWJGMC?: string } }
-      | any;
+    KHXXZZFW?: { id?: string; FWMC?: string; KHZZFW?: { id?: string; FWMC?: string; FWJGMC?: string } } | any;
   };
 
   type CreateKHXSTK = {
@@ -3294,6 +3426,8 @@ declare namespace API {
     FWZT?: number;
     /** 费用 */
     FY?: number;
+    /** 报名学生人数 */
+    xs_count?: number;
     /** 开始日期 */
     KSRQ?: string | any;
     /** 结束日期 */
@@ -4913,6 +5047,49 @@ declare namespace API {
     XXJBSJId?: string;
     /** 学年学期ID */
     XNXQId?: string;
+  };
+
+  type XXSPPZ = {
+    id: string;
+    /** 教师请假是否审批 */
+    JSQJ: boolean;
+    /** 学生请假是否审批 */
+    XSQJ: boolean;
+    /** 教师调课是否审批 */
+    JSTK: boolean;
+    /** 教师代课是否审批 */
+    JSDK: boolean;
+    /** 学生退课是否审批 */
+    XSTK: boolean;
+    /** 教师补签是否审批 */
+    JSBQ: boolean;
+    /** 教师补签开始日期 */
+    JSBQ_KSRQ: string;
+    /** 教师补签结束日期 */
+    JSBQ_JSRQ: string;
+  };
+
+  type CreateXXSPPZ = {
+    /** 教师请假是否审批 */
+    JSQJ: boolean;
+    /** 学生请假是否审批 */
+    XSQJ: boolean;
+    /** 教师调课是否审批 */
+    JSTK: boolean;
+    /** 教师代课是否审批 */
+    JSDK: boolean;
+    /** 学生退课是否审批 */
+    XSTK: boolean;
+    /** 学生退款是否审批 */
+    XSTF: boolean;
+    /** 教师补签是否审批 */
+    JSBQ: boolean;
+    /** 教师补签开始日期 */
+    JSBQ_KSRQ: string;
+    /** 教师补签结束日期 */
+    JSBQ_JSRQ: string;
+    /** 学校ID */
+    XXJBSJId: string;
   };
 
   type XXTZGG = {
