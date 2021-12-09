@@ -1,0 +1,24 @@
+.Modals {
+  width: 600px !important;
+  :global {
+    input[disabled] {
+      color: #333;
+      background-color: #fff;
+      border: none;
+    }
+    .ant-form-item:nth-of-type(3) {
+      .ant-form-item-label::before {
+        display: inline-block;
+        margin-right: 4px;
+        color: #ff4d4f;
+        font-size: 14px;
+        font-family: SimSun, sans-serif;
+        line-height: 1;
+        content: '*';
+      }
+    }
+    .ant-modal-footer {
+      padding: 10px 24px;
+    }
+  }
+}

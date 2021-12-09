@@ -4,9 +4,9 @@ import { LogoutOutlined } from '@ant-design/icons';
 import { useAccess, useModel, history } from 'umi';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
 import HeaderDropdown from '../HeaderDropdown';
-import { JYJGSJ, updateJYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
+import { getJYJGSJ, JYJGSJ, updateJYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
 import { initWXAgentConfig, initWXConfig, showUserName } from '@/wx';
-import BasicInfoModal from '@/components/BasicInfoModal'
+import BasicInfoModal from '@/components/BasicInfoModal';
 import styles from './index.less';
 import { removeOAuthToken } from '@/utils';
 
@@ -18,6 +18,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
   const { isAdmin } = useAccess();
   const { initialState, setInitialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
+  const { loading, refresh } = useModel('@@initialState');
   const [wechatReded, setWechatReded] = useState(false);
   const [wechatInfo, setWechatInfo] = useState({
     openId: ''
@@ -33,6 +34,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
         id: jyjId
       });
       if (res.status === 'ok') {
+        console.log(res, '---------------');
         setJyjData(res.data);
       }
     }
@@ -61,7 +63,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
       });
   }, [wechatReded]);
 
-  const loading = (
+  const loadings = (
     <span className={`${styles.action} ${styles.account}`}>
       <Spin
         size="small"
@@ -73,45 +75,18 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
     </span>
   );
   if (!initialState) {
-    return loading;
+    return loadings;
   }
 
-  const handleOk = (cityAdcode: any) => {
-    setShowModal(false);
-    form
-      .validateFields()
-      .then(values => {
-        form.resetFields();
-        form.setFieldsValue(values)
-        console.log(values.unitName);
-        (async () => {
-          if (currentUser?.jyjId) {
-            const resUpdateJYJGSJ = await updateJYJGSJ({
-              id: currentUser?.jyjId
-            }, {
-              BMMC: values.unitName,
-              BZ: values.introduction,
-              XZQH: cityAdcode
-            });
-            if (resUpdateJYJGSJ.status === 'ok') {
-              message.success('操作成功');
-            } else {
-              message.error('操作失败');
-            }
-            if (key === 'logout' && initialState) {
-              setTimeout(() => {
-                setInitialState({ ...initialState, currentUser: null });
-                removeOAuthToken();
-                history.replace(initialState.buildOptions.authType === 'wechat' ? '/authCallback/overDue' : '/');
-                return;
-              }, 1000)
-            }
-          }
-        })()
-      })
-      .catch(info => {
-        console.log('校验失败:', info);
-      });
+  const handleOk = async (cityAdcode: any) => {
+    const res = await updateJYJGSJ({ id: currentUser!.jyjId! }, cityAdcode);
+    if (res.status === 'ok') {
+      message.success('保存成功');
+      setShowModal(false);
+      await refresh();
+    } else {
+      message.error('保存失败，请联系管理员或稍后再试');
+    }
   };
 
   const onMenuClick = useCallback(
@@ -124,15 +99,12 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
       setShowModal(true);
       setKey(event.key);
     },
-    [initialState, setInitialState],
+    [initialState, setInitialState]
   );
 
   const menuHeaderDropdown = (
     <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
-
-      <Menu.Item key="logout">
-        基本信息维护
-      </Menu.Item>
+      <Menu.Item key="logout">基本信息维护</Menu.Item>
     </Menu>
   );
 
@@ -162,7 +134,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
           </span>
         </span>
       </HeaderDropdown>
-      <BasicInfoModal showModal={showModal} handleOk={handleOk} form={form} />
+      <BasicInfoModal showModal={showModal} setShowModal={setShowModal} handleOk={handleOk} form={form} />
     </>
   );
 };

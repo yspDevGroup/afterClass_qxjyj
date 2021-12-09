@@ -96,7 +96,7 @@ const Index = () => {
       }
     }
     fetchData();
-  }, []);
+  }, [currentUser]);
 
   return (
     <div className={styles.pageWrapper}>
