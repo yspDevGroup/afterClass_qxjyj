@@ -2,10 +2,11 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-09-01 11:07:27
- * @LastEditTime: 2021-09-01 18:53:09
- * @LastEditors: Sissle Lynn
+ * @LastEditTime: 2021-12-09 15:04:18
+ * @LastEditors: Wu Zhan
  */
 import { JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
+import { getAdministrative } from '@/services/after-class-qxjyj/sso';
 import { Button, Form, Input, Modal, Select, Image, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useModel } from 'umi';
@@ -35,6 +36,22 @@ const BasicInfoModal = (props: {
   const layout = {
     labelCol: { span: 6 }
   };
+
+  //获取区域内容
+  const getRegion = async (type: 'province' | 'city' | 'region', code: string) => {
+    const response = await getAdministrative({
+      type,
+      code
+    });
+    if (response?.status === 'ok') {
+      console.log('response', response);
+      return response?.data?.rows;
+    } else {
+      message.error(response.message);
+    }
+    return [];
+  };
+
   useEffect(() => {
     async function fetchData(jyjId: string) {
       const res = await JYJGSJ({
@@ -76,9 +93,11 @@ const BasicInfoModal = (props: {
   }, [currentUser, showModal]);
 
   const requestData = async () => {
-    const response = await fetch('https://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/100000_province.json');
-    const provinceData = await response.json();
-    setCities(provinceData.rows);
+    // const response = await fetch('https://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/100000_province.json');
+    // const provinceData = await response.json();
+    // setCities(provinceData.rows);
+    const list = await getRegion('province', '');
+    setCities(list);
   };
 
   useEffect(() => {
@@ -88,32 +107,32 @@ const BasicInfoModal = (props: {
     }
     if (typeof XZQHM !== 'undefined') {
       (async () => {
-        const response = await fetch(
-          `https://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${XZQHM?.substring(0, 2)}0000_city.json`
-        );
-        const provinceData = await response.json();
-        setSecondCity(provinceData.rows);
-        const res = await fetch(
-          `https://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${XZQHM?.substring(0, 4)}00_district.json`
-        );
-        const resData = await res.json();
-        let newArr: any[] = [];
-        resData.rows.forEach((item: any) => {
-          if (item.adcode.substring(0, 4) === XZQHM?.substring(0, 4)) {
-            newArr.push(item);
-          }
-        });
-        setCounty(newArr);
+        // const response = await fetch(
+        //   `https://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${XZQHM?.substring(0, 2)}0000_city.json`
+        // );
+        // const provinceData = await response.json();
+        const list1 = await getRegion('city', `${XZQHM?.substring(0, 2)}0000`);
+        setSecondCity(list1);
+        // const res = await fetch(
+        //   `https://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${XZQHM?.substring(0, 4)}00_district.json`
+        // );
+        // const resData = await res.json();
+        // let newArr: any[] = [];
+        // resData.rows.forEach((item: any) => {
+        //   if (item.adcode.substring(0, 4) === XZQHM?.substring(0, 4)) {
+        //     newArr.push(item);
+        //   }
+        // });
+        const list2 = await getRegion('region', `${XZQHM?.substring(0, 4)}00`);
+
+        setCounty(list2);
       })();
     }
   }, [XZQHM]);
 
   const handleChange = async (type: string, value: any) => {
     if (type === 'cities') {
-      const response = await fetch(
-        `https://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${value.value}_city.json`
-      );
-      const provinceData = await response.json();
+      const list = await getRegion('city', value.value);
       if (value.value === '810000' || value.value === '820000' || value.value === '710000') {
         setCityAdcode(value.value);
         setstate(true);
@@ -121,7 +140,6 @@ const BasicInfoModal = (props: {
         setstate(false);
         setCityAdcode(undefined);
       }
-      setSecondCity(provinceData.rows);
       setProvinceVal({
         value: value.value,
         label: value.label,
@@ -130,19 +148,11 @@ const BasicInfoModal = (props: {
       setCityVal({});
       setCountyVal({});
       setCounty([]);
-      setSecondCity(provinceData.rows);
+      setSecondCity(list);
     } else if (type === 'secondCity') {
-      const res = await fetch(
-        `https://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/${value.value}_district.json`
-      );
-      const resData = await res.json();
-      let newArr: any[] = [];
-      resData.rows.forEach((item: any) => {
-        if (item.adcode.substring(0, 4) === value.value.substring(0, 4)) {
-          newArr.push(item);
-        }
-      });
-      setCounty(newArr);
+      const list = await getRegion('region', value.value);
+
+      setCounty(list);
       setCityVal({
         value: value.value,
         label: value.label,
@@ -226,8 +236,8 @@ const BasicInfoModal = (props: {
           >
             {cities?.map((item: any) => {
               return (
-                <Option value={item.adcode} key={item.name}>
-                  {item.name}
+                <Option value={item.dm} key={item.mc}>
+                  {item.mc}
                 </Option>
               );
             })}
@@ -246,8 +256,8 @@ const BasicInfoModal = (props: {
           >
             {secondCity?.map((item: any) => {
               return (
-                <Option value={item.adcode} key={item.name}>
-                  {item.name}
+                <Option value={item.dm} key={item.mc}>
+                  {item.mc}
                 </Option>
               );
             })}
@@ -262,8 +272,8 @@ const BasicInfoModal = (props: {
           >
             {county?.map((item: any) => {
               return (
-                <Option value={item.adcode} key={item.adcode}>
-                  {item.name}
+                <Option value={item.dm} key={item.mc}>
+                  {item.mc}
                 </Option>
               );
             })}
