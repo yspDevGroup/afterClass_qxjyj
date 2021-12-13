@@ -4,14 +4,16 @@ import { request } from 'umi';
 
 /** 获取课后服务订单记录 GET /khxsdd/${param0} */
 export async function getKHXSDD(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getKHXSDDParams,
-
+  params: {
+    // path
+    /** 类型ID */
+    id: string;
+  },
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
   return request<{
-    status: 'ok' | 'error';
+    status?: 'ok' | 'error';
     data?: {
       id?: string;
       DDBH?: string;
@@ -67,13 +69,15 @@ export async function getKHXSDD(
 
 /** 删除课后服务订单记录 DELETE /khxsdd/${param0} */
 export async function deleteKHXSDD(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.deleteKHXSDDParams,
-
+  params: {
+    // path
+    /** 类型ID */
+    id: string;
+  },
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<{ status: 'ok' | 'error'; message?: string }>(`/khxsdd/${param0}`, {
+  return request<{ status?: 'ok' | 'error'; message?: string }>(`/khxsdd/${param0}`, {
     method: 'DELETE',
     params: { ...queryParams },
     ...(options || {})
@@ -108,7 +112,7 @@ export async function getAllKHXSDD(
   },
   options?: { [key: string]: any }
 ) {
-  return request<{ status: 'ok' | 'error'; data?: API.KHXSDD[]; message?: string }>('/khxsdd/', {
+  return request<{ status?: 'ok' | 'error'; data?: API.KHXSDD[]; message?: string }>('/khxsdd/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -121,7 +125,7 @@ export async function getAllKHXSDD(
 /** 创建课后服务订单记录 PUT /khxsdd/create */
 export async function createKHXSDD(body: API.CreateKHXSDD, options?: { [key: string]: any }) {
   return request<{
-    status: 'ok' | 'error';
+    status?: 'ok' | 'error';
     data?: {
       id?: string;
       DDBH?: string;
@@ -182,23 +186,23 @@ export async function createKHXSDD(body: API.CreateKHXSDD, options?: { [key: str
 export async function payKHXSDD(
   body: {
     /** 课后服务订单ID */
-    ddIds: string[];
+    ddIds?: string[];
     /** 课后服务班级ID */
     bjId?: string;
     /** 跳转地址 */
-    returnUrl: string;
+    returnUrl?: string;
     /** 学生ID */
-    xsId: string;
+    xsId?: string;
     /** 课程名称 */
-    kcmc: string;
+    kcmc?: string;
     /** 课后服务订单支付金额 */
-    amount: number;
+    amount?: number;
     /** 学校ID */
-    XXJBSJId: string;
+    XXJBSJId?: string;
   },
   options?: { [key: string]: any }
 ) {
-  return request<{ status: 'ok' | 'error'; data?: string; message?: string }>('/khxsdd/pay', {
+  return request<{ status?: 'ok' | 'error'; data?: string; message?: string }>('/khxsdd/pay', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -212,7 +216,7 @@ export async function payKHXSDD(
 export async function refundKHXSDD(
   body: {
     /** 课后服务订单ID */
-    ddId: string;
+    ddId?: string;
     /** 课后服务订单退款金额 */
     amount?: number;
     /** 课后服务订单退款原因 */
@@ -222,7 +226,7 @@ export async function refundKHXSDD(
   },
   options?: { [key: string]: any }
 ) {
-  return request<{ status: 'ok' | 'error'; data?: string; message?: string }>('/khxsdd/refund', {
+  return request<{ status?: 'ok' | 'error'; data?: string; message?: string }>('/khxsdd/refund', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -234,13 +238,15 @@ export async function refundKHXSDD(
 
 /** 订单过期 DELETE /khxsdd/overdue/${param0} */
 export async function overdueKHXSDD(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.overdueKHXSDDParams,
-
+  params: {
+    // path
+    /** 订单ID */
+    id: string;
+  },
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<{ status: 'ok' | 'error'; message?: string }>(`/khxsdd/overdue/${param0}`, {
+  return request<{ status?: 'ok' | 'error'; message?: string }>(`/khxsdd/overdue/${param0}`, {
     method: 'DELETE',
     params: { ...queryParams },
     ...(options || {})
@@ -251,11 +257,11 @@ export async function overdueKHXSDD(
 export async function getStudentOrders(
   body: {
     /** 学生ID */
-    XSJBSJId: string;
+    XSJBSJId?: string;
   },
   options?: { [key: string]: any }
 ) {
-  return request<{ status: 'ok' | 'error'; data?: API.KHXSDD[]; message?: string }>('/khxsdd/getStudentOrders', {
+  return request<{ status?: 'ok' | 'error'; data?: API.KHXSDD[]; message?: string }>('/khxsdd/getStudentOrders', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -287,7 +293,7 @@ export async function exportStudentOrders(
   },
   options?: { [key: string]: any }
 ) {
-  return request<{ status: 'ok' | 'error'; data?: string; message?: string }>('/khxsdd/exportStudentOrders', {
+  return request<{ status?: 'ok' | 'error'; data?: string; message?: string }>('/khxsdd/exportStudentOrders', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
