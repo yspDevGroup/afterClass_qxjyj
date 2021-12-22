@@ -2,8 +2,8 @@
  * @description: 工具类
  * @author: zpl
  * @Date: 2021-08-09 10:36:53
- * @LastEditTime: 2021-12-02 15:46:53
- * @LastEditors: Sissle Lynn
+ * @LastEditTime: 2021-12-22 09:34:42
+ * @LastEditors: zpl
  */
 import { history } from 'umi';
 import { parse } from 'querystring';
