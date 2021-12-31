@@ -35,8 +35,8 @@ const Blacklist = (props: { Keys: string | undefined }) => {
 
   const getData = async () => {
     const resJYJGSJ = await JYJGSJ({ id: jyjId! });
-    setXZQUMid(resJYJGSJ.data.XZQH);
-    if (resJYJGSJ.status === 'ok') {
+    setXZQUMid(resJYJGSJ?.data?.XZQH);
+    if (resJYJGSJ?.status === 'ok') {
       const res = await getAllInstitutions(
         {
           ZT: [1],

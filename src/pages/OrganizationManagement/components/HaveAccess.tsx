@@ -34,7 +34,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
   const [JGMC, setJGMC] = useState<string>();
   const getData = async () => {
     const resJYJGSJ = await JYJGSJ({ id: jyjId! });
-    setXZQUMid(resJYJGSJ.data.XZQH);
+    setXZQUMid(resJYJGSJ?.data?.XZQH);
     if (resJYJGSJ.status === 'ok') {
       const res = await getAllInstitutions(
         {

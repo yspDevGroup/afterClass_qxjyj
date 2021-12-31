@@ -155,7 +155,7 @@ const SchoolManagement = (props: any) => {
             };
             const resJYJGSJ = await JYJGSJ({ id: currentUser!.jyjId! });
             const resgetAllSchools = await getAllSchools({
-              XZQHM: resJYJGSJ.data.XZQH,
+              XZQHM: resJYJGSJ?.data?.XZQH,
               XXMC: '',
               page: 0,
               pageSize: 0
