@@ -39,17 +39,22 @@ const BasicInfoModal = (props: {
 
   //获取区域内容
   const getRegion = async (type: 'province' | 'city' | 'region', code: string) => {
-    const response = await getAdministrative({
-      type,
-      code
-    });
-    if (response?.status === 'ok') {
-      console.log('response', response);
-      return response?.data?.rows;
-    } else {
-      message.error(response.message);
+    try{
+      const response = await getAdministrative({
+        type,
+        code
+      });
+      if (response?.status === 'ok') {
+        // console.log('response', response);
+        return response?.data?.rows;
+      } else {
+        // message.error(response.message);
+      }
+      return [];
+    }catch(err){
+      message.error('获取行政区划码失败')
     }
-    return [];
+   
   };
 
   useEffect(() => {
