@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 09:50:10
- * @LastEditTime: 2021-11-23 09:28:51
- * @LastEditors: Sissle Lynn
+ * @LastEditTime: 2022-01-11 14:56:50
+ * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
 import { Col, message, Popconfirm, Row, Image, Modal, Input, Form, Tooltip, Button } from 'antd';
@@ -26,7 +26,7 @@ const Blacklist = (props: { Keys: string | undefined }) => {
   const [Datas, setDatas] = useState<TableListItem>();
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
-  const { username, id, jyjId } = currentUser!;
+  const { username, userId, jyjId } = currentUser!;
   const { Keys } = props;
   const [form] = Form.useForm();
   const actionRef3 = useRef<ActionType>();
@@ -37,16 +37,14 @@ const Blacklist = (props: { Keys: string | undefined }) => {
     const resJYJGSJ = await JYJGSJ({ id: jyjId! });
     setXZQUMid(resJYJGSJ?.data?.XZQH);
     if (resJYJGSJ?.status === 'ok') {
-      const res = await getAllInstitutions(
-        {
-          ZT: [1],
-          XZQHM: resJYJGSJ.data.XZQH,
-          JGMC: JGMC,
-          LX: 1,
-          page: 0,
-          pageSize: 0
-        },
-      );
+      const res = await getAllInstitutions({
+        ZT: [1],
+        XZQHM: resJYJGSJ.data.XZQH,
+        JGMC: JGMC,
+        LX: 1,
+        page: 0,
+        pageSize: 0
+      });
       if (res.status === 'ok') {
         let newArr: any[] = [];
         res.data?.rows.forEach((value: any) => {
@@ -92,7 +90,7 @@ const Blacklist = (props: { Keys: string | undefined }) => {
       ZT: 3,
       LX: 1,
       SPR: username,
-      SPRId: id,
+      SPRId: userId || '',
       BZ: params.BZ,
       SQR,
       SQRId,
@@ -107,7 +105,7 @@ const Blacklist = (props: { Keys: string | undefined }) => {
         ZT: 4,
         BZ: params.BZ,
         SPR: username,
-        SPRId: id,
+        SPRId: userId || '',
         KHJYJGId: Datas?.value?.id,
         JYJGSJId: jyjId
       });
@@ -218,29 +216,37 @@ const Blacklist = (props: { Keys: string | undefined }) => {
           setting: false,
           fullScreen: false,
           density: false,
-          reload: false,
+          reload: false
         }}
         headerTitle={
           <SearchLayout>
             <div>
-              <label htmlFor='type'>机构名称：</label>
-              <Search placeholder="搜索机构名称" allowClear onSearch={(value: string) => {
-                setJGMC(value);
-              }} />
+              <label htmlFor="type">机构名称：</label>
+              <Search
+                placeholder="搜索机构名称"
+                allowClear
+                onSearch={(value: string) => {
+                  setJGMC(value);
+                }}
+              />
             </div>
           </SearchLayout>
         }
         dateFormatter="string"
         toolBarRender={() => []}
       />
-      <Modal title="移出黑名单" visible={isModalVisible} footer={[
-        <Button key="submit" type="primary" onClick={handleOk}>
-          确定
-        </Button>,
-        <Button key="back" onClick={handleCancel}>
-          取消
-        </Button>,
-      ]}>
+      <Modal
+        title="移出黑名单"
+        visible={isModalVisible}
+        footer={[
+          <Button key="submit" type="primary" onClick={handleOk}>
+            确定
+          </Button>,
+          <Button key="back" onClick={handleCancel}>
+            取消
+          </Button>
+        ]}
+      >
         <Form form={form} onFinish={submit} className={styles.Forms}>
           <Form.Item
             name="BZ"

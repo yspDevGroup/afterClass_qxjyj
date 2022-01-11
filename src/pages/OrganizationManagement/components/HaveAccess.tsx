@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-26 11:45:40
- * @LastEditTime: 2021-11-23 10:26:15
- * @LastEditors: Sissle Lynn
+ * @LastEditTime: 2022-01-11 14:57:51
+ * @LastEditors: wsl
  */
 import React, { useEffect, useRef, useState } from 'react';
 import { message, Modal, Form, Input, Button } from 'antd';
@@ -25,7 +25,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
   const [form] = Form.useForm();
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
-  const { username, jyjId, id } = currentUser!;
+  const { username, jyjId, userId } = currentUser!;
   const actionRef1 = useRef<ActionType>();
   const [dataSource, setDataSourse] = useState<any>();
   const [Datas, setDatas] = useState<TableListItem>();
@@ -36,16 +36,14 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
     const resJYJGSJ = await JYJGSJ({ id: jyjId! });
     setXZQUMid(resJYJGSJ?.data?.XZQH);
     if (resJYJGSJ.status === 'ok') {
-      const res = await getAllInstitutions(
-        {
-          ZT: [1],
-          XZQHM: resJYJGSJ.data.XZQH,
-          JGMC: JGMC,
-          LX: 0,
-          page: 0,
-          pageSize: 0
-        },
-      );
+      const res = await getAllInstitutions({
+        ZT: [1],
+        XZQHM: resJYJGSJ.data.XZQH,
+        JGMC: JGMC,
+        LX: 0,
+        page: 0,
+        pageSize: 0
+      });
       if (res.status === 'ok') {
         let newArr: any[] = [];
         res.data?.rows.forEach((value: any) => {
@@ -84,9 +82,9 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
     }, 50);
   }, [isModalVisible]);
 
-  useEffect(()=>{
+  useEffect(() => {
     getData();
-  },[JGMC]);
+  }, [JGMC]);
   const handleOk = () => {
     form.submit();
   };
@@ -99,7 +97,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       const data = {
         ZT: 3,
         SPR: username,
-        SPRId: id,
+        SPRId: userId || '',
         BZ: params.BZ,
         JYJGSJId: jyjId
       };
@@ -111,7 +109,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
           ZT: 1,
           BZ: params.BZ,
           SPR: username,
-          SPRId: id,
+          SPRId: userId || '',
           KHJYJGId: Datas?.value?.id,
           JYJGSJId: jyjId
         });
@@ -122,7 +120,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
         KHJYJGId: Datas!.value.id,
         id: Datas!.value.KHJGRZSQs[0].id,
         SPR: username,
-        SPRId: id,
+        SPRId: userId || '',
         BZ: params.BZ,
         JYJGSJId: jyjId
       };
@@ -134,7 +132,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
           ZT: 3,
           BZ: params.BZ,
           SPR: username,
-          SPRId: id,
+          SPRId: userId || '',
           KHJYJGId: Datas?.value?.id,
           JYJGSJId: jyjId
         });
@@ -312,29 +310,37 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
           setting: false,
           fullScreen: false,
           density: false,
-          reload: false,
+          reload: false
         }}
         headerTitle={
           <SearchLayout>
             <div>
-              <label htmlFor='type'>机构名称：</label>
-              <Search placeholder="搜索机构名称" allowClear onSearch={(value: string) => {
-                setJGMC(value);
-              }} />
+              <label htmlFor="type">机构名称：</label>
+              <Search
+                placeholder="搜索机构名称"
+                allowClear
+                onSearch={(value: string) => {
+                  setJGMC(value);
+                }}
+              />
             </div>
           </SearchLayout>
         }
         dateFormatter="string"
         toolBarRender={() => []}
       />
-      <Modal title={Titles} visible={isModalVisible} footer={[
+      <Modal
+        title={Titles}
+        visible={isModalVisible}
+        footer={[
           <Button key="submit" type="primary" onClick={handleOk}>
             确定
           </Button>,
           <Button key="back" onClick={handleCancel}>
             取消
-          </Button>,
-        ]}>
+          </Button>
+        ]}
+      >
         <Form form={form} onFinish={submit} className={styles.Forms}>
           <Form.Item
             name="BZ"
