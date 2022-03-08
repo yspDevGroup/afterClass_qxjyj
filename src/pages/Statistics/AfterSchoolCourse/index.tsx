@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Input, message, Select } from 'antd';
+import { Button, Input, message, Select, Spin } from 'antd';
 import { useModel, Link } from 'umi';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
@@ -12,8 +12,13 @@ import personImg from '@/assets/person.png';
 import classImg from '@/assets/class.png';
 import courseImg from '@/assets/course.png';
 import refundImg from '@/assets/refund.png';
+import { DownloadOutlined } from '@ant-design/icons';
 import SearchLayout from '@/components/Search/Layout';
-import { recalculateBJTJInfo, recalculateKCTJInfo } from '@/services/after-class-qxjyj/reports';
+import {
+  exportEducationCoursesInfo,
+  recalculateBJTJInfo,
+  recalculateKCTJInfo
+} from '@/services/after-class-qxjyj/reports';
 import { getAllSchools } from '@/services/after-class-qxjyj/jyjgsj';
 
 const { Option } = Select;
@@ -31,6 +36,7 @@ const AfterSchoolCourse = () => {
   const [TitleData, setTitleData] = useState<any>();
   const [SchoolList, setSchoolList] = useState<any>([]);
   const [XXMC, setXXMC] = useState<any>('');
+  const [loading, setLoading] = useState<boolean>(false);
   // table表格数据
   const columns: ProColumns<any>[] = [
     {
@@ -133,9 +139,9 @@ const AfterSchoolCourse = () => {
       ellipsis: true,
       render: (test: any, record: any) => {
         const num =
-          record.TKRS != 0
+          Number(record.TKXSS) + Number(record?.FWBTKXSS) !== 0
             ? (
-                (Number(Number(record.TKXSS) + Number(record?.FWBTKXSS)) /
+                ((Number(record.TKXSS) + Number(record?.FWBTKXSS)) /
                   (Number(record.BMXSS) + Number(record?.FWBBMXSS))) *
                 100
               ).toFixed(1) + '%'
@@ -219,149 +225,174 @@ const AfterSchoolCourse = () => {
       }
     }
   };
+
+  const onExportClick = () => {
+    setLoading(true);
+    (async () => {
+      const res = await exportEducationCoursesInfo({
+        XZQHM: currentUser?.XZQHM,
+        XXMC,
+        KCMC,
+        KCLX,
+        KCLY
+      });
+      if (res.status === 'ok') {
+        window.location.href = res.data;
+        setLoading(false);
+      } else {
+        message.error(res.message);
+        setLoading(false);
+      }
+    })();
+  };
   return (
     <>
       <div className={styles.AfterSchoolCourse}>
-        <ProTable
-          columns={columns}
-          dataSource={dataSource}
-          rowKey="id"
-          search={false}
-          pagination={{
-            showQuickJumper: true,
-            pageSize: 10,
-            defaultCurrent: 1
-          }}
-          scroll={{ x: getTableWidth(columns) }}
-          options={{
-            setting: false,
-            fullScreen: false,
-            density: false,
-            reload: false
-          }}
-          headerTitle={
-            <>
-              <div>
-                <SearchLayout>
-                  <div>
-                    <label htmlFor="kctype">学校名称：</label>
-                    <Select
-                      allowClear
-                      onChange={(value: string) => {
-                        setXXMC(value);
-                      }}
-                    >
-                      {SchoolList?.map((item: any) => {
-                        return (
-                          <Option key={item.id} value={item.XXMC}>
-                            {item.XXMC}
-                          </Option>
-                        );
-                      })}
-                    </Select>
-                  </div>
-                  <div>
-                    <label htmlFor="kcname">课程名称：</label>
-                    <Search
-                      placeholder="课程名称"
-                      allowClear
-                      onSearch={(value: string) => {
-                        setKCMC(value);
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="kcly">课程来源：</label>
-                    <Select
-                      allowClear
-                      placeholder="课程来源"
-                      onChange={(value) => {
-                        setKCLY(value);
-                      }}
-                      value={KCLY}
-                    >
-                      <Option value="校内课程" key="校内课程">
-                        校内课程
-                      </Option>
-                      <Option value="机构课程" key="机构课程">
-                        机构课程
-                      </Option>
-                    </Select>
-                  </div>
-                  <div>
-                    <label htmlFor="kctype">课程类型：</label>
-                    <Select
-                      allowClear
-                      onChange={(value: string) => {
-                        setKCLX(value);
-                      }}
-                    >
-                      {KCLXData?.map((item: any) => {
-                        return (
-                          <Option key={item.id} value={item.KCTAG}>
-                            {item.KCTAG}
-                          </Option>
-                        );
-                      })}
-                    </Select>
-                  </div>
-                </SearchLayout>
-              </div>
-              <div className={styles.TopCards}>
+        <Spin spinning={loading}>
+          <ProTable
+            columns={columns}
+            dataSource={dataSource}
+            rowKey="id"
+            search={false}
+            pagination={{
+              showQuickJumper: true,
+              pageSize: 10,
+              defaultCurrent: 1
+            }}
+            scroll={{ x: getTableWidth(columns) }}
+            options={{
+              setting: false,
+              fullScreen: false,
+              density: false,
+              reload: false
+            }}
+            headerTitle={
+              <>
                 <div>
-                  <div>
-                    <span>
-                      <img src={courseImg} />
-                    </span>
+                  <SearchLayout>
                     <div>
-                      <h3>{TitleData?.kc_count || 0}</h3>
-                      <p>课程累计数</p>
+                      <label htmlFor="kctype">学校名称：</label>
+                      <Select
+                        allowClear
+                        onChange={(value: string) => {
+                          setXXMC(value);
+                        }}
+                      >
+                        {SchoolList?.map((item: any) => {
+                          return (
+                            <Option key={item.id} value={item.XXMC}>
+                              {item.XXMC}
+                            </Option>
+                          );
+                        })}
+                      </Select>
+                    </div>
+                    <div>
+                      <label htmlFor="kcname">课程名称：</label>
+                      <Search
+                        placeholder="课程名称"
+                        allowClear
+                        onSearch={(value: string) => {
+                          setKCMC(value);
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="kcly">课程来源：</label>
+                      <Select
+                        allowClear
+                        placeholder="课程来源"
+                        onChange={(value) => {
+                          setKCLY(value);
+                        }}
+                        value={KCLY}
+                      >
+                        <Option value="校内课程" key="校内课程">
+                          校内课程
+                        </Option>
+                        <Option value="机构课程" key="机构课程">
+                          机构课程
+                        </Option>
+                      </Select>
+                    </div>
+                    <div>
+                      <label htmlFor="kctype">课程类型：</label>
+                      <Select
+                        allowClear
+                        onChange={(value: string) => {
+                          setKCLX(value);
+                        }}
+                      >
+                        {KCLXData?.map((item: any) => {
+                          return (
+                            <Option key={item.id} value={item.KCTAG}>
+                              {item.KCTAG}
+                            </Option>
+                          );
+                        })}
+                      </Select>
+                    </div>
+                  </SearchLayout>
+                </div>
+                <div className={styles.TopCards}>
+                  <div>
+                    <div>
+                      <span>
+                        <img src={courseImg} />
+                      </span>
+                      <div>
+                        <h3>{TitleData?.kc_count || 0}</h3>
+                        <p>课程累计数</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div>
+                      <span>
+                        <img src={classImg} />
+                      </span>
+                      <div>
+                        <h3>{Number(TitleData?.bjs_count) + Number(TitleData?.fwbjs_count) || 0}</h3>
+                        <p>课程班累计数</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div>
+                      <span>
+                        <img src={personImg} />
+                      </span>
+                      <div>
+                        <h3>{Number(TitleData?.fwbbmxss_count) + Number(TitleData?.bmxss_count) || 0}</h3>
+                        <p>报名累计人数</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div>
+                      <span>
+                        <img src={personImg} />
+                      </span>
+                      <div>
+                        <h3>{Number(TitleData?.fwbtkxss_count) + Number(TitleData?.tkxss_count) || 0}</h3>
+                        <p>退课累计人数</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div>
-                  <div>
-                    <span>
-                      <img src={classImg} />
-                    </span>
-                    <div>
-                      <h3>{Number(TitleData?.bjs_count) + Number(TitleData?.fwbjs_count) || 0}</h3>
-                      <p>课程班累计数</p>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div>
-                    <span>
-                      <img src={personImg} />
-                    </span>
-                    <div>
-                      <h3>{Number(TitleData?.fwbbmxss_count) + Number(TitleData?.bmxss_count) || 0}</h3>
-                      <p>报名累计人数</p>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div>
-                    <span>
-                      <img src={personImg} />
-                    </span>
-                    <div>
-                      <h3>{Number(TitleData?.fwbtkxss_count) + Number(TitleData?.tkxss_count) || 0}</h3>
-                      <p>退课累计人数</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <p className={styles.title}>
-                <span>系统每天凌晨自动更新一次，如需立即更新，请点击【刷新】按钮</span>
-                <Button type="primary" onClick={submit}>
-                  刷新
-                </Button>
-              </p>
-            </>
-          }
-        />
+                <p className={styles.title}>
+                  <span>系统每天凌晨自动更新一次，如需立即更新，请点击【刷新】按钮</span>
+                  <Button type="primary" onClick={submit}>
+                    刷新
+                  </Button>
+                  <Button icon={<DownloadOutlined />} type="primary" onClick={onExportClick}>
+                    导出
+                  </Button>
+                </p>
+              </>
+            }
+          />
+        </Spin>
       </div>
     </>
   );

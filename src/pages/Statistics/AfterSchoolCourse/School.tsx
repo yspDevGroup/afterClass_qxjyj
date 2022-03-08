@@ -102,7 +102,8 @@ const School = (props: any) => {
       width: 100,
       ellipsis: true,
       render: (test: any, record: any) => {
-        const num = record.TKXSS !== '0' ? ((Number(record.TKXSS) / Number(record.BMXSS)) * 100).toFixed(1) + '%' : 0;
+        const num =
+          Number(record.TKXSS) !== 0 ? ((Number(record.TKXSS) / Number(record.BMXSS)) * 100).toFixed(1) + '%' : 0;
         return num;
       }
     },

@@ -1,4 +1,123 @@
 declare namespace API {
+  type LoginParams = {
+    /** 登录名 */
+    username: string;
+    /** 密码 */
+    password: string;
+    /** 自动登录 */
+    autoLogin: boolean;
+    type: 'account' | 'mobile';
+  };
+
+  type LoginResult = {
+    currentAuthority: string[];
+    token: string;
+    type: 'account' | 'mobile' | 'github';
+  };
+
+  type BJSJ = {
+    id: string;
+    /** 班号 */
+    BH: number;
+    /** 班级 */
+    BJ: string;
+    /** 建班年月 */
+    JBNY?: string | any;
+    /** 班主任工号 */
+    BZRGH?: string;
+    /** 班长学号 */
+    BZXH?: string;
+    /** 班级荣誉称号 */
+    BJRYCH?: string;
+    /** 学制 */
+    XZ?: string;
+    /** 班级类型码 */
+    BJLXM?: string;
+    /** 文理类型 */
+    WLLX?: string;
+    /** 毕业日期 */
+    BYRQ?: string | any;
+    /** 是否少数民族双语教学班 */
+    SFSSMZSYJXB?: string;
+    /** 双语教学模式码 */
+    SYJXMSM?: string;
+    /** 上课地点 */
+    SKDD?: string;
+    /** 班级简称 */
+    BJJC?: string;
+    NJSJ?: { id?: string; NJ?: number; NJMC?: string; XD?: string };
+    BZR?: { id?: string; GH?: string; XM?: string };
+    FBZR?: { id?: string; GH?: string; XM?: string };
+  };
+
+  type CreateBJSJ = {
+    /** 班号 */
+    BH: number;
+    /** 班级 */
+    BJ: string;
+    /** 建班年月 */
+    JBNY?: string | any;
+    /** 班主任工号 */
+    BZRGH?: string;
+    /** 班长学号 */
+    BZXH?: string;
+    /** 班级荣誉称号 */
+    BJRYCH?: string;
+    /** 学制 */
+    XZ?: string;
+    /** 班级类型码 */
+    BJLXM?: string;
+    /** 文理类型 */
+    WLLX?: string;
+    /** 毕业日期 */
+    BYRQ?: string | any;
+    /** 是否少数民族双语教学班 */
+    SFSSMZSYJXB?: string;
+    /** 双语教学模式码 */
+    SYJXMSM?: string;
+    /** 上课地点 */
+    SKDD?: string;
+    /** 班级简称 */
+    BJJC?: string;
+    NJSJId: string;
+    BZRId?: string;
+    FBZRId?: string;
+  };
+
+  type UpdateBJSJ = {
+    /** 班号 */
+    BH?: number;
+    /** 班级 */
+    BJ?: string;
+    /** 建班年月 */
+    JBNY?: string;
+    /** 班主任工号 */
+    BZRGH?: string;
+    /** 班长学号 */
+    BZXH?: string;
+    /** 班级荣誉称号 */
+    BJRYCH?: string;
+    /** 学制 */
+    XZ?: string;
+    /** 班级类型码 */
+    BJLXM?: string;
+    /** 文理类型 */
+    WLLX?: string;
+    /** 毕业日期 */
+    BYRQ?: string;
+    /** 是否少数民族双语教学班 */
+    SFSSMZSYJXB?: string;
+    /** 双语教学模式码 */
+    SYJXMSM?: string;
+    /** 上课地点 */
+    SKDD?: string;
+    /** 班级简称 */
+    BJJC?: string;
+    NJSJId?: string;
+    BZRId?: string;
+    FBZRId?: string;
+  };
+
   type FJLX = {
     id: string;
     /** 房间类型 */
@@ -546,6 +665,45 @@ declare namespace API {
     CFYY?: string;
     /** 来源 */
     LY?: string;
+  };
+
+  type JZGGZJL = {
+    id: string;
+    GZQSRQ: string;
+    GZZZRQ?: string | any;
+    GZDW?: string;
+    GZNR?: string;
+    CRDZZW?: string;
+    CRZYJSZWM?: string;
+    GZZMR?: string;
+    GZJLBZ?: string;
+  };
+
+  type CreateJZGGZJL = {
+    GZQSRQ: string;
+    GZZZRQ?: string | any;
+    GZDW?: string;
+    GZNR?: string;
+    CRDZZW?: string;
+    CRZYJSZWM?: string;
+    GZZMR?: string;
+    GZJLBZ?: string;
+    /** 教师ID */
+    JZGJBSJId?: string;
+  };
+
+  type UpdateJZGGZJL = {
+    GZQSRQ?: string;
+    GZZZRQ?: string | any;
+    GZDW?: string;
+    GZNR?: string;
+    CRDZZW?: string;
+    CRZYJSZWM?: string;
+    GZZMR?: string;
+    GZJLBZ?: string;
+    QJDM?: string;
+    /** 教师ID */
+    JZGJBSJId?: string;
   };
 
   type JZGJTCY = {
@@ -3017,43 +3175,31 @@ declare namespace API {
     KHBJSJId?: string;
   };
 
-  type JZGGZJL = {
-    id: string;
-    GZQSRQ: string;
-    GZZZRQ?: string | any;
-    GZDW?: string;
-    GZNR?: string;
-    CRDZZW?: string;
-    CRZYJSZWM?: string;
-    GZZMR?: string;
-    GZJLBZ?: string;
-  };
-
-  type CreateJZGGZJL = {
-    GZQSRQ: string;
-    GZZZRQ?: string | any;
-    GZDW?: string;
-    GZNR?: string;
-    CRDZZW?: string;
-    CRZYJSZWM?: string;
-    GZZMR?: string;
-    GZJLBZ?: string;
+  type KHXKSJ = {
+    id?: string;
+    /** 巡课日期 */
+    RQ?: string;
     /** 教师ID */
     JZGJBSJId?: string;
+    JZGJBSJ?: { id?: string; XM?: string; WechatUserId?: string };
   };
 
-  type UpdateJZGGZJL = {
-    GZQSRQ?: string;
-    GZZZRQ?: string | any;
-    GZDW?: string;
-    GZNR?: string;
-    CRDZZW?: string;
-    CRZYJSZWM?: string;
-    GZZMR?: string;
-    GZJLBZ?: string;
-    QJDM?: string;
+  type CreateKHXKSJ = {
+    /** 巡课日期 */
+    RQ?: string;
     /** 教师ID */
     JZGJBSJId?: string;
+    /** 学校ID */
+    XXJBSJId?: string;
+  };
+
+  type UpdateKHXKSJ = {
+    /** 巡课日期 */
+    RQ?: string;
+    /** 教师ID */
+    JZGJBSJId?: string;
+    /** 学校ID */
+    XXJBSJId?: string;
   };
 
   type KHXSCQ = {
@@ -5322,150 +5468,34 @@ declare namespace API {
     ZXFAId?: string;
   };
 
-  type KHXKSJ = {
-    id?: string;
-    /** 巡课日期 */
-    RQ?: string;
-    /** 教师ID */
-    JZGJBSJId?: string;
-    JZGJBSJ?: { id?: string; XM?: string; WechatUserId?: string };
-  };
-
-  type CreateKHXKSJ = {
-    /** 巡课日期 */
-    RQ?: string;
-    /** 教师ID */
-    JZGJBSJId?: string;
-    /** 学校ID */
-    XXJBSJId?: string;
-  };
-
-  type UpdateKHXKSJ = {
-    /** 巡课日期 */
-    RQ?: string;
-    /** 教师ID */
-    JZGJBSJId?: string;
-    /** 学校ID */
-    XXJBSJId?: string;
-  };
-
-  type BJSJ = {
+  type getBJSJParams = {
+    /** 班级ID */
     id: string;
-    /** 班号 */
-    BH: number;
-    /** 班级 */
-    BJ: string;
-    /** 建班年月 */
-    JBNY?: string | any;
-    /** 班主任工号 */
-    BZRGH?: string;
-    /** 班长学号 */
-    BZXH?: string;
-    /** 班级荣誉称号 */
-    BJRYCH?: string;
-    /** 学制 */
-    XZ?: string;
-    /** 班级类型码 */
-    BJLXM?: string;
-    /** 文理类型 */
-    WLLX?: string;
-    /** 毕业日期 */
-    BYRQ?: string | any;
-    /** 是否少数民族双语教学班 */
-    SFSSMZSYJXB?: string;
-    /** 双语教学模式码 */
-    SYJXMSM?: string;
-    /** 上课地点 */
-    SKDD?: string;
-    /** 班级简称 */
-    BJJC?: string;
-    NJSJ?: { id?: string; NJ?: number; NJMC?: string; XD?: string };
-    BZR?: { id?: string; GH?: string; XM?: string };
-    FBZR?: { id?: string; GH?: string; XM?: string };
   };
 
-  type CreateBJSJ = {
-    /** 班号 */
-    BH: number;
-    /** 班级 */
-    BJ: string;
-    /** 建班年月 */
-    JBNY?: string | any;
-    /** 班主任工号 */
-    BZRGH?: string;
-    /** 班长学号 */
-    BZXH?: string;
-    /** 班级荣誉称号 */
-    BJRYCH?: string;
-    /** 学制 */
-    XZ?: string;
-    /** 班级类型码 */
-    BJLXM?: string;
-    /** 文理类型 */
-    WLLX?: string;
-    /** 毕业日期 */
-    BYRQ?: string | any;
-    /** 是否少数民族双语教学班 */
-    SFSSMZSYJXB?: string;
-    /** 双语教学模式码 */
-    SYJXMSM?: string;
-    /** 上课地点 */
-    SKDD?: string;
-    /** 班级简称 */
-    BJJC?: string;
-    NJSJId: string;
-    BZRId?: string;
-    FBZRId?: string;
+  type deleteBJSJParams = {
+    /** 班级ID */
+    id: string;
   };
 
-  type UpdateBJSJ = {
-    /** 班号 */
-    BH?: number;
-    /** 班级 */
-    BJ?: string;
-    /** 建班年月 */
-    JBNY?: string;
-    /** 班主任工号 */
-    BZRGH?: string;
-    /** 班长学号 */
-    BZXH?: string;
-    /** 班级荣誉称号 */
-    BJRYCH?: string;
-    /** 学制 */
-    XZ?: string;
-    /** 班级类型码 */
-    BJLXM?: string;
-    /** 文理类型 */
-    WLLX?: string;
-    /** 毕业日期 */
-    BYRQ?: string;
-    /** 是否少数民族双语教学班 */
-    SFSSMZSYJXB?: string;
-    /** 双语教学模式码 */
-    SYJXMSM?: string;
-    /** 上课地点 */
-    SKDD?: string;
-    /** 班级简称 */
-    BJJC?: string;
-    NJSJId?: string;
-    BZRId?: string;
-    FBZRId?: string;
+  type getClassesParams = {
+    /** 教职工ID */
+    id: string;
   };
 
-  type LoginParams = {
-    /** 登录名 */
-    username: string;
-    /** 密码 */
-    password: string;
-    /** 自动登录 */
-    autoLogin: boolean;
-    type: 'account' | 'mobile';
+  type updateBJSJParams = {
+    /** 班级ID */
+    id: string;
   };
 
-  type LoginResult = {
-    currentAuthority: string[];
-    token: string;
-    type: 'account' | 'mobile' | 'github';
+  type updateClassTeacherParams = {
+    /** 班级任课老师信息ID */
+    id: string;
+  };
+
+  type deleteClassTeacherParams = {
+    /** 班级任课老师信息ID */
+    id: string;
   };
 
   type getFJLXParams = {
@@ -5605,6 +5635,16 @@ declare namespace API {
 
   type updateJZGCFSJParams = {
     /** 教师惩罚信息ID */
+    id: string;
+  };
+
+  type deleteJZGGZJLParams = {
+    /** 教师工作简历ID */
+    id: string;
+  };
+
+  type updateJZGGZJLParams = {
+    /** 教师工作简历ID */
     id: string;
   };
 
@@ -6005,16 +6045,6 @@ declare namespace API {
 
   type updateKHXKJLParams = {
     /** 巡课记录数据ID */
-    id: string;
-  };
-
-  type deleteJZGGZJLParams = {
-    /** 教师工作简历ID */
-    id: string;
-  };
-
-  type updateJZGGZJLParams = {
-    /** 教师工作简历ID */
     id: string;
   };
 
@@ -6444,36 +6474,6 @@ declare namespace API {
 
   type updateZXSJParams = {
     /** 作息时间ID */
-    id: string;
-  };
-
-  type getBJSJParams = {
-    /** 班级ID */
-    id: string;
-  };
-
-  type deleteBJSJParams = {
-    /** 班级ID */
-    id: string;
-  };
-
-  type getClassesParams = {
-    /** 教职工ID */
-    id: string;
-  };
-
-  type updateBJSJParams = {
-    /** 班级ID */
-    id: string;
-  };
-
-  type updateClassTeacherParams = {
-    /** 班级任课老师信息ID */
-    id: string;
-  };
-
-  type deleteClassTeacherParams = {
-    /** 班级任课老师信息ID */
     id: string;
   };
 }

@@ -53,18 +53,23 @@ const AfterSchoolClass = (props: any) => {
       key: 'RKJS',
       align: 'center',
       render: (test: any, record: any) => {
-        console.log(record);
         return (
-          <EllipsisHint
-            width="100%"
-            text={record?.KHBJSJ?.KHBJJs?.map((item: any) => {
-              const showWXName = item?.JZGJBSJ?.XM === '未知' && item?.JZGJBSJ?.WechatUserId;
-              if (showWXName) {
-                return <WWOpenDataCom type="userName" openid={item?.JZGJBSJ?.WechatUserId} />;
-              }
-              return <Tag key={item.id}>{item?.JZGJBSJ?.XM}</Tag>;
-            })}
-          />
+          <>
+            {record?.KHBJSJ ? (
+              <EllipsisHint
+                width="100%"
+                text={record?.KHBJSJ?.KHBJJs?.map((item: any) => {
+                  const showWXName = item?.JZGJBSJ?.XM === '未知' && item?.JZGJBSJ?.WechatUserId;
+                  if (showWXName) {
+                    return <WWOpenDataCom type="userName" openid={item?.JZGJBSJ?.WechatUserId} />;
+                  }
+                  return <Tag key={item.id}>{item?.JZGJBSJ?.XM}</Tag>;
+                })}
+              />
+            ) : (
+              '-'
+            )}
+          </>
         );
       },
       width: 120,
