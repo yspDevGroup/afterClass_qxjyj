@@ -4,17 +4,15 @@ import { request } from 'umi';
 
 /** 获取课堂风采记录详情 GET /khktfc/${param0} */
 export async function getKHKTFC(
-  params: {
-    // path
-    /** 课堂风采记录ID */
-    id: string;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getKHKTFCParams,
+
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
   return request<{
-    status?: 'ok' | 'error';
-    data: {
+    status: 'ok' | 'error';
+    data?: {
       id?: string;
       NR?: string;
       TP?: string;
@@ -32,15 +30,13 @@ export async function getKHKTFC(
 
 /** 删除课堂风采记录 DELETE /khktfc/${param0} */
 export async function deleteKHKTFC(
-  params: {
-    // path
-    /** 类型ID */
-    id: string;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.deleteKHKTFCParams,
+
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<{ status?: 'ok' | 'error'; message?: string }>(`/khktfc/${param0}`, {
+  return request<{ status: 'ok' | 'error'; message?: string }>(`/khktfc/${param0}`, {
     method: 'DELETE',
     params: { ...queryParams },
     ...(options || {})
@@ -59,7 +55,7 @@ export async function getAllKHKTFC(
     /** 学生数据ID */
     XSJBSJId?: string;
     /** 学校ID */
-    XXJBSJId?: string;
+    XXJBSJId: string;
     /** 页数 */
     page?: number;
     /** 每页记录数 */
@@ -68,7 +64,7 @@ export async function getAllKHKTFC(
   options?: { [key: string]: any }
 ) {
   return request<{
-    status?: 'ok' | 'error';
+    status: 'ok' | 'error';
     data?: { count?: number; rows?: any[] };
     message?: string;
   }>('/khktfc/', {
@@ -84,8 +80,8 @@ export async function getAllKHKTFC(
 /** 创建课堂风采记录 PUT /khktfc/create */
 export async function createKHKTFC(body: API.CreateKHKTFC, options?: { [key: string]: any }) {
   return request<{
-    status?: 'ok' | 'error';
-    data: {
+    status: 'ok' | 'error';
+    data?: {
       id?: string;
       NR?: string;
       TP?: string;
@@ -106,16 +102,14 @@ export async function createKHKTFC(body: API.CreateKHKTFC, options?: { [key: str
 
 /** 更新课堂风采记录 PUT /khktfc/update/${param0} */
 export async function updateKHKTFC(
-  params: {
-    // path
-    /** 课堂风采记录ID */
-    id: string;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.updateKHKTFCParams,
+
   body: API.UpdateKHKTFC,
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<{ status?: 'ok' | 'error'; message?: string }>(`/khktfc/update/${param0}`, {
+  return request<{ status: 'ok' | 'error'; message?: string }>(`/khktfc/update/${param0}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -130,7 +124,7 @@ export async function updateKHKTFC(
 export async function getAllpresence(
   body: {
     /** 学年学期id */
-    XNXQId?: string;
+    XNXQId: string;
     /** 课程id */
     KHKCId?: string;
     /** 课后班级id */
@@ -147,6 +141,34 @@ export async function getAllpresence(
   options?: { [key: string]: any }
 ) {
   return request<any>('/khktfc/getAllpresence', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: body,
+    ...(options || {})
+  });
+}
+
+/** 家长端查看课堂风采 POST /khktfc/getPresenceByStudent */
+export async function getPresenceByStudent(
+  body: {
+    /** 学年学期ID */
+    XNXQId: string;
+    /** 学生数据ID */
+    XSJBSJId: string;
+    /** 页数 */
+    page?: number;
+    /** 每页记录数 */
+    pageSize?: number;
+  },
+  options?: { [key: string]: any }
+) {
+  return request<{
+    status: 'ok' | 'error';
+    data?: { count?: number; rows?: any[] };
+    message?: string;
+  }>('/khktfc/getPresenceByStudent', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

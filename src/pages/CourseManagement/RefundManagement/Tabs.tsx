@@ -3,6 +3,7 @@ import { Button, Tabs } from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import SchoolRefund from './SchoolRefund';
 import ServiceRefund from './ServiceRefund';
+import AfterClassRefund from './AfterClassRefund';
 
 const { TabPane } = Tabs;
 /**
@@ -27,10 +28,13 @@ const LeaveManagement = (props: any) => {
       </Button>
       <p style={{ fontWeight: 'bold', fontSize: '18px', marginBottom: '10px' }}>{state?.xxmc}</p>
       <Tabs>
-        <TabPane tab="课程退款" key="1">
+        <TabPane tab="课后服务退款" key="1">
+          <AfterClassRefund state={state} />
+        </TabPane>
+        <TabPane tab="课程退款" key="2">
           <SchoolRefund state={state} />
         </TabPane>
-        <TabPane tab="服务退款" key="2">
+        <TabPane tab="增值服务退款" key="3">
           <ServiceRefund state={state} />
         </TabPane>
       </Tabs>

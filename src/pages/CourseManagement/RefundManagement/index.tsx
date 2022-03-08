@@ -51,18 +51,25 @@ const RefundManagement = () => {
       ellipsis: true
     },
     {
-      title: '课程退款次数',
+      title: '课后课程退款数',
+      dataIndex: 'khfwtk_count',
+      key: 'khfwtk_count',
+      align: 'center',
+      width: 120
+    },
+    {
+      title: '课程退款数',
       dataIndex: 'kctk_count',
       key: 'kctk_count',
       align: 'center',
       width: 100
     },
     {
-      title: '服务退款次数',
+      title: '增值服务退款数',
       dataIndex: 'fwtk_count',
       key: 'fwtk_count',
       align: 'center',
-      width: 100
+      width: 120
     },
     {
       title: '操作',
@@ -110,11 +117,11 @@ const RefundManagement = () => {
 
   const schoolChange = (val: string, auth: any) => {
     setCurSchool(auth.key);
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     getData();
-  },[curSchool])
+  }, [curSchool]);
 
   return (
     <>

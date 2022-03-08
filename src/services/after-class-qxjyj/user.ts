@@ -2,14 +2,6 @@
 /* eslint-disable */
 import { request } from 'umi';
 
-/** github认证回调 GET /auth/github/callback */
-export async function githubCallback(options?: { [key: string]: any }) {
-  return request<any>('/auth/github/callback', {
-    method: 'GET',
-    ...(options || {})
-  });
-}
-
 /** Route used by the frontend app to validate the session and retrieve the CSRF token. GET /user/refresh */
 export async function getUserRefresh(options?: { [key: string]: any }) {
   return request<{ csrfToken?: string }>('/user/refresh', {
@@ -20,7 +12,7 @@ export async function getUserRefresh(options?: { [key: string]: any }) {
 
 /** 查询所有用户 GET /user/ */
 export async function getAllUser(options?: { [key: string]: any }) {
-  return request<{ status?: 'ok' | 'error'; data?: API.CurrentUser[]; message?: string }>('/user/', {
+  return request<{ status: 'ok' | 'error'; data?: API.CurrentUser[]; message?: string }>('/user/', {
     method: 'GET',
     ...(options || {})
   });
@@ -28,15 +20,13 @@ export async function getAllUser(options?: { [key: string]: any }) {
 
 /** 获取当前用户 GET /user/currentUser */
 export async function currentUser(
-  params: {
-    // query
-    /** 登录平台类型 */
-    plat?: string;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.currentUserParams,
+
   options?: { [key: string]: any }
 ) {
   return request<{
-    status?: 'ok' | 'error';
+    status: 'ok' | 'error';
     data?: {
       info?: {
         id?: string;
@@ -105,7 +95,7 @@ export async function currentUser(
 
 /** 更新当前用户信息 PUT /user/currentUser */
 export async function updateUser(body: API.CreateUser, options?: { [key: string]: any }) {
-  return request<{ status?: 'ok' | 'error'; message?: string }>('/user/currentUser', {
+  return request<{ status: 'ok' | 'error'; message?: string }>('/user/currentUser', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -118,7 +108,7 @@ export async function updateUser(body: API.CreateUser, options?: { [key: string]
 /** 创建用户 PUT /user/create */
 export async function createUser(body: API.CreateUser, options?: { [key: string]: any }) {
   return request<{
-    status?: 'ok' | 'error';
+    status: 'ok' | 'error';
     data?: {
       id?: string;
       jgId?: string | any;
@@ -186,15 +176,13 @@ export async function createUser(body: API.CreateUser, options?: { [key: string]
 
 /** 删除用户数据 DELETE /user/${param0} */
 export async function deleteUser(
-  params: {
-    // path
-    /** 用户ID */
-    id: string;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.deleteUserParams,
+
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<{ status?: 'ok' | 'error'; message?: string }>(`/user/${param0}`, {
+  return request<{ status: 'ok' | 'error'; message?: string }>(`/user/${param0}`, {
     method: 'DELETE',
     params: { ...queryParams },
     ...(options || {})
@@ -211,9 +199,9 @@ export async function homePageInfo(
     /** 校区ID */
     XQSJId?: string;
     /** 学年学期ID */
-    XNXQId?: string;
+    XNXQId: string;
     /** 学校ID */
-    XXJBSJId?: string;
+    XXJBSJId: string;
     /** 学生ID */
     XSId?: string;
     /** 教师ID */
@@ -221,134 +209,7 @@ export async function homePageInfo(
   },
   options?: { [key: string]: any }
 ) {
-  return request<{
-    status?: 'ok' | 'error';
-    data?: {
-      bmkssj?: string;
-      bmjssj?: string;
-      skkssj?: string;
-      skjssj?: string;
-      weekSchedule?: {
-        id?: string;
-        WEEKDAY?: '0' | '1' | '2' | '3' | '4' | '5' | '6';
-        KHBJSJ?: {
-          id?: string;
-          BJMC?: string;
-          BJMS?: string;
-          BJZT?: '未开班' | '已开班' | '已结课';
-          ZJS?: string;
-          FJS?: string;
-          BJRS?: number;
-          KSS?: number;
-          KKRQ?: string | any;
-          JKRQ?: string | any;
-          BMKSSJ?: string;
-          BMJSSJ?: string;
-          KCTP?: string;
-          NJS?: string;
-          XQ?: string;
-          NJSName?: string;
-          XQName?: string;
-          ZJSName?: string;
-          FJSName?: string;
-          KHKCSJ?: {
-            id?: string;
-            KCMC?: string;
-            KCTP?: string;
-            KCZT?: number;
-            KCMS?: string;
-            KKRQ?: string | any;
-            JKRQ?: string | any;
-            BMKSSJ?: string;
-            BMJSSJ?: string;
-          };
-        };
-        XXSJPZ?: {
-          id?: string;
-          KSSJ?: string;
-          JSSJ?: string;
-          KJS?: string;
-          TITLE?: string;
-          BZXX?: string;
-          TYPE?: 0 | 1 | 2;
-        };
-        FJSJ?: {
-          id?: string;
-          FJBH?: string;
-          FJMC?: string;
-          FJLC?: string;
-          FJRS?: number;
-          FJLX?: string;
-          XQName?: string;
-        };
-      }[];
-      kskc?: {
-        id?: string;
-        KCLX?: string;
-        KCTAG?: string;
-        KHKCSJs?: {
-          id?: string;
-          KCMC?: string;
-          KCTP?: string;
-          KCZT?: number;
-          KCMS?: string;
-          KKRQ?: string | any;
-          JKRQ?: string | any;
-          BMKSSJ?: string;
-          BMJSSJ?: string;
-        }[];
-      }[];
-      yxkc?: {
-        id?: string;
-        BJMC?: string;
-        BJMS?: string;
-        BJZT?: '未开班' | '已开班' | '已结课';
-        ZJS?: string;
-        FJS?: string;
-        BJRS?: number;
-        KSS?: number;
-        FY?: number;
-        ZHPF?: number;
-        KKRQ?: string | any;
-        JKRQ?: string | any;
-        BMKSSJ?: string;
-        BMJSSJ?: string;
-        KCTP?: string;
-        NJS?: string;
-        XQ?: string;
-        BMLX?: number;
-        BJLX?: number;
-        KHKCSJId?: string;
-        KHXSBJs?: { id?: string; ZT?: number }[];
-        KHKCSJ?: {
-          id?: string;
-          KCMC?: string;
-          KCLX?: string;
-          KCTP?: string;
-          KCZT?: number;
-          KCMS?: string;
-          KKRQ?: string | any;
-          JKRQ?: string | any;
-          BMKSSJ?: string;
-          BMJSSJ?: string;
-          XNXQId?: string;
-        };
-      }[];
-      lskc?: {
-        id?: string;
-        JSPY?: string;
-        KCMC?: string;
-        KCFY?: string;
-        SJJF?: string;
-        KSS?: string;
-        CQS?: string;
-        BJMC?: string;
-        KHBJSJId?: string;
-        XNXQId?: string;
-      }[];
-    };
-    message?: string;
-  }>('/user/homepage', {
+  return request<any>('/user/homepage', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -360,7 +221,15 @@ export async function homePageInfo(
 
 /** 刷新Token GET /user/refreshToken */
 export async function refreshToken(options?: { [key: string]: any }) {
-  return request<{ status?: 'ok' | 'error'; data?: string; message?: string }>('/user/refreshToken', {
+  return request<{ status: 'ok' | 'error'; data?: string; message?: string }>('/user/refreshToken', {
+    method: 'GET',
+    ...(options || {})
+  });
+}
+
+/** github认证回调 GET /auth/github/callback */
+export async function githubCallback(options?: { [key: string]: any }) {
+  return request<any>('/auth/github/callback', {
     method: 'GET',
     ...(options || {})
   });

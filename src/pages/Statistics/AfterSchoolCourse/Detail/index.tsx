@@ -35,7 +35,7 @@ const AfterSchoolClass = (props: any) => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
-      fixed:'left',
+      fixed: 'left',
       align: 'center'
     },
     {
@@ -44,7 +44,7 @@ const AfterSchoolClass = (props: any) => {
       key: 'BJMC',
       align: 'center',
       ellipsis: true,
-      fixed:'left',
+      fixed: 'left',
       width: 140
     },
     {
@@ -110,32 +110,16 @@ const AfterSchoolClass = (props: any) => {
     },
     {
       title: '报名人数',
-      dataIndex: 'BMRS',
-      key: 'BMRS',
+      dataIndex: 'BMXSS',
+      key: 'BMXSS',
       align: 'center',
       width: 90,
       ellipsis: true
     },
     {
       title: '退课人数',
-      dataIndex: 'TKRS',
-      key: 'TKRS',
-      align: 'center',
-      width: 100,
-      ellipsis: true
-    },
-    {
-      title: '收款金额',
-      dataIndex: 'SKJE',
-      key: 'SKJE',
-      align: 'center',
-      width: 100,
-      ellipsis: true
-    },
-    {
-      title: '退款金额',
-      dataIndex: 'TKJE',
-      key: 'TKJE',
+      dataIndex: 'TKXSS',
+      key: 'TKXSS',
       align: 'center',
       width: 100,
       ellipsis: true
@@ -143,8 +127,8 @@ const AfterSchoolClass = (props: any) => {
   ];
 
   const termChange = (val: string) => {
-    getCourseList( KHKCSJId, val);
-  }
+    getCourseList(KHKCSJId, val);
+  };
 
   return (
     <>
@@ -165,7 +149,7 @@ const AfterSchoolClass = (props: any) => {
           pagination={{
             showQuickJumper: true,
             pageSize: 10,
-            defaultCurrent: 1,
+            defaultCurrent: 1
           }}
           scroll={{ x: getTableWidth(columns) }}
           columns={columns}

@@ -4,21 +4,24 @@ import { request } from 'umi';
 
 /** 获取教师认领课程班记录 GET /khbjjsrl/${param0} */
 export async function getKHBJJSRL(
-  params: {
-    // path
-    /** 认领记录ID */
-    id: string;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getKHBJJSRLParams,
+
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
   return request<{
-    status?: 'ok' | 'error';
-    data: {
+    status: 'ok' | 'error';
+    data?: {
       id?: string;
       RQ?: string;
       JSLX?: number;
-      KHBJSJ?: { id?: string; BJMC?: string };
+      KHBJSJ?: {
+        KHKCSJ?: { id?: string; KCMC?: string };
+        id?: string;
+        BJMC?: string;
+        FJSJ?: { id?: string; FJBH?: string; FJMC?: string; FJLC?: string };
+      };
       JZGJBSJ?: { id?: string; XM?: string; GH?: string; LXDH?: string; WechatUserId?: string };
       XXSJPZ?: {
         id?: string;
@@ -39,15 +42,13 @@ export async function getKHBJJSRL(
 
 /** 删除教师认领课程班记录 DELETE /khbjjsrl/${param0} */
 export async function deleteKHBJJSRL(
-  params: {
-    // path
-    /** 教师认领课程班记录ID */
-    id: string;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.deleteKHBJJSRLParams,
+
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<{ status?: 'ok' | 'error'; message?: string }>(`/khbjjsrl/${param0}`, {
+  return request<{ status: 'ok' | 'error'; message?: string }>(`/khbjjsrl/${param0}`, {
     method: 'DELETE',
     params: { ...queryParams },
     ...(options || {})
@@ -78,11 +79,7 @@ export async function getAll(
   },
   options?: { [key: string]: any }
 ) {
-  return request<{
-    status?: 'ok' | 'error';
-    data?: { count?: number; rows?: API.KHBJJSRL[] };
-    message?: string;
-  }>('/khbjjsrl/getAll', {
+  return request<any>('/khbjjsrl/getAll', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -95,12 +92,17 @@ export async function getAll(
 /** 创建/更新教师认领课程班记录 PUT /khbjjsrl/create */
 export async function createKHBJJSRL(body: API.CreateKHBJJSRL, options?: { [key: string]: any }) {
   return request<{
-    status?: 'ok' | 'error';
-    data: {
+    status: 'ok' | 'error';
+    data?: {
       id?: string;
       RQ?: string;
       JSLX?: number;
-      KHBJSJ?: { id?: string; BJMC?: string };
+      KHBJSJ?: {
+        KHKCSJ?: { id?: string; KCMC?: string };
+        id?: string;
+        BJMC?: string;
+        FJSJ?: { id?: string; FJBH?: string; FJMC?: string; FJLC?: string };
+      };
       JZGJBSJ?: { id?: string; XM?: string; GH?: string; LXDH?: string; WechatUserId?: string };
       XXSJPZ?: {
         id?: string;

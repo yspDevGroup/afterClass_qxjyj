@@ -4,16 +4,14 @@ import { request } from 'umi';
 
 /** 获取课后服务订单记录 GET /khxsdd/${param0} */
 export async function getKHXSDD(
-  params: {
-    // path
-    /** 类型ID */
-    id: string;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getKHXSDDParams,
+
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
   return request<{
-    status?: 'ok' | 'error';
+    status: 'ok' | 'error';
     data?: {
       id?: string;
       DDBH?: string;
@@ -30,7 +28,7 @@ export async function getKHXSDD(
         XH?: string;
         XM?: string;
         WechatUserId?: string;
-        BJSJ?: { id?: string; BJ?: string; NJSJ?: { id?: string; NJMC?: string; XD?: string } };
+        BJSJ?: { id?: string; BJ?: string; NJSJ?: { id?: string; NJMC?: string; XD?: string } } | any;
       };
       KHBJSJ?:
         | {
@@ -56,6 +54,25 @@ export async function getKHXSDD(
             BMJSSJ?: string;
             FWTP?: string;
             KHZZFW?: { id?: string; FWMC?: string; FWNR?: string; FWJGMC?: string; FWZT?: number };
+          }
+        | any;
+      XSFWBJ?:
+        | {
+            id?: string;
+            ZT?: number;
+            KHFWBJ?: {
+              id?: string;
+              FWFY?: string | any;
+              FWMC?: string;
+              FWTP?: string | any;
+              FWMS?: string | any;
+              BJSJ?: {
+                id?: string;
+                BJ?: string;
+                NJSJ?: { id?: string; NJMC?: string; XD?: string };
+              };
+            };
+            KHFWSJPZ?: { id?: string; KSRQ?: string; JSRQ?: string };
           }
         | any;
     };
@@ -69,15 +86,13 @@ export async function getKHXSDD(
 
 /** 删除课后服务订单记录 DELETE /khxsdd/${param0} */
 export async function deleteKHXSDD(
-  params: {
-    // path
-    /** 类型ID */
-    id: string;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.deleteKHXSDDParams,
+
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<{ status?: 'ok' | 'error'; message?: string }>(`/khxsdd/${param0}`, {
+  return request<{ status: 'ok' | 'error'; message?: string }>(`/khxsdd/${param0}`, {
     method: 'DELETE',
     params: { ...queryParams },
     ...(options || {})
@@ -91,6 +106,12 @@ export async function getAllKHXSDD(
     DDLX?: number;
     /** 学生ID */
     XSJBSJId?: string;
+    /** 班级ID */
+    BJSJId?: string;
+    /** 年级ID */
+    NJSJId?: string;
+    /** 校区ID */
+    XQSJId?: string;
     /** 学生姓名 */
     XSXM?: string;
     /** 课后服务名称 */
@@ -103,6 +124,8 @@ export async function getAllKHXSDD(
     XXJBSJId?: string;
     /** 班级ID */
     KHBJSJId?: string;
+    /** 学生报名服务班ID */
+    XSFWBJId?: string;
     /** 班级名称 */
     bjmc?: string;
     /** 课程名称 */
@@ -112,7 +135,7 @@ export async function getAllKHXSDD(
   },
   options?: { [key: string]: any }
 ) {
-  return request<{ status?: 'ok' | 'error'; data?: API.KHXSDD[]; message?: string }>('/khxsdd/', {
+  return request<{ status: 'ok' | 'error'; data?: API.KHXSDD[]; message?: string }>('/khxsdd/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -125,7 +148,7 @@ export async function getAllKHXSDD(
 /** 创建课后服务订单记录 PUT /khxsdd/create */
 export async function createKHXSDD(body: API.CreateKHXSDD, options?: { [key: string]: any }) {
   return request<{
-    status?: 'ok' | 'error';
+    status: 'ok' | 'error';
     data?: {
       id?: string;
       DDBH?: string;
@@ -142,7 +165,7 @@ export async function createKHXSDD(body: API.CreateKHXSDD, options?: { [key: str
         XH?: string;
         XM?: string;
         WechatUserId?: string;
-        BJSJ?: { id?: string; BJ?: string; NJSJ?: { id?: string; NJMC?: string; XD?: string } };
+        BJSJ?: { id?: string; BJ?: string; NJSJ?: { id?: string; NJMC?: string; XD?: string } } | any;
       };
       KHBJSJ?:
         | {
@@ -168,6 +191,25 @@ export async function createKHXSDD(body: API.CreateKHXSDD, options?: { [key: str
             BMJSSJ?: string;
             FWTP?: string;
             KHZZFW?: { id?: string; FWMC?: string; FWNR?: string; FWJGMC?: string; FWZT?: number };
+          }
+        | any;
+      XSFWBJ?:
+        | {
+            id?: string;
+            ZT?: number;
+            KHFWBJ?: {
+              id?: string;
+              FWFY?: string | any;
+              FWMC?: string;
+              FWTP?: string | any;
+              FWMS?: string | any;
+              BJSJ?: {
+                id?: string;
+                BJ?: string;
+                NJSJ?: { id?: string; NJMC?: string; XD?: string };
+              };
+            };
+            KHFWSJPZ?: { id?: string; KSRQ?: string; JSRQ?: string };
           }
         | any;
     };
@@ -186,23 +228,23 @@ export async function createKHXSDD(body: API.CreateKHXSDD, options?: { [key: str
 export async function payKHXSDD(
   body: {
     /** 课后服务订单ID */
-    ddIds?: string[];
+    ddIds: string[];
     /** 课后服务班级ID */
     bjId?: string;
     /** 跳转地址 */
-    returnUrl?: string;
+    returnUrl: string;
     /** 学生ID */
-    xsId?: string;
+    xsId: string;
     /** 课程名称 */
-    kcmc?: string;
+    kcmc: string;
     /** 课后服务订单支付金额 */
-    amount?: number;
+    amount: number;
     /** 学校ID */
-    XXJBSJId?: string;
+    XXJBSJId: string;
   },
   options?: { [key: string]: any }
 ) {
-  return request<{ status?: 'ok' | 'error'; data?: string; message?: string }>('/khxsdd/pay', {
+  return request<{ status: 'ok' | 'error'; data?: string; message?: string }>('/khxsdd/pay', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -216,7 +258,7 @@ export async function payKHXSDD(
 export async function refundKHXSDD(
   body: {
     /** 课后服务订单ID */
-    ddId?: string;
+    ddId: string;
     /** 课后服务订单退款金额 */
     amount?: number;
     /** 课后服务订单退款原因 */
@@ -226,7 +268,7 @@ export async function refundKHXSDD(
   },
   options?: { [key: string]: any }
 ) {
-  return request<{ status?: 'ok' | 'error'; data?: string; message?: string }>('/khxsdd/refund', {
+  return request<{ status: 'ok' | 'error'; data?: string; message?: string }>('/khxsdd/refund', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -238,15 +280,13 @@ export async function refundKHXSDD(
 
 /** 订单过期 DELETE /khxsdd/overdue/${param0} */
 export async function overdueKHXSDD(
-  params: {
-    // path
-    /** 订单ID */
-    id: string;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.overdueKHXSDDParams,
+
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<{ status?: 'ok' | 'error'; message?: string }>(`/khxsdd/overdue/${param0}`, {
+  return request<{ status: 'ok' | 'error'; message?: string }>(`/khxsdd/overdue/${param0}`, {
     method: 'DELETE',
     params: { ...queryParams },
     ...(options || {})
@@ -256,12 +296,15 @@ export async function overdueKHXSDD(
 /** 移动端查询学生订单信息 POST /khxsdd/getStudentOrders */
 export async function getStudentOrders(
   body: {
+    DDZT?: string[];
+    /** 订单类型 */
+    DDLX?: number[];
     /** 学生ID */
-    XSJBSJId?: string;
+    XSJBSJId: string;
   },
   options?: { [key: string]: any }
 ) {
-  return request<{ status?: 'ok' | 'error'; data?: API.KHXSDD[]; message?: string }>('/khxsdd/getStudentOrders', {
+  return request<any>('/khxsdd/getStudentOrders', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -293,7 +336,7 @@ export async function exportStudentOrders(
   },
   options?: { [key: string]: any }
 ) {
-  return request<{ status?: 'ok' | 'error'; data?: string; message?: string }>('/khxsdd/exportStudentOrders', {
+  return request<{ status: 'ok' | 'error'; data?: string; message?: string }>('/khxsdd/exportStudentOrders', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

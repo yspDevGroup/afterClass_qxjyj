@@ -148,22 +148,6 @@ const ClassInfo = (props: any) => {
     },
     {
       type: 'group',
-      key: 'group5',
-      groupItems: [
-        {
-          type: 'input',
-          label: '报名时段',
-          placeholder: '——',
-          key: 'BMSD',
-          name: 'BMSD',
-          disabled,
-          mode: 'multiple'
-        },
-        {}
-      ]
-    },
-    {
-      type: 'group',
       key: 'group6',
       groupItems: [
         {

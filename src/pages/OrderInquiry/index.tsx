@@ -18,7 +18,7 @@ import SearchLayout from '@/components/Search/Layout';
 
 // 点击查询按钮
 const OrderInquiry = () => {
-  const SubmitTable = () => { };
+  const SubmitTable = () => {};
   const columns: ProColumns<any>[] | undefined = [
     {
       title: '序号',
@@ -26,7 +26,7 @@ const OrderInquiry = () => {
       dataIndex: 'index',
       valueType: 'index',
       fixed: 'left',
-      width: 50,
+      width: 50
     },
     {
       title: '学校名称',
@@ -75,24 +75,10 @@ const OrderInquiry = () => {
       search: false
     },
     {
-      title: '开设课程数量',
-      key: 'KHKCSQs',
-      dataIndex: 'KHKCSQs',
-      align: 'center',
-      width: 130,
-      search: false,
-      render: (_, record) => {
-        const num1 = record.KHKCSQs?.length;
-        const num2 = record.KHKCSJs?.length;
-        const num = num1! + num2!;
-        return <div>{num}</div>;
-      }
-    },
-    {
       title: '操作',
       align: 'center',
       search: false,
-      width: 160,
+      width: 260,
       fixed: 'right',
       render: (_, record) => {
         return (
@@ -108,13 +94,26 @@ const OrderInquiry = () => {
                 }
               }}
             >
-              课程订单
+              课后服务订单
             </Link>
             <Link
               to={{
                 pathname: '/OrderInquiry/tabs',
                 state: {
                   index: '2',
+                  id: record.id,
+                  xzqhm: currentUser?.XZQHM,
+                  xxmc: record.XXMC
+                }
+              }}
+            >
+              课程订单
+            </Link>
+            <Link
+              to={{
+                pathname: '/OrderInquiry/tabs',
+                state: {
+                  index: '3',
                   id: record.id,
                   xzqhm: currentUser?.XZQHM,
                   xxmc: record.XXMC
@@ -138,7 +137,7 @@ const OrderInquiry = () => {
   const getData = async () => {
     const res = await getAllSchools({
       XZQHM: currentUser?.XZQHM,
-      XXMC: curSchool || "",
+      XXMC: curSchool || '',
       page: 0,
       pageSize: 0
     });
@@ -149,11 +148,11 @@ const OrderInquiry = () => {
 
   const schoolChange = (val: string) => {
     setCurSchool(val);
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     getData();
-  },[curSchool])
+  }, [curSchool]);
 
   return (
     <>
@@ -167,7 +166,7 @@ const OrderInquiry = () => {
         pagination={{
           showQuickJumper: true,
           pageSize: 10,
-          defaultCurrent: 1,
+          defaultCurrent: 1
         }}
         scroll={{ x: getTableWidth(columns) }}
         options={{

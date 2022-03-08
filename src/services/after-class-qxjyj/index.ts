@@ -3,10 +3,6 @@
 // API 更新时间：
 // API 唯一标识：
 import * as other from './other';
-import * as auth from './auth';
-import * as user from './user';
-import * as bjsj from './bjsj';
-import * as jzgjbsj from './jzgjbsj';
 import * as fjlx from './fjlx';
 import * as fjsj from './fjsj';
 import * as jcsj from './jcsj';
@@ -16,17 +12,19 @@ import * as jxjhsj from './jxjhsj';
 import * as jyjgsj from './jyjgsj';
 import * as jyjgtzgg from './jyjgtzgg';
 import * as jzgcfsj from './jzgcfsj';
-import * as jzggzjl from './jzggzjl';
 import * as jzgjtcy from './jzgjtcy';
 import * as jzgktyj from './jzgktyj';
 import * as jzglwsj from './jzglwsj';
 import * as jzgrysj from './jzgrysj';
+import * as jzgjbsj from './jzgjbsj';
 import * as jzgxxjl from './jzgxxjl';
 import * as kcbsksj from './kcbsksj';
 import * as kcsj from './kcsj';
 import * as khbjjsrl from './khbjjsrl';
 import * as khbjpj from './khbjpj';
 import * as khbjsj from './khbjsj';
+import * as khfwbj from './khfwbj';
+import * as khfwsj from './khfwsj';
 import * as khjgrzsq from './khjgrzsq';
 import * as khjscq from './khjscq';
 import * as khjspj from './khjspj';
@@ -44,7 +42,7 @@ import * as khktfc from './khktfc';
 import * as khpksj from './khpksj';
 import * as khtksj from './khtksj';
 import * as khxkjl from './khxkjl';
-import * as khxksj from './khxksj';
+import * as jzggzjl from './jzggzjl';
 import * as khxscq from './khxscq';
 import * as khxsdd from './khxsdd';
 import * as khxspj from './khxspj';
@@ -59,6 +57,7 @@ import * as reports from './reports';
 import * as sso from './sso';
 import * as statistic from './statistic';
 import * as upload from './upload';
+import * as user from './user';
 import * as wechat from './wechat';
 import * as xksj from './xksj';
 import * as xl from './xl';
@@ -74,18 +73,18 @@ import * as xsxxjl from './xsxxjl';
 import * as xxgg from './xxgg';
 import * as xxjbpz from './xxjbpz';
 import * as xxjbsj from './xxjbsj';
+import * as xxjtpz from './xxjtpz';
 import * as xxpz from './xxpz';
 import * as xxsjpz from './xxsjpz';
 import * as xxsppz from './xxsppz';
 import * as xxtzgg from './xxtzgg';
 import * as zxfa from './zxfa';
 import * as zxsj from './zxsj';
+import * as khxksj from './khxksj';
+import * as bjsj from './bjsj';
+import * as auth from './auth';
 export default {
   other,
-  auth,
-  user,
-  bjsj,
-  jzgjbsj,
   fjlx,
   fjsj,
   jcsj,
@@ -95,17 +94,19 @@ export default {
   jyjgsj,
   jyjgtzgg,
   jzgcfsj,
-  jzggzjl,
   jzgjtcy,
   jzgktyj,
   jzglwsj,
   jzgrysj,
+  jzgjbsj,
   jzgxxjl,
   kcbsksj,
   kcsj,
   khbjjsrl,
   khbjpj,
   khbjsj,
+  khfwbj,
+  khfwsj,
   khjgrzsq,
   khjscq,
   khjspj,
@@ -123,7 +124,7 @@ export default {
   khpksj,
   khtksj,
   khxkjl,
-  khxksj,
+  jzggzjl,
   khxscq,
   khxsdd,
   khxspj,
@@ -138,6 +139,7 @@ export default {
   sso,
   statistic,
   upload,
+  user,
   wechat,
   xksj,
   xl,
@@ -153,10 +155,14 @@ export default {
   xxgg,
   xxjbpz,
   xxjbsj,
+  xxjtpz,
   xxpz,
   xxsjpz,
   xxsppz,
   xxtzgg,
   zxfa,
-  zxsj
+  zxsj,
+  khxksj,
+  bjsj,
+  auth
 };

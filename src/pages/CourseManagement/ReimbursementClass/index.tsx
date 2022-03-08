@@ -50,6 +50,13 @@ const ReimbursementClass = () => {
       ellipsis: true
     },
     {
+      title: '课后服务退订数',
+      dataIndex: 'khfwtd_count',
+      key: 'khfwtd_count',
+      align: 'center',
+      width: 120
+    },
+    {
       title: '课程退订数',
       dataIndex: 'kctd_count',
       key: 'kctk_count',
@@ -57,11 +64,11 @@ const ReimbursementClass = () => {
       width: 100
     },
     {
-      title: '服务退订数',
+      title: '增值服务退订数',
       dataIndex: 'fwtd_count',
       key: 'fwtk_count',
       align: 'center',
-      width: 100
+      width: 120
     },
     {
       title: '操作',
@@ -109,11 +116,11 @@ const ReimbursementClass = () => {
 
   const schoolChange = (val: string, auth: any) => {
     setCurSchool(auth.key);
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     getData();
-  },[curSchool])
+  }, [curSchool]);
 
   return (
     <>

@@ -15,6 +15,72 @@
   }
 }
 
-.formItem{
+.formItem {
   margin-right: 20px;
+}
+.AfterSchoolCourse {
+  :global {
+    .ant-pro-table-list-toolbar-container {
+      width: 100%;
+      .ant-pro-table-list-toolbar-left {
+        width: 100%;
+        .ant-pro-table-list-toolbar-title {
+          display: block;
+          width: 100%;
+        }
+      }
+    }
+  }
+  .TopCards {
+    // display: none;
+    display: flex;
+    width: 100%;
+    margin: 24px 0;
+    > div {
+      flex: 1;
+      & + div {
+        padding-left: 24px;
+      }
+      > div {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background-color: #ebf4ff;
+        border-radius: 8px;
+        img {
+          width: 50px;
+          margin: 0 10px 0 0;
+        }
+        h3 {
+          font-weight: bold;
+          font-size: 16px;
+          line-height: 24px;
+        }
+        h3,
+        p {
+          margin: 0;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+        p {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+  .title {
+    display: flex;
+    justify-content: flex-end;
+
+    > span {
+      color: #4884ff;
+      line-height: 30px;
+    }
+
+    button {
+      width: 80px;
+      margin-left: 20px;
+    }
+  }
 }

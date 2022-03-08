@@ -45,7 +45,7 @@ const School = (props: any) => {
       ellipsis: true,
       align: 'center',
       render: (_, record) => {
-        return record?.XXJBSJ?.XXMC
+        return record?.XXJBSJ?.XXMC;
       }
     },
     {
@@ -76,23 +76,23 @@ const School = (props: any) => {
       key: 'bj_count',
       align: 'center',
       width: 100,
-      ellipsis: true,
+      ellipsis: true
     },
     {
-      title: '报名人次',
-      dataIndex: 'BMRS',
-      key: 'BMRS',
+      title: '报名人数',
+      dataIndex: 'BMXSS',
+      key: 'BMXSS',
       align: 'center',
       width: 100,
-      ellipsis: true,
+      ellipsis: true
     },
     {
-      title: '退课人次',
-      dataIndex: 'TKRS',
-      key: 'TKRS',
+      title: '退课人数',
+      dataIndex: 'TKXSS',
+      key: 'TKXSS',
       align: 'center',
       width: 100,
-      ellipsis: true,
+      ellipsis: true
     },
     {
       title: '退课比例',
@@ -102,25 +102,9 @@ const School = (props: any) => {
       width: 100,
       ellipsis: true,
       render: (test: any, record: any) => {
-        const num = record.TKRS !== 0 ? (Number((record.TKRS / record.BMRS)) * 100).toFixed(1) + '%' : 0;
+        const num = record.TKXSS !== '0' ? ((Number(record.TKXSS) / Number(record.BMXSS)) * 100).toFixed(1) + '%' : 0;
         return num;
-      },
-    },
-    {
-      title: '收款金额',
-      dataIndex: 'SKJE',
-      key: 'SKJE',
-      align: 'center',
-      width: 100,
-      ellipsis: true,
-    },
-    {
-      title: '退款金额',
-      dataIndex: 'TKJE',
-      key: 'TKJE',
-      align: 'center',
-      width: 100,
-      ellipsis: true,
+      }
     },
     {
       title: '操作',
@@ -142,15 +126,15 @@ const School = (props: any) => {
                   KHKCSJId: KCId,
                   XXMC: record?.XXJBSJ?.XXMC,
                   KCMC: KCMC
-                },
-              },
+                }
+              }
             }}
           >
             详情
           </Link>
         </>
-      ),
-    },
+      )
+    }
   ];
   const ChoseSelect = async () => {
     const res3 = await getClassesByCourse({
@@ -164,7 +148,7 @@ const School = (props: any) => {
   };
   useEffect(() => {
     ChoseSelect();
-  }, [XXMC])
+  }, [XXMC]);
 
   return (
     <>
@@ -186,7 +170,7 @@ const School = (props: any) => {
           pagination={{
             showQuickJumper: true,
             pageSize: 10,
-            defaultCurrent: 1,
+            defaultCurrent: 1
           }}
           scroll={{ x: getTableWidth(columns) }}
           dataSource={dataSource}
@@ -196,16 +180,16 @@ const School = (props: any) => {
             setting: false,
             fullScreen: false,
             density: false,
-            reload: false,
+            reload: false
           }}
           headerTitle={
             <SearchLayout>
               <div>
-                <label htmlFor='xxmc'>学校名称：</label>
+                <label htmlFor="xxmc">学校名称：</label>
                 <Search
                   allowClear
                   onSearch={(val) => {
-                    setXXMC(val)
+                    setXXMC(val);
                   }}
                 />
               </div>
