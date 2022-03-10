@@ -67,6 +67,18 @@ export default {
             hideInMenu: 'true'
           },
           {
+            name: '行政班列表',
+            path: '/schoolManagement/administrativeClass',
+            hideInMenu: 'true',
+            routes: [
+              {
+                path: '/schoolManagement/administrativeClass/detail',
+                hideInMenu: 'true',
+                name: '行政班详情'
+              }
+            ]
+          },
+          {
             name: '课程列表',
             path: '/schoolManagement/courseList',
             hideInMenu: 'true',

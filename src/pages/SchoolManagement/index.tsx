@@ -97,11 +97,11 @@ const SchoolManagement = () => {
           </Link>
           <Link
             to={{
-              pathname: '/schoolManagement/courseList',
+              pathname: '/schoolManagement/administrativeClass',
               state: record
             }}
           >
-            课程列表
+            行政班列表
           </Link>
         </div>
       )
@@ -115,7 +115,7 @@ const SchoolManagement = () => {
     const resJYJGSJ = await JYJGSJ({ id: currentUser!.jyjId! });
     const resgetAllSchools = await getAllSchools({
       XZQHM: resJYJGSJ?.data?.XZQH,
-      XXMC: curSchool || "",
+      XXMC: curSchool || '',
       page: 0,
       pageSize: 0
     });
@@ -126,11 +126,11 @@ const SchoolManagement = () => {
 
   const schoolChange = (val: string) => {
     setCurSchool(val);
-  }
+  };
 
   useEffect(() => {
     getData();
-  }, [curSchool])
+  }, [curSchool]);
 
   return (
     <div className={styles.SchoolManagement}>
@@ -155,7 +155,7 @@ const SchoolManagement = () => {
           setting: false,
           fullScreen: false,
           density: false,
-          reload: false,
+          reload: false
         }}
         rowKey="id"
         dateFormatter="string"
