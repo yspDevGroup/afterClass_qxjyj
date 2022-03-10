@@ -41,7 +41,7 @@ const SemesterSelect: FC<SemesterSelectProps> = ({ onChange, XXJBSJId }) => {
 
   return (
     <div>
-      <label htmlFor='term'>所属学年学期：</label>
+      <label htmlFor="term">所属学年学期：</label>
       <Select
         value={term}
         allowClear
@@ -49,6 +49,7 @@ const SemesterSelect: FC<SemesterSelectProps> = ({ onChange, XXJBSJId }) => {
           setTerm(value);
           onChange?.(value);
         }}
+        style={{ width: 170 }}
       >
         {termList?.map((item: any) => {
           return (

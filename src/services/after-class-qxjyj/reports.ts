@@ -687,6 +687,28 @@ export async function exportStudentEnroll(
   });
 }
 
+/** 导出班级学生课后服务报名表 POST /reports/exportServiceEnroll */
+export async function exportServiceEnroll(
+  body: {
+    /** 学年学期ID */
+    XNXQId: string;
+    /** 班级ID */
+    BJSJId: string;
+    /** 导出时段 */
+    KHFWSJPZIds: string[];
+  },
+  options?: { [key: string]: any }
+) {
+  return request<any>('/reports/exportServiceEnroll', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: body,
+    ...(options || {})
+  });
+}
+
 /** 区县教育局获取全部课程的统计报表 POST /reports/exportEducationCoursesInfo */
 export async function exportEducationCoursesInfo(
   body: {

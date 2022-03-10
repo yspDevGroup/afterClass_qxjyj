@@ -228,51 +228,6 @@ const ClassList = (props: any) => {
           }}
           scroll={{ x: 1300 }}
           dataSource={dataSource}
-          // request={async (
-          //   params: TableListItem & {
-          //     pageSize?: number;
-          //     current?: number;
-          //     // keyword?: string;
-          //   },
-          //   sort,
-          //   filter
-          // ): Promise<Partial<RequestData<TableListItem>>> => {
-          //   // 表单搜索项会从 params 传入，传递给后端接口。
-          //   const opts: TableListParams = {
-          //     ...params,
-          //     sorter: sort && Object.keys(sort).length ? sort : undefined
-          //   };
-
-          //   const {id} = state.value;
-          //   const res = await getAllClasses({
-          //     KHKCSJId: id,
-          //     page: 0,
-          //     pageSize: 0,
-          //   });
-          //   if (res.status === 'ok') {
-          //     let newArr: any[] = [];
-
-          //     res.data?.rows.forEach((value: any) => {
-          //       // const { KCMC,BJRS,BMRS,XQSJ,KKRQ } = value;
-          //       console.log('value',value);
-
-          //       newArr.push(value);
-          //     });
-          //     console.log('newArr',newArr);
-          //     if (newArr.length === res.data.rows?.length) {
-          //       return {
-          //         data: newArr,
-          //         total: res.data?.count,
-          //         success: true
-          //       };
-          //     }
-          //   } else {
-          //     message.error(res.message);
-          //     return {};
-          //   }
-
-          //   return {};
-          // }}
           rowKey="id"
           dateFormatter="string"
           search={false}

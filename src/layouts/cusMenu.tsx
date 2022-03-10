@@ -7,7 +7,8 @@ import {
   AppstoreAddOutlined,
   NotificationOutlined,
   AuditOutlined,
-  ProfileOutlined
+  ProfileOutlined,
+  PieChartOutlined
 } from '@ant-design/icons';
 export default {
   route: {
@@ -251,10 +252,6 @@ export default {
         name: '统计报表',
         routes: [
           {
-            path: '/statistics/graphic',
-            name: '数据大屏'
-          },
-          {
             path: '/statistics/afterSchoolCourse',
             name: '课程统计',
             routes: [
@@ -282,6 +279,13 @@ export default {
             hideInMenu: 'true'
           }
         ]
+      },
+      {
+        // 数据大屏
+        path: '/statistics/graphic',
+        icon: <PieChartOutlined />,
+        name: '数据大屏',
+        component: './statistics/graphic'
       },
       {
         path: '/courseInfo',

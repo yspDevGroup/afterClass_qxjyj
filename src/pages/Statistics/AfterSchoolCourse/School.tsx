@@ -167,6 +167,7 @@ const School = (props: any) => {
           返回上一页
         </Button>
         <ProTable
+          className={styles.XxList}
           columns={columns}
           pagination={{
             showQuickJumper: true,
@@ -184,17 +185,20 @@ const School = (props: any) => {
             reload: false
           }}
           headerTitle={
-            <SearchLayout>
-              <div>
-                <label htmlFor="xxmc">学校名称：</label>
-                <Search
-                  allowClear
-                  onSearch={(val) => {
-                    setXXMC(val);
-                  }}
-                />
-              </div>
-            </SearchLayout>
+            <>
+              <SearchLayout>
+                <div>
+                  <label htmlFor="xxmc">学校名称：</label>
+                  <Search
+                    allowClear
+                    onSearch={(val) => {
+                      setXXMC(val);
+                    }}
+                  />
+                </div>
+              </SearchLayout>
+              <p className={styles.courseName}>课程名称：{KCMC}</p>
+            </>
           }
         />
       </div>

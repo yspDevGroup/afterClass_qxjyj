@@ -13,6 +13,7 @@ import WWOpenDataCom from '@/components/WWOpenDataCom';
 import { getTableWidth } from '@/utils';
 import SemesterSelect from '@/components/Search/SemesterSelect';
 import SearchLayout from '@/components/Search/Layout';
+import styles from './index.less';
 
 const AfterSchoolClass = (props: any) => {
   // 表格数据源
@@ -74,16 +75,6 @@ const AfterSchoolClass = (props: any) => {
       },
       width: 120,
       ellipsis: true
-    },
-    {
-      title: '开课时段',
-      dataIndex: 'SKSD',
-      key: 'SKSD',
-      align: 'center',
-      width: 180,
-      render: (_, record: any) => {
-        return moment(record?.KKSJ).format('YYYY.MM.DD') + '~' + moment(record?.JKSJ).format('YYYY.MM.DD');
-      }
     },
     {
       title: '适用年级',
@@ -151,6 +142,7 @@ const AfterSchoolClass = (props: any) => {
           返回上一页
         </Button>
         <ProTable
+          className={styles.XxList}
           pagination={{
             showQuickJumper: true,
             pageSize: 10,
@@ -168,9 +160,14 @@ const AfterSchoolClass = (props: any) => {
             reload: false
           }}
           headerTitle={
-            <SearchLayout>
-              <SemesterSelect XXJBSJId={XXJBSJId} onChange={termChange} />
-            </SearchLayout>
+            <>
+              <SearchLayout>
+                <SemesterSelect XXJBSJId={XXJBSJId} onChange={termChange} />
+              </SearchLayout>
+              <p className={styles.courseName}>
+                课程名称：{state?.data?.KCMC} <span>学校名称：{state?.data?.XXMC}</span>
+              </p>
+            </>
           }
         />
       </div>
