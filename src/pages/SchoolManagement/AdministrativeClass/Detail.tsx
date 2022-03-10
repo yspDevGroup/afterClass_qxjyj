@@ -176,6 +176,7 @@ const Details = (props: any) => {
       <ProTable
         columns={columns}
         dataSource={dataSource}
+        className={styles.details}
         rowKey="id"
         search={false}
         pagination={{

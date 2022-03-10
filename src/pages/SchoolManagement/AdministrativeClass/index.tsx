@@ -166,6 +166,22 @@ const AdministrativeClass = (props: any) => {
       width: 150
     },
     {
+      title: '状态',
+      dataIndex: 'ZT',
+      key: 'ZT',
+      align: 'center',
+      width: 100,
+      render: (_, record: any) => {
+        if (record?.KHFWBJs?.length) {
+          if (record?.KHFWBJs[0]?.ZT === 0) {
+            return '未发布';
+          }
+          return '已发布';
+        }
+        return '待配置';
+      }
+    },
+    {
       title: '操作',
       valueType: 'option',
       key: 'option',
@@ -221,19 +237,18 @@ const AdministrativeClass = (props: any) => {
               NJId: NjId ? [NjId] : undefined,
               BJSJId: BJId,
               XNXQId: curXNXQId,
-              page: 0,
-              pageSize: 0,
+              ISJD: true,
+              FWZT: 1,
+              page: param.current,
+              pageSize: param.pageSize,
               XQSJId: campusId
             };
             const res = await getKHFWBJXSbm(obj);
-            if (res?.status === 'ok') {
-              const newData = res?.data?.rows?.filter((item: any) => {
-                return item?.KHFWBJs?.length !== 0 && item?.KHFWBJs?.[0]?.ZT === 1;
-              });
+            if (res.status === 'ok') {
               return {
-                data: newData,
+                data: res.data.rows,
                 success: true,
-                total: newData.length
+                total: res.data.count
               };
             }
           }
@@ -262,7 +277,7 @@ const AdministrativeClass = (props: any) => {
             </div>
             <div>
               <label htmlFor="grade">学年学期：</label>
-              <Select value={curXNXQId} placeholder="请选择" onChange={onXNXQChange}>
+              <Select value={curXNXQId} placeholder="请选择" onChange={onXNXQChange} style={{ width: 170 }}>
                 {curXNXQData?.map((item: any) => {
                   return <Option key={item.id} value={item.id}>{`${item.XN}-${item.XQ}`}</Option>;
                 })}
