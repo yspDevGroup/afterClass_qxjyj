@@ -394,6 +394,10 @@ export async function getSchoolCoursesEvaluation(
     XZQHM?: string;
     /** 课程ID */
     KHKCSJId: string;
+    /** 学年 */
+    XN: string;
+    /** 学期 */
+    XQ: string;
     /** 学校名称 */
     XXMC?: string;
     /** 学校ID */
@@ -455,6 +459,10 @@ export async function getAllCoursesInfo(
   body: {
     XZQHM?: string;
     SXZQHM?: string;
+    /** 学年 */
+    XN: string;
+    /** 学期 */
+    XQ: string;
     /** 课程名称 */
     KCMC?: string;
     /** 课程类型 */
@@ -486,6 +494,10 @@ export async function getAllCoursesInfo(
 export async function getClassesByCourse(
   body: {
     XZQHM?: string;
+    /** 学年 */
+    XN: string;
+    /** 学期 */
+    XQ: string;
     isFW?: number;
     /** 课程ID */
     KHKCSJId: string;
@@ -550,6 +562,10 @@ export async function getAttendanceTrend(
 export async function getSchoolsQJ(
   body: {
     XZQHM: string;
+    /** 学年 */
+    XN: string;
+    /** 学期 */
+    XQ: string;
     XXJBSJId?: string;
     /** 页数 */
     page?: number;
@@ -572,9 +588,12 @@ export async function getSchoolsQJ(
 export async function getSchoolsTK(
   body: {
     XZQHM: string;
+    /** 学年 */
+    XN: string;
+    /** 学期 */
+    XQ: string;
     /** 学校基本数据id */
     XXJBSJId?: string;
-    isTK: boolean;
     /** 页数 */
     page?: number;
     /** 每页记录数 */

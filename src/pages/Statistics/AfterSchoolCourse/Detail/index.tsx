@@ -23,7 +23,8 @@ const AfterSchoolClass = (props: any) => {
   const getCourseList = async (kcdm: string, xnxq?: string) => {
     const res = await getClasses({
       XNXQId: xnxq,
-      KHKCSJId: kcdm
+      KHKCSJId: kcdm,
+      isFW: 0
     });
     if (res?.status === 'ok') {
       setDataSource(res?.data?.rows);

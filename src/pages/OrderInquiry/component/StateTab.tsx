@@ -11,12 +11,21 @@ import { getAllKHKCLX } from '@/services/after-class-qxjyj/khkclx';
 import { getAllCourses2 } from '@/services/after-class-qxjyj/khkcsj';
 import { getTableWidth } from '@/utils';
 import SearchLayout from '@/components/Search/Layout';
+import SemesterSelect from '@/components/SemesterSelect';
 
 const { Option } = Select;
 const StateTab = (props: any) => {
+  console.log(props, 'props');
   const { DDZT, id } = props.TabState;
+  console.log(id, 'id--------');
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
+  const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);
+  const [kcmcValue, setKcmcValue] = useState<any>();
+  const [kcmcData, setKcmcData] = useState<any[] | undefined>([]);
+  const [kclxOptions, setKCLXOptions] = useState<any>();
+  const [kclxValue, setKCLXValue] = useState<any>();
+  const [XNXQId, setXNXQId] = useState<string>();
   const columns: ProColumns<API.KHXSDD>[] = [
     {
       title: '序号',
@@ -147,11 +156,7 @@ const StateTab = (props: any) => {
       }
     }
   ];
-  const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);
-  const [kcmcValue, setKcmcValue] = useState<any>();
-  const [kcmcData, setKcmcData] = useState<any[] | undefined>([]);
-  const [kclxOptions, setKCLXOptions] = useState<any>();
-  const [kclxValue, setKCLXValue] = useState<any>();
+
   useEffect(() => {
     (async () => {
       // 通过课程数据接口拿到所有的课程
@@ -173,16 +178,20 @@ const StateTab = (props: any) => {
   }, [kclxValue]);
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    console.log(XNXQId, 'XNXQId------');
     (async () => {
-      const res = await getOrders({
-        XZQHM: currentUser?.XZQHM,
-        DDZT,
-        DDLX: 0,
-        XXJBSJId: id,
-        kcmc: kcmcValue,
-        KHKCLXId: kclxValue
-      });
-      setDataSource(res.data?.rows);
+      if (XNXQId) {
+        const res = await getOrders({
+          XZQHM: currentUser?.XZQHM || '',
+          DDZT,
+          DDLX: 0,
+          XXJBSJId: id,
+          kcmc: kcmcValue,
+          KHKCLXId: kclxValue,
+          XNXQId
+        });
+        setDataSource(res.data?.rows);
+      }
       if (!kclxValue) {
         const kclxRes = await getAllKHKCLX({ name: '' });
         if (kclxRes.status === 'ok') {
@@ -196,7 +205,12 @@ const StateTab = (props: any) => {
         }
       }
     })();
-  }, [kcmcValue, kclxValue]);
+  }, [kcmcValue, kclxValue, XNXQId]);
+
+  const onSelectChange = (value: string) => {
+    console.log(value, 'value-----');
+    setXNXQId(value);
+  };
   return (
     <>
       <div>
@@ -218,8 +232,12 @@ const StateTab = (props: any) => {
           search={false}
           headerTitle={
             <SearchLayout>
+              <span style={{ fontSize: 14 }}>
+                所属学年学期：
+                <SemesterSelect onChange={onSelectChange} XXJBSJId={id} />
+              </span>
               <div style={{ marginRight: 20 }}>
-                <label htmlFor='kclx'>课程类型：</label>
+                <label htmlFor="kclx">课程类型：</label>
                 <Select
                   value={kclxValue}
                   allowClear
@@ -243,7 +261,7 @@ const StateTab = (props: any) => {
                 </Select>
               </div>
               <div>
-                <label htmlFor='kcmc'>课程名称：</label>
+                <label htmlFor="kcmc">课程名称：</label>
                 <Select
                   value={kcmcValue}
                   allowClear

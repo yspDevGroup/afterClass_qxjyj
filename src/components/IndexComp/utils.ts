@@ -8,28 +8,28 @@
 export const bgColor = [
   {
     begin: '#FFA178',
-    end: '#FF6756',
+    end: '#FF6756'
   },
   {
     begin: '#36D1DC',
-    end: '#85ABFF',
+    end: '#85ABFF'
   },
   {
     begin: '#FFE466',
-    end: '#FF9B1E',
+    end: '#FF9B1E'
   },
   {
     begin: '#6FEE7C',
-    end: '#4DC6B7',
+    end: '#4DC6B7'
   },
   {
     begin: '#86A8E7',
-    end: '#7F7FD5',
+    end: '#7F7FD5'
   },
   {
     begin: '#4BF3D5',
-    end: '#1CC6C6',
-  },
+    end: '#1CC6C6'
+  }
 ];
 export const topNum = [
   {
@@ -37,15 +37,15 @@ export const topNum = [
     type: 'xxNum'
   },
   {
-    title: '开设机构',
-    type: 'jgNum',
+    title: '准入机构',
+    type: 'jgNum'
   },
   {
     title: '课程总数',
     type: 'kcNum'
   },
   {
-    title: '开设课程班',
+    title: '课程班总数',
     type: 'bjNum'
   },
   {
@@ -69,25 +69,25 @@ export const columnConfig: any = {
     }
   },
   yAxis: { minInterval: 1 },
-  grid:{
+  grid: {
     containLabel: true,
     bottom: 40
   },
   columnStyle: {},
   maxColumnWidth: 30,
   scrollbar: {
-    type: 'horizontal',
+    type: 'horizontal'
   },
   meta: {
     type: { alias: '学校名称' },
-    value: { alias: '课程数量' },
+    value: { alias: '课程数量' }
   }
 };
 export const pieConfig: any = {
   appendPadding: 20,
   legend: {
     layout: 'horizontal',
-    position: 'top',
+    position: 'top'
   },
   data: [],
   angleField: 'value',
@@ -95,21 +95,21 @@ export const pieConfig: any = {
   color: ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'],
   radius: 0.8,
   innerRadius: 0.6,
-  pieStyle:{
-    stroke:'#fff',
-    lineWidth:0,
-    strokeOpacity:0,
+  pieStyle: {
+    stroke: '#fff',
+    lineWidth: 0,
+    strokeOpacity: 0
   },
   label: {
     type: 'spider',
     labelHeight: 28,
-    content: '{name}',
+    content: '{name}'
   },
   interactions: [{ type: 'element-selected' }, { type: 'element-active' }],
   statistic: {
     title: false,
-    content: false,
-  },
+    content: false
+  }
 };
 export const lineConfig: any = {
   appendPadding: 20,
@@ -119,18 +119,18 @@ export const lineConfig: any = {
   seriesField: 'category',
   legend: false,
   yAxis: {},
-  xAxis:{
+  xAxis: {
     label: {
       autoHide: true,
       autoRotate: false
     }
   },
-  grid:{
+  grid: {
     containLabel: true,
     bottom: 40
   },
   scrollbar: {
-    type: 'horizontal',
+    type: 'horizontal'
   },
-  color: ['#1979C9', '#D62A0D', '#FAA219'],
+  color: ['#1979C9', '#D62A0D', '#FAA219']
 };

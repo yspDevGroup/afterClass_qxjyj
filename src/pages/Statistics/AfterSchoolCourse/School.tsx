@@ -16,6 +16,7 @@ import styles from './index.less';
 import EllipsisHint from '@/components/EllipsisHint';
 import { getTableWidth } from '@/utils';
 import SearchLayout from '@/components/Search/Layout';
+import Semester from '@/components/Semester';
 
 const { Search } = Input;
 const School = (props: any) => {
@@ -26,6 +27,7 @@ const School = (props: any) => {
   const [XXMC, setXXMC] = useState<string>('');
   // 表格数据源
   const [dataSource, setDataSource] = useState<any>([]);
+  const [XNXQ, setXNXQ] = useState<string>('');
   // table表格数据
   const columns: ProColumns<any>[] = [
     {
@@ -141,6 +143,9 @@ const School = (props: any) => {
     const res3 = await getClassesByCourse({
       XZQHM: currentUser?.XZQHM,
       KHKCSJId: KCId,
+      // isFW:1,
+      XN: XNXQ.substring(0, 9),
+      XQ: XNXQ.substring(10, 14),
       XXMC
     });
     if (res3.status === 'ok') {
@@ -148,9 +153,14 @@ const School = (props: any) => {
     }
   };
   useEffect(() => {
-    ChoseSelect();
-  }, [XXMC]);
+    if (XNXQ) {
+      ChoseSelect();
+    }
+  }, [XXMC, XNXQ]);
 
+  const onSelectChange = (value: string) => {
+    setXNXQ(value);
+  };
   return (
     <>
       <div>
@@ -187,6 +197,12 @@ const School = (props: any) => {
           headerTitle={
             <>
               <SearchLayout>
+                <div>
+                  <span style={{ fontSize: 14 }}>
+                    学年学期：
+                    <Semester onChange={onSelectChange} />
+                  </span>
+                </div>
                 <div>
                   <label htmlFor="xxmc">学校名称：</label>
                   <Search

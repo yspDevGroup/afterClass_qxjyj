@@ -8,6 +8,7 @@ import styles from '../index.less';
 import EllipsisHint from '@/components/EllipsisHint';
 import { getTableWidth } from '@/utils';
 import SearchLayout from '@/components/Search/Layout';
+import Semester from '@/components/Semester';
 
 const { Search } = Input;
 // 点击查询按钮
@@ -21,6 +22,7 @@ const OrderInquiry = (props: any) => {
   // 表格数据源
   const [dataSource, setDataSource] = useState<any>([]);
   const [curSchool, setCurSchool] = useState<string>();
+  const [XNXQ, setXNXQ] = useState<string>('');
 
   const columns: ProColumns<any>[] | undefined = [
     {
@@ -121,6 +123,8 @@ const OrderInquiry = (props: any) => {
       XXMC: curSchool || '',
       KHKCSJId: KCId,
       SSJGLX,
+      XN: XNXQ.substring(0, 9),
+      XQ: XNXQ.substring(10, 14),
       page: 0,
       pageSize: 0
     });
@@ -129,9 +133,14 @@ const OrderInquiry = (props: any) => {
     }
   };
   useEffect(() => {
-    ChoseSelect();
-  }, [curSchool]);
+    if (XNXQ) {
+      ChoseSelect();
+    }
+  }, [curSchool, XNXQ]);
 
+  const onSelectChange = (value: string) => {
+    setXNXQ(value);
+  };
   return (
     <>
       <Button
@@ -166,7 +175,13 @@ const OrderInquiry = (props: any) => {
         headerTitle={
           <SearchLayout>
             <div>
-              <label htmlFor='xxmc'>学校名称：</label>
+              <span style={{ fontSize: 14 }}>
+                学年学期：
+                <Semester onChange={onSelectChange} />
+              </span>
+            </div>
+            <div>
+              <label htmlFor="xxmc">学校名称：</label>
               <Search
                 allowClear
                 onSearch={(val) => {

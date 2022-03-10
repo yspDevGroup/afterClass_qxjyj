@@ -8,6 +8,7 @@ import styles from './index.less';
 import { getAllKHKCLX } from '@/services/after-class-qxjyj/khkclx';
 import { getTableWidth } from '@/utils';
 import SearchLayout from '@/components/Search/Layout';
+import Semester from '@/components/Semester';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -19,6 +20,7 @@ const MutualEvaluation = (data: any) => {
   const [KCLY, setKCLY] = useState<string>('');
   const [KCLXData, setKCLXData] = useState<any>();
   const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);
+  const [XNXQ, setXNXQ] = useState<string>();
   useEffect(() => {
     (async () => {
       const res = await getAllKHKCLX({});
@@ -28,15 +30,24 @@ const MutualEvaluation = (data: any) => {
     })();
   }, []);
   useEffect(() => {
-    (async () => {
-      const res = await getCoursesEvaluation({ XZQHM: currentUser?.XZQHM, KCMC, KCLX, KCLY });
-      if (res.status === 'ok' && res?.data) {
-        setDataSource(res?.data?.rows);
-      } else {
-        message.error(res.message || '数据获取失败，请联系系统管理员或稍后再试');
-      }
-    })();
-  }, [KCMC, KCLX, KCLY]);
+    if (XNXQ) {
+      (async () => {
+        const res = await getCoursesEvaluation({
+          XZQHM: currentUser?.XZQHM,
+          KCMC,
+          KCLX,
+          KCLY,
+          XN: XNXQ?.substring(0, 9),
+          XQ: XNXQ.substring(10, 14)
+        });
+        if (res.status === 'ok' && res?.data) {
+          setDataSource(res?.data?.rows);
+        } else {
+          message.error(res.message || '数据获取失败，请联系系统管理员或稍后再试');
+        }
+      })();
+    }
+  }, [KCMC, KCLX, KCLY, XNXQ]);
   const columns: ProColumns<any>[] = [
     {
       title: '序号',
@@ -140,6 +151,11 @@ const MutualEvaluation = (data: any) => {
       )
     }
   ];
+  const onSelectChange = (value: string) => {
+    console.log(value, '---');
+    setXNXQ(value);
+  };
+
   return (
     <div>
       <ProTable
@@ -163,13 +179,23 @@ const MutualEvaluation = (data: any) => {
           <>
             <SearchLayout>
               <div>
-                <label htmlFor='kcname'>课程名称：</label>
-                <Search placeholder="课程名称" allowClear onSearch={(value: string) => {
-                  setKCMC(value);
-                }} />
+                <span style={{ fontSize: 14 }}>
+                  学年学期：
+                  <Semester onChange={onSelectChange} />
+                </span>
               </div>
               <div>
-                <label htmlFor='kcly'>课程来源：</label>
+                <label htmlFor="kcname">课程名称：</label>
+                <Search
+                  placeholder="课程名称"
+                  allowClear
+                  onSearch={(value: string) => {
+                    setKCMC(value);
+                  }}
+                />
+              </div>
+              <div>
+                <label htmlFor="kcly">课程来源：</label>
                 <Select
                   allowClear
                   placeholder="课程来源"
@@ -178,16 +204,16 @@ const MutualEvaluation = (data: any) => {
                   }}
                   value={KCLY}
                 >
-                  <Option value='校内课程' key='校内课程'>
+                  <Option value="校内课程" key="校内课程">
                     校内课程
                   </Option>
-                  <Option value='机构课程' key='机构课程'>
+                  <Option value="机构课程" key="机构课程">
                     机构课程
                   </Option>
                 </Select>
               </div>
               <div>
-                <label htmlFor='kctype'>课程类型：</label>
+                <label htmlFor="kctype">课程类型：</label>
                 <Select
                   allowClear
                   onChange={(value: string) => {
@@ -195,9 +221,11 @@ const MutualEvaluation = (data: any) => {
                   }}
                 >
                   {KCLXData?.map((item: any) => {
-                    return <Option key={item.id} value={item.KCTAG}>
-                      {item.KCTAG}
-                    </Option>
+                    return (
+                      <Option key={item.id} value={item.KCTAG}>
+                        {item.KCTAG}
+                      </Option>
+                    );
                   })}
                 </Select>
               </div>

@@ -5,13 +5,14 @@ import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { getOrders } from '@/services/after-class-qxjyj/jyjgsj';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
-import { Select } from 'antd';
+import { message, Select } from 'antd';
 import styles from './index.less';
 import { getAllKHKCLX } from '@/services/after-class-qxjyj/khkclx';
 import { getAllCourses2 } from '@/services/after-class-qxjyj/khkcsj';
 import { getTableWidth } from '@/utils';
 import SearchLayout from '@/components/Search/Layout';
 import { getAllNJSJ } from '@/services/after-class-qxjyj/njsj';
+import SemesterSelect from '@/components/SemesterSelect';
 
 const { Option } = Select;
 const AfterTab = (props: any) => {
@@ -21,6 +22,8 @@ const AfterTab = (props: any) => {
   const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);
   const [NJValue, setNJValue] = useState<any>();
   const [NjmcData, setNjmcData] = useState<any[] | undefined>([]);
+  const [XNXQId, setXNXQId] = useState<string>();
+
   const columns: ProColumns<API.KHXSDD>[] = [
     {
       title: '序号',
@@ -127,22 +130,27 @@ const AfterTab = (props: any) => {
     })();
   }, []);
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    (async () => {
-      const res = await getOrders({
-        XZQHM: currentUser?.XZQHM || '',
-        DDZT: ['已付款', '已退款'],
-        DDLX: 2,
-        XXJBSJId: id,
-        NJSJId: NJValue
-      });
-      if (res?.status === 'ok') {
-        console.log(11111);
-        setDataSource(res.data);
-      }
-    })();
-  }, [NJValue]);
-  console.log(dataSource, 'dataSource');
+    if (XNXQId) {
+      (async () => {
+        const res = await getOrders({
+          XZQHM: currentUser?.XZQHM || '',
+          DDZT: ['已付款', '已退款'],
+          DDLX: 2,
+          XXJBSJId: id,
+          NJSJId: NJValue,
+          XNXQId
+        });
+        if (res?.status === 'ok') {
+          setDataSource(res.data);
+        } else {
+          message.warning(res?.message);
+        }
+      })();
+    }
+  }, [NJValue, XNXQId]);
+  const onSelectChange = (value: string) => {
+    setXNXQId(value);
+  };
   return (
     <>
       <div>
@@ -164,6 +172,10 @@ const AfterTab = (props: any) => {
           search={false}
           headerTitle={
             <SearchLayout>
+              <span style={{ fontSize: 14 }}>
+                所属学年学期：
+                <SemesterSelect onChange={onSelectChange} XXJBSJId={id} />
+              </span>
               <div>
                 <label htmlFor="kcmc">年级：</label>
                 <Select

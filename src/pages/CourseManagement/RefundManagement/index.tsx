@@ -9,11 +9,15 @@ import { getTableWidth } from '@/utils';
 import { getAllSchools, getSchoolsTK } from '@/services/after-class-qxjyj/jyjgsj';
 import SchoolSelect from '@/components/Search/SchoolSelect';
 import SearchLayout from '@/components/Search/Layout';
+import Semester from '@/components/Semester';
 
 const RefundManagement = () => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
   const actionRef = useRef<ActionType>();
+  const [XNXQ, setXNXQ] = useState<string>('');
+  const [curSchool, setCurSchool] = useState<string>();
+  const [dataSource, setDataSourse] = useState<any>();
 
   // table表格数据
   const columns: ProColumns<any>[] = [
@@ -99,14 +103,13 @@ const RefundManagement = () => {
     }
   ];
 
-  const [curSchool, setCurSchool] = useState<string>();
-  const [dataSource, setDataSourse] = useState<any>();
-
   const getData = async () => {
     const resAll = await getSchoolsTK({
-      XZQHM: currentUser?.XZQHM,
+      XZQHM: currentUser?.XZQHM || '',
       XXJBSJId: curSchool,
       isTK: true,
+      XN: XNXQ.substring(0, 9),
+      XQ: XNXQ.substring(10, 14),
       page: 0,
       pageSize: 0
     });
@@ -116,12 +119,17 @@ const RefundManagement = () => {
   };
 
   const schoolChange = (val: string, auth: any) => {
-    setCurSchool(auth.key);
+    setCurSchool(auth?.key);
   };
 
   useEffect(() => {
-    getData();
-  }, [curSchool]);
+    if (XNXQ) {
+      getData();
+    }
+  }, [curSchool, XNXQ]);
+  const onSelectChange = (value: string) => {
+    setXNXQ(value);
+  };
 
   return (
     <>
@@ -139,6 +147,12 @@ const RefundManagement = () => {
           scroll={{ x: getTableWidth(columns) }}
           headerTitle={
             <SearchLayout>
+              <div>
+                <span style={{ fontSize: 14 }}>
+                  学年学期：
+                  <Semester onChange={onSelectChange} />
+                </span>
+              </div>
               <SchoolSelect onChange={schoolChange} />
             </SearchLayout>
           }

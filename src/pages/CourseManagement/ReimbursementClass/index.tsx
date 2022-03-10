@@ -6,6 +6,7 @@ import Style from './index.less';
 import { getTableWidth } from '@/utils';
 import SchoolSelect from '@/components/Search/SchoolSelect';
 import SearchLayout from '@/components/Search/Layout';
+import Semester from '@/components/Semester';
 
 // 退课
 const ReimbursementClass = () => {
@@ -13,6 +14,9 @@ const ReimbursementClass = () => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
   const actionRef = useRef<ActionType>();
+  const [XNXQ, setXNXQ] = useState<string>('');
+  const [curSchool, setCurSchool] = useState<string>();
+  const [dataSource, setDataSourse] = useState<any>();
 
   // table表格数据
   const columns: ProColumns<any>[] = [
@@ -98,14 +102,13 @@ const ReimbursementClass = () => {
     }
   ];
 
-  const [curSchool, setCurSchool] = useState<string>();
-  const [dataSource, setDataSourse] = useState<any>();
-
   const getData = async () => {
     const resAll = await getSchoolsTK({
-      XZQHM: currentUser?.XZQHM,
+      XZQHM: currentUser?.XZQHM || '',
       XXJBSJId: curSchool,
-      isTK: false,
+      // isTK: false,
+      XN: XNXQ.substring(0, 9),
+      XQ: XNXQ.substring(10, 14),
       pageSize: 0,
       page: 0
     });
@@ -115,13 +118,18 @@ const ReimbursementClass = () => {
   };
 
   const schoolChange = (val: string, auth: any) => {
-    setCurSchool(auth.key);
+    setCurSchool(auth?.key);
   };
 
   useEffect(() => {
-    getData();
-  }, [curSchool]);
+    if (XNXQ) {
+      getData();
+    }
+  }, [curSchool, XNXQ]);
 
+  const onSelectChange = (value: string) => {
+    setXNXQ(value);
+  };
   return (
     <>
       <div className={Style.bodyContainer}>
@@ -138,6 +146,12 @@ const ReimbursementClass = () => {
           scroll={{ x: getTableWidth(columns) }}
           headerTitle={
             <SearchLayout>
+              <div>
+                <span style={{ fontSize: 14 }}>
+                  学年学期：
+                  <Semester onChange={onSelectChange} />
+                </span>
+              </div>
               <SchoolSelect onChange={schoolChange} />
             </SearchLayout>
           }

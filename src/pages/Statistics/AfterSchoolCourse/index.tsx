@@ -20,6 +20,7 @@ import {
   recalculateKCTJInfo
 } from '@/services/after-class-qxjyj/reports';
 import { getAllSchools } from '@/services/after-class-qxjyj/jyjgsj';
+import Semester from '@/components/Semester';
 
 const { Option } = Select;
 const { Search } = Input;
@@ -37,6 +38,7 @@ const AfterSchoolCourse = () => {
   const [SchoolList, setSchoolList] = useState<any>([]);
   const [XXMC, setXXMC] = useState<any>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const [XNXQ, setXNXQ] = useState<string>('');
   // table表格数据
   const columns: ProColumns<any>[] = [
     {
@@ -85,8 +87,8 @@ const AfterSchoolCourse = () => {
     },
     {
       title: '开设课程学校数量',
-      dataIndex: 'HZXXS',
-      key: 'HZXXS',
+      dataIndex: 'BJS',
+      key: 'BJS',
       align: 'center',
       width: 130,
       ellipsis: true,
@@ -96,39 +98,27 @@ const AfterSchoolCourse = () => {
     },
     {
       title: '课程班数量',
-      dataIndex: 'KCBSL',
-      key: 'KCBSL',
+      dataIndex: 'BJS',
+      key: 'BJS',
       align: 'center',
       width: 100,
-      ellipsis: true,
-      render: (_, record) => {
-        const num = Number(record.BJS) + Number(record?.FWBJS);
-        return num;
-      }
+      ellipsis: true
     },
     {
       title: '报名人数',
-      dataIndex: 'BMRS',
-      key: 'BMRS',
+      dataIndex: 'BMXSS',
+      key: 'BMXSS',
       align: 'center',
       width: 100,
-      ellipsis: true,
-      render: (test: any, record: any) => {
-        const num = Number(record.BMXSS) + Number(record?.FWBBMXSS);
-        return num;
-      }
+      ellipsis: true
     },
     {
       title: '退课人数',
-      dataIndex: 'TKRS',
-      key: 'TKRS',
+      dataIndex: 'TKXSS',
+      key: 'TKXSS',
       align: 'center',
       width: 100,
-      ellipsis: true,
-      render: (test: any, record: any) => {
-        const num = Number(record.TKXSS) + Number(record?.FWBTKXSS);
-        return num;
-      }
+      ellipsis: true
     },
     {
       title: '退课比例',
@@ -139,13 +129,7 @@ const AfterSchoolCourse = () => {
       ellipsis: true,
       render: (test: any, record: any) => {
         const num =
-          Number(record.TKXSS) + Number(record?.FWBTKXSS) !== 0
-            ? (
-                ((Number(record.TKXSS) + Number(record?.FWBTKXSS)) /
-                  (Number(record.BMXSS) + Number(record?.FWBBMXSS))) *
-                100
-              ).toFixed(1) + '%'
-            : 0;
+          Number(record.TKXSS) !== 0 ? ((Number(record.TKXSS) / Number(record.BMXSS)) * 100).toFixed(1) + '%' : 0;
         return num;
       }
     },
@@ -197,7 +181,9 @@ const AfterSchoolCourse = () => {
       XXMC,
       KCMC,
       KCLY,
-      KCLX
+      KCLX,
+      XN: XNXQ.substring(0, 9),
+      XQ: XNXQ.substring(10, 14)
     });
     if (res3.status === 'ok') {
       setDataSource(res3?.data?.rows);
@@ -213,8 +199,10 @@ const AfterSchoolCourse = () => {
     })();
   }, []);
   useEffect(() => {
-    ChoseSelect();
-  }, [KCLX, KCLY, KCMC, XXMC]);
+    if (XNXQ) {
+      ChoseSelect();
+    }
+  }, [KCLX, KCLY, KCMC, XXMC, XNXQ]);
 
   const submit = async () => {
     const res = await recalculateBJTJInfo();
@@ -245,6 +233,9 @@ const AfterSchoolCourse = () => {
       }
     })();
   };
+  const onSelectChange = (value: string) => {
+    setXNXQ(value);
+  };
   return (
     <>
       <div className={styles.AfterSchoolCourse}>
@@ -270,6 +261,12 @@ const AfterSchoolCourse = () => {
               <>
                 <div>
                   <SearchLayout>
+                    <div>
+                      <span style={{ fontSize: 14 }}>
+                        学年学期：
+                        <Semester onChange={onSelectChange} />
+                      </span>
+                    </div>
                     <div>
                       <label htmlFor="kctype">学校名称：</label>
                       <Select
@@ -352,7 +349,7 @@ const AfterSchoolCourse = () => {
                         <img src={classImg} />
                       </span>
                       <div>
-                        <h3>{Number(TitleData?.bjs_count) + Number(TitleData?.fwbjs_count) || 0}</h3>
+                        <h3>{TitleData?.bjs_count || 0}</h3>
                         <p>课程班累计数</p>
                       </div>
                     </div>
@@ -363,7 +360,7 @@ const AfterSchoolCourse = () => {
                         <img src={personImg} />
                       </span>
                       <div>
-                        <h3>{Number(TitleData?.fwbbmxss_count) + Number(TitleData?.bmxss_count) || 0}</h3>
+                        <h3>{TitleData?.bmxss_count || 0}</h3>
                         <p>报名累计人数</p>
                       </div>
                     </div>
@@ -374,7 +371,7 @@ const AfterSchoolCourse = () => {
                         <img src={personImg} />
                       </span>
                       <div>
-                        <h3>{Number(TitleData?.fwbtkxss_count) + Number(TitleData?.tkxss_count) || 0}</h3>
+                        <h3>{TitleData?.tkxss_count || 0}</h3>
                         <p>退课累计人数</p>
                       </div>
                     </div>

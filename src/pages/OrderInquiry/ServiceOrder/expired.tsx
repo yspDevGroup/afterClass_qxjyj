@@ -12,12 +12,20 @@ import { getKHZZFW } from '@/services/after-class-qxjyj/khzzfw';
 import { getKHXXZZFW } from '@/services/after-class-qxjyj/khxxzzfw';
 import { getTableWidth } from '@/utils';
 import SearchLayout from '@/components/Search/Layout';
+import SemesterSelect from '@/components/SemesterSelect';
 
 const { Option } = Select;
 const StateTab = (props: any) => {
   const { DDZT, id } = props.TabState;
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
+  const [XNXQId, setXNXQId] = useState<string>();
+  const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);
+  const [fwlxData, setFwlxData] = useState<any[] | undefined>([]);
+  const [zzfwData, setZzfwData] = useState<any[] | undefined>([]);
+  const [zzfwValue, setZzfwValue] = useState<string | undefined>();
+  const [fwlxValue, setFwlxValue] = useState<string | undefined>();
+
   const columns: ProColumns<API.KHXSDD>[] | undefined = [
     {
       title: '序号',
@@ -106,47 +114,47 @@ const StateTab = (props: any) => {
       width: 150,
       render: (_text: any, record: any) => {
         return record.ZFFS;
-      },
+      }
     }
   ];
-  const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);
-  const [fwlxData, setFwlxData] = useState<any[] | undefined>([]);
-  const [zzfwData, setZzfwData] = useState<any[] | undefined>([]);
-  const [zzfwValue, setZzfwValue] = useState<string | undefined>();
-  const [fwlxValue, setFwlxValue] = useState<string | undefined>();
-
-  useEffect(() => {
-    getData();
-  }, [fwlxValue, zzfwValue])
-
   const getData = async () => {
     const res = await getOrders({
-      XZQHM: currentUser?.XZQHM,
+      XZQHM: currentUser?.XZQHM || '',
       DDZT,
       DDLX: 1,
       XXJBSJId: id,
       KHZZFWId: fwlxValue,
-      KHXXZZFWId: zzfwValue
+      KHXXZZFWId: zzfwValue,
+      XNXQId
     });
     setDataSource(res.data?.rows);
 
-    const fwlxRes = await getKHZZFW({ XXJBSJId: id })
+    const fwlxRes = await getKHZZFW({ XXJBSJId: id });
     if (fwlxRes.status === 'ok') {
       const FWLX = fwlxRes?.data?.rows?.map((item: any) => ({
         label: item.FWMC,
-        value: item.id,
+        value: item.id
       }));
       setFwlxData(FWLX);
     }
-    const zzfwRes = await getKHXXZZFW({ XXJBSJId: id, KHZZFWId: fwlxValue })
+    const zzfwRes = await getKHXXZZFW({ XXJBSJId: id, KHZZFWId: fwlxValue });
     if (zzfwRes.status === 'ok') {
       const ZZFW = zzfwRes?.data?.rows?.map((item: any) => ({
         label: item.FWMC,
-        value: item.id,
+        value: item.id
       }));
       setZzfwData(ZZFW);
     }
-  }
+  };
+  useEffect(() => {
+    if (XNXQId) {
+      getData();
+    }
+  }, [fwlxValue, zzfwValue, XNXQId]);
+
+  const onSelectChange = (value: string) => {
+    setXNXQId(value);
+  };
   return (
     <>
       <div>
@@ -168,8 +176,12 @@ const StateTab = (props: any) => {
           search={false}
           headerTitle={
             <SearchLayout>
+              <span style={{ fontSize: 14 }}>
+                所属学年学期：
+                <SemesterSelect onChange={onSelectChange} XXJBSJId={id} />
+              </span>
               <div>
-              <label htmlFor='fwlx'>服务类型：</label>
+                <label htmlFor="fwlx">服务类型：</label>
                 <Select
                   value={fwlxValue}
                   allowClear
@@ -193,7 +205,7 @@ const StateTab = (props: any) => {
                 </Select>
               </div>
               <div>
-                <label htmlFor='fwmc'>服务名称：</label>
+                <label htmlFor="fwmc">服务名称：</label>
                 <Select
                   value={zzfwValue}
                   allowClear
