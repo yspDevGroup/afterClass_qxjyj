@@ -378,7 +378,7 @@ const AfterSchoolCourse = () => {
                   </div>
                 </div>
                 <p className={styles.title}>
-                  <span>系统每天凌晨自动更新一次，如需立即更新，请点击【刷新】按钮</span>
+                  <span>仅统计缤纷课堂，系统每天凌晨自动更新一次，如需立即更新，请点击【刷新】按钮</span>
                   <Button type="primary" onClick={submit}>
                     刷新
                   </Button>

@@ -1,6 +1,6 @@
 import ProTable from '@ant-design/pro-table';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
-import { Select, Tooltip } from 'antd';
+import { Button, Select, Tooltip } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'umi';
 import styles from './index.less';
@@ -9,7 +9,7 @@ import { queryXNXQList } from '@/services/local-services/xnxq';
 import { getAllXQSJ } from '@/services/after-class-qxjyj/xqsj';
 import SearchLayout from '@/components/Search/Layout';
 import { getGradesByCampus } from '@/services/after-class-qxjyj/njsj';
-import { QuestionCircleOutlined } from '@ant-design/icons';
+import { QuestionCircleOutlined, LeftOutlined } from '@ant-design/icons';
 
 type selectType = { label: string; value: string };
 
@@ -220,6 +220,21 @@ const AdministrativeClass = (props: any) => {
 
   return (
     <div className={styles.AdministrativeClass}>
+      <Button
+        type="primary"
+        onClick={() => {
+          history.go(-1);
+        }}
+        style={{
+          marginBottom: '24px',
+          marginLeft: 24
+        }}
+      >
+        <LeftOutlined />
+        返回上一页
+      </Button>
+      <span style={{ fontSize: '18px', marginLeft: '24px', fontWeight: 'bold' }}>{state?.XXMC}</span>
+      <span style={{ fontSize: '14px', color: '#4884ff', float: 'right', marginRight: 24 }}>仅统计课后服务数据</span>
       <ProTable<any>
         actionRef={actionRef}
         columns={columns}
