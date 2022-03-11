@@ -28,22 +28,29 @@ const Semester: FC<SemesterSelectProps> = ({ onChange }) => {
     const generateArray = (start: number, end: number) => {
       return Array.from(new Array(end + 1).keys()).slice(start);
     };
+    let XNXQNow = '';
     // 生成当前学年学期
-    if (Number(moment(new Date()).format('MM')) < 3 || Number(moment(new Date()).format('MM')) > 9) {
+    if (Number(moment(new Date()).format('MM')) > 2 && Number(moment(new Date()).format('MM')) < 9) {
+      XNArr = generateArray(Number(moment(new Date()).format('YYYY')) - 4, Number(moment(new Date()).format('YYYY')));
+      XNXQNow = `${Number(moment(new Date()).format('YYYY')) - 1}-${Number(
+        moment(new Date()).format('YYYY')
+      )}-第二学期`;
+      setTerm(XNXQNow);
+      onChange(XNXQNow);
+    } else {
       XNArr = generateArray(
         Number(moment(new Date()).format('YYYY')) - 3,
         Number(moment(new Date()).format('YYYY')) + 1
       );
-      const XNXQNow = `${Number(moment(new Date()).format('YYYY')) - 1}-${Number(
-        moment(new Date()).format('YYYY')
-      )}-第一学期`;
-      setTerm(XNXQNow);
-      onChange(XNXQNow);
-    } else {
-      XNArr = generateArray(Number(moment(new Date()).format('YYYY')) - 4, Number(moment(new Date()).format('YYYY')));
-      const XNXQNow = `${Number(moment(new Date()).format('YYYY')) - 1}-${Number(
-        moment(new Date()).format('YYYY')
-      )}-第二学期`;
+      if (Number(moment(new Date()).format('MM')) > 8) {
+        XNXQNow = `${Number(moment(new Date()).format('YYYY'))}-${Number(
+          moment(new Date()).format('YYYY') + 1
+        )}-第一学期`;
+      } else {
+        XNXQNow = `${Number(moment(new Date()).format('YYYY')) - 1}-${Number(
+          moment(new Date()).format('YYYY')
+        )}-第一学期`;
+      }
       setTerm(XNXQNow);
       onChange(XNXQNow);
     }

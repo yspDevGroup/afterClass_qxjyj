@@ -13,15 +13,26 @@ import styles from './index.less';
 
 const Topbar = (props: { data: any }) => {
   const { data } = props;
+  console.log(data, '------');
   return (
     <Row gutter={[24, 24]} className={styles.topHeader}>
       {topNum.map((item, index) => {
-        return <Col span={4} key={item.title}>
-          <div className={styles.headerItem} style={{ background: `linear-gradient(180deg, ${bgColor[index].begin} 0%, ${bgColor[index].end} 100%)` }}>
-            <h3>{data?.[item.type]}</h3>
-            <p title={item.title}>{item.title}</p>
-          </div>
-        </Col>
+        console.log(item, 'item');
+        return (
+          <Col span={4} key={item.title}>
+            <div
+              className={styles.headerItem}
+              style={{ background: `linear-gradient(180deg, ${bgColor[index].begin} 0%, ${bgColor[index].end} 100%)` }}
+            >
+              {item.type === 'xsNum' && Number(data?.[item.type]) + Number(data?.khfwxs_count) ? (
+                <h3>{Number(data?.[item.type]) + Number(data?.khfwxs_count)}</h3>
+              ) : (
+                <h3>{data?.[item.type]}</h3>
+              )}
+              <p title={item.title}>{item.title}</p>
+            </div>
+          </Col>
+        );
       })}
     </Row>
   );

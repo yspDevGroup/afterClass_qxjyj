@@ -16,6 +16,7 @@ import noData from '@/assets/noData.png';
 import styles from './index.less';
 import { getAllInstitutions, JYJGSJ, toIntroduceCourses, homePage } from '@/services/after-class-qxjyj/jyjgsj';
 import { getJYJGTZGG } from '@/services/after-class-qxjyj/jyjgtzgg';
+import moment from 'moment';
 
 const Index = () => {
   const { initialState } = useModel('@@initialState');
@@ -28,9 +29,23 @@ const Index = () => {
   const [zcggData, setZcggData] = useState<any>([]);
 
   useEffect(() => {
+    let XN = '';
+    let XQ = '';
+    if (Number(moment(new Date()).format('MM')) > 2 && Number(moment(new Date()).format('MM')) < 9) {
+      XQ = '第二学期';
+    } else {
+      XQ = '第一学期';
+    }
+    if (Number(moment(new Date()).format('MM')) > 8) {
+      XN = `${Number(moment(new Date()).format('YYYY'))}-${Number(moment(new Date()).format('YYYY')) + 1}`;
+    } else {
+      XN = `${Number(moment(new Date()).format('YYYY')) - 1}-${Number(moment(new Date()).format('YYYY'))}`;
+    }
     async function fetchData() {
       const res = await homePage({
-        JYJGSJId: currentUser?.jyjId
+        JYJGSJId: currentUser?.jyjId || '',
+        XN,
+        XQ
       });
       if (res.status === 'ok') {
         const { xxbm, xxkc, kclx, ...rest } = res.data;

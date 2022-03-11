@@ -286,6 +286,8 @@ export async function getCoursesBySchool(
 export async function homePage(
   body: {
     JYJGSJId: string;
+    XN: string;
+    XQ: string;
   },
   options?: { [key: string]: any }
 ) {
