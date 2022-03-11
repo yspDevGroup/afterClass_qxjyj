@@ -13,7 +13,6 @@ import styles from './index.less';
 
 const Topbar = (props: { data: any }) => {
   const { data } = props;
-  console.log(data, '------');
   return (
     <Row gutter={[24, 24]} className={styles.topHeader}>
       {topNum.map((item, index) => {

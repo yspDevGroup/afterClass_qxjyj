@@ -143,7 +143,7 @@ const School = (props: any) => {
     const res3 = await getClassesByCourse({
       XZQHM: currentUser?.XZQHM,
       KHKCSJId: KCId,
-      // isFW:1,
+      isFW: 0,
       XN: XNXQ.substring(0, 9),
       XQ: XNXQ.substring(10, 14),
       XXMC
