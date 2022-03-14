@@ -55,7 +55,7 @@ const RefundManagement = () => {
       ellipsis: true
     },
     {
-      title: '课后课程退款数',
+      title: '课后服务退款数',
       dataIndex: 'khfwtk_count',
       key: 'khfwtk_count',
       align: 'center',
