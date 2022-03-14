@@ -587,7 +587,7 @@ export async function getSchoolsQJ(
   });
 }
 
-/** 区县教育局查看所有学校的退课退款 POST /jyjgsj/getSchoolsTK */
+/** 区县教育局查看所有学校的退课 POST /jyjgsj/getSchoolsTK */
 export async function getSchoolsTK(
   body: {
     XZQHM: string;
@@ -605,6 +605,33 @@ export async function getSchoolsTK(
   options?: { [key: string]: any }
 ) {
   return request<any>('/jyjgsj/getSchoolsTK', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: body,
+    ...(options || {})
+  });
+}
+
+/** 区县教育局查看所有学校的退款 POST /jyjgsj/getSchoolsTKSJ */
+export async function getSchoolsTKSJ(
+  body: {
+    XZQHM: string;
+    /** 学年 */
+    XN: string;
+    /** 学期 */
+    XQ: string;
+    /** 学校基本数据id */
+    XXJBSJId?: string;
+    /** 页数 */
+    page?: number;
+    /** 每页记录数 */
+    pageSize?: number;
+  },
+  options?: { [key: string]: any }
+) {
+  return request<any>('/jyjgsj/getSchoolsTKSJ', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

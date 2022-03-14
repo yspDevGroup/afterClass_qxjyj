@@ -74,8 +74,8 @@ const School = (props: any) => {
     },
     {
       title: '课程班数量',
-      dataIndex: 'bj_count',
-      key: 'bj_count',
+      dataIndex: 'BJS',
+      key: 'BJS',
       align: 'center',
       width: 100,
       ellipsis: true
@@ -89,9 +89,25 @@ const School = (props: any) => {
       ellipsis: true
     },
     {
+      title: '报名人次',
+      dataIndex: 'BMRS',
+      key: 'BMRS',
+      align: 'center',
+      width: 100,
+      ellipsis: true
+    },
+    {
       title: '退课人数',
       dataIndex: 'TKXSS',
       key: 'TKXSS',
+      align: 'center',
+      width: 100,
+      ellipsis: true
+    },
+    {
+      title: '退课人次',
+      dataIndex: 'TKRS',
+      key: 'TKRS',
       align: 'center',
       width: 100,
       ellipsis: true
@@ -105,7 +121,7 @@ const School = (props: any) => {
       ellipsis: true,
       render: (test: any, record: any) => {
         const num =
-          Number(record.TKXSS) !== 0 ? ((Number(record.TKXSS) / Number(record.BMXSS)) * 100).toFixed(1) + '%' : 0;
+          Number(record.TKRS) !== 0 ? ((Number(record.TKRS) / Number(record.BMRS)) * 100).toFixed(1) + '%' : 0;
         return num;
       }
     },

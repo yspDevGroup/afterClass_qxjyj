@@ -6,7 +6,7 @@ import Style from './index.less';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { getTableWidth } from '@/utils';
-import { getAllSchools, getSchoolsTK } from '@/services/after-class-qxjyj/jyjgsj';
+import { getAllSchools, getSchoolsTK, getSchoolsTKSJ } from '@/services/after-class-qxjyj/jyjgsj';
 import SchoolSelect from '@/components/Search/SchoolSelect';
 import SearchLayout from '@/components/Search/Layout';
 import Semester from '@/components/Semester';
@@ -104,10 +104,9 @@ const RefundManagement = () => {
   ];
 
   const getData = async () => {
-    const resAll = await getSchoolsTK({
+    const resAll = await getSchoolsTKSJ({
       XZQHM: currentUser?.XZQHM || '',
       XXJBSJId: curSchool,
-      isTK: true,
       XN: XNXQ.substring(0, 9),
       XQ: XNXQ.substring(10, 14),
       page: 0,

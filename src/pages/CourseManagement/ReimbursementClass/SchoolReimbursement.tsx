@@ -144,7 +144,7 @@ const SchoolReimbursement = (props: { state: any }) => {
       XXJBSJId: id,
       XNXQId: xnxq,
       LX: 0,
-      ZT: [0, 1, 2],
+      ZT: [1],
       page: 0,
       pageSize: 0
     });
@@ -155,7 +155,7 @@ const SchoolReimbursement = (props: { state: any }) => {
 
   const termChange = (val: string) => {
     getData(val);
-  }
+  };
 
   return (
     <>

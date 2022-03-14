@@ -113,9 +113,25 @@ const AfterSchoolCourse = () => {
       ellipsis: true
     },
     {
+      title: '报名人次',
+      dataIndex: 'BMRS',
+      key: 'BMRS',
+      align: 'center',
+      width: 100,
+      ellipsis: true
+    },
+    {
       title: '退课人数',
       dataIndex: 'TKXSS',
       key: 'TKXSS',
+      align: 'center',
+      width: 100,
+      ellipsis: true
+    },
+    {
+      title: '退课人次',
+      dataIndex: 'TKRS',
+      key: 'TKRS',
       align: 'center',
       width: 100,
       ellipsis: true
@@ -129,7 +145,7 @@ const AfterSchoolCourse = () => {
       ellipsis: true,
       render: (test: any, record: any) => {
         const num =
-          Number(record.TKXSS) !== 0 ? ((Number(record.TKXSS) / Number(record.BMXSS)) * 100).toFixed(1) + '%' : 0;
+          Number(record.TKRS) !== 0 ? ((Number(record.TKRS) / Number(record.BMRS)) * 100).toFixed(1) + '%' : 0;
         return num;
       }
     },
@@ -378,7 +394,7 @@ const AfterSchoolCourse = () => {
                   </div>
                 </div>
                 <p className={styles.title}>
-                  <span>仅统计缤纷课堂，系统每天凌晨自动更新一次，如需立即更新，请点击【刷新】按钮</span>
+                  <span>仅统计缤纷课堂数据，系统每天凌晨自动更新一次，如需立即更新，请点击【刷新】按钮</span>
                   <Button type="primary" onClick={submit}>
                     刷新
                   </Button>

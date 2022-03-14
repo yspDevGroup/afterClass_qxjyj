@@ -179,7 +179,7 @@ const ServiceRefund = (props: { state: any }) => {
   const getData = async (xnxq?: string) => {
     const resAll = await getAllKHXSTK({
       LX: 1,
-      TKZT: [2, 3],
+      TKZT: [3],
       XXJBSJId: id,
       XNXQId: xnxq,
       page: 0,
@@ -192,7 +192,7 @@ const ServiceRefund = (props: { state: any }) => {
 
   const termChange = (val: string) => {
     getData(val);
-  }
+  };
 
   return (
     <>

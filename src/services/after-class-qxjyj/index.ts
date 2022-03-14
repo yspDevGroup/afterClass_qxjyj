@@ -25,6 +25,7 @@ import * as jzgxxjl from './jzgxxjl';
 import * as kcbsksj from './kcbsksj';
 import * as kcsj from './kcsj';
 import * as khbjjsrl from './khbjjsrl';
+import * as khbjpj from './khbjpj';
 import * as khbjsj from './khbjsj';
 import * as khfwbj from './khfwbj';
 import * as khfwsj from './khfwsj';
@@ -46,20 +47,20 @@ import * as khpksj from './khpksj';
 import * as khtksj from './khtksj';
 import * as khxkjl from './khxkjl';
 import * as khxksj from './khxksj';
+import * as khxscq from './khxscq';
 import * as khxsdd from './khxsdd';
 import * as khxspj from './khxspj';
 import * as khxsqj from './khxsqj';
 import * as khxstk from './khxstk';
 import * as khxxzzfw from './khxxzzfw';
-import * as khxscq from './khxscq';
 import * as khzzfw from './khzzfw';
-import * as pksj from './pksj';
 import * as njsj from './njsj';
+import * as pksj from './pksj';
 import * as redis from './redis';
 import * as reports from './reports';
+import * as sso from './sso';
 import * as statistic from './statistic';
 import * as upload from './upload';
-import * as sso from './sso';
 import * as wechat from './wechat';
 import * as xksj from './xksj';
 import * as xl from './xl';
@@ -72,8 +73,8 @@ import * as xsjlsj from './xsjlsj';
 import * as xsjtcy from './xsjtcy';
 import * as xsjzxx from './xsjzxx';
 import * as xsxxjl from './xsxxjl';
-import * as xxjbpz from './xxjbpz';
 import * as xxgg from './xxgg';
+import * as xxjbpz from './xxjbpz';
 import * as xxjbsj from './xxjbsj';
 import * as xxjtpz from './xxjtpz';
 import * as xxpz from './xxpz';
@@ -82,7 +83,6 @@ import * as xxsppz from './xxsppz';
 import * as xxtzgg from './xxtzgg';
 import * as zxfa from './zxfa';
 import * as zxsj from './zxsj';
-import * as khbjpj from './khbjpj';
 export default {
   other,
   auth,
@@ -107,6 +107,7 @@ export default {
   kcbsksj,
   kcsj,
   khbjjsrl,
+  khbjpj,
   khbjsj,
   khfwbj,
   khfwsj,
@@ -128,20 +129,20 @@ export default {
   khtksj,
   khxkjl,
   khxksj,
+  khxscq,
   khxsdd,
   khxspj,
   khxsqj,
   khxstk,
   khxxzzfw,
-  khxscq,
   khzzfw,
-  pksj,
   njsj,
+  pksj,
   redis,
   reports,
+  sso,
   statistic,
   upload,
-  sso,
   wechat,
   xksj,
   xl,
@@ -154,8 +155,8 @@ export default {
   xsjtcy,
   xsjzxx,
   xsxxjl,
-  xxjbpz,
   xxgg,
+  xxjbpz,
   xxjbsj,
   xxjtpz,
   xxpz,
@@ -163,6 +164,5 @@ export default {
   xxsppz,
   xxtzgg,
   zxfa,
-  zxsj,
-  khbjpj
+  zxsj
 };

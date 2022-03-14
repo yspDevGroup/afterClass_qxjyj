@@ -169,7 +169,7 @@ const ServiceUnsubscribe = (props: { state: any }) => {
       XXJBSJId: id,
       XNXQId: xnxq,
       LX: 1,
-      ZT: [0, 1, 2],
+      ZT: [1],
       page: 0,
       pageSize: 0
     });
@@ -180,7 +180,7 @@ const ServiceUnsubscribe = (props: { state: any }) => {
 
   const termChange = (val: string) => {
     getData(val);
-  }
+  };
 
   return (
     <>

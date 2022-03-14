@@ -114,9 +114,25 @@ const AfterSchoolClass = (props: any) => {
       ellipsis: true
     },
     {
+      title: '报名人次',
+      dataIndex: 'BMRS',
+      key: 'BMRS',
+      align: 'center',
+      width: 90,
+      ellipsis: true
+    },
+    {
       title: '退课人数',
       dataIndex: 'TKXSS',
       key: 'TKXSS',
+      align: 'center',
+      width: 100,
+      ellipsis: true
+    },
+    {
+      title: '退课人数',
+      dataIndex: 'TKRS',
+      key: 'TKRS',
       align: 'center',
       width: 100,
       ellipsis: true
