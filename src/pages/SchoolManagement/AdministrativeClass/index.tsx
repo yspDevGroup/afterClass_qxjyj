@@ -234,7 +234,7 @@ const AdministrativeClass = (props: any) => {
         返回上一页
       </Button>
       <span style={{ fontSize: '18px', marginLeft: '24px', fontWeight: 'bold' }}>{state?.XXMC}</span>
-      <span style={{ fontSize: '14px', color: '#4884ff', float: 'right', marginRight: 24, lineHeight: 32 }}>
+      <span style={{ fontSize: '14px', color: '#4884ff', float: 'right', marginRight: 24, lineHeight: '32px' }}>
         仅统计课后服务数据
       </span>
       <ProTable<any>
