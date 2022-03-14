@@ -19,6 +19,7 @@ export async function getKHJSCQ(
       XXSJPZId?: string;
       JZGJBSJId?: string;
       KHBJSJId?: string;
+      JSLX?: number | any;
       JZGJBSJ?: { id?: string; XM?: string; GH?: string; LXDH?: string | any; WechatUserId?: string } | any;
       XXSJPZ?:
         | {

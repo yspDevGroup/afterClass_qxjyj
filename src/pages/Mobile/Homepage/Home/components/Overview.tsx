@@ -33,7 +33,11 @@ const Overview = () => {
       if (res.status === 'ok') {
         const { xxbm, xxkc, kclx, ...rest } = res.data;
         // 配置头部统计栏目数据
-        setHomeData({ ...rest });
+        setHomeData({
+          ...rest,
+          xsNums: Number(res?.data?.xsNum + res?.data?.khfwxs_count),
+          tk_amounts: Number(res?.data?.tk_amount + res?.data?.khfwtk_amount + res?.data?.zzfwtk_amount)
+        });
       }
     }
     fetchData();
@@ -71,11 +75,7 @@ const Overview = () => {
                 <Col className="gutter-row" span={8}>
                   <ItemCard
                     title={item.title}
-                    count={
-                      item.type === 'xsNum' && Number(homeData?.[item.type]) + Number(homeData?.khfwxs_count)
-                        ? Number(homeData?.[item.type]) + Number(homeData?.khfwxs_count)
-                        : homeData?.[item.type]
-                    }
+                    count={homeData ? homeData[item.type] : 0}
                     bgImg={item.bgImg}
                     key={item.title}
                     zzfw={homeData?.zzfw_amount ? homeData?.zzfw_amount : 0}

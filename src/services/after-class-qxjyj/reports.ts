@@ -736,3 +736,25 @@ export async function exportEducationCoursesInfo(
     ...(options || {})
   });
 }
+
+/** 局端信息统计 POST /reports/statisEducation */
+export async function statisEducation(
+  body: {
+    XZQHM?: string;
+    SXZQHM?: string;
+    /** 学年 */
+    XN?: string;
+    /** 学期 */
+    XQ?: string;
+  },
+  options?: { [key: string]: any }
+) {
+  return request<any>('/reports/statisEducation', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: body,
+    ...(options || {})
+  });
+}

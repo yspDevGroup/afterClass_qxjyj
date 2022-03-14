@@ -496,6 +496,7 @@ export async function getAllCoursesInfo(
 export async function getClassesByCourse(
   body: {
     XZQHM?: string;
+    SXZQHM?: string;
     /** 学年 */
     XN: string;
     /** 学期 */
