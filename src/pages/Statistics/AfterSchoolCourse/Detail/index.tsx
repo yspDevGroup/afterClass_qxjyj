@@ -130,7 +130,7 @@ const AfterSchoolClass = (props: any) => {
       ellipsis: true
     },
     {
-      title: '退课人数',
+      title: '退课人次',
       dataIndex: 'TKRS',
       key: 'TKRS',
       align: 'center',
