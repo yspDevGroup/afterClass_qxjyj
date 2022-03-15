@@ -133,8 +133,19 @@ const SchoolReimbursement = (props: { state: any }) => {
       align: 'center',
       width: 100,
       ellipsis: true,
-      render: (_, record) => {
-        return record.ZT === 0 ? '申请中' : record.ZT === 1 ? '已退课' : '已驳回';
+      valueEnum: {
+        0: {
+          text: '申请中',
+          status: 'Processing'
+        },
+        1: {
+          text: '已完成',
+          status: 'Success'
+        },
+        2: {
+          text: '已驳回',
+          status: 'Error'
+        }
       }
     }
   ];
