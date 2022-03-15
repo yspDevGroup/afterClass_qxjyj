@@ -59,13 +59,6 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
           newArr.push(data);
         });
         setDataSourse(newArr);
-        // if (newArr.length === res.data?.rows.length) {
-        //   return {
-        //     data: newArr,
-        //     total: res.data?.count,
-        //     success: true
-        //   };
-        // }
       } else {
         message.error(res.message);
         return {};

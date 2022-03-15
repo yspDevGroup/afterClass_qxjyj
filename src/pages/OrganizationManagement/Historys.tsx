@@ -23,6 +23,7 @@ import { JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
 import { useModel, history } from 'umi';
 import { LeftOutlined } from '@ant-design/icons';
 import { getAllSPJL } from '@/services/after-class-qxjyj/khjyjspjl';
+import ShowName from '@/components/ShowName';
 
 const Historys = (props: { Keys: string | undefined }) => {
   const { Keys } = props;
@@ -122,7 +123,8 @@ const Historys = (props: { Keys: string | undefined }) => {
       align: 'center',
       width: 120,
       ellipsis: true,
-      search: false
+      search: false,
+      render: (_, record) => <ShowName type="userName" openid={record?.SPRId} XM={record?.SPR} />
     },
     {
       title: '操作时间',

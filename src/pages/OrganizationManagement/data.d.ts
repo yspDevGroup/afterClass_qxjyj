@@ -15,6 +15,8 @@ export type TableListItem = {
   ZRXX?: string;
   value?: any;
   BZ?: string;
+  SPRId?: string;
+  SPR?: string;
 };
 
 /**
