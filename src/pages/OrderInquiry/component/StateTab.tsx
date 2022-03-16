@@ -117,7 +117,7 @@ const StateTab = (props: any) => {
       align: 'center',
       width: 110,
       render: (_text: any, record: any) => {
-        return <div>{record.DDFY - record?.KHBJSJ?.FY}</div>;
+        return <div>{Number(record.DDFY - record?.KHBJSJ?.FY).toFixed(2)}</div>;
       }
     },
     {
