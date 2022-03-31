@@ -101,10 +101,8 @@ type BuildOptions = {
   ssoHost: string;
   /** 认证方式 */
   authType: AuthType;
-  /** 注册的应用id */
-  clientId: string;
-  /** 注册的应用密钥 */
-  clientSecret: string;
+  /** 注册的应用id，区县教育局固定为00005 */
+  clientId: '00005';
 };
 
 /** 全局初始信息 */
