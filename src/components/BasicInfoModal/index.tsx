@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-09-01 11:07:27
- * @LastEditTime: 2021-12-09 15:04:18
+ * @LastEditTime: 2022-03-31 14:02:13
  * @LastEditors: Wu Zhan
  */
 import { JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
@@ -39,7 +39,7 @@ const BasicInfoModal = (props: {
 
   //获取区域内容
   const getRegion = async (type: 'province' | 'city' | 'region', code: string) => {
-    try{
+    try {
       const response = await getAdministrative({
         type,
         code
@@ -51,10 +51,9 @@ const BasicInfoModal = (props: {
         // message.error(response.message);
       }
       return [];
-    }catch(err){
-      message.error('获取行政区划码失败')
+    } catch (err) {
+      message.error('获取行政区划码失败');
     }
-   
   };
 
   useEffect(() => {
@@ -285,7 +284,7 @@ const BasicInfoModal = (props: {
           </Select>
         </Form.Item>
         <Form.Item label="单位简介" name="introduction" wrapperCol={{ span: 20 }}>
-          <TextArea rows={4} />
+          <TextArea rows={4} maxLength={255} />
         </Form.Item>
       </Form>
     </Modal>

@@ -2,8 +2,8 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-09-01 08:49:11
- * @LastEditTime: 2021-09-08 20:47:52
- * @LastEditors: wsl
+ * @LastEditTime: 2022-03-31 14:02:10
+ * @LastEditors: Wu Zhan
  */
 import React, { useEffect, useState } from 'react';
 import { useModel } from 'umi';
@@ -12,6 +12,7 @@ import img from '@/assets/Company.png';
 import { createJYJGSJ, updateJYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
 import styles from './index.less';
 import BasicInfoModal from '../BasicInfoModal';
+import { gotoLink } from '@/utils';
 
 const { Option } = Select;
 
@@ -25,6 +26,7 @@ const Register = () => {
     if (res.status === 'ok') {
       message.success('保存成功');
       setShowModal(false);
+      gotoLink('/');
       await refresh();
     } else {
       message.error('保存失败，请联系管理员或稍后再试');

@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-26 11:45:40
- * @LastEditTime: 2022-01-11 14:57:51
- * @LastEditors: wsl
+ * @LastEditTime: 2022-03-31 14:05:47
+ * @LastEditors: Wu Zhan
  */
 import React, { useEffect, useRef, useState } from 'react';
 import { message, Modal, Form, Input, Button } from 'antd';
@@ -107,6 +107,8 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
           JYJGSJId: jyjId
         });
         getData();
+      } else {
+        message.error(res.message);
       }
     } else {
       const data = {
@@ -130,6 +132,8 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
           JYJGSJId: jyjId
         });
         getData();
+      } else {
+        message.error(res.message);
       }
     }
   };
@@ -346,7 +350,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
               }
             ]}
           >
-            <Input.TextArea placeholder="请输入" rows={4} />
+            <Input.TextArea placeholder="请输入" rows={4} maxLength={255} showCount />
           </Form.Item>
         </Form>
       </Modal>
