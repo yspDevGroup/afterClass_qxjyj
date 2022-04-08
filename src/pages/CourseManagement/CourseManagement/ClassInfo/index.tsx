@@ -1,6 +1,6 @@
 import ProTable, { ActionType } from '@ant-design/pro-table';
 import { Button, Modal, Table, Tag } from 'antd';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import classes from './index.less';
 import { history, Link } from 'umi';
 import { LeftOutlined } from '@ant-design/icons';
@@ -17,6 +17,13 @@ const ClassInfo = (props: any) => {
   const actionRef = useRef<ActionType>();
   const { KHBJSJs } = state;
   const [dataSource, setDataSource] = useState<any>([]);
+  const [SYNJ, setSYNJ] = useState<any>([]);
+
+  useEffect(() => {
+    state?.NJSJs.sort((a: any, b: any) => {
+      return a.NJ - b.NJ;
+    });
+  }, []);
 
   const onSelectChange = (value: string) => {
     getDataSource(value);
@@ -126,60 +133,6 @@ const ClassInfo = (props: any) => {
         />
       )
     },
-    // {
-    //   title: '序号',
-    //   dataIndex: 'index',
-    //   valueType: 'index',
-    //   width: 50,
-    //   fixed:'left',
-    //   align: 'center'
-    // },
-    // {
-    //   title: '课程班名称',
-    //   dataIndex: 'BJMC',
-    //   key: 'BJMC',
-    //   align: 'center',
-    //   fixed:'left',
-    //   width: 130,
-    //   ellipsis: true,
-    //   search: false
-    // },
-    // {
-    //   title: '所属校区',
-    //   dataIndex: 'XQSJ',
-    //   key: 'XQSJ',
-    //   align: 'center',
-    //   search: false,
-    //   width: 120,
-    //   ellipsis: true,
-    //   render: (text: any) => {
-    //     return text?.XQMC;
-    //   }
-    // },
-    // {
-    //   title: '所属学校',
-    //   dataIndex: 'XQSJ',
-    //   key: 'XQSJ',
-    //   align: 'center',
-    //   search: false,
-    //   width: 160,
-    //   ellipsis: true,
-    //   render: (text: any, record: any) => {
-    //     return text?.XXJBSJ?.XXMC;
-    //   }
-    // },
-    // {
-    //   title: '所属学期',
-    //   dataIndex: 'XNXQ',
-    //   key: 'XNXQ',
-    //   align: 'center',
-    //   search: false,
-    //   width: 120,
-    //   ellipsis: true,
-    //   render: (text: any, record: any) => {
-    //     return `${record?.XNXQ?.XN} ${record?.XNXQ?.XQ}`;
-    //   }
-    // },
     {
       title: '操作',
       dataIndex: 'option',
