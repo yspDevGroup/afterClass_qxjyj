@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link, useModel } from 'umi';
-import { Rate, message, Input, Select } from 'antd';
+import { Rate, message, Input, Select, Tooltip } from 'antd';
 import ProTable, { ProColumns } from '@ant-design/pro-table';
 import { getCoursesEvaluation } from '@/services/after-class-qxjyj/jyjgsj';
-
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import styles from './index.less';
 import { getAllKHKCLX } from '@/services/after-class-qxjyj/khkclx';
 import { getTableWidth } from '@/utils';
@@ -111,7 +111,23 @@ const MutualEvaluation = (data: any) => {
       }
     },
     {
-      title: '课程评分',
+      title: (
+        <span>
+          课程评分&nbsp;
+          <Tooltip
+            overlayStyle={{ maxWidth: '30em' }}
+            title={
+              <>
+                该课程下所有班级家长评价的平均分，
+                <br />
+                包含全部涉及到的学年学期及学校
+              </>
+            }
+          >
+            <QuestionCircleOutlined />
+          </Tooltip>
+        </span>
+      ),
       dataIndex: 'PJFS',
       key: 'PJFS',
       align: 'center',
