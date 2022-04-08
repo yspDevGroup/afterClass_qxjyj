@@ -7,7 +7,7 @@ import { getAllKHXSPJ } from '@/services/after-class-qxjyj/khxspj';
 import WWOpenDataCom from '@/components/WWOpenDataCom';
 
 const TabList = (props: any) => {
-  const { ListName, ListState,XXJBSJId } = props.ListData;
+  const { ListName, ListState, XXJBSJId } = props.ListData;
   const { KHBJJs } = ListState;
 
   const handleCancel = () => {
@@ -20,17 +20,17 @@ const TabList = (props: any) => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
-      fixed:'left',
+      fixed: 'left',
       align: 'center'
     },
     {
       title: '评价人',
       dataIndex: 'PJR',
       key: 'PJR',
-      fixed:'left',
+      fixed: 'left',
       align: 'center',
       width: 150,
-      ellipsis: true,
+      ellipsis: true
     },
     {
       title: '课程评分',
@@ -63,7 +63,7 @@ const TabList = (props: any) => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
-      fixed:'left',
+      fixed: 'left',
       align: 'center'
     },
     {
@@ -72,7 +72,7 @@ const TabList = (props: any) => {
       key: 'XSXM',
       align: 'center',
       width: 110,
-      fixed:'left',
+      fixed: 'left',
       render: (text: any, record: any) => {
         const showWXName = record.XSJBSJ?.XM === '未知' && record.WechatUserId;
         if (showWXName) {
@@ -125,7 +125,7 @@ const TabList = (props: any) => {
       width: 160
     },
     {
-      title: '课程评分',
+      title: '该学生课堂评分',
       dataIndex: 'PJFS',
       key: 'PJFS',
       align: 'center',
@@ -200,7 +200,7 @@ const TabList = (props: any) => {
         pagination={{
           showQuickJumper: true,
           pageSize: 10,
-          defaultCurrent: 1,
+          defaultCurrent: 1
         }}
         scroll={{ x: ListName === '学生评价' ? 1200 : 1000 }}
         rowKey="id"

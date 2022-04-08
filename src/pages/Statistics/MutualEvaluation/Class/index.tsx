@@ -8,12 +8,11 @@ import WWOpenDataCom from '@/components/WWOpenDataCom';
 import { getTableWidth } from '@/utils';
 import SemesterSelect from '@/components/Search/SemesterSelect';
 import SearchLayout from '@/components/Search/Layout';
+import styles from './index.less';
 
 const Class = (props: any) => {
   const { state } = props.location;
-  const { XXJBSJId, KHKCSJId } = state;
-  // 选择学年学期
-  const [term, setTerm] = useState<string>();
+  const { XXJBSJId, KHKCSJId, XXMC, KCMC } = state;
   const [dataSource, setDataSource] = useState<API.KHXSDD[] | undefined>([]);
   const columns: ProColumns<any>[] = [
     {
@@ -88,10 +87,10 @@ const Class = (props: any) => {
               pathname: '/statistics/MutualEvaluation/Details',
               state: {
                 type: 'detail',
+                XXJBSJId,
+                XXMC,
                 data: {
-                  ...record,
-                  XXJBSJId,
-                  XNXQId: term
+                  ...record
                 }
               }
             }}
@@ -113,11 +112,11 @@ const Class = (props: any) => {
   };
 
   const termChange = (val: string) => {
-    getCourseList( KHKCSJId, val);
-  }
+    getCourseList(KHKCSJId, val);
+  };
 
   return (
-    <>
+    <div className={styles.ClassPJ}>
       <Button
         type="primary"
         onClick={() => {
@@ -130,6 +129,10 @@ const Class = (props: any) => {
         <LeftOutlined />
         返回上一页
       </Button>
+      <div className={styles.TopSearchss}>
+        <span>学校名称：{XXMC}</span>
+        <span style={{ marginLeft: '20px' }}>课程名称：{KCMC}</span>
+      </div>
       <ProTable
         columns={columns}
         pagination={{
@@ -137,7 +140,7 @@ const Class = (props: any) => {
           pageSize: 10,
           defaultCurrent: 1
         }}
-        scroll={{ x:  getTableWidth(columns) }}
+        scroll={{ x: getTableWidth(columns) }}
         dataSource={dataSource}
         rowKey="id"
         search={false}
@@ -153,7 +156,7 @@ const Class = (props: any) => {
           </SearchLayout>
         }
       />
-    </>
+    </div>
   );
 };
 Class.wrappers = ['@/wrappers/auth'];

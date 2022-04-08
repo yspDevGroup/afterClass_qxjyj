@@ -155,6 +155,9 @@ const OrderInquiry = (props: any) => {
         <LeftOutlined />
         返回上一页
       </Button>
+      <div className={styles.TopSearchss}>
+        <span style={{ marginLeft: '20px', marginBottom: '0' }}>课程名称：{KCMC}</span>
+      </div>
       <ProTable
         columns={columns}
         actionRef={actionRef}
@@ -195,4 +198,5 @@ const OrderInquiry = (props: any) => {
     </>
   );
 };
+OrderInquiry.wrappers = ['@/wrappers/auth'];
 export default OrderInquiry;

@@ -152,7 +152,6 @@ const MutualEvaluation = (data: any) => {
     }
   ];
   const onSelectChange = (value: string) => {
-    console.log(value, '---');
     setXNXQ(value);
   };
 
