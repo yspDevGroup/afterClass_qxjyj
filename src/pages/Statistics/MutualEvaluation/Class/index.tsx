@@ -49,19 +49,20 @@ const Class = (props: any) => {
       }
     },
     {
+      title: '课程班人数',
+      dataIndex: 'xs_count',
+      key: 'xs_count ',
+      align: 'center',
+      width: 110
+    },
+    {
       title: '评价人数',
       dataIndex: 'pj_count',
       key: ' pj_count',
       align: 'center',
       width: 100
     },
-    {
-      title: '课程班人数',
-      dataIndex: 'pj_count',
-      key: 'pj_count ',
-      align: 'center',
-      width: 110
-    },
+
     {
       title: '课程班评分',
       dataIndex: 'pj_avg',
