@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 10:16:11
- * @LastEditTime: 2022-01-11 14:58:36
- * @LastEditors: wsl
+ * @LastEditTime: 2022-04-18 10:38:59
+ * @LastEditors: Wu Zhan
  */
 import React, { useEffect, useRef, useState } from 'react';
 import { Col, message, Modal, Popconfirm, Row, Tabs, Image, Form, Input, Button } from 'antd';
@@ -19,6 +19,7 @@ import { updateKHJYJG } from '@/services/after-class-qxjyj/khjyjg';
 import { CreateKHJYJSPJL } from '@/services/after-class-qxjyj/khjyjspjl';
 import SearchLayout from '@/components/Search/Layout';
 import { getTableWidth } from '@/utils';
+import { JSInforMation } from '@/components/JSInforMation';
 
 const { Search } = Input;
 const CannotAccess = (props: { Keys: string | undefined }) => {
@@ -28,7 +29,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
-  const { username, userId, jyjId } = currentUser!;
+  const { username, UserId, jyjId } = currentUser!;
   const [XZQUMid, setXZQUMid] = useState<string>();
   const [dataSource, setDataSourse] = useState<any>();
   const [Datas, setDatas] = useState<TableListItem>();
@@ -96,7 +97,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
     const data = {
       ZT: 2,
       SPR: username,
-      SPRId: userId || '',
+      SPRId: UserId || '',
       BZ: params.BZ,
       JYJGSJId: jyjId
     };
@@ -109,7 +110,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
         ZT: 2,
         BZ: params.BZ,
         SPR: username,
-        SPRId: userId || '',
+        SPRId: UserId || '',
         KHJYJGId: Datas?.value?.id,
         JYJGSJId: jyjId
       });
@@ -214,13 +215,14 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
             </Link>
             <Popconfirm
               key="zr"
+              disabled={JSInforMation(currentUser, false)}
               title="确定准入该机构?"
               onConfirm={async () => {
                 const data = {
                   ZT: 1,
                   BZ: '',
                   SPR: username,
-                  SPRId: userId || '',
+                  SPRId: UserId || '',
                   RZSJ: moment(myDate).format(),
                   JYJGSJId: jyjId
                 };
@@ -231,7 +233,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
                     ZT: 0,
                     BZ: '',
                     SPR: username,
-                    SPRId: userId || '',
+                    SPRId: UserId || '',
                     KHJYJGId: record.value?.id,
                     JYJGSJId: jyjId
                   });
@@ -242,13 +244,21 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
               cancelText="取消"
               placement="topRight"
             >
-              <a>准入</a>
+              <a
+                onClick={() => {
+                  JSInforMation(currentUser);
+                }}
+              >
+                准入
+              </a>
             </Popconfirm>
             <a
               key="bhsq"
               onClick={() => {
-                setDatas(record);
-                setIsModalVisible(true);
+                if (JSInforMation(currentUser)) {
+                  setDatas(record);
+                  setIsModalVisible(true);
+                }
               }}
             >
               驳回申请

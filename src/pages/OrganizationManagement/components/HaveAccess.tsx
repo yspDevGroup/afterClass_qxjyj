@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-26 11:45:40
- * @LastEditTime: 2022-03-31 14:05:47
+ * @LastEditTime: 2022-04-18 10:41:21
  * @LastEditors: Wu Zhan
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -17,6 +17,7 @@ import { getAllInstitutions, JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj'
 import { CreateKHJYJSPJL } from '@/services/after-class-qxjyj/khjyjspjl';
 import SearchLayout from '@/components/Search/Layout';
 import { getTableWidth } from '@/utils';
+import { JSInforMation } from '@/components/JSInforMation';
 
 const { Search } = Input;
 const HaveAccess = (props: { Keys: string | undefined }) => {
@@ -25,7 +26,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
   const [form] = Form.useForm();
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
-  const { username, jyjId, userId } = currentUser!;
+  const { username, jyjId, UserId } = currentUser!;
   const actionRef1 = useRef<ActionType>();
   const [dataSource, setDataSourse] = useState<any>();
   const [Datas, setDatas] = useState<TableListItem>();
@@ -90,7 +91,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       const data = {
         ZT: 3,
         SPR: username,
-        SPRId: userId || '',
+        SPRId: UserId || '',
         BZ: params.BZ,
         JYJGSJId: jyjId
       };
@@ -102,7 +103,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
           ZT: 1,
           BZ: params.BZ,
           SPR: username,
-          SPRId: userId || '',
+          SPRId: UserId || '',
           KHJYJGId: Datas?.value?.id,
           JYJGSJId: jyjId
         });
@@ -115,7 +116,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
         KHJYJGId: Datas!.value.id,
         id: Datas!.value.KHJGRZSQs[0].id,
         SPR: username,
-        SPRId: userId || '',
+        SPRId: UserId || '',
         BZ: params.BZ,
         JYJGSJId: jyjId
       };
@@ -127,7 +128,7 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
           ZT: 3,
           BZ: params.BZ,
           SPR: username,
-          SPRId: userId || '',
+          SPRId: UserId || '',
           KHJYJGId: Datas?.value?.id,
           JYJGSJId: jyjId
         });
@@ -262,9 +263,11 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
                 <a
                   href="#"
                   onClick={() => {
-                    setDatas(record);
-                    setTitles('取消准入');
-                    setIsModalVisible(true);
+                    if (JSInforMation(currentUser)) {
+                      setDatas(record);
+                      setTitles('取消准入');
+                      setIsModalVisible(true);
+                    }
                   }}
                 >
                   取消准入
@@ -272,9 +275,11 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
                 <a
                   key="qxzr"
                   onClick={() => {
-                    setDatas(record);
-                    setTitles('加入黑名单');
-                    setIsModalVisible(true);
+                    if (JSInforMation(currentUser)) {
+                      setDatas(record);
+                      setTitles('加入黑名单');
+                      setIsModalVisible(true);
+                    }
                   }}
                 >
                   加入黑名单

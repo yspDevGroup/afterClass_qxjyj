@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 10:01:58
- * @LastEditTime: 2021-10-18 12:02:48
- * @LastEditors: Sissle Lynn
+ * @LastEditTime: 2022-04-18 09:26:18
+ * @LastEditors: Wu Zhan
  */
 /*
  * @description:
@@ -31,7 +31,7 @@ const Historys = (props: { Keys: string | undefined }) => {
   const actionRef4 = useRef<ActionType>();
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
-  const { username, jyjId, id } = currentUser!;
+  const { jyjId } = currentUser!;
 
   useEffect(() => {
     actionRef4?.current?.reload();

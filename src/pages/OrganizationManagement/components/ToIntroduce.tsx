@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-29 15:00:08
- * @LastEditTime: 2021-10-22 19:43:51
- * @LastEditors: zpl
+ * @LastEditTime: 2022-04-18 09:30:39
+ * @LastEditors: Wu Zhan
  */
 import React, { useEffect, useRef } from 'react';
 import { message, Popconfirm, Tag } from 'antd';
@@ -19,8 +19,6 @@ import WWOpenDataCom from '@/components/WWOpenDataCom';
 
 const HaveIntroduced = (props: { Keys: string | undefined; state: any; type?: string }) => {
   const { Keys, state, type } = props;
-  const { initialState } = useModel('@@initialState');
-  const { currentUser } = initialState || {};
   const actionRef1 = useRef<ActionType>();
   useEffect(() => {
     actionRef1?.current?.reload();

@@ -2,8 +2,8 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 09:50:10
- * @LastEditTime: 2022-01-11 14:56:50
- * @LastEditors: wsl
+ * @LastEditTime: 2022-04-18 10:25:55
+ * @LastEditors: Wu Zhan
  */
 import React, { useEffect, useRef, useState } from 'react';
 import { Col, message, Popconfirm, Row, Image, Modal, Input, Form, Tooltip, Button } from 'antd';
@@ -18,6 +18,7 @@ import { updateKHJYJG } from '@/services/after-class-qxjyj/khjyjg';
 import { CreateKHJYJSPJL } from '@/services/after-class-qxjyj/khjyjspjl';
 import SearchLayout from '@/components/Search/Layout';
 import { getTableWidth } from '@/utils';
+import { JSInforMation } from '@/components/JSInforMation';
 
 const { Search } = Input;
 const Blacklist = (props: { Keys: string | undefined }) => {
@@ -26,7 +27,7 @@ const Blacklist = (props: { Keys: string | undefined }) => {
   const [Datas, setDatas] = useState<TableListItem>();
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
-  const { username, userId, jyjId } = currentUser!;
+  const { username, UserId, jyjId } = currentUser!;
   const { Keys } = props;
   const [form] = Form.useForm();
   const actionRef3 = useRef<ActionType>();
@@ -90,7 +91,7 @@ const Blacklist = (props: { Keys: string | undefined }) => {
       ZT: 3,
       LX: 1,
       SPR: username,
-      SPRId: userId || '',
+      SPRId: UserId || '',
       BZ: params.BZ,
       SQR,
       SQRId,
@@ -105,7 +106,7 @@ const Blacklist = (props: { Keys: string | undefined }) => {
         ZT: 4,
         BZ: params.BZ,
         SPR: username,
-        SPRId: userId || '',
+        SPRId: UserId || '',
         KHJYJGId: Datas?.value?.id,
         JYJGSJId: jyjId
       });
@@ -183,8 +184,10 @@ const Blacklist = (props: { Keys: string | undefined }) => {
                 <a
                   key="qxzr"
                   onClick={() => {
-                    setDatas(record);
-                    setIsModalVisible(true);
+                    if (JSInforMation(currentUser)) {
+                      setDatas(record);
+                      setIsModalVisible(true);
+                    }
                   }}
                 >
                   移出黑名单
