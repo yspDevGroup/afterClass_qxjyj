@@ -4,7 +4,7 @@ import { request } from 'umi';
 
 /** 创建课后服务退课记录 PUT /khtksj/create */
 export async function createKHTKSJ(body: API.CreateKHTKSJ[], options?: { [key: string]: any }) {
-  return request<{ status: 'ok' | 'error'; data?: API.KHTKSJ[]; message?: string }>('/khtksj/create', {
+  return request<{ status?: 'ok' | 'error'; data?: API.KHTKSJ[]; message?: string }>('/khtksj/create', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -18,17 +18,17 @@ export async function createKHTKSJ(body: API.CreateKHTKSJ[], options?: { [key: s
 export async function bulkCreateKHFWTK(
   body: {
     /** 学年学期ID */
-    XNXQId: string;
+    XNXQId?: string;
     XSJBSJIds?: string[];
     /** 退课状态,0:申请中;1:已退课;2:不同意退课 */
-    ZT: number;
+    ZT?: number;
     /** 课后服务班级id */
-    KHFWBJId: string;
+    KHFWBJId?: string;
     KHFWSJPZIds?: string[];
   },
   options?: { [key: string]: any }
 ) {
-  return request<{ status: 'ok' | 'error'; data?: API.KHTKSJ[]; message?: string }>('/khtksj/bulkCreateKHFWTK', {
+  return request<{ status?: 'ok' | 'error'; data?: API.KHTKSJ[]; message?: string }>('/khtksj/bulkCreateKHFWTK', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -66,9 +66,9 @@ export async function getKHTKSJ(
     /** 学生报名服务班ID */
     XSFWBJId?: string;
     /** 退课类型，0:退课;1:停餐;2:服务班 */
-    LX: number;
+    LX?: number;
     /** 学校ID */
-    XXJBSJId: string;
+    XXJBSJId?: string;
     /** 页数 */
     page?: number;
     /** 每页记录数 */
@@ -77,7 +77,7 @@ export async function getKHTKSJ(
   options?: { [key: string]: any }
 ) {
   return request<{
-    status: 'ok' | 'error';
+    status?: 'ok' | 'error';
     data?: { count?: number; rows?: API.KHTKSJ[] };
     message?: string;
   }>('/khtksj/getAll', {
@@ -92,13 +92,15 @@ export async function getKHTKSJ(
 
 /** 删除课后服务退课记录 DELETE /khtksj/${param0} */
 export async function deleteKHTKSJ(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.deleteKHTKSJParams,
-
+  params: {
+    // path
+    /** 课后服务退课记录ID */
+    id: string;
+  },
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<{ status: 'ok' | 'error'; message?: string }>(`/khtksj/${param0}`, {
+  return request<{ status?: 'ok' | 'error'; message?: string }>(`/khtksj/${param0}`, {
     method: 'DELETE',
     params: { ...queryParams },
     ...(options || {})
@@ -107,14 +109,16 @@ export async function deleteKHTKSJ(
 
 /** 更新课后服务退课记录 PUT /khtksj/update/${param0} */
 export async function updateKHTKSJ(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.updateKHTKSJParams,
-
+  params: {
+    // path
+    /** 课后服务退课记录ID */
+    id: string;
+  },
   body: API.UpdateKHTKSJ,
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<{ status: 'ok' | 'error'; message?: string }>(`/khtksj/update/${param0}`, {
+  return request<{ status?: 'ok' | 'error'; message?: string }>(`/khtksj/update/${param0}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -131,7 +135,7 @@ export async function getAllTK(
     /** 退课状态 */
     ZT?: number[];
     /** 行政区划码 */
-    XZQHM: string;
+    XZQHM?: string;
     /** 学年学期ID */
     XNXQId?: string;
     XXJBSJId?: string | any;
@@ -164,9 +168,9 @@ export async function getAllTKByAgency(
     /** 学年学期ID */
     XNXQId?: string;
     /** 学校ID */
-    XXJBSJId: string;
+    XXJBSJId?: string;
     /** 机构ID */
-    KHJYJGId: string;
+    KHJYJGId?: string;
     /** 页数 */
     page?: number;
     /** 每页记录数 */
@@ -198,9 +202,9 @@ export async function getAllTKByJGid(
     /** 学年学期ID */
     XNXQId?: string;
     /** 学校ID */
-    XXJBSJId: string;
+    XXJBSJId?: string;
     /** 机构ID */
-    KHJYJGId: string;
+    KHJYJGId?: string;
     /** 页数 */
     page?: number;
     /** 每页记录数 */
@@ -228,7 +232,7 @@ export async function getAllRefunds(
     /** 学生姓名 */
     XSXM?: string;
     /** 学年学期ID */
-    XNXQId: string;
+    XNXQId?: string;
     /** 课后服务班级ID */
     KHBJSJId?: string;
     /** 学生报名服务班ID */

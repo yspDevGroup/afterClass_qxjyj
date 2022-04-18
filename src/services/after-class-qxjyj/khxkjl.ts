@@ -5,7 +5,7 @@ import { request } from 'umi';
 /** 创建巡课记录 PUT /khxkjl/create */
 export async function createKHXKJL(body: API.CreateKHXKJL, options?: { [key: string]: any }) {
   return request<{
-    status: 'ok' | 'error';
+    status?: 'ok' | 'error';
     data?: {
       id?: string;
       RQ?: string;
@@ -21,6 +21,15 @@ export async function createKHXKJL(body: API.CreateKHXKJL, options?: { [key: str
       SKJSId?: string;
       FJSJId?: string;
       KHBJSJId?: string;
+      XXSJPZId?: string;
+      XXSJPZ?: {
+        id?: string;
+        KSSJ?: string;
+        JSSJ?: string;
+        KJS?: string;
+        TITLE?: string;
+        BZXX?: string;
+      };
       KHBJSJ?: { id?: string; BJMC?: string };
       FJSJ?: { id?: string; FJBH?: string; FJMC?: string; FJLC?: string };
       XKJS?: { id?: string; XM?: string };
@@ -53,7 +62,7 @@ export async function getKHXKJL(
     /** 场地ID */
     FJSJId?: string;
     /** 学校ID */
-    XXJBSJId: string;
+    XXJBSJId?: string;
     /** 学年学期ID */
     XNXQId?: string;
     /** 页数 */
@@ -64,7 +73,7 @@ export async function getKHXKJL(
   options?: { [key: string]: any }
 ) {
   return request<{
-    status: 'ok' | 'error';
+    status?: 'ok' | 'error';
     data?: { count?: number; rows?: API.KHXKJL[] };
     message?: string;
   }>('/khxkjl/getAll', {
@@ -79,14 +88,16 @@ export async function getKHXKJL(
 
 /** 根据ID查找巡课记录 GET /khxkjl/${param0} */
 export async function KHXKJL(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.KHXKJLParams,
-
+  params: {
+    // path
+    /** 巡课记录ID */
+    id: string;
+  },
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
   return request<{
-    status: 'ok' | 'error';
+    status?: 'ok' | 'error';
     data?: {
       id?: string;
       RQ?: string;
@@ -102,6 +113,15 @@ export async function KHXKJL(
       SKJSId?: string;
       FJSJId?: string;
       KHBJSJId?: string;
+      XXSJPZId?: string;
+      XXSJPZ?: {
+        id?: string;
+        KSSJ?: string;
+        JSSJ?: string;
+        KJS?: string;
+        TITLE?: string;
+        BZXX?: string;
+      };
       KHBJSJ?: { id?: string; BJMC?: string };
       FJSJ?: { id?: string; FJBH?: string; FJMC?: string; FJLC?: string };
       XKJS?: { id?: string; XM?: string };
@@ -117,13 +137,15 @@ export async function KHXKJL(
 
 /** 删除巡课记录 DELETE /khxkjl/${param0} */
 export async function deleteKHXKJL(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.deleteKHXKJLParams,
-
+  params: {
+    // path
+    /** 巡课记录ID */
+    id: string;
+  },
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<{ status: 'ok' | 'error'; message?: string }>(`/khxkjl/${param0}`, {
+  return request<{ status?: 'ok' | 'error'; message?: string }>(`/khxkjl/${param0}`, {
     method: 'DELETE',
     params: { ...queryParams },
     ...(options || {})
@@ -132,14 +154,16 @@ export async function deleteKHXKJL(
 
 /** 更新巡课记录 PUT /khxkjl/update/${param0} */
 export async function updateKHXKJL(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.updateKHXKJLParams,
-
+  params: {
+    // path
+    /** 巡课记录数据ID */
+    id: string;
+  },
   body: API.UpdateKHXKJL,
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<{ status: 'ok' | 'error'; message?: string }>(`/khxkjl/update/${param0}`, {
+  return request<{ status?: 'ok' | 'error'; message?: string }>(`/khxkjl/update/${param0}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'

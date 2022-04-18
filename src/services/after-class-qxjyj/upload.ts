@@ -4,23 +4,33 @@ import { request } from 'umi';
 
 /** 上传文件 POST /upload/uploadFile */
 export async function uploadFile(options?: { [key: string]: any }) {
-  return request<{ status: 'ok' | 'error'; data?: string; message?: string }>('/upload/uploadFile', {
+  return request<{ status?: 'ok' | 'error'; data?: string; message?: string }>('/upload/uploadFile', {
     method: 'POST',
     ...(options || {})
   });
 }
 
 /** 导入教师信息 POST /upload/importTeachers */
-export async function importTeachers(options?: { [key: string]: any }) {
-  return request<{ status: 'ok' | 'error'; data?: string; message?: string }>('/upload/importTeachers', {
+export async function importTeachers(
+  params: {
+    // query
+    /** 登录平台类型 */
+    plat?: string;
+  },
+  options?: { [key: string]: any }
+) {
+  return request<{ status?: 'ok' | 'error'; data?: string; message?: string }>('/upload/importTeachers', {
     method: 'POST',
+    params: {
+      ...params
+    },
     ...(options || {})
   });
 }
 
 /** 导入场地信息 POST /upload/importSites */
 export async function importSites(options?: { [key: string]: any }) {
-  return request<{ status: 'ok' | 'error'; data?: string; message?: string }>('/upload/importSites', {
+  return request<{ status?: 'ok' | 'error'; data?: string; message?: string }>('/upload/importSites', {
     method: 'POST',
     ...(options || {})
   });
@@ -28,7 +38,7 @@ export async function importSites(options?: { [key: string]: any }) {
 
 /** 导入学生信息 POST /upload/importStudents */
 export async function importStudents(options?: { [key: string]: any }) {
-  return request<{ status: 'ok' | 'error'; data?: string; message?: string }>('/upload/importStudents', {
+  return request<{ status?: 'ok' | 'error'; data?: string; message?: string }>('/upload/importStudents', {
     method: 'POST',
     ...(options || {})
   });
@@ -36,12 +46,14 @@ export async function importStudents(options?: { [key: string]: any }) {
 
 /** 企业微信教师导入 POST /upload/importWechatTeachers */
 export async function importWechatTeachers(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.importWechatTeachersParams,
-
+  params: {
+    // query
+    /** 登录平台类型 */
+    plat?: string;
+  },
   options?: { [key: string]: any }
 ) {
-  return request<{ status: 'ok' | 'error'; data?: string; message?: string }>('/upload/importWechatTeachers', {
+  return request<any>('/upload/importWechatTeachers', {
     method: 'POST',
     params: {
       ...params
@@ -64,7 +76,7 @@ export async function syncWechatTeachers(
   },
   options?: { [key: string]: any }
 ) {
-  return request<{ status: 'ok' | 'error'; data?: string; message?: string }>('/upload/syncWechatTeachers', {
+  return request<{ status?: 'ok' | 'error'; data?: string; message?: string }>('/upload/syncWechatTeachers', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -86,7 +98,7 @@ export async function syncWechatStudents(
   },
   options?: { [key: string]: any }
 ) {
-  return request<{ status: 'ok' | 'error'; data?: string; message?: string }>('/upload/syncWechatStudents', {
+  return request<{ status?: 'ok' | 'error'; data?: string; message?: string }>('/upload/syncWechatStudents', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -98,7 +110,7 @@ export async function syncWechatStudents(
 
 /** 导入行政班学生列表进行报名 POST /upload/importStudentSignUp */
 export async function importStudentSignUp(options?: { [key: string]: any }) {
-  return request<{ status: 'ok' | 'error'; data?: any[]; message?: string }>('/upload/importStudentSignUp', {
+  return request<{ status?: 'ok' | 'error'; data?: any[]; message?: string }>('/upload/importStudentSignUp', {
     method: 'POST',
     ...(options || {})
   });
@@ -106,7 +118,7 @@ export async function importStudentSignUp(options?: { [key: string]: any }) {
 
 /** 导入教师巡课安排 POST /upload/importTeacherXKAP */
 export async function importTeacherXKAP(options?: { [key: string]: any }) {
-  return request<{ status: 'ok' | 'error'; data?: any[]; message?: string }>('/upload/importTeacherXKAP', {
+  return request<{ status?: 'ok' | 'error'; data?: any[]; message?: string }>('/upload/importTeacherXKAP', {
     method: 'POST',
     ...(options || {})
   });

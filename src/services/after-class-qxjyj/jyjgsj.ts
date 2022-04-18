@@ -4,15 +4,17 @@ import { request } from 'umi';
 
 /** 根据ID获取教育机构数据 GET /jyjgsj/${param0} */
 export async function JYJGSJ(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.JYJGSJParams,
-
+  params: {
+    // path
+    /** 教育机构ID */
+    id: string;
+  },
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
   return request<{
-    status: 'ok' | 'error';
-    data?: {
+    status?: 'ok' | 'error';
+    data: {
       id?: string;
       BMBM?: string;
       BMMC?: string;
@@ -36,13 +38,15 @@ export async function JYJGSJ(
 
 /** 删除教育机构数据 DELETE /jyjgsj/${param0} */
 export async function deleteJYJGSJ(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.deleteJYJGSJParams,
-
+  params: {
+    // path
+    /** 教育机构ID */
+    id: string;
+  },
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<{ status: 'ok' | 'error'; message?: string }>(`/jyjgsj/${param0}`, {
+  return request<{ status?: 'ok' | 'error'; message?: string }>(`/jyjgsj/${param0}`, {
     method: 'DELETE',
     params: { ...queryParams },
     ...(options || {})
@@ -52,8 +56,8 @@ export async function deleteJYJGSJ(
 /** 创建教育机构数据 PUT /jyjgsj/create */
 export async function createJYJGSJ(body: API.CreateJYJGSJ, options?: { [key: string]: any }) {
   return request<{
-    status: 'ok' | 'error';
-    data?: {
+    status?: 'ok' | 'error';
+    data: {
       id?: string;
       BMBM?: string;
       BMMC?: string;
@@ -85,14 +89,14 @@ export async function getJYJGSJ(
     /** 是否为市教育局 */
     isCity?: boolean;
     /** 页数 */
-    page: number;
+    page?: number;
     /** 每页记录数 */
-    pageSize: number;
+    pageSize?: number;
   },
   options?: { [key: string]: any }
 ) {
   return request<{
-    status: 'ok' | 'error';
+    status?: 'ok' | 'error';
     data?: { count?: number; rows?: API.JYJGSJ[] };
     message?: string;
   }>('/jyjgsj/getAll', {
@@ -107,14 +111,16 @@ export async function getJYJGSJ(
 
 /** 更新教育机构数据 PUT /jyjgsj/update/${param0} */
 export async function updateJYJGSJ(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.updateJYJGSJParams,
-
+  params: {
+    // path
+    /** 教育机构ID */
+    id: string;
+  },
   body: API.UpdateJYJGSJ,
   options?: { [key: string]: any }
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<{ status: 'ok' | 'error'; message?: string }>(`/jyjgsj/update/${param0}`, {
+  return request<{ status?: 'ok' | 'error'; message?: string }>(`/jyjgsj/update/${param0}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -137,9 +143,9 @@ export async function getAllSchools(
     /** 学校名称 */
     XXMC?: string;
     /** 页数 */
-    page: number;
+    page?: number;
     /** 每页记录数 */
-    pageSize: number;
+    pageSize?: number;
   },
   options?: { [key: string]: any }
 ) {
@@ -169,9 +175,9 @@ export async function getAllInstitutions(
     /** 机构名称 */
     JGMC?: string;
     /** 页数 */
-    page: number;
+    page?: number;
     /** 每页记录数 */
-    pageSize: number;
+    pageSize?: number;
   },
   options?: { [key: string]: any }
 ) {
@@ -195,11 +201,11 @@ export async function getAllCourses(
     /** 课程类型ID */
     KHKCLXId?: string;
     /** 行政区划码 */
-    XZQHM: string;
+    XZQHM?: string;
     /** 页数 */
-    page: number;
+    page?: number;
     /** 每页记录数 */
-    pageSize: number;
+    pageSize?: number;
   },
   options?: { [key: string]: any }
 ) {
@@ -221,11 +227,11 @@ export async function toIntroduceCourses(
     /** 课程类型ID */
     KHKCLXId?: string;
     /** 行政区划码 */
-    XZQHM: string;
+    XZQHM?: string;
     /** 页数 */
-    page: number;
+    page?: number;
     /** 每页记录数 */
-    pageSize: number;
+    pageSize?: number;
   },
   options?: { [key: string]: any }
 ) {
@@ -266,7 +272,7 @@ export async function getCourses(
 /** 获取学校的课程列表 POST /jyjgsj/getCoursesBySchool */
 export async function getCoursesBySchool(
   body: {
-    XXJBSJId: string;
+    XXJBSJId?: string;
     XNXQId?: string;
     KCMC?: string;
   },
@@ -285,9 +291,9 @@ export async function getCoursesBySchool(
 /** 获取教育局的首页统计数据 POST /jyjgsj/homePage */
 export async function homePage(
   body: {
-    JYJGSJId: string;
-    XN: string;
-    XQ: string;
+    JYJGSJId?: string;
+    XN?: string;
+    XQ?: string;
   },
   options?: { [key: string]: any }
 ) {
@@ -304,7 +310,7 @@ export async function homePage(
 /** 教育局获取订单信息 POST /jyjgsj/getOrders */
 export async function getOrders(
   body: {
-    XZQHM: string;
+    XZQHM?: string;
     XXJBSJId?: string;
     DDLX?: number;
     KCMC?: string;
@@ -336,9 +342,9 @@ export async function getOrders(
 /** 获取市教育局大屏数据 POST /jyjgsj/getScreenInfo */
 export async function getScreenInfo(
   body: {
-    XZQHM: string;
-    XN: string;
-    XQ: string;
+    XZQHM?: string;
+    XN?: string;
+    XQ?: string;
     /** 是否为市教育局 */
     isCity?: boolean;
   },
@@ -395,11 +401,11 @@ export async function getSchoolCoursesEvaluation(
   body: {
     XZQHM?: string;
     /** 课程ID */
-    KHKCSJId: string;
+    KHKCSJId?: string;
     /** 学年 */
-    XN: string;
+    XN?: string;
     /** 学期 */
-    XQ: string;
+    XQ?: string;
     /** 学校名称 */
     XXMC?: string;
     /** 学校ID */
@@ -426,7 +432,7 @@ export async function getSchoolCoursesEvaluation(
 /** 区县教育局获取课程统计报表 POST /jyjgsj/getCoursesInfo */
 export async function getCoursesInfo(
   body: {
-    XZQHM: string;
+    XZQHM?: string;
     /** 课程名称 */
     KCMC?: string;
     /** 课程类型 */
@@ -462,9 +468,9 @@ export async function getAllCoursesInfo(
     XZQHM?: string;
     SXZQHM?: string;
     /** 学年 */
-    XN: string;
+    XN?: string;
     /** 学期 */
-    XQ: string;
+    XQ?: string;
     /** 课程名称 */
     KCMC?: string;
     /** 课程类型 */
@@ -498,12 +504,12 @@ export async function getClassesByCourse(
     XZQHM?: string;
     SXZQHM?: string;
     /** 学年 */
-    XN: string;
+    XN?: string;
     /** 学期 */
-    XQ: string;
+    XQ?: string;
     isFW?: number;
     /** 课程ID */
-    KHKCSJId: string;
+    KHKCSJId?: string;
     /** 学校名称 */
     XXMC?: string;
     /** 页数 */
@@ -526,9 +532,9 @@ export async function getClassesByCourse(
 /** 区县教育局按日期统计收费信息 POST /jyjgsj/getTotalCost */
 export async function getTotalCost(
   body: {
-    XZQHM: string;
-    startDate: string;
-    endDate: string;
+    XZQHM?: string;
+    startDate?: string;
+    endDate?: string;
   },
   options?: { [key: string]: any }
 ) {
@@ -545,9 +551,9 @@ export async function getTotalCost(
 /** 区县教育局查看考勤趋势 POST /jyjgsj/getAttendanceTrend */
 export async function getAttendanceTrend(
   body: {
-    XZQHM: string;
-    startDate: string;
-    endDate: string;
+    XZQHM?: string;
+    startDate?: string;
+    endDate?: string;
   },
   options?: { [key: string]: any }
 ) {
@@ -564,11 +570,11 @@ export async function getAttendanceTrend(
 /** 区县教育局查看所有学校的请假列表 POST /jyjgsj/getSchoolsQJ */
 export async function getSchoolsQJ(
   body: {
-    XZQHM: string;
+    XZQHM?: string;
     /** 学年 */
-    XN: string;
+    XN?: string;
     /** 学期 */
-    XQ: string;
+    XQ?: string;
     XXJBSJId?: string;
     /** 页数 */
     page?: number;
@@ -590,11 +596,11 @@ export async function getSchoolsQJ(
 /** 区县教育局查看所有学校的退课 POST /jyjgsj/getSchoolsTK */
 export async function getSchoolsTK(
   body: {
-    XZQHM: string;
+    XZQHM?: string;
     /** 学年 */
-    XN: string;
+    XN?: string;
     /** 学期 */
-    XQ: string;
+    XQ?: string;
     /** 学校基本数据id */
     XXJBSJId?: string;
     /** 页数 */
@@ -617,11 +623,11 @@ export async function getSchoolsTK(
 /** 区县教育局查看所有学校的退款 POST /jyjgsj/getSchoolsTKSJ */
 export async function getSchoolsTKSJ(
   body: {
-    XZQHM: string;
+    XZQHM?: string;
     /** 学年 */
-    XN: string;
+    XN?: string;
     /** 学期 */
-    XQ: string;
+    XQ?: string;
     /** 学校基本数据id */
     XXJBSJId?: string;
     /** 页数 */
@@ -644,7 +650,7 @@ export async function getSchoolsTKSJ(
 /** 获取学校的课程列表2 POST /jyjgsj/getCoursesBySchool2 */
 export async function getCoursesBySchool2(
   body: {
-    XXJBSJId: string;
+    XXJBSJId?: string;
     KCMC?: string;
   },
   options?: { [key: string]: any }
@@ -663,7 +669,7 @@ export async function getCoursesBySchool2(
 export async function getEducationStatistic(
   body: {
     /** 行政区划码 */
-    XZQHM: string;
+    XZQHM?: string;
     /** 学年 */
     XN?: string;
     /** 学期 */
@@ -689,7 +695,7 @@ export async function getEducationStatistic(
 export async function getHotclass(
   body: {
     /** 行政区划码 */
-    XZQHM: string;
+    XZQHM?: string;
     /** 学年 */
     XN?: string;
     /** 学期 */
@@ -715,7 +721,7 @@ export async function getHotclass(
 export async function getGoodClass(
   body: {
     /** 行政区划码 */
-    XZQHM: string;
+    XZQHM?: string;
     /** 学年 */
     XN?: string;
     /** 学期 */
