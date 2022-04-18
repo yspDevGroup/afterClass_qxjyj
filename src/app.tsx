@@ -2,17 +2,17 @@
  * @description: 运行时配置
  * @author: zpl
  * @Date: 2021-08-09 10:44:42
- * @LastEditTime: 2021-12-02 15:56:27
- * @LastEditors: Sissle Lynn
+ * @LastEditTime: 2022-04-18 09:18:30
+ * @LastEditors: Wu Zhan
  */
 import { notification, message } from 'antd';
 import { history } from 'umi';
 import type { RequestConfig } from 'umi';
 import type { ResponseError } from 'umi-request';
 import 'moment/locale/zh-cn';
-import { currentUser as getCurrentUser } from './services/after-class-qxjyj/user';
+import { currentUser as getCurrentUser } from './services/after-class-qxjyj/auth';
 import { currentWechatUser } from './services/after-class-qxjyj/wechat';
-import { getAuthorization, getBuildOptions, getCookie, removeOAuthToken } from './utils';
+import { getAuthorization, getAuthType, getBuildOptions, getCookie, removeOAuthToken } from './utils';
 import LoadingPage from '@/components/Loading';
 
 /** 获取用户信息比较慢的时候会展示一个 loading */
@@ -29,18 +29,45 @@ export const initialStateConfig = {
 export async function getInitialState(): Promise<InitialState> {
   console.log('process.env.REACT_APP_ENV: ', process.env.REACT_APP_ENV);
   const buildOptions = await getBuildOptions();
-  const fetchUserInfo = async (): Promise<UserInfo | null> => {
-    const res =
-      buildOptions.authType === 'wechat'
-        ? await currentWechatUser({ plat: 'education' })
-        : await getCurrentUser({ plat: 'education' });
-    const { status, data } = res;
-    if (status === 'ok' && data?.info) {
-      return data.info;
+  const fetchUserInfo = async (): Promise<UserInfo | undefined> => {
+    const authType = getAuthType() || 'password';
+    let res;
+    let dataUser: UserInfo | undefined;
+    switch (authType) {
+      case 'wechat':
+        res = await currentWechatUser({ plat: 'education' });
+        if (res.status === 'ok') {
+          const data = res?.data?.info;
+          dataUser = data;
+        }
+        break;
+      case 'password':
+      default:
+        res = await getCurrentUser({ plat: 'education' });
+        console.log('res', res);
+
+        if (res.status === 'ok') {
+          const data = res?.data;
+          dataUser = {
+            ...data,
+            jyjId: data?.QYId,
+            type: data?.userType?.map((item: { name: string }) => item.name)
+          };
+        }
+        break;
     }
-    const isFirstPage = location.pathname !== '/' && !location.pathname.toLowerCase().startsWith('/authcallback');
-    isFirstPage && message.warn(res.message === 'Invalid Token!' ? '未登录' : res.message);
-    return null;
+    return dataUser;
+    // const res =
+    //   buildOptions.authType === 'wechat'
+    //     ? await currentWechatUser({ plat: 'education' })
+    //     : await getCurrentUser({ plat: 'education' });
+    // const { status, data } = res;
+    // if (status === 'ok' && data?.info) {
+    //   return data.info;
+    // }
+    // const isFirstPage = location.pathname !== '/' && !location.pathname.toLowerCase().startsWith('/authcallback');
+    // isFirstPage && message.warn(res.message === 'Invalid Token!' ? '未登录' : res.message);
+    // return null;
   };
   const user = await fetchUserInfo();
   return {

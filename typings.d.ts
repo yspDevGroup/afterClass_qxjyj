@@ -107,7 +107,7 @@ type BuildOptions = {
 
 /** 全局初始信息 */
 type InitialState = {
-  currentUser: UserInfo | null;
+  currentUser: UserInfo | undefined;
   buildOptions: BuildOptions;
 };
 

@@ -2,8 +2,8 @@
  * @description: 工具类
  * @author: zpl
  * @Date: 2021-08-09 10:36:53
- * @LastEditTime: 2022-04-02 10:19:52
- * @LastEditors: Sissle Lynn
+ * @LastEditTime: 2022-04-18 09:04:42
+ * @LastEditors: Wu Zhan
  */
 import { history } from 'umi';
 import { parse } from 'querystring';
@@ -34,7 +34,7 @@ export const getBuildOptions = async (): Promise<BuildOptions> => {
         ENV_host: 'http://afterclassQxjyj.prod.xianyunshipei.com',
         ssoHost: 'http://sso.prod.xianyunshipei.com',
         authType: 'wechat',
-        clientId: '00005',
+        clientId: '00005'
       };
     case 'chanming':
       // 禅鸣环境
@@ -152,6 +152,7 @@ export const getLoginPath = (buildOptions?: BuildOptions, reLogin?: boolean): st
         url.searchParams.append('client_id', clientId || '');
         url.searchParams.append('logo', `${ENV_host}/logo.png`);
         url.searchParams.append('title', `${ENV_title}`);
+        url.searchParams.append('subtitle', `${ENV_subTitle}`);
         url.searchParams.append('redirect_uri', callback);
         url.searchParams.append('reLogin', String(reLogin || 'false'));
         loginPath = url.href;
@@ -473,4 +474,16 @@ export const getTableWidth = (columns: any[]) => {
     return sum;
   }
   return 1300;
+};
+
+export const setAuthType = (authType: string) => {
+  if (authType) {
+    localStorage.setItem('authType', authType);
+  }
+};
+export const getAuthType = () => {
+  return localStorage.getItem('authType') || 'password';
+};
+export const removeAuthType = () => {
+  localStorage.removeItem('authType');
 };
