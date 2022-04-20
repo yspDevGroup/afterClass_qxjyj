@@ -2,7 +2,7 @@
  * @description: 工具类
  * @author: zpl
  * @Date: 2021-08-09 10:36:53
- * @LastEditTime: 2022-04-18 09:04:42
+ * @LastEditTime: 2022-04-20 14:22:08
  * @LastEditors: Wu Zhan
  */
 import { history } from 'umi';
@@ -131,8 +131,9 @@ export const envjudge = (): PlatType => {
  * @return {*}  {string}
  */
 export const getLoginPath = (buildOptions?: BuildOptions, reLogin?: boolean): string => {
-  const { authType = 'none', ssoHost, ENV_host, clientId } = buildOptions || {};
+  const { ssoHost, ENV_host, clientId } = buildOptions || {};
   let loginPath: string;
+  const authType = getAuthType();
   switch (authType) {
     case 'wechat':
       // 前提是本应该已经注册为微信认证，且正确配置认证回调地址为 ${ENV_host}/AuthCallback/wechat
