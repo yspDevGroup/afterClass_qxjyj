@@ -10,18 +10,18 @@ const NewsList = (props: { data: ListItem[]; type: any; operation: any; showModa
   const teacher = history.location.pathname.indexOf('teacher') > -1;
 
   function info() {
-    if(type !== 'azeList'){
+    if (type !== 'azeList') {
       Modal.info({
         content: (
           <div>
-            <p>请在PC端企业微信进行审批操作</p>
+            <p>请在PC管理端进行审批操作</p>
           </div>
         ),
         okText: '确定',
-        okButtonProps:{
+        okButtonProps: {
           block: true
         },
-        onOk() {},
+        onOk() {}
       });
     }
   }
@@ -30,23 +30,26 @@ const NewsList = (props: { data: ListItem[]; type: any; operation: any; showModa
     <div className={styles[type]}>
       <List
         dataSource={data}
-        renderItem={(v: any,index) => {
+        renderItem={(v: any, index) => {
           return (
             <div className={styles.ModalStyle}>
               <div className={operation ? 'ui-listItemContent' : ''} onClick={showModal ? info : undefined}>
-                <Link to={showModal ? '/mobile/homepage' : {pathname: '/mobile/homepage/home/noticeDetails', state: { allDataSource: data, index }}}>
+                <Link
+                  to={
+                    showModal
+                      ? '/mobile/homepage'
+                      : { pathname: '/mobile/homepage/home/noticeDetails', state: { allDataSource: data, index } }
+                  }
+                >
                   <List.Item.Meta
                     title={
                       <div className={styles.TitleRow}>
                         <div className={styles.Title}>
                           {v.SFTT === 1 ? <div className={styles.Headlines}>头条</div> : <></>}
-                          <span style={{fontSize: '14px', fontWeight: 'bold'}}>{v.BT || v.KCMC}</span>
-
+                          <span style={{ fontSize: '14px', fontWeight: 'bold' }}>{v.BT || v.KCMC}</span>
                         </div>
                         <div className={styles.TitleRight}>
-                         {
-                           type === 'azeList' ? '' : <span>{moment(v.createdAt).format('YYYY.MM.DD')}</span>
-                         }
+                          {type === 'azeList' ? '' : <span>{moment(v.createdAt).format('YYYY.MM.DD')}</span>}
                         </div>
                       </div>
                     }
@@ -54,14 +57,17 @@ const NewsList = (props: { data: ListItem[]; type: any; operation: any; showModa
                       <>
                         <div className={styles.descRow} key={`${v.title}`}>
                           <div className={styles.descleft}>
-                            {
-                              type === 'azeList' ? <span style={{fontSize: '12px'}}>{moment(v.RQ).format('YYYY.MM.DD h:mm:ss')}</span> : <span>{'类型：'}{v.KCMC ? '课程引入申请' : '机构准入申请'}</span>
-                            }
+                            {type === 'azeList' ? (
+                              <span style={{ fontSize: '12px' }}>{moment(v.RQ).format('YYYY.MM.DD h:mm:ss')}</span>
+                            ) : (
+                              <span>
+                                {'类型：'}
+                                {v.KCMC ? '课程引入申请' : '机构准入申请'}
+                              </span>
+                            )}
                           </div>
                           <div className={styles.descright}>
-                            {
-                               type === 'azeList' ? <IconFont type="icon-gengduo" className={styles.gengduo} /> : ''
-                            }
+                            {type === 'azeList' ? <IconFont type="icon-gengduo" className={styles.gengduo} /> : ''}
                           </div>
                         </div>
                       </>
@@ -113,7 +119,7 @@ const ListComp = (props: { listData?: ListData; cls?: string; operation?: any; s
           ''
         )}
         {list?.length ? (
-          <NewsList data={list} type={type} operation={operation} showModal={showModal}/>
+          <NewsList data={list} type={type} operation={operation} showModal={showModal} />
         ) : (
           <>
             {noDataIcon ? (
@@ -129,6 +135,6 @@ const ListComp = (props: { listData?: ListData; cls?: string; operation?: any; s
     );
   }
   return <></>;
-}
+};
 
 export default ListComp;
