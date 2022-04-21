@@ -121,7 +121,15 @@ const course = () => {
         <ModuleTitle data="学校、机构课程对比" />
         <div className={styles.chartsContainer}>
           {proportionConfig.data && proportionConfig.data?.length !== 0 ? (
-            <Pie {...proportionConfig} />
+            <Pie
+              {...proportionConfig}
+              tooltip={{
+                formatter: (datum: any) => {
+                  console.log(datum);
+                  return { name: datum.type, value: datum.value + '%' };
+                }
+              }}
+            />
           ) : (
             <Empty
               image={noData}

@@ -20,15 +20,14 @@ const Home = () => {
         <Row style={{ height: '74px' }} className={styles.teacherInfo}>
           <Col span={22}>
             <p>
-              {currentUser?.UserId === '未知' && currentUser.wechatUserId ? (
+              {currentUser?.XM === '未知' && currentUser.wechatUserId ? (
                 <WWOpenDataCom type="userName" openid={currentUser.wechatUserId} />
               ) : (
-                currentUser?.username
+                currentUser?.XM || currentUser?.username
               )}
               ，您好！
             </p>
             <div>
-              <Avatar size={18} style={{ height: 0 }} src={<Image src={currentUser?.avatar} fallback={defUserImg} />} />
               <span className={styles.school}> {currentUser?.QYMC || ''}</span>
             </div>
           </Col>
