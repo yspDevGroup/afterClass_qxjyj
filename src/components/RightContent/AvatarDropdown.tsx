@@ -95,8 +95,6 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
       item: React.ReactInstance;
       domEvent: React.MouseEvent<HTMLElement>;
     }) => {
-      console.log('item', event);
-      console.log('item', key);
       if (event.key === 'information') {
         setShowModal(true);
         setKey(event.key);
