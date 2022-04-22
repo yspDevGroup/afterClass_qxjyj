@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Form, Menu, message, Spin } from 'antd';
-import { LogoutOutlined } from '@ant-design/icons';
+import { LogoutOutlined, SettingOutlined } from '@ant-design/icons';
 import { useAccess, useModel, history } from 'umi';
-import WWOpenDataCom from '@/components/WWOpenDataCom';
 import HeaderDropdown from '../HeaderDropdown';
-import { getJYJGSJ, JYJGSJ, updateJYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
-import { initWXAgentConfig, initWXConfig, showUserName } from '@/wx';
+import { JYJGSJ, updateJYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
+import { initWXAgentConfig, initWXConfig } from '@/wx';
 import BasicInfoModal from '@/components/BasicInfoModal';
 import styles from './index.less';
-import { removeOAuthToken } from '@/utils';
+import { getAuthType, removeOAuthToken } from '@/utils';
 
 export type GlobalHeaderRightProps = {
   menu?: boolean;
@@ -96,15 +95,34 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
       item: React.ReactInstance;
       domEvent: React.MouseEvent<HTMLElement>;
     }) => {
-      setShowModal(true);
-      setKey(event.key);
+      console.log('item', event);
+      console.log('item', key);
+      if (event.key === 'information') {
+        setShowModal(true);
+        setKey(event.key);
+      }
+      if (event.key === 'logout' && initialState) {
+        const authType = getAuthType();
+        localStorage.removeItem('authType');
+        setInitialState({ ...initialState, currentUser: null });
+        removeOAuthToken();
+        history.replace(authType === 'wechat' ? '/authCallback/overDue' : '/');
+        return;
+      }
     },
     [initialState, setInitialState]
   );
 
   const menuHeaderDropdown = (
     <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
-      <Menu.Item key="logout">基本信息维护</Menu.Item>
+      <Menu.Item key="information">
+        <SettingOutlined />
+        基本信息维护
+      </Menu.Item>
+      <Menu.Item key="logout">
+        <LogoutOutlined />
+        退出登录
+      </Menu.Item>
     </Menu>
   );
 
