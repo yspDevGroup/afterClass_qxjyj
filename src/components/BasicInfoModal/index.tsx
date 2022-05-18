@@ -2,7 +2,7 @@
  * @description:
  * @author: Sissle Lynn
  * @Date: 2021-09-01 11:07:27
- * @LastEditTime: 2022-03-31 14:02:13
+ * @LastEditTime: 2022-05-18 14:31:49
  * @LastEditors: Wu Zhan
  */
 import { JYJGSJ } from '@/services/after-class-qxjyj/jyjgsj';
@@ -46,9 +46,7 @@ const BasicInfoModal = (props: {
       });
       if (response?.status === 'ok') {
         // console.log('response', response);
-        return response?.data?.rows;
-      } else {
-        // message.error(response.message);
+        return response?.data?.list?.map((item: { name: string; code: string }) => ({ mc: item.name, dm: item.code }));
       }
       return [];
     } catch (err) {

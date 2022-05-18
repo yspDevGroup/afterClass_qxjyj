@@ -2,7 +2,7 @@
  * @description: 工具类
  * @author: zpl
  * @Date: 2021-08-09 10:36:53
- * @LastEditTime: 2022-04-20 14:22:08
+ * @LastEditTime: 2022-05-18 14:25:49
  * @LastEditors: Wu Zhan
  */
 import { history } from 'umi';
@@ -24,7 +24,7 @@ export const getBuildOptions = async (): Promise<BuildOptions> => {
   const { data = {} } = ENV_debug ? {} : await getEnv();
   const { yspAppEnv = 'local', nodeEnv } = data;
   console.log('nodeEnv: ', nodeEnv);
-
+  console.log('yspAppEnv', yspAppEnv);
   switch (yspAppEnv) {
     case 'production':
       // 生产环境
@@ -131,17 +131,17 @@ export const envjudge = (): PlatType => {
  * @return {*}  {string}
  */
 export const getLoginPath = (buildOptions?: BuildOptions, reLogin?: boolean): string => {
-  const { ssoHost, ENV_host, clientId } = buildOptions || {};
+  const { ssoHost, ENV_host } = buildOptions || {};
   let loginPath: string;
   const authType = getAuthType();
   switch (authType) {
     case 'wechat':
       // 前提是本应该已经注册为微信认证，且正确配置认证回调地址为 ${ENV_host}/AuthCallback/wechat
-      loginPath = `${ssoHost}/wechat/authorizeUrl?suiteID=${clientId}`;
+      loginPath = `${ssoHost}/wechat/authorizeUrl?suiteID=${ENV_clientId}`;
       break;
     case 'authorization_code':
       // TODO 待处理
-      loginPath = `${ssoHost}/oauth2/code?client_id=${clientId}&response_type=${authType}&redirect_uri=${''}state=${''}scope=${''}`;
+      loginPath = `${ssoHost}/oauth2/code?client_id=${ENV_clientId}&response_type=${authType}&redirect_uri=${''}state=${''}scope=${''}`;
       break;
     case 'password':
     default:
@@ -150,7 +150,7 @@ export const getLoginPath = (buildOptions?: BuildOptions, reLogin?: boolean): st
         const callback = encodeURIComponent(`${ENV_host}/AuthCallback/password`);
         const url = new URL(`${ssoHost}/oauth2/password`);
         url.searchParams.append('response_type', authType);
-        url.searchParams.append('client_id', clientId || '');
+        url.searchParams.append('client_id', ENV_clientId || '');
         url.searchParams.append('logo', `${ENV_host}/logo.png`);
         url.searchParams.append('title', `${ENV_title}`);
         url.searchParams.append('subtitle', `${ENV_subTitle}`);

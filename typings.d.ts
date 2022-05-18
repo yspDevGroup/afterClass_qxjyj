@@ -15,6 +15,8 @@ declare const ENV_title: string;
 declare const ENV_subTitle: string;
 /** 是否为本地开发模式 */
 declare const ENV_debug: boolean;
+/** 应用编号 */
+declare const ENV_clientId: string;
 
 declare const wx: any;
 declare const WWOpenData: any;
