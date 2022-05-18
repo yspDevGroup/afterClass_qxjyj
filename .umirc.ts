@@ -14,7 +14,8 @@ export default defineConfig({
   define: {
     ENV_title: '课后服务平台-区县教育局',
     ENV_subTitle: '管理员登录',
-    ENV_debug: false
+    ENV_debug: false,
+    ENV_clientId: '00005'
   },
   links: [{ rel: 'icon', href: './title.png' }],
   dynamicImport: {
