@@ -8,6 +8,7 @@ import IconFont from '@/components/CustomIcon';
 const NewsList = (props: { data: ListItem[]; type: any; operation: any; showModal?: boolean }) => {
   const { data, type, operation, showModal = false } = props;
   const teacher = history.location.pathname.indexOf('teacher') > -1;
+  console.log('data=====', data);
 
   function info() {
     if (type !== 'azeList') {
@@ -46,7 +47,7 @@ const NewsList = (props: { data: ListItem[]; type: any; operation: any; showModa
                       <div className={styles.TitleRow}>
                         <div className={styles.Title}>
                           {v.SFTT === 1 ? <div className={styles.Headlines}>头条</div> : <></>}
-                          <span style={{ fontSize: '14px', fontWeight: 'bold' }}>{v.BT || v.KCMC}</span>
+                          <span style={{ fontSize: '14px', fontWeight: 'bold' }}>{v.BT || v.KCMC || v.QYMC}</span>
                         </div>
                         <div className={styles.TitleRight}>
                           {type === 'azeList' ? '' : <span>{moment(v.createdAt).format('YYYY.MM.DD')}</span>}
