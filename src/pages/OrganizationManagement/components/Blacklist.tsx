@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 09:50:10
- * @LastEditTime: 2022-04-18 10:25:55
+ * @LastEditTime: 2022-05-19 17:22:27
  * @LastEditors: Wu Zhan
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -184,10 +184,10 @@ const Blacklist = (props: { Keys: string | undefined }) => {
                 <a
                   key="qxzr"
                   onClick={() => {
-                    if (JSInforMation(currentUser)) {
-                      setDatas(record);
-                      setIsModalVisible(true);
-                    }
+                    // if (JSInforMation(currentUser)) {
+                    setDatas(record);
+                    setIsModalVisible(true);
+                    // }
                   }}
                 >
                   移出黑名单

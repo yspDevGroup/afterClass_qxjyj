@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-26 11:45:40
- * @LastEditTime: 2022-05-19 16:31:01
+ * @LastEditTime: 2022-05-19 17:22:47
  * @LastEditors: Wu Zhan
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -263,11 +263,11 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
                 <a
                   href="#"
                   onClick={() => {
-                    if (JSInforMation(currentUser)) {
-                      setDatas(record);
-                      setTitles('取消准入');
-                      setIsModalVisible(true);
-                    }
+                    // if (JSInforMation(currentUser)) {
+                    setDatas(record);
+                    setTitles('取消准入');
+                    setIsModalVisible(true);
+                    // }
                   }}
                 >
                   取消准入
@@ -275,11 +275,11 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
                 <a
                   key="qxzr"
                   onClick={() => {
-                    if (JSInforMation(currentUser)) {
-                      setDatas(record);
-                      setTitles('加入黑名单');
-                      setIsModalVisible(true);
-                    }
+                    // if (JSInforMation(currentUser)) {
+                    setDatas(record);
+                    setTitles('加入黑名单');
+                    setIsModalVisible(true);
+                    // }
                   }}
                 >
                   加入黑名单

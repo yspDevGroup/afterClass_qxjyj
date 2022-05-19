@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-27 10:16:11
- * @LastEditTime: 2022-04-18 10:38:59
+ * @LastEditTime: 2022-05-19 17:22:37
  * @LastEditors: Wu Zhan
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -215,7 +215,7 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
             </Link>
             <Popconfirm
               key="zr"
-              disabled={JSInforMation(currentUser, false)}
+              // disabled={JSInforMation(currentUser, false)}
               title="确定准入该机构?"
               onConfirm={async () => {
                 const data = {
@@ -245,9 +245,9 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
               placement="topRight"
             >
               <a
-                onClick={() => {
-                  JSInforMation(currentUser);
-                }}
+              // onClick={() => {
+              //   JSInforMation(currentUser);
+              // }}
               >
                 准入
               </a>
@@ -255,10 +255,10 @@ const CannotAccess = (props: { Keys: string | undefined }) => {
             <a
               key="bhsq"
               onClick={() => {
-                if (JSInforMation(currentUser)) {
-                  setDatas(record);
-                  setIsModalVisible(true);
-                }
+                // if (JSInforMation(currentUser)) {
+                setDatas(record);
+                setIsModalVisible(true);
+                // }
               }}
             >
               驳回申请
