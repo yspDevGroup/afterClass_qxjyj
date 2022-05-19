@@ -2,7 +2,7 @@
  * @description:
  * @author: wsl
  * @Date: 2021-08-26 11:45:40
- * @LastEditTime: 2022-04-18 10:41:21
+ * @LastEditTime: 2022-05-19 16:31:01
  * @LastEditors: Wu Zhan
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -334,6 +334,9 @@ const HaveAccess = (props: { Keys: string | undefined }) => {
       <Modal
         title={Titles}
         visible={isModalVisible}
+        onCancel={() => {
+          setIsModalVisible(false);
+        }}
         footer={[
           <Button key="submit" type="primary" onClick={handleOk}>
             确定
