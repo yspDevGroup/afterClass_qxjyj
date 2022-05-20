@@ -8,7 +8,6 @@ import IconFont from '@/components/CustomIcon';
 const NewsList = (props: { data: ListItem[]; type: any; operation: any; showModal?: boolean }) => {
   const { data, type, operation, showModal = false } = props;
   const teacher = history.location.pathname.indexOf('teacher') > -1;
-  console.log('data=====', data);
 
   function info() {
     if (type !== 'azeList') {
