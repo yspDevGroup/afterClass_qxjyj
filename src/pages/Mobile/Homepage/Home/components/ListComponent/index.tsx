@@ -59,7 +59,7 @@ const NewsList = (props: { data: ListItem[]; type: any; operation: any; showModa
                         <div className={styles.descRow} key={`${v.title}`}>
                           <div className={styles.descleft}>
                             {type === 'azeList' ? (
-                              <span style={{ fontSize: '12px' }}>{moment(v.RQ).format('YYYY.MM.DD h:mm:ss')}</span>
+                              <span style={{ fontSize: '12px' }}>{moment(v.RQ).format('YYYY.MM.DD HH:mm:ss')}</span>
                             ) : (
                               <span>
                                 {'类型：'}
