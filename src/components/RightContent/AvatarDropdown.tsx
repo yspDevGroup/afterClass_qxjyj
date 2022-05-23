@@ -8,6 +8,7 @@ import { initWXAgentConfig, initWXConfig } from '@/wx';
 import BasicInfoModal from '@/components/BasicInfoModal';
 import styles from './index.less';
 import { getAuthType, removeOAuthToken } from '@/utils';
+import ShowName from '../ShowName';
 
 export type GlobalHeaderRightProps = {
   menu?: boolean;
@@ -143,8 +144,11 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
             )}
 
             <span className={`${styles.name} anticon`} ref={userRef}>
-              {/* <WWOpenDataCom type="userName" openid={wechatInfo.openId} /> */}
-              {currentUser?.XM || currentUser?.username}
+              <ShowName
+                XM={currentUser?.XM || currentUser?.realName}
+                type="userName"
+                openid={currentUser?.UserId || currentUser?.username}
+              />
               {isAdmin ? '' : '老师'}
             </span>
           </span>
